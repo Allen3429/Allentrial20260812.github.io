@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Allen | 多元潛能的實踐者</title>
+    <!-- 步驟1：匯入 Perxona SDK -->
+    <script type="module" src="https://cdn.perxona.ai/asia/prod/latest/widget/entry/index.js"></script>
     <style>
         :root {
             --bg-color: #f0f2f5;
@@ -52,7 +54,7 @@
             box-shadow: 0 15px 35px rgba(0,0,0,0.1);
         }
         
-        /* 核心宣言區 - 佔據較大版面 */
+        /* 核心宣言區 */
         .hero {
             grid-column: span 2;
             grid-row: span 2;
@@ -60,30 +62,11 @@
             color: white;
             justify-content: center;
         }
-        .hero h1 {
-            font-size: 2.2rem;
-            line-height: 1.4;
-            margin: 0 0 1.5rem 0;
-            font-weight: 700;
-        }
-        .hero p {
-            font-size: 1.15rem;
-            opacity: 0.9;
-            line-height: 1.8;
-            margin: 0;
-            letter-spacing: 0.5px;
-        }
+        .hero h1 { font-size: 2.2rem; line-height: 1.4; margin: 0 0 1.5rem 0; font-weight: 700; }
+        .hero p { font-size: 1.15rem; opacity: 0.9; line-height: 1.8; margin: 0; letter-spacing: 0.5px; }
 
         /* 標籤設計 */
-        .tag {
-            display: inline-block;
-            padding: 0.4rem 1rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 1.2rem;
-            width: max-content;
-        }
+        .tag { display: inline-block; padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; margin-bottom: 1.2rem; width: max-content; }
         
         /* 個人簡介區 */
         .profile {
@@ -91,11 +74,21 @@
             background: var(--card-bg);
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start;
             border: 2px solid #e2e8f0;
         }
         .profile h2 { margin: 0 0 0.5rem 0; font-size: 2rem; color: var(--text-main); }
-        .profile p { margin: 0; color: var(--text-muted); font-size: 1.2rem; font-weight: 500;}
+        .profile p { margin: 0 0 1.5rem 0; color: var(--text-muted); font-size: 1.2rem; font-weight: 500;}
+
+        /* Perxona Widget 容器樣式 */
+        .widget-container {
+            width: 100%;
+            min-height: 400px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            background-color: #f7fafc;
+        }
 
         /* 其他模塊 */
         .card-tech { grid-column: span 1; grid-row: span 2; }
@@ -110,7 +103,7 @@
         .bento-item h3 { margin: 0 0 0.8rem 0; font-size: 1.4rem; color: var(--text-main); }
         .bento-item p { margin: 0; color: var(--text-muted); font-size: 1rem; line-height: 1.6; }
         
-        /* RWD 響應式設定 */
+        /* RWD */
         @media (max-width: 900px) {
             .bento-grid { grid-template-columns: repeat(2, 1fr); }
             .hero { grid-column: span 2; }
@@ -139,10 +132,19 @@
             <p>專注於林業材料與碳匯模型。擅長以 Python 與 R 語言進行資料探勘與圖表視覺化，讓數據為大自然發聲。</p>
         </div>
 
-        <!-- 個人簡介區 -->
+        <!-- 個人簡介區 (嵌入了 AI 分身 Widget) -->
         <div class="bento-item profile">
             <h2>Allen 陳承新</h2>
             <p>永續探索者 / 跨界學習者 / 積極主動的實踐家</p>
+            <!-- 步驟2：嵌入小工具 -->
+            <div class="widget-container">
+                <sv-agent
+                  agentProfileId="01KZTY7DR2FC4AT24YS0YKF1H5"
+                  presentationMode="embedded"
+                  apiKey="9657350f-0e87-4da3-9e02-a0a9e83ee0c1"
+                  style="width: 100%; height: 100%; display: block;"
+                ></sv-agent>
+            </div>
         </div>
 
         <!-- 運動與實作區 -->
