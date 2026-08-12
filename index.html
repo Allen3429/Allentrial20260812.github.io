@@ -3,152 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Allen | 多元潛能的實踐者</title>
-    <!-- 步驟1：匯入 Perxona SDK -->
-    <script type="module" src="https://cdn.perxona.ai/asia/prod/latest/widget/entry/index.js"></script>
+    <title>我的網站</title>
     <style>
-        :root {
-            --bg-color: #f0f2f5;
-            --text-main: #1a202c;
-            --text-muted: #4a5568;
-            --card-bg: #ffffff;
-            --accent-1: #2b6cb0;
-            --accent-2: #2f855a;
-            --accent-3: #c05621;
-            --accent-4: #6b46c1;
-        }
-        * { box-sizing: border-box; }
-        body { 
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
-            background-color: var(--bg-color); 
-            color: var(--text-main); 
-            margin: 0; 
-            padding: 3rem 1.5rem; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center;
-            min-height: 100vh;
-        }
-        .bento-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            grid-auto-rows: minmax(180px, auto);
-            gap: 1.5rem;
-            max-width: 1000px;
-            width: 100%;
-        }
-        .bento-item {
-            background-color: var(--card-bg);
-            border-radius: 24px;
-            padding: 2rem;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.04);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            position: relative;
-            overflow: hidden;
-        }
-        .bento-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-        }
-        
-        /* 核心宣言區 */
-        .hero {
-            grid-column: span 2;
-            grid-row: span 2;
-            background: linear-gradient(135deg, #1a365d, #2b6cb0);
-            color: white;
-            justify-content: center;
-        }
-        .hero h1 { font-size: 2.2rem; line-height: 1.4; margin: 0 0 1.5rem 0; font-weight: 700; }
-        .hero p { font-size: 1.15rem; opacity: 0.9; line-height: 1.8; margin: 0; letter-spacing: 0.5px; }
-
-        /* 標籤設計 */
-        .tag { display: inline-block; padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; margin-bottom: 1.2rem; width: max-content; }
-        
-        /* 個人簡介區 */
-        .profile {
-            grid-column: span 2;
-            background: var(--card-bg);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            border: 2px solid #e2e8f0;
-        }
-        .profile h2 { margin: 0 0 0.5rem 0; font-size: 2rem; color: var(--text-main); }
-        .profile p { margin: 0; color: var(--text-muted); font-size: 1.2rem; font-weight: 500;}
-
-        /* 其他模塊 */
-        .card-tech { grid-column: span 1; grid-row: span 2; }
-        .card-tech .tag { background: #e6fffa; color: var(--accent-2); }
-        
-        .card-sports { grid-column: span 1; grid-row: span 1; }
-        .card-sports .tag { background: #feebc8; color: var(--accent-3); }
-        
-        .card-mindset { grid-column: span 1; grid-row: span 1; }
-        .card-mindset .tag { background: #faf5ff; color: var(--accent-4); }
-        
-        .bento-item h3 { margin: 0 0 0.8rem 0; font-size: 1.4rem; color: var(--text-main); }
-        .bento-item p { margin: 0; color: var(--text-muted); font-size: 1rem; line-height: 1.6; }
-        
-        /* RWD */
-        @media (max-width: 900px) {
-            .bento-grid { grid-template-columns: repeat(2, 1fr); }
-            .hero { grid-column: span 2; }
-            .profile { grid-column: span 2; }
-            .card-tech, .card-sports, .card-mindset { grid-column: span 2; grid-row: span 1; }
-        }
-        @media (max-width: 480px) {
-            .bento-grid { grid-template-columns: 1fr; }
-            .hero, .profile, .card-tech, .card-sports, .card-mindset { grid-column: span 1; }
-            .hero h1 { font-size: 1.8rem; }
+        /* 這裡可以放 CSS 樣式 */
+        body {
+            font-family: "PingFang TC", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
         }
     </style>
 </head>
 <body>
-    <div class="bento-grid">
-        <!-- 核心宣言區 -->
-        <div class="bento-item hero">
-            <h1>我相信一枝筆、一張紙<br>能改變命運。</h1>
-            <p>我相信沒有做不到的事，沒有放棄的理由。<br>我相信多元潛能是我通向世界的鑰匙，<br>我相信積極主動是我的秘密武器。</p>
-        </div>
-        
-        <!-- 專業與技術區 -->
-        <div class="bento-item card-tech">
-            <span class="tag">Environment & Data</span>
-            <h3>數據 × 永續</h3>
-            <p>專注於林業材料與碳匯模型。擅長以 Python 與 R 語言進行資料探勘與圖表視覺化，讓數據為大自然發聲。</p>
-        </div>
 
-        <!-- 個人簡介區 -->
-        <div class="bento-item profile">
-            <h2>Allen 陳承新</h2>
-            <p>永續探索者 / 跨界學習者 / 積極主動的實踐家</p>
-        </div>
+    <script
+  type="module"
+  src="https://cdn.perxona.ai/asia/prod/latest/widget/entry/index.js"
+></script>
 
-        <!-- 運動與實作區 -->
-        <div class="bento-item card-sports">
-            <span class="tag">Action & Discipline</span>
-            <h3>實作與紀律</h3>
-            <p>無論是親手調校公路車變速器，還是穩穩吃下馬拉松的每週跑量，我都從實作中累積最純粹的底氣。</p>
-        </div>
-
-        <!-- 邏輯與思維區 -->
-        <div class="bento-item card-mindset">
-            <span class="tag">Logic & Strategy</span>
-            <h3>跨界推演</h3>
-            <p>將金融選擇權的風險拆解思維帶入日常，習慣將生活難題逐一破解，不替自我設限。</p>
-        </div>
-    </div>
-
-    <!-- 步驟2：嵌入小工具 (Bubble 氣泡模式) -->
     <sv-agent
-      agentProfileId="01KZTY7DR2FC4AT24YS0YKF1H5"
-      presentationMode="bubble"
-      apiKey="9657350f-0e87-4da3-9e02-a0a9e83ee0c1"
-    ></sv-agent>
+  agentProfileId="01KZTY7DR2FC4AT24YS0YKF1H5"
+  presentationMode="bubble"
+  apiKey="9208afe0-ae4b-4ab6-a26b-0f39519225a4"
+>
+</sv-agent>
 
 </body>
 </html>
