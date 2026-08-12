@@ -74,21 +74,11 @@
             background: var(--card-bg);
             display: flex;
             flex-direction: column;
-            justify-content: flex-start;
+            justify-content: center;
             border: 2px solid #e2e8f0;
         }
         .profile h2 { margin: 0 0 0.5rem 0; font-size: 2rem; color: var(--text-main); }
-        .profile p { margin: 0 0 1.5rem 0; color: var(--text-muted); font-size: 1.2rem; font-weight: 500;}
-
-        /* Perxona Widget 容器樣式 */
-        .widget-container {
-            width: 100%;
-            min-height: 400px;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            background-color: #f7fafc;
-        }
+        .profile p { margin: 0; color: var(--text-muted); font-size: 1.2rem; font-weight: 500;}
 
         /* 其他模塊 */
         .card-tech { grid-column: span 1; grid-row: span 2; }
@@ -132,19 +122,10 @@
             <p>專注於林業材料與碳匯模型。擅長以 Python 與 R 語言進行資料探勘與圖表視覺化，讓數據為大自然發聲。</p>
         </div>
 
-        <!-- 個人簡介區 (嵌入了 AI 分身 Widget) -->
+        <!-- 個人簡介區 -->
         <div class="bento-item profile">
             <h2>Allen 陳承新</h2>
             <p>永續探索者 / 跨界學習者 / 積極主動的實踐家</p>
-            <!-- 步驟2：嵌入小工具 -->
-            <div class="widget-container">
-                <sv-agent
-                  agentProfileId="01KZTY7DR2FC4AT24YS0YKF1H5"
-                  presentationMode="bubble"
-                  apiKey="9657350f-0e87-4da3-9e02-a0a9e83ee0c1"
-                  style="width: 100%; height: 100%; display: block;"
-                ></sv-agent>
-            </div>
         </div>
 
         <!-- 運動與實作區 -->
@@ -161,5 +142,13 @@
             <p>將金融選擇權的風險拆解思維帶入日常，習慣將生活難題逐一破解，不替自我設限。</p>
         </div>
     </div>
+
+    <!-- 步驟2：嵌入小工具 (Bubble 氣泡模式) -->
+    <sv-agent
+      agentProfileId="01KZTY7DR2FC4AT24YS0YKF1H5"
+      presentationMode="bubble"
+      apiKey="9657350f-0e87-4da3-9e02-a0a9e83ee0c1"
+    ></sv-agent>
+
 </body>
 </html>
