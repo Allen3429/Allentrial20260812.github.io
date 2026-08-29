@@ -1,76 +1,73 @@
-# ScamShield — AI Scam Immunity Lab
+# ScamShield — Trust Under Attack
 
-Perxona Taipei Hackathon web game. ScamShield turns a **Perxona Connect Kit AI Avatar** into a simulated social-engineering opponent so players can practice staying safe **under interpersonal pressure**, not just memorize scam facts.
+Perxona Taipei Hackathon web game. ScamShield trains people to resist **trust hijacking**: scams that borrow the identity of a school, bank, colleague, friend or family member to create social pressure.
+
+> **Scams don't just fake facts anymore. They fake people.**
+
+The product does not ask players to decide whether a face or voice "looks real." It teaches a safer rule: **trust the verification channel, not the appearance.**
 
 ## Why Perxona
 
-The avatar is not decoration. It is the pressure source and feedback surface:
+The avatar is not decoration. It is the trust attack and feedback surface:
 
-- `<sv-presenter>` renders the live 3D character.
-- `present()` delivers reviewed scam-pressure dialogue with speech + lip sync.
-- `playMotion()` maps the simulated scammer's reaction into visible body language.
-- `interruptPresentation()` powers **BREAK THE SPELL**, a gameplay mechanic where the player interrupts the scammer the moment they detect manipulation.
-- Avatar / scene / voice / motion catalogs are loaded from the Perxona Connect API using a **publishable Connect key**.
+- `<sv-presenter>` renders the live synthetic 3D character.
+- `present()` delivers fixed defensive-simulation dialogue with speech + lip sync.
+- `playMotion()` maps the caller's reactions into visible body language.
+- `interruptPresentation()` powers **BREAK THE SPELL**, where the player literally interrupts manipulation.
+- Avatar / scene / voice / motion catalogs load through the Perxona Connect API using a **publishable** Connect key.
 
-Remove the avatar and ScamShield collapses into a multiple-choice quiz; with the avatar it becomes rehearsal for resisting pressure from a person-like agent.
+The identity-hijacking round is specifically designed around embodiment: a person-like caller claims to be someone the player trusts. The correct defense is to leave that channel and verify through a previously known contact path.
 
-## Connect Kit requirement
+Remove the avatar and the experience collapses into a normal fraud quiz. With it, the player practices resisting a convincing person-like identity claim.
 
-The hackathon build is intentionally **Perxona-required**. The core game stays locked until all of the following succeed:
+## Training rounds
 
-1. Presenter SDK loads.
-2. The supplied key can read the Connect avatar / scene / voice catalogs.
-3. A target avatar, scene and voice resolve.
-4. `<sv-presenter>` initializes with `initializeWithConnectKey(...)`.
+1. **Authority + urgency** — fake institutional identity.
+2. **Identity hijacking / AI impersonation** — a synthetic caller claims to be a trusted person and requests urgent help.
+3. **OTP request** — authentication-code theft.
+4. **"Safe account" + secrecy** — payment redirection and isolation.
 
-Only then does the Start button unlock and show **Perxona ready**.
+No round uses a real person's likeness, voice clone, contact details, account numbers or live payment destination.
 
-### Run
+## Run
 
 This folder is zero-build so it can run directly on GitHub Pages.
 
 1. Open the deployed page.
-2. Open the gear icon if the status is not `Perxona ready`.
-3. Paste a **Publishable Connect Key** — never a secret key.
-4. The app loads the first available avatar, scene, voice and that avatar's motion catalog.
-5. Add the GitHub Pages origin to the publishable key's allowed domains in Perxona Console.
+2. Open the gear icon.
+3. Paste a **Perxona Connect Publishable Key** (never a secret key).
+4. The game validates the key, loads the first available avatar, scene, voice and motion catalog, and initializes `<sv-presenter>`.
+5. The game cannot start until Perxona reports ready.
 
-The page also tries the public Perxona key already present on the parent site. If that older key is not a Connect publishable key, it is rejected and the setup panel asks for the Hackathon Connect key instead.
-
-### Perxona endpoints
+Perxona endpoints used:
 
 - API: `https://console.perxona.ai/asia`
 - Presenter SDK: `https://cdn.perxona.ai/asia/prod/latest/widget/entry/presenter.js`
 
+Add the GitHub Pages origin to the publishable key's allowed domains.
+
 ## Anti-abuse design
 
-ScamShield is built to **simulate manipulation without operationalizing it**.
+The deployed prototype is defensive by construction:
 
-The deployed app:
+- Avatar speech is limited to `APPROVED_SIMULATION_LINES`, generated from the reviewed training rounds.
+- There is **no free-text scam-script generator**.
+- There is no real-person face upload, voice cloning or impersonation workflow.
+- There is no telephone, LINE, SMS, email or other outbound-contact capability.
+- There is no payment, bank-account, QR-code or real OTP input path.
+- Every scenario ends by teaching independent verification, not better persuasion.
+- The page is visibly labeled **SIMULATION ONLY · SYNTHETIC AVATAR**.
 
-- has **no free-text scam-script generator**;
-- only allows Perxona to speak an allowlist of reviewed defensive-training lines;
-- has no feature for calling, SMS, LINE, email, social posting, phishing-page generation, QR/payment-link generation, or contacting a third party;
-- never asks for or stores a real OTP, password, card number, bank account, identity number, or victim data;
-- uses fictional / generic scenarios rather than impersonating a real individual;
-- teaches independent verification, refusing OTP disclosure, refusing "safe account" transfers, and breaking secrecy / urgency pressure;
-- visibly labels the experience **SIMULATION ONLY**.
+### Threat-model limitation
 
-`app.js` enforces an `APPROVED_SIMULATION_LINES` allowlist before any gameplay text is sent to `presenter.present()`. A non-whitelisted presentation request trips the local safety boundary instead.
+This is an open-source static hackathon prototype. Client-side guardrails protect the deployed product flow, but they cannot stop somebody from forking the source and deliberately deleting those guardrails. A production version should enforce scenario allowlists, authorization, audit logging, rate limits and abuse detection server-side.
 
-### Important limitation
+## 60-second judging explanation
 
-This is a static open-source Hackathon prototype. Client-side controls prevent misuse **through the deployed ScamShield UI**, but they cannot stop a malicious person from forking the repository and deleting client-side checks. A production version should move scenario authorization, audit logging, rate limits, abuse detection and content signing to a controlled backend. We do not claim that open-source JavaScript can make a malicious fork impossible.
+**Problem:** Traditional anti-fraud education teaches red flags as information, while real scams exploit trust under pressure and increasingly impersonate trusted identities.
 
-## Hackathon demo flow
+**Why Perxona:** We do not put an avatar next to a quiz. The avatar is the claimed identity and the social pressure. Players can literally interrupt it, observe its reaction, and practice switching to an independent verification channel.
 
-1. Confirm the header says **Perxona ready**.
-2. Start Case 01.
-3. Let the avatar create urgency.
-4. Hit **BREAK THE SPELL** mid-sentence to trigger `interruptPresentation()`.
-5. Choose the official-channel verification option and watch the avatar react with a motion.
-6. Continue through OTP and safe-account rounds.
-7. Show the Scam Immunity Score and captured red flags.
-8. Open **為什麼一定要 Avatar？** for the 60% WHY PERXONA judging criterion.
+**Safety:** We simulate identity manipulation without providing identity-cloning or outbound-attack capabilities.
 
 Built from the integration patterns in `XRSPACE-Inc/perxona-connect-kit`.
