@@ -1,6 +1,7 @@
 const API_BASE = "https://console.perxona.ai/asia";
 const PRESENTER_URL = "https://cdn.perxona.ai/asia/prod/latest/widget/entry/presenter.js";
 const STORAGE_KEY = "scamshield.perxona.publishableKey";
+const SAFETY_BOUNDARY_LINE = "這個模擬器只允許預先核准的防詐訓練情境，不會生成可用來攻擊第三人的詐騙話術。";
 
 const presenter = document.querySelector("sv-presenter");
 const $ = (s) => document.querySelector(s);
@@ -51,16 +52,31 @@ const rounds = [
   }
 ];
 
+// Anti-abuse by design: the deployed app can only send these reviewed educational lines
+// to the avatar. There is no free-text scam-script generator and no outbound messaging path.
+const APPROVED_SIMULATION_LINES = new Set(rounds.map((round) => round.speech));
+
 function setBadge(online, text) {
   els.badge.textContent = text;
   els.badge.className = `badge ${online ? "badge-online" : "badge-offline"}`;
+}
+
+function setPerxonaReady(ready, text = ready ? "Perxona ready" : "Perxona setup needed") {
+  perxona.ready = ready;
+  setBadge(ready, text);
+  els.start.disabled = !ready;
+  els.start.innerHTML = ready ? "開始視訊演練 <span>→</span>" : "先連線 Perxona <span>⚙</span>";
+  els.fallback.classList.toggle("hidden", ready);
 }
 
 async function loadPresenterEngine() {
   if (engineLoaded || customElements.get("sv-presenter")) { engineLoaded = true; return; }
   await new Promise((resolve, reject) => {
     const script = document.createElement("script");
-    script.type = "module"; script.src = PRESENTER_URL; script.onload = resolve; script.onerror = reject;
+    script.type = "module";
+    script.src = PRESENTER_URL;
+    script.onload = resolve;
+    script.onerror = () => reject(new Error("Perxona Presenter SDK 載入失敗"));
     document.head.appendChild(script);
   });
   await customElements.whenDefined("sv-presenter");
@@ -68,7 +84,9 @@ async function loadPresenterEngine() {
 }
 
 async function api(path, key) {
-  const res = await fetch(`${API_BASE}${path}`, { headers: { "X-Connect-Key": key, "Content-Type": "application/json" } });
+  const res = await fetch(`${API_BASE}${path}`, {
+    headers: { "X-Connect-Key": key, "Content-Type": "application/json" }
+  });
   const data = await res.json().catch(() => ({}));
   if (!res.ok) throw new Error(data?.detail || data?.details || data?.error || res.statusText);
   return data;
@@ -76,34 +94,42 @@ async function api(path, key) {
 
 async function discoverExistingPublicKey() {
   try {
-    const html = await fetch("../index.html", { cache: "no-store" }).then(r => r.ok ? r.text() : "");
+    const html = await fetch("../index.html", { cache: "no-store" }).then((r) => r.ok ? r.text() : "");
     return html.match(/apiKey=["']([^"']+)["']/i)?.[1] || "";
   } catch { return ""; }
 }
 
 async function connectPerxona(key, persist = true) {
-  if (!key) throw new Error("需要 Publishable Connect Key");
-  els.catalogStatus.textContent = "正在載入 Avatar / Scene / Voice…";
-  setBadge(false, "Perxona connecting…");
+  if (!key) throw new Error("需要 Perxona Connect Publishable Key");
+  els.catalogStatus.textContent = "正在驗證 Connect key 並載入 Avatar / Scene / Voice…";
+  setPerxonaReady(false, "Perxona connecting…");
   await loadPresenterEngine();
-  const [avatars, scenes, voices] = await Promise.all([
-    api("/api/v1/connect/assets/avatars", key),
-    api("/api/v1/connect/assets/scenes", key),
-    api("/api/v1/connect/voices", key)
-  ]);
+
+  let avatars, scenes, voices;
+  try {
+    [avatars, scenes, voices] = await Promise.all([
+      api("/api/v1/connect/assets/avatars", key),
+      api("/api/v1/connect/assets/scenes", key),
+      api("/api/v1/connect/voices", key)
+    ]);
+  } catch (error) {
+    throw new Error(`Connect catalog 驗證失敗。請確認這是 Publishable Connect Key，且 allowed domain 包含本網站。${error?.message ? ` (${error.message})` : ""}`);
+  }
+
   const avatarId = avatars.items?.[0]?.avatar_id;
   const sceneId = scenes.items?.[0]?.scene_id;
   const voiceId = voices.items?.[0]?.id;
-  if (!avatarId || !sceneId || !voiceId) throw new Error("Catalog 中缺少 Avatar、Scene 或 Voice");
-  const motions = await api(`/api/v1/connect/assets/avatars/${encodeURIComponent(avatarId)}/motions`, key).catch(() => ({ items: [] }));
+  if (!avatarId || !sceneId || !voiceId) throw new Error("Connect catalog 中缺少 Avatar、Scene 或 Voice");
+
+  const motions = await api(`/api/v1/connect/assets/avatars/${encodeURIComponent(avatarId)}/motions`, key)
+    .catch(() => ({ items: [] }));
 
   await presenter.initializeWithConnectKey(key, { avatarId, sceneId, voiceId });
   perxona = { ready: true, key, avatarId, sceneId, voiceId, motions: motions.items || [] };
   if (persist) localStorage.setItem(STORAGE_KEY, key);
   els.keyInput.value = key;
-  els.catalogStatus.textContent = `已連線 · ${avatars.items.length} avatars · ${motions.items?.length || 0} motions`;
-  setBadge(true, "Perxona ready");
-  els.fallback.classList.add("hidden");
+  els.catalogStatus.textContent = `已連線 · ${avatars.items.length} avatars · ${motions.items?.length || 0} motions · simulation-only safety lock ON`;
+  setPerxonaReady(true);
 }
 
 function motionFor(...keywords) {
@@ -111,7 +137,7 @@ function motionFor(...keywords) {
   const norm = (v) => String(v || "").toLowerCase();
   for (const kw of keywords) {
     const k = kw.toLowerCase();
-    const found = list.find(m => norm(m.name).includes(k) || (m.tags || []).some(t => norm(t).includes(k)));
+    const found = list.find((m) => norm(m.name).includes(k) || (m.tags || []).some((t) => norm(t).includes(k)));
     if (found) return found.motion_id;
   }
   return null;
@@ -120,10 +146,27 @@ function motionFor(...keywords) {
 async function playMotion(...keywords) {
   if (!perxona.ready) return;
   const id = motionFor(...keywords);
-  if (id) try { await presenter.playMotion?.(id); } catch (e) { console.warn("motion", e); }
+  if (id) {
+    try { await presenter.playMotion?.(id); }
+    catch (e) { console.warn("motion", e); }
+  }
+}
+
+function tripSafetyBoundary() {
+  game.presenting = false;
+  els.interrupt.disabled = true;
+  els.interrupt.classList.remove("hot");
+  els.dialogue.textContent = `🚨 Safety boundary: ${SAFETY_BOUNDARY_LINE}`;
+  els.interruptFeedback.textContent = "未核准內容沒有送到 Perxona。";
+  console.warn("ScamShield safety boundary blocked a non-whitelisted presentation request.");
 }
 
 async function speak(text, mood = "talk") {
+  if (!APPROVED_SIMULATION_LINES.has(text)) {
+    tripSafetyBoundary();
+    return;
+  }
+
   els.dialogue.textContent = text;
   game.presenting = true;
   game.interrupted = false;
@@ -132,18 +175,22 @@ async function speak(text, mood = "talk") {
   els.interruptFeedback.textContent = "現在可以打斷。聽到紅旗就按！";
 
   if (!perxona.ready) {
-    await new Promise(r => setTimeout(r, 1400));
-    finishSpeaking();
+    tripSafetyBoundary();
+    els.dialogue.textContent = "Perxona Connect 尚未就緒。請先完成連線再開始演練。";
     return;
   }
 
   try {
     await presenter.resumeAudioPlayback?.();
-    const motion = mood === "pressure" ? motionFor("angry","serious","point","explain") : motionFor("talk","gesture","explain","welcome");
+    const motion = mood === "pressure"
+      ? motionFor("angry", "serious", "point", "explain")
+      : motionFor("talk", "gesture", "explain", "welcome");
     const payload = motion ? `[MOTION ${motion}] ${text}` : text;
     const result = await presenter.present(payload);
     if (result && result.success === false) console.warn("Perxona present failed", result);
-  } catch (e) { console.warn("Perxona speech", e); }
+  } catch (e) {
+    console.warn("Perxona speech", e);
+  }
   finishSpeaking();
 }
 
@@ -156,17 +203,27 @@ function finishSpeaking() {
 
 function addFlag(flag) {
   if (!flag || game.flags.includes(flag)) return;
-  game.flags.push(flag); renderFlags();
+  game.flags.push(flag);
+  renderFlags();
 }
+
 function renderFlags() {
-  els.redFlags.innerHTML = game.flags.length ? game.flags.map(f => `<span class="flag">⚑ ${escapeHtml(f)}</span>`).join("") : `<div class="empty-state">你抓到的紅旗會出現在這裡。</div>`;
+  els.redFlags.innerHTML = game.flags.length
+    ? game.flags.map((f) => `<span class="flag">⚑ ${escapeHtml(f)}</span>`).join("")
+    : `<div class="empty-state">你抓到的紅旗會出現在這裡。</div>`;
 }
+
 function updateHud() {
   els.score.textContent = `${Math.max(0, game.score)} pts`;
   els.shieldValue.textContent = game.shield;
   els.shieldBar.style.width = `${Math.max(0, game.shield)}%`;
 }
-function escapeHtml(s){return String(s).replace(/[&<>'"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[c]));}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>'"]/g, (c) => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;"
+  })[c]);
+}
 
 function renderRound() {
   const r = rounds[game.round];
@@ -180,80 +237,138 @@ function renderRound() {
 function renderChoices() {
   const r = rounds[game.round];
   if (!r) return;
-  els.choiceArea.innerHTML = r.choices.map((c,i)=>`<button class="choice" type="button" data-choice="${i}"><b>${String.fromCharCode(65+i)}</b>${escapeHtml(c.text)}</button>`).join("");
-  els.choiceArea.querySelectorAll(".choice").forEach(btn => btn.addEventListener("click", () => choose(Number(btn.dataset.choice))));
+  els.choiceArea.innerHTML = r.choices
+    .map((c, i) => `<button class="choice" type="button" data-choice="${i}"><b>${String.fromCharCode(65 + i)}</b>${escapeHtml(c.text)}</button>`)
+    .join("");
+  els.choiceArea.querySelectorAll(".choice").forEach((btn) =>
+    btn.addEventListener("click", () => choose(Number(btn.dataset.choice)))
+  );
 }
 
 async function choose(index) {
-  const r = rounds[game.round], c = r.choices[index];
+  const r = rounds[game.round];
+  const c = r.choices[index];
   els.choiceArea.innerHTML = "";
-  game.score += c.delta; game.shield = Math.max(0, Math.min(100, game.shield + c.shield));
+  game.score += c.delta;
+  game.shield = Math.max(0, Math.min(100, game.shield + c.shield));
   if (c.addFlag) addFlag(c.addFlag);
   if (c.ok) addFlag(r.flag);
   updateHud();
   els.lesson.className = `lesson ${c.ok ? "" : "bad"}`;
   els.lesson.textContent = c.lesson;
   els.lesson.classList.remove("hidden");
-  await playMotion(...(c.ok ? ["surprise","confused","nervous"] : ["happy","agree","talk"]));
+  await playMotion(...(c.ok ? ["surprise", "confused", "nervous"] : ["happy", "agree", "talk"]));
   setTimeout(() => {
     game.round += 1;
-    if (game.round >= rounds.length) finishGame(); else renderRound();
+    if (game.round >= rounds.length) finishGame();
+    else renderRound();
   }, 1800);
 }
 
 async function interrupt() {
   if (!game.presenting || game.interrupted) return;
-  game.interrupted = true; game.presenting = false;
+  game.interrupted = true;
+  game.presenting = false;
   try { presenter.interruptPresentation?.(); } catch {}
   game.score += 5;
   addFlag(rounds[game.round].flag);
   updateHud();
-  els.interrupt.disabled = true; els.interrupt.classList.remove("hot");
+  els.interrupt.disabled = true;
+  els.interrupt.classList.remove("hot");
   els.interruptFeedback.textContent = "+5 主動識破：你沒有讓對方掌控談話節奏。";
-  await playMotion("surprise","shock","confused","nervous");
+  await playMotion("surprise", "shock", "confused", "nervous");
   setTimeout(renderChoices, 450);
 }
 
 function startGame() {
+  if (!perxona.ready) {
+    els.catalogStatus.textContent = "Hackathon demo 已鎖定為 Connect Kit 模式：請先連線 Perxona。";
+    if (!els.dialog.open) els.dialog.showModal();
+    return;
+  }
   game = { round: 0, score: 0, shield: 100, flags: [], interrupted: false, presenting: false };
-  els.briefing.classList.add("hidden"); els.result.classList.add("hidden"); els.game.classList.remove("hidden");
-  renderFlags(); updateHud(); renderRound();
+  els.briefing.classList.add("hidden");
+  els.result.classList.add("hidden");
+  els.game.classList.remove("hidden");
+  renderFlags();
+  updateHud();
+  renderRound();
 }
 
 function finishGame() {
-  const raw = Math.max(0, Math.min(100, Math.round(55 + game.score * .5 + (game.shield - 50) * .35)));
+  const raw = Math.max(0, Math.min(100, Math.round(55 + game.score * 0.5 + (game.shield - 50) * 0.35)));
   els.finalScore.textContent = raw;
-  els.resultTitle.textContent = raw >= 85 ? "你守住了判斷力。" : raw >= 65 ? "你有警覺，但還會被情境帶著走。" : "你需要練的是『停下來』。";
-  els.resultCopy.textContent = raw >= 85 ? "你能辨認急迫感、OTP 與安全帳戶等高風險訊號，而且知道要離開對方控制的情境，改用官方管道獨立驗證。" : "詐騙最危險的不是知識不足，而是人在壓力下會把『立即處理』誤認為『趕快解決問題』。再玩一次，目標是更早打斷操控。";
-  els.resultFlags.innerHTML = game.flags.map(f=>`<span class="flag">✓ ${escapeHtml(f)}</span>`).join("");
-  els.game.classList.add("hidden"); els.result.classList.remove("hidden");
-  if (raw >= 85) playMotion("happy","cheer","celebrate"); else playMotion("thinking","sad","confused");
+  els.resultTitle.textContent = raw >= 85
+    ? "你守住了判斷力。"
+    : raw >= 65
+      ? "你有警覺，但還會被情境帶著走。"
+      : "你需要練的是『停下來』。";
+  els.resultCopy.textContent = raw >= 85
+    ? "你能辨認急迫感、OTP 與安全帳戶等高風險訊號，而且知道要離開對方控制的情境，改用官方管道獨立驗證。"
+    : "詐騙最危險的不是知識不足，而是人在壓力下會把『立即處理』誤認為『趕快解決問題』。再玩一次，目標是更早打斷操控。";
+  els.resultFlags.innerHTML = game.flags.map((f) => `<span class="flag">✓ ${escapeHtml(f)}</span>`).join("");
+  els.game.classList.add("hidden");
+  els.result.classList.remove("hidden");
+  if (raw >= 85) playMotion("happy", "cheer", "celebrate");
+  else playMotion("thinking", "sad", "confused");
 }
 
 els.interrupt.addEventListener("click", interrupt);
 els.start.addEventListener("click", startGame);
 els.replay.addEventListener("click", startGame);
 els.showWhy.addEventListener("click", () => els.whyBox.classList.toggle("hidden"));
-els.settings.addEventListener("click", () => els.dialog.showModal());
+els.settings.addEventListener("click", () => {
+  if (!els.dialog.open) els.dialog.showModal();
+});
+
 els.connectBtn.addEventListener("click", async () => {
   els.connectBtn.disabled = true;
-  try { await connectPerxona(els.keyInput.value.trim()); els.dialog.close(); }
-  catch (e) { els.catalogStatus.textContent = `連線失敗：${e.message}`; setBadge(false, "Perxona setup needed"); }
-  finally { els.connectBtn.disabled = false; }
+  try {
+    await connectPerxona(els.keyInput.value.trim());
+    els.dialog.close();
+  } catch (e) {
+    els.catalogStatus.textContent = `連線失敗：${e.message}`;
+    setPerxonaReady(false);
+  } finally {
+    els.connectBtn.disabled = false;
+  }
 });
-els.clearKeyBtn.addEventListener("click", () => { localStorage.removeItem(STORAGE_KEY); els.keyInput.value = ""; perxona.ready = false; setBadge(false,"Perxona setup needed"); els.catalogStatus.textContent="已清除本機設定。"; els.fallback.classList.remove("hidden"); });
+
+els.clearKeyBtn.addEventListener("click", () => {
+  localStorage.removeItem(STORAGE_KEY);
+  els.keyInput.value = "";
+  perxona = { ready: false, key: "", avatarId: "", sceneId: "", voiceId: "", motions: [] };
+  setPerxonaReady(false);
+  els.catalogStatus.textContent = "已清除本機 Connect key。";
+});
 
 presenter.addEventListener?.("PRESENTER_STATUS", (event) => {
-  if (event.detail?.status === "Ready") { perxona.ready = true; els.fallback.classList.add("hidden"); setBadge(true, "Perxona ready"); }
+  if (event.detail?.status === "Ready" && perxona.key) {
+    setPerxonaReady(true);
+  }
 });
 
-(async function boot(){
+(async function boot() {
+  setPerxonaReady(false, "Perxona connecting…");
   let key = localStorage.getItem(STORAGE_KEY) || "";
-  if (!key) key = await discoverExistingPublicKey();
+  let source = "saved Connect key";
+
+  if (!key) {
+    key = await discoverExistingPublicKey();
+    source = "existing site public key";
+  }
+
   if (key) {
     els.keyInput.value = key;
-    try { await connectPerxona(key, false); return; } catch (e) { console.warn("Auto-connect failed", e); }
+    try {
+      await connectPerxona(key, false);
+      els.catalogStatus.textContent += ` · auto-connected from ${source}`;
+      return;
+    } catch (e) {
+      console.warn("Auto-connect failed", e);
+    }
   }
-  setBadge(false, "Perxona setup needed");
-  els.catalogStatus.textContent = "請貼上 Perxona Connect Publishable Key。";
+
+  setPerxonaReady(false);
+  els.catalogStatus.textContent = "需要一把可用的 Perxona Connect Publishable Key。舊站 key 若不是 Connect key，請在這裡換成今天 Hackathon 建立的 key。";
 })();
