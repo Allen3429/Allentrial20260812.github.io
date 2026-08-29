@@ -1,112 +1,181 @@
 # ScamShield — Trust Under Attack
 
-Perxona Taipei Hackathon web game. ScamShield trains people to resist **trust hijacking**: scams that borrow the identity of a school, bank, colleague, friend or family member to create social pressure.
-
 > **Scams don't just fake facts anymore. They fake people.**
+>
+> **Trust the channel, not the face.**
 
-The product does not ask players to decide whether a face or voice "looks real." It teaches a safer rule: **trust the verification channel, not the appearance.**
+ScamShield is an open-source web game built for the **Perxona Taipei Hackathon 2026**. It trains people to resist identity impersonation and social-engineering pressure using live synthetic AI avatars.
+
+**Live demo:** https://allen3429.github.io/Allentrial20260812.github.io/scamshield/
+
+**Final judging brief:** [docs/JUDGING_BRIEF.md](./docs/JUDGING_BRIEF.md)
+
+## What it does
+
+Instead of asking users to memorize scam red flags, ScamShield places them inside a controlled high-pressure simulation. A Perxona avatar claims to be a school administrator, family member, IT helpdesk agent, executive, vendor, lawyer, or incident commander and tries to push the player toward a risky decision.
+
+The player must interrupt manipulation, independently verify identity, refuse unsafe actions, and recover correctly if a mistake has already happened.
+
+### Campaign Mode — 3 stages / 12 rounds
+
+**Stage 1 — Trust Basics**
+- authority + urgency
+- family-member / AI impersonation
+- OTP theft
+- “safe account” + secrecy
+
+**Stage 2 — Enterprise Defense**
+- vendor bank-account change
+- MFA push fatigue
+- CEO urgent-payment fraud
+- payroll-account modification
+
+**Stage 3 — Trust-Chain Boss Rush**
+- legal-secrecy trap
+- multi-channel consistency illusion
+- stolen shared secret
+- fake incident commander
+
+The campaign includes Trust Shield, combo streak, red-flag collection, checkpoints, one-to-three-star stage ratings, Recovery Checks, a final Trust Resilience Score, and locally saved best score.
+
+A **Quick Mode** preserves the original four-round flow for short demos.
 
 ## Why Perxona
 
-The avatar is not decoration. It is the trust attack and feedback surface:
+The avatar is not decoration. **The avatar is the trust attack.**
 
-- `<sv-presenter>` renders the live synthetic 3D character.
-- `present()` delivers fixed defensive-simulation dialogue with speech + lip sync.
-- `playMotion()` maps the caller's reactions into visible body language.
-- `interruptPresentation()` powers **BREAK THE SPELL**, where the player literally interrupts manipulation.
-- Avatar / scene / voice / motion catalogs load through the Perxona Connect API using a **publishable** Connect key.
-- The participant can select the caller's avatar, voice and pressure-speed profile before playing.
+ScamShield uses the Perxona Connect Kit for:
 
-Remove the avatar and the experience collapses into a normal fraud quiz. With it, the player practices resisting a convincing person-like identity claim while under time and social pressure.
+- `<sv-presenter>` — live synthetic 3D caller
+- `present()` — speech + lip sync
+- `playMotion()` — visible reactions and body language
+- `interruptPresentation()` — powers **BREAK THE SPELL**, letting the player literally interrupt the simulated manipulator
+- avatar / scene / voice / motion catalogs through a publishable Connect key
+- participant-selectable caller appearance, voice, and pressure profile
 
-## Game modes
+Remove the avatar and the experience collapses into a normal fraud quiz. With it, the learner practices resisting a convincing person-like identity claim under social and time pressure.
 
-### Campaign Mode — 3 stages / 12 main rounds
+## Who it is for
 
-**Stage 1 · Trust Basics**
+The initial buyer is an **enterprise CISO / Security Awareness / Human Risk team**.
 
-1. Authority + urgency
-2. Family-member / AI impersonation
-3. OTP theft
-4. “Safe account” + secrecy
+High-risk users include:
 
-**Stage 2 · Enterprise Defense**
+- Finance / Accounts Payable
+- Procurement
+- Executive Assistants
+- HR
+- IT Helpdesk
+- managers with approval authority
 
-5. Vendor bank-account change
-6. IT helpdesk + MFA push fatigue
-7. CEO urgent-payment fraud
-8. Payroll account modification
+The product path is: enterprise pilot → annual per-seat access → organization-specific scenario packs → later LMS / SSO / SCORM integration.
 
-**Stage 3 · Trust-Chain Boss Rush**
+ScamShield is designed to complement, not replace, existing security-awareness platforms. Its wedge is **real-time embodied impersonation rehearsal**.
 
-9. Legal-secrecy trap
-10. Multi-channel consistency illusion
-11. Stolen shared secret
-12. Fake incident commander asking the employee to disable monitoring and disclose backup codes
+## Core design principle
 
-Each stage has a checkpoint, one-to-three-star performance rating, Trust Shield recovery and a stage map. The campaign tracks safe decisions, risky decisions, interruption timing, combo streak, recovery behavior and final Trust Resilience Score. Best score and run count persist locally.
+ScamShield does **not** teach users to visually detect deepfakes.
 
-### Recovery branches
+If a face and voice are already convincing, appearance is not a reliable authentication factor. The safer rule is:
 
-A high-risk wrong decision can open a short containment challenge rather than immediately ending the run. Examples include:
+> **Do not authenticate identity from appearance. Verify through a channel you control.**
+
+## Recovery matters too
+
+Some unsafe choices trigger short containment challenges instead of ending the run:
 
 - OTP disclosed → revoke sessions and reset credentials
 - suspicious transfer initiated → freeze payment and contact the bank
-- unknown MFA approved → revoke access and report through the official IT channel
+- unknown MFA approved → revoke access and report through official IT
 - sensitive account changed → restore data and preserve an audit trail
-- security controls disabled → restore visibility and re-enter the formal incident chain
+- security controls disabled → restore visibility and return to the formal incident chain
 
-These branches teach that a mistake is not the end: rapid containment still matters.
+The lesson is that prevention matters, but rapid containment after a mistake still has value.
 
-### Quick Mode
+## Running the project
 
-The original four-round experience remains available for a short live demonstration.
+This folder is intentionally zero-build and can run directly on GitHub Pages.
 
-No scenario uses a real person's likeness, voice clone, contact details, account numbers or live payment destination.
-
-## Run
-
-This folder is zero-build so it can run directly on GitHub Pages.
-
-1. Open the deployed page.
+1. Open the live site or serve this folder statically.
 2. Open the gear icon.
-3. Paste a **Perxona Connect Publishable Key** (never a secret key).
-4. The game validates the key, loads the available avatar, scene, voice and motion catalogs, and initializes `<sv-presenter>`.
-5. Select an avatar, voice and pressure-speed profile.
-6. Choose Campaign Mode or Quick Mode.
-7. The game cannot start until Perxona reports ready.
+3. Paste a **Perxona Connect Publishable Key** — never a secret key.
+4. Add your site hostname to the key's allowed domains.
+5. Let the app load available avatar, scene, voice, and motion catalogs.
+6. Select an avatar, voice, and pressure profile.
+7. Choose Campaign Mode or Quick Mode.
 
-Perxona endpoints used:
+Perxona endpoints used by the prototype:
 
 - API: `https://console.perxona.ai/asia`
 - Presenter SDK: `https://cdn.perxona.ai/asia/prod/latest/widget/entry/presenter.js`
 
-Add the GitHub Pages origin to the publishable key's allowed domains.
+## Project structure
 
-## Anti-abuse design
+```text
+scamshield/
+├── index.html                 # app shell
+├── app.js                     # original 4-round flow + Perxona integration
+├── campaign.js                # 12-round campaign engine
+├── campaign-data.js           # reviewed defensive scenarios
+├── campaign.css               # campaign UI
+├── ux-upgrade.js/.css         # high-pressure call UX
+├── ux-v2.js/.css              # casting, pacing, equipment props
+├── voice-fix.js               # voice ranking
+├── voice-match.js             # avatar → voice matching
+├── compat.js                  # older Chrome compatibility
+├── docs/JUDGING_BRIEF.md      # final judging / demo brief
+├── SECURITY.md                # anti-abuse model
+└── LICENSE                    # MIT for ScamShield original code
+```
+
+## Safety / anti-abuse
 
 The deployed prototype is defensive by construction:
 
-- Avatar speech is limited to reviewed fixed simulation lines.
-- There is **no free-text scam-script generator**.
-- There is no real-person face upload, voice cloning or impersonation workflow.
-- There is no telephone, LINE, SMS, email or other outbound-contact capability.
-- There is no payment, bank-account, QR-code or real OTP input path.
-- Every scenario ends by teaching independent verification or incident containment, not better persuasion.
-- The page is visibly labeled **SIMULATION ONLY · SYNTHETIC AVATAR**.
+- reviewed fixed simulation lines only
+- no free-text scam-script generator
+- no real-person face upload or voice cloning
+- no phone / SMS / email / LINE outbound capability
+- no real OTP, bank credentials, QR codes, or live payment destination
+- persistent **SIMULATION ONLY · SYNTHETIC AVATAR** labeling
+- every scenario teaches independent verification or incident containment
 
-### Threat-model limitation
+The design goal is:
 
-This is an open-source static hackathon prototype. Client-side guardrails protect the deployed product flow, but they cannot stop somebody from forking the source and deliberately deleting those guardrails. A production version should enforce scenario allowlists, authorization, audit logging, rate limits and abuse detection server-side.
+> **Simulate manipulation without operationalizing it.**
 
-## 60-second judging explanation
+See [SECURITY.md](./SECURITY.md) for the threat-model limitation of a client-side open-source prototype.
 
-**Problem:** Traditional anti-fraud education teaches red flags as information, while real scams exploit trust under pressure and increasingly impersonate trusted identities.
+## Measuring behavior
 
-**Why Perxona:** We do not put an avatar next to a quiz. The avatar is the claimed identity and the social pressure. Players can literally interrupt it, observe its reaction, progress through increasingly difficult identity attacks, and practice switching to an independent verification channel.
+ScamShield does not claim that a hackathon prototype has already proven real-world fraud reduction. It is designed to measure behaviors such as:
 
-**Product depth:** Campaign Mode turns a one-off quiz into repeatable training: 12 scenarios, three difficulty stages, checkpoints, recovery branches and measurable behavior.
+- unsafe-action rate
+- independent-verification rate
+- time-to-interrupt / time-to-break-the-spell
+- credential / OTP disclosure rate
+- payment-policy bypass rate
+- recovery decision quality
+- improvement across repeated sessions
 
-**Safety:** We simulate identity manipulation without providing identity-cloning or outbound-attack capabilities.
+## Open source
 
-Built from the integration patterns in `XRSPACE-Inc/perxona-connect-kit`.
+ScamShield's original project code is released under the [MIT License](./LICENSE).
+
+Perxona / XRSPACE SDKs, services, trademarks, avatar assets, and other third-party materials remain subject to their own terms and are **not** relicensed by this repository.
+
+Contributions are welcome, especially around defensive scenario design, accessibility, measurement methodology, LMS integration, and server-side anti-abuse controls.
+
+## Hackathon closing line
+
+> **Phishing simulation trained us not to trust every email.  
+> ScamShield trains us not to trust every face.**
+
+Don't ask: “Does this person look real?”  
+Ask: **“Can I verify them through a channel I control?”**
+
+---
+
+Built with [`XRSPACE-Inc/perxona-connect-kit`](https://github.com/XRSPACE-Inc/perxona-connect-kit) for the Perxona Taipei Hackathon 2026.
+
+`#Perxona` `#AIAvatar` `#PerxonaBuilder` `#TaipeiHackathon`
