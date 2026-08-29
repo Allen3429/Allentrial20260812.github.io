@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0b1020" />
+  <title>ScamShield — AI 詐騙免疫訓練場</title>
+  <meta name="description" content="用 Perxona AI Avatar 在安全環境中練習識破詐騙操控。" />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <div class="noise" aria-hidden="true"></div>
+  <header class="topbar">
+    <a class="brand" href="./" aria-label="ScamShield home">
+      <span class="brand-mark">S</span>
+      <span><strong>ScamShield</strong><small>AI SCAM IMMUNITY LAB</small></span>
+    </a>
+    <div class="top-actions">
+      <span id="connectionBadge" class="badge badge-offline">Perxona connecting…</span>
+      <button id="settingsBtn" class="icon-btn" type="button" title="Perxona 設定">⚙</button>
+    </div>
+  </header>
+
+  <main class="app-shell">
+    <section class="briefing card" id="briefingPanel">
+      <div>
+        <p class="kicker">CASE 01 · VIDEO CALL</p>
+        <h1>你能在壓力下<br><em>保持判斷力嗎？</em></h1>
+        <p class="intro">一名自稱「校務註冊中心」的人打來視訊電話。你的任務不是答對考題，而是在一個看起來像真人、會催促你的對象面前，辨認操控技巧並做出安全決策。</p>
+      </div>
+      <div class="brief-grid">
+        <div><span>目標</span><strong>守住個資與金流</strong></div>
+        <div><span>關卡</span><strong>3 個壓力回合</strong></div>
+        <div><span>特殊技</span><strong>BREAK THE SPELL</strong></div>
+      </div>
+      <button id="startBtn" class="primary-btn" type="button">開始視訊演練 <span>→</span></button>
+    </section>
+
+    <section id="gamePanel" class="game-grid hidden" aria-live="polite">
+      <div class="stage-card card">
+        <div class="stage-head">
+          <div>
+            <p class="kicker" id="roundLabel">ROUND 1 / 3</p>
+            <h2 id="roundTitle">權威 + 急迫</h2>
+          </div>
+          <div class="lives" aria-label="Shield health">
+            <span>SHIELD</span><div class="shield-track"><i id="shieldBar"></i></div><strong id="shieldValue">100</strong>
+          </div>
+        </div>
+
+        <div id="avatarStage" class="avatar-stage">
+          <sv-presenter></sv-presenter>
+          <div id="avatarFallback" class="avatar-fallback">
+            <div class="fallback-face">◉</div>
+            <p>Perxona Avatar</p>
+            <small>連線後會在這裡出現</small>
+          </div>
+          <div class="video-ui" aria-hidden="true">
+            <span class="rec-dot"></span><span>LIVE SIMULATION</span>
+          </div>
+        </div>
+
+        <div class="interrupt-zone">
+          <button id="interruptBtn" class="interrupt-btn" type="button" disabled>
+            <span>🚨</span>
+            <strong>BREAK THE SPELL</strong>
+            <small>聽到可疑操控時，直接打斷對方</small>
+          </button>
+          <p id="interruptFeedback" class="microcopy">Avatar 說話時按下，可獲得「主動識破」加分。</p>
+        </div>
+      </div>
+
+      <aside class="decision-card card">
+        <div class="evidence-head">
+          <span>YOUR FIELD NOTES</span>
+          <strong id="scoreValue">0 pts</strong>
+        </div>
+        <div id="redFlags" class="red-flags">
+          <div class="empty-state">你抓到的紅旗會出現在這裡。</div>
+        </div>
+
+        <div id="dialogueBox" class="dialogue-box">
+          <span class="speaker">SCAMMER</span>
+          <p id="dialogueText">準備好後開始演練。</p>
+        </div>
+
+        <div id="choiceArea" class="choice-area"></div>
+        <div id="lessonBox" class="lesson hidden"></div>
+      </aside>
+    </section>
+
+    <section id="resultPanel" class="result card hidden">
+      <div class="result-score">
+        <span>SCAM IMMUNITY SCORE</span>
+        <strong id="finalScore">0</strong>
+        <small>/ 100</small>
+      </div>
+      <div>
+        <p class="kicker">DEBRIEF</p>
+        <h2 id="resultTitle">你守住了判斷力。</h2>
+        <p id="resultCopy"></p>
+        <div id="resultFlags" class="result-flags"></div>
+        <div class="result-actions">
+          <button id="replayBtn" class="primary-btn" type="button">再練一次</button>
+          <button id="showWhyBtn" class="secondary-btn" type="button">為什麼一定要 Avatar？</button>
+        </div>
+        <div id="whyBox" class="why-box hidden">
+          <strong>The avatar is the pressure.</strong>
+          <p>文字可以教你「詐騙有哪些紅旗」；但 ScamShield 練的是：當一個會看著你、說話、催促、被打斷後改變反應的對象就在你面前時，你還能不能停下來驗證。拿掉 Avatar，就只剩知識測驗。</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="settingsDialog" class="settings-dialog">
+    <form method="dialog" class="settings-card" id="settingsForm">
+      <div class="settings-head">
+        <div><p class="kicker">PERXONA CONNECT KIT</p><h2>連線設定</h2></div>
+        <button class="icon-btn" value="cancel" aria-label="關閉">×</button>
+      </div>
+      <p class="settings-copy">ScamShield 只需要 <strong>Publishable Connect Key</strong>。Secret key 不應放在瀏覽器，也不要貼在這裡。</p>
+      <label>Publishable key<input id="connectKeyInput" type="password" autocomplete="off" placeholder="Paste publishable Connect key" /></label>
+      <div id="catalogStatus" class="catalog-status">尚未載入 catalog。</div>
+      <div class="settings-actions">
+        <button id="connectBtn" type="button" class="primary-btn">連接 Perxona</button>
+        <button id="clearKeyBtn" type="button" class="text-btn">清除本機設定</button>
+      </div>
+      <p class="tiny">Key 只存於此瀏覽器 localStorage。部署前請在 Perxona Console 將這個 GitHub Pages 網域加入 publishable key 的 allowed domains。</p>
+    </form>
+  </dialog>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
