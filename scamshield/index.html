@@ -33,7 +33,11 @@
         <div><span>關卡</span><strong>3 個壓力回合</strong></div>
         <div><span>特殊技</span><strong>BREAK THE SPELL</strong></div>
       </div>
-      <button id="startBtn" class="primary-btn" type="button">開始視訊演練 <span>→</span></button>
+      <div class="why-box" style="grid-column:1/-1;margin-top:0">
+        <strong>🛡 SIMULATION-ONLY SAFETY BOUNDARY</strong>
+        <p>ScamShield 沒有自由生成詐騙話術的入口，也不能打電話、傳訊息、寄信、建立付款連結或接收真實 OTP／銀行資料。Perxona Avatar 只會演出預先核准的防詐訓練台詞。</p>
+      </div>
+      <button id="startBtn" class="primary-btn" type="button" disabled>先連線 Perxona <span>⚙</span></button>
     </section>
 
     <section id="gamePanel" class="game-grid hidden" aria-live="polite">
@@ -52,11 +56,11 @@
           <sv-presenter></sv-presenter>
           <div id="avatarFallback" class="avatar-fallback">
             <div class="fallback-face">◉</div>
-            <p>Perxona Avatar</p>
-            <small>連線後會在這裡出現</small>
+            <p>Perxona Connect</p>
+            <small>等待 Connect Kit 初始化</small>
           </div>
           <div class="video-ui" aria-hidden="true">
-            <span class="rec-dot"></span><span>LIVE SIMULATION</span>
+            <span class="rec-dot"></span><span>SIMULATION ONLY</span>
           </div>
         </div>
 
@@ -80,7 +84,7 @@
         </div>
 
         <div id="dialogueBox" class="dialogue-box">
-          <span class="speaker">SCAMMER</span>
+          <span class="speaker">SIMULATED SCAMMER</span>
           <p id="dialogueText">準備好後開始演練。</p>
         </div>
 
@@ -107,6 +111,7 @@
         <div id="whyBox" class="why-box hidden">
           <strong>The avatar is the pressure.</strong>
           <p>文字可以教你「詐騙有哪些紅旗」；但 ScamShield 練的是：當一個會看著你、說話、催促、被打斷後改變反應的對象就在你面前時，你還能不能停下來驗證。拿掉 Avatar，就只剩知識測驗。</p>
+          <p><strong>Safety by design:</strong> deployed gameplay is allowlisted simulation only；沒有自由 prompt、第三方聯絡能力或真實金流欄位。</p>
         </div>
       </div>
     </section>
@@ -118,14 +123,14 @@
         <div><p class="kicker">PERXONA CONNECT KIT</p><h2>連線設定</h2></div>
         <button class="icon-btn" value="cancel" aria-label="關閉">×</button>
       </div>
-      <p class="settings-copy">ScamShield 只需要 <strong>Publishable Connect Key</strong>。Secret key 不應放在瀏覽器，也不要貼在這裡。</p>
+      <p class="settings-copy">Hackathon 版只接受 <strong>Publishable Connect Key</strong>，並在 Connect catalog 與 Presenter 初始化成功後才會解鎖遊戲。Secret key 不應放在瀏覽器，也不要貼在這裡。</p>
       <label>Publishable key<input id="connectKeyInput" type="password" autocomplete="off" placeholder="Paste publishable Connect key" /></label>
-      <div id="catalogStatus" class="catalog-status">尚未載入 catalog。</div>
+      <div id="catalogStatus" class="catalog-status">正在檢查 Connect Kit…</div>
       <div class="settings-actions">
         <button id="connectBtn" type="button" class="primary-btn">連接 Perxona</button>
         <button id="clearKeyBtn" type="button" class="text-btn">清除本機設定</button>
       </div>
-      <p class="tiny">Key 只存於此瀏覽器 localStorage。部署前請在 Perxona Console 將這個 GitHub Pages 網域加入 publishable key 的 allowed domains。</p>
+      <p class="tiny">Key 只存於此瀏覽器 localStorage。請在 Perxona Console 將 GitHub Pages 網域加入 publishable key 的 allowed domains。部署版沒有任何欄位會要求真實 OTP、密碼、銀行帳號或轉帳。</p>
     </form>
   </dialog>
 
