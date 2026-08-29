@@ -1,0 +1,466 @@
+/* High-pressure call treatment layered over the base ScamShield UI. */
+
+:root {
+  --threat: #ff3b57;
+  --threat-deep: #a90f2f;
+  --threat-glow: rgba(255, 59, 87, 0.38);
+  --safe: #70f0c2;
+}
+
+body {
+  background:
+    radial-gradient(circle at 50% -20%, rgba(92, 14, 34, 0.24), transparent 42%),
+    radial-gradient(circle at 10% 20%, rgba(19, 39, 83, 0.18), transparent 34%),
+    #05070d;
+}
+
+.topbar {
+  background: rgba(5, 7, 13, 0.9);
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+.brand-mark {
+  background: linear-gradient(145deg, #edf3ff, #8996ad);
+  color: #070a11;
+  border-radius: 5px;
+}
+
+.game-grid {
+  grid-template-columns: minmax(0, 1.6fr) minmax(330px, 0.58fr);
+}
+
+.stage-card {
+  background:
+    linear-gradient(160deg, rgba(16, 19, 29, 0.98), rgba(5, 7, 13, 0.98));
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.avatar-stage {
+  min-height: 500px;
+  background:
+    radial-gradient(circle at 50% 22%, rgba(97, 111, 140, 0.22), transparent 32%),
+    linear-gradient(180deg, #10141d, #05070c 76%);
+  border-color: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  box-shadow: inset 0 0 80px rgba(0, 0, 0, 0.5);
+}
+
+.avatar-stage sv-presenter,
+#agentMount {
+  filter: saturate(0.62) contrast(1.12) brightness(0.83);
+}
+
+#agentMount sv-agent {
+  display: block;
+  width: 100%;
+  height: 100%;
+  filter: saturate(0.55) contrast(1.16) brightness(0.8);
+  transform: scale(1.08);
+  transform-origin: center 35%;
+}
+
+.video-ui {
+  top: auto;
+  bottom: 14px;
+  left: 14px;
+  border-radius: 4px;
+  color: #d7deec;
+  background: rgba(3, 5, 9, 0.76);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.ux-threat-hud {
+  position: absolute;
+  inset: 0;
+  z-index: 8;
+  pointer-events: none;
+  font-variant-numeric: tabular-nums;
+}
+
+.ux-caller-state {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border: 1px solid rgba(255, 59, 87, 0.42);
+  background: rgba(16, 2, 7, 0.78);
+  color: #ffbdc8;
+  font-size: 10px;
+  font-weight: 950;
+  letter-spacing: 0.12em;
+  border-radius: 4px;
+  backdrop-filter: blur(9px);
+}
+
+.ux-caller-state span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--threat);
+  box-shadow: 0 0 0 5px rgba(255, 59, 87, 0.12), 0 0 15px var(--threat-glow);
+}
+
+.ux-pressure-clock {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  min-width: 90px;
+  padding: 7px 10px;
+  text-align: center;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(3, 5, 9, 0.8);
+  border-radius: 4px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 19px;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+}
+
+.ux-signal {
+  position: absolute;
+  top: 58px;
+  right: 14px;
+  color: rgba(225, 231, 242, 0.62);
+  font-size: 8px;
+  font-weight: 850;
+  letter-spacing: 0.1em;
+}
+
+.ux-pressure-message {
+  position: absolute;
+  left: 50%;
+  bottom: 48px;
+  transform: translateX(-50%);
+  width: min(82%, 620px);
+  padding: 12px 18px;
+  color: #fff;
+  background: linear-gradient(90deg, rgba(123, 7, 34, 0.92), rgba(36, 4, 13, 0.92));
+  border: 1px solid rgba(255, 90, 113, 0.56);
+  border-radius: 5px;
+  text-align: center;
+  font-size: clamp(13px, 1.8vw, 18px);
+  font-weight: 950;
+  letter-spacing: 0.06em;
+  opacity: 0;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.48);
+}
+
+.ux-scanlines {
+  position: absolute;
+  inset: 0;
+  opacity: 0.1;
+  background: repeating-linear-gradient(
+    180deg,
+    transparent 0,
+    transparent 3px,
+    rgba(255, 255, 255, 0.09) 4px
+  );
+  mix-blend-mode: overlay;
+}
+
+.ux-vignette {
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 0 110px rgba(0, 0, 0, 0.72);
+  transition: box-shadow 0.2s ease;
+}
+
+.pressure-live .avatar-stage {
+  border-color: rgba(255, 59, 87, 0.52);
+  box-shadow:
+    0 0 0 1px rgba(255, 59, 87, 0.12),
+    0 0 48px rgba(255, 20, 60, 0.13),
+    inset 0 0 90px rgba(0, 0, 0, 0.58);
+}
+
+.pressure-live .ux-pressure-message {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-2px);
+}
+
+.pressure-live .ux-pressure-clock {
+  color: #ffdbe1;
+  border-color: rgba(255, 59, 87, 0.58);
+  background: rgba(71, 4, 20, 0.84);
+  box-shadow: 0 0 20px rgba(255, 59, 87, 0.2);
+  animation: clock-pulse 0.9s steps(2, end) infinite;
+}
+
+.pressure-live .ux-caller-state span {
+  animation: caller-blink 0.66s steps(2, end) infinite;
+}
+
+.pressure-live .ux-vignette {
+  box-shadow:
+    inset 0 0 120px rgba(0, 0, 0, 0.72),
+    inset 0 0 75px rgba(180, 0, 38, 0.18);
+}
+
+.pressure-live .stage-card {
+  animation: pressure-drift 2.2s ease-in-out infinite;
+}
+
+.pressure-expired .ux-pressure-clock,
+.pressure-expired .ux-pressure-message {
+  background: #7e0824;
+  animation: expired-flash 0.28s steps(2, end) infinite;
+}
+
+@keyframes caller-blink {
+  50% { opacity: 0.35; }
+}
+
+@keyframes clock-pulse {
+  50% { transform: scale(1.025); }
+}
+
+@keyframes pressure-drift {
+  0%, 100% { transform: translateX(0); }
+  35% { transform: translateX(-0.7px); }
+  70% { transform: translateX(0.7px); }
+}
+
+@keyframes expired-flash {
+  50% { opacity: 0.72; }
+}
+
+.interrupt-zone {
+  padding-top: 11px;
+}
+
+.interrupt-btn {
+  min-height: 88px;
+  border-radius: 8px;
+  border-color: rgba(255, 59, 87, 0.45);
+  background:
+    linear-gradient(105deg, rgba(112, 5, 30, 0.78), rgba(35, 5, 14, 0.92));
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.04);
+}
+
+.interrupt-btn > span {
+  font-size: 30px;
+}
+
+.interrupt-btn strong {
+  font-size: 15px;
+  color: #fff;
+  letter-spacing: 0.09em;
+}
+
+.interrupt-btn small {
+  color: #ffc0cb;
+}
+
+.interrupt-btn.hot {
+  border-color: var(--threat);
+  background: linear-gradient(105deg, #a50c34, #4a071a);
+  box-shadow: 0 0 0 4px rgba(255, 59, 87, 0.08), 0 10px 30px rgba(81, 3, 24, 0.4);
+  animation: interrupt-pulse 0.72s ease-in-out infinite;
+}
+
+@keyframes interrupt-pulse {
+  50% { transform: translateY(-1px) scale(1.005); }
+}
+
+.dialogue-box {
+  border-radius: 7px;
+  border-color: rgba(255, 59, 87, 0.21);
+  background: linear-gradient(150deg, rgba(22, 6, 12, 0.78), rgba(7, 10, 17, 0.96));
+}
+
+.dialogue-box p {
+  font-size: 16px;
+  line-height: 1.48;
+  font-weight: 700;
+}
+
+.speaker {
+  color: #ff8da1;
+}
+
+.choice {
+  border-radius: 7px;
+  background: #0d1320;
+}
+
+.choice:hover {
+  border-color: rgba(255, 255, 255, 0.34);
+  background: #141d2e;
+}
+
+.decision-safe .decision-card {
+  box-shadow: 0 0 0 2px rgba(112, 240, 194, 0.2), 0 0 45px rgba(112, 240, 194, 0.08);
+}
+
+.decision-risky .decision-card {
+  box-shadow: 0 0 0 2px rgba(255, 59, 87, 0.22), 0 0 50px rgba(255, 59, 87, 0.1);
+}
+
+.call-connecting::before {
+  content: "INCOMING IDENTITY CLAIM";
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: rgba(3, 5, 9, 0.92);
+  font-size: clamp(18px, 3vw, 36px);
+  font-weight: 950;
+  letter-spacing: 0.18em;
+  animation: call-connect 0.78s ease both;
+  pointer-events: none;
+}
+
+@keyframes call-connect {
+  0% { opacity: 0; }
+  22%, 72% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.ux-casting-panel {
+  margin: 16px 0;
+  padding: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.ux-casting-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.ux-casting-head strong {
+  display: block;
+  color: #fff;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+}
+
+.ux-casting-head small {
+  display: block;
+  margin-top: 4px;
+  color: #8f9db6;
+  font-size: 10px;
+}
+
+.ux-casting-head > span {
+  color: #ff9aac;
+  font-size: 9px;
+  white-space: nowrap;
+}
+
+.ux-avatar-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.ux-avatar-card {
+  min-width: 0;
+  padding: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 9px;
+  background: #080d17;
+  color: #cbd5e7;
+  cursor: pointer;
+  text-align: left;
+}
+
+.ux-avatar-card img,
+.ux-avatar-placeholder {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  aspect-ratio: 1.3;
+  object-fit: cover;
+  border-radius: 6px;
+  background: #111827;
+  filter: saturate(0.72) contrast(1.05);
+}
+
+.ux-avatar-card span:last-child {
+  display: block;
+  overflow: hidden;
+  padding: 6px 3px 3px;
+  font-size: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ux-avatar-card.is-selected {
+  border-color: #ff667f;
+  box-shadow: 0 0 0 2px rgba(255, 59, 87, 0.12);
+}
+
+.ux-casting-selects {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.ux-casting-selects label {
+  display: grid;
+  gap: 5px;
+  color: #8f9db6;
+  font-size: 10px;
+}
+
+.ux-casting-selects select {
+  width: 100%;
+  min-width: 0;
+  padding: 9px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 7px;
+  background: #080d17;
+  color: #eaf0fb;
+}
+
+.ux-apply-casting {
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px 12px;
+  border: 1px solid rgba(255, 59, 87, 0.36);
+  border-radius: 8px;
+  background: rgba(255, 59, 87, 0.09);
+  color: #ffbec9;
+  font-weight: 850;
+  cursor: pointer;
+}
+
+@media (max-width: 850px) {
+  .game-grid { grid-template-columns: 1fr; }
+  .avatar-stage { min-height: 430px; }
+  .ux-pressure-message { bottom: 46px; }
+}
+
+@media (max-width: 520px) {
+  .avatar-stage { min-height: 390px; }
+  .ux-caller-state { font-size: 8px; }
+  .ux-pressure-clock { min-width: 70px; font-size: 15px; }
+  .ux-signal { display: none; }
+  .ux-pressure-message { width: calc(100% - 24px); font-size: 12px; }
+  .ux-avatar-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ux-casting-selects { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pressure-live .stage-card,
+  .pressure-live .ux-pressure-clock,
+  .pressure-live .ux-caller-state span,
+  .interrupt-btn.hot,
+  .pressure-expired .ux-pressure-clock,
+  .pressure-expired .ux-pressure-message {
+    animation: none !important;
+  }
+}
