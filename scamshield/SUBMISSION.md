@@ -2,87 +2,91 @@
 
 ## One-liner
 
-**AI is making scams more convincing. ScamShield uses an AI avatar to make people harder to scam.**
+**Scams don't just fake facts anymore. They fake people. ScamShield trains you to verify trust under pressure.**
 
 ## Problem
 
-Most anti-fraud education teaches people what scam red flags *look like* on a slide. Real scams happen under social pressure: an apparently credible person is looking at you, talking fast, invoking authority, creating urgency and asking you to act before you verify.
+Most anti-fraud education teaches what red flags look like on a slide. Real scams happen under social pressure, and the attacker may borrow a trusted identity: a school, bank, boss, friend or family member. A familiar name, face, voice or account can make people lower their guard.
 
 ## Solution
 
-ScamShield is a browser game where a Perxona avatar plays a **clearly labeled simulated scammer**. Players practice interrupting manipulation and choosing safe actions in a simulated video call. The game scores both knowledge and the ability to break the scammer's conversational control.
+ScamShield is a browser game where a **synthetic Perxona avatar** plays a caller who claims a trusted identity. Players practice interrupting manipulation, refusing unsafe requests and switching to an independent verification channel.
+
+The game never clones a real person. It trains the opposite behavior: **a convincing face or voice is not proof of identity.**
 
 ## Why Perxona
 
-The avatar itself is a game mechanic:
+The avatar itself is the game mechanic:
 
 - Speech + lip sync create person-like pressure.
-- Motion communicates escalating pressure and reaction.
-- `interruptPresentation()` lets the player literally interrupt the scammer using **BREAK THE SPELL**.
-- The avatar reacts after safe / unsafe decisions.
-- The game will not start until a real Perxona Connect avatar / scene / voice target is initialized.
+- Motion makes the caller's changing reaction visible.
+- `interruptPresentation()` lets the player literally interrupt the caller using **BREAK THE SPELL**.
+- The identity-hijacking round requires embodiment: the challenge is maintaining verification discipline while a person-like agent claims to be someone you trust.
 
-**If you remove the avatar, the core training experience disappears and becomes a normal quiz.**
-
-## Safety by design
-
-**We simulate manipulation without operationalizing it.**
-
-The deployed product has no user-generated scam script, no victim targeting, no outbound phone/message/email capability, no payment links, and no real OTP/banking fields. Perxona can only speak pre-reviewed defensive-simulation lines from a local allowlist.
-
-For production, the same allowlist and audit controls would move server-side. Because this Hackathon version is open-source client JavaScript, we do not pretend a malicious fork is technically impossible; what we guarantee is that the deployed ScamShield product itself does not expose an offensive workflow.
+**Remove the avatar and the core training experience becomes a normal multiple-choice quiz.**
 
 ## 5-minute live demo
 
 **0:00–0:30 — Hook**
 
-"Everyone knows you should not give scammers your OTP. But knowing that in a classroom and remembering it while a convincing person is pressuring you are two different skills."
+"Scams don't just fake facts anymore. They fake people. If a video caller looks and sounds familiar, would you still verify them through another channel?"
 
-**0:30–0:45 — Prove Perxona**
+**0:30–1:20 — Authority / urgency**
 
-Point to the green **Perxona ready** badge.
+Let the avatar claim to be an institution. Hit **BREAK THE SPELL** when it creates urgency, then choose independent verification.
 
-"This is not an avatar mockup. The game is locked until Perxona Connect Kit resolves a real avatar, scene and voice."
+**1:20–2:30 — Identity hijacking**
 
-**0:45–2:30 — Play**
+The avatar now claims to be a trusted person who urgently needs help and tells you not to use the original contact channel. Choose: end the conversation and call back through the contact path you already trust.
 
-Run Case 01. Let the avatar speak. Interrupt on the urgency line using **BREAK THE SPELL**. Choose the official-channel verification option and show the avatar's reaction. Continue to OTP and safe-account rounds.
+Say: "The lesson is not 'spot the deepfake.' The lesson is 'never let appearance become authentication.'"
 
-**2:30–3:10 — Result**
+**2:30–3:30 — OTP + payment isolation**
 
-Show the Scam Immunity Score and captured red flags.
+Show the OTP and safe-account rounds quickly.
 
-**3:10–4:05 — Why Perxona**
+**3:30–4:10 — Result**
 
-"We did not put an avatar next to a quiz. The avatar is the pressure source, and interrupting the avatar is gameplay. Remove Perxona and the product loses the behavior we are training."
+Show Trust Resilience Score and captured red flags.
 
-**4:05–4:35 — Safety**
+**4:10–5:00 — Why Perxona / product path**
 
-"The obvious risk is that a scam simulator could become a scam tool. So ScamShield is simulation-only by design: no free prompt, no victim targeting, no outbound messages, and only reviewed training dialogue may reach the avatar."
+"We did not put an avatar next to a quiz. The avatar is the trust attack. We use embodiment to train the moment where users are most vulnerable: when a person-like identity is asking them to act now."
 
-**4:35–5:00 — Product path**
-
-Daily 2-minute scam drills: student scams, family-emergency impersonation, investment fraud and enterprise social engineering. Schools, banks and employers can deploy reviewed scenario packs to populations they need to protect.
-
-## Likely judge Q&A
-
-### Q: Couldn't this be used to teach people how to scam?
-
-**Answer:**
-"That is exactly why we separated *simulation* from *operational capability*. ScamShield exposes no free-form scam generation, no victim targeting, no external communication, and no real payment or credential flow. The avatar only performs pre-reviewed defensive scenarios. In production we would enforce those scenario permissions server-side with audit logs and abuse monitoring."
-
-### Q: Why not just use ChatGPT or a quiz?
-
-**Answer:**
-"Because the failure mode we train is not lack of knowledge. It is losing judgment under interpersonal pressure. Perxona gives us an embodied pressure source, visible reactions, speech and an interruptible person-like agent. BREAK THE SPELL literally calls the presenter interruption API, so embodiment is part of the game mechanic."
-
-### Q: What happens if Perxona is removed?
-
-**Answer:**
-"Then ScamShield becomes a multiple-choice worksheet. The core rehearsal — staying calm while a person-like agent is pressuring you and actively interrupting that agent — disappears."
+Future scenario packs: student scams, family-emergency impersonation, recruitment scams and enterprise social engineering. Schools, banks and employers can deploy short recurring drills.
 
 ## Judging map
 
-- **Product value (30%)**: fraud prevention, clear users, repeatable scenario packs, institutional distribution.
-- **Why Perxona (60%)**: embodiment creates pressure; motion is feedback; interrupting presenter is gameplay; removing avatar breaks the core experience.
-- **Demo/story (10%)**: understandable in seconds, interactive live moment, visible before/after behavior, and a clear safety answer.
+### Product value — 30%
+
+- Real, recurring fraud-prevention problem.
+- Useful to students, families, banks, schools and employers.
+- Repeatable scenario packs enable a product/business path.
+
+### WHY PERXONA — 60%
+
+- The avatar is the claimed identity and pressure source.
+- Motion is visible behavioral feedback.
+- Interrupting the presenter is gameplay.
+- Identity-hijacking training loses its core embodied pressure when the avatar is removed.
+- Synthetic avatar use demonstrates the concept without cloning a real person.
+
+### Demo / storytelling — 10%
+
+- Understandable in one sentence: "Trust the channel, not the face."
+- Interactive moment: interrupt the avatar mid-speech.
+- Visible progression from pressure → verification → debrief.
+
+## Safety Q&A
+
+**Q: Could scammers use this product to learn how to scam people?**
+
+A: The deployed version is simulation-only. It has no free-text scam-script generator, no real-person cloning, no outbound calling or messaging, no payment links and no real victim data. The avatar can only speak pre-reviewed training lines. We simulate manipulation without operationalizing it.
+
+**Q: What about deepfakes or identity theft?**
+
+A: That is exactly why we avoid teaching users to visually detect whether a person is "real." The safer behavior is independent verification through a channel the user already controls. Our synthetic avatar demonstrates the trust problem without reproducing a real person's identity.
+
+## Closing line
+
+> **Don't ask: "Does this person look real?" Ask: "Can I verify them through a channel I control?"**
