@@ -4,8 +4,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#0b1020" />
-  <title>ScamShield — AI 詐騙免疫訓練場</title>
-  <meta name="description" content="用 Perxona AI Avatar 在安全環境中練習識破詐騙操控。" />
+  <title>ScamShield — Trust Under Attack</title>
+  <meta name="description" content="用 Perxona AI Avatar 在安全環境中練習識破身分盜用與社交工程詐騙。" />
   <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
@@ -13,7 +13,7 @@
   <header class="topbar">
     <a class="brand" href="./" aria-label="ScamShield home">
       <span class="brand-mark">S</span>
-      <span><strong>ScamShield</strong><small>AI SCAM IMMUNITY LAB</small></span>
+      <span><strong>ScamShield</strong><small>TRUST UNDER ATTACK</small></span>
     </a>
     <div class="top-actions">
       <span id="connectionBadge" class="badge badge-offline">Perxona connecting…</span>
@@ -24,18 +24,14 @@
   <main class="app-shell">
     <section class="briefing card" id="briefingPanel">
       <div>
-        <p class="kicker">CASE 01 · VIDEO CALL</p>
-        <h1>你能在壓力下<br><em>保持判斷力嗎？</em></h1>
-        <p class="intro">一名自稱「校務註冊中心」的人打來視訊電話。你的任務不是答對考題，而是在一個看起來像真人、會催促你的對象面前，辨認操控技巧並做出安全決策。</p>
+        <p class="kicker">CASE 01 · TRUST VERIFICATION</p>
+        <h1>詐騙不只造假資訊。<br><em>它會冒充你信任的人。</em></h1>
+        <p class="intro">臉、聲音、姓名、熟悉的語氣，甚至帳號本身，都可能被盜用。ScamShield 不教你猜「這個人像不像真的」，而是讓你在一個會看著你、催促你、改變反應的 AI Avatar 面前，練習真正可靠的獨立驗證。</p>
       </div>
       <div class="brief-grid">
-        <div><span>目標</span><strong>守住個資與金流</strong></div>
-        <div><span>關卡</span><strong>3 個壓力回合</strong></div>
+        <div><span>核心觀念</span><strong>Trust the channel, not the face.</strong></div>
+        <div><span>關卡</span><strong>4 種信任攻擊</strong></div>
         <div><span>特殊技</span><strong>BREAK THE SPELL</strong></div>
-      </div>
-      <div class="why-box" style="grid-column:1/-1;margin-top:0">
-        <strong>🛡 SIMULATION-ONLY SAFETY BOUNDARY</strong>
-        <p>ScamShield 沒有自由生成詐騙話術的入口，也不能打電話、傳訊息、寄信、建立付款連結或接收真實 OTP／銀行資料。Perxona Avatar 只會演出預先核准的防詐訓練台詞。</p>
       </div>
       <button id="startBtn" class="primary-btn" type="button" disabled>先連線 Perxona <span>⚙</span></button>
     </section>
@@ -44,11 +40,11 @@
       <div class="stage-card card">
         <div class="stage-head">
           <div>
-            <p class="kicker" id="roundLabel">ROUND 1 / 3</p>
+            <p class="kicker" id="roundLabel">ROUND 1 / 4</p>
             <h2 id="roundTitle">權威 + 急迫</h2>
           </div>
           <div class="lives" aria-label="Shield health">
-            <span>SHIELD</span><div class="shield-track"><i id="shieldBar"></i></div><strong id="shieldValue">100</strong>
+            <span>TRUST SHIELD</span><div class="shield-track"><i id="shieldBar"></i></div><strong id="shieldValue">100</strong>
           </div>
         </div>
 
@@ -56,11 +52,11 @@
           <sv-presenter></sv-presenter>
           <div id="avatarFallback" class="avatar-fallback">
             <div class="fallback-face">◉</div>
-            <p>Perxona Connect</p>
-            <small>等待 Connect Kit 初始化</small>
+            <p>Perxona Avatar required</p>
+            <small>Connect Kit 成功連線後才可開始</small>
           </div>
           <div class="video-ui" aria-hidden="true">
-            <span class="rec-dot"></span><span>SIMULATION ONLY</span>
+            <span class="rec-dot"></span><span>SIMULATION ONLY · SYNTHETIC AVATAR</span>
           </div>
         </div>
 
@@ -76,7 +72,7 @@
 
       <aside class="decision-card card">
         <div class="evidence-head">
-          <span>YOUR FIELD NOTES</span>
+          <span>YOUR TRUST NOTES</span>
           <strong id="scoreValue">0 pts</strong>
         </div>
         <div id="redFlags" class="red-flags">
@@ -84,7 +80,7 @@
         </div>
 
         <div id="dialogueBox" class="dialogue-box">
-          <span class="speaker">SIMULATED SCAMMER</span>
+          <span class="speaker" id="speakerLabel">CLAIMED IDENTITY</span>
           <p id="dialogueText">準備好後開始演練。</p>
         </div>
 
@@ -95,13 +91,13 @@
 
     <section id="resultPanel" class="result card hidden">
       <div class="result-score">
-        <span>SCAM IMMUNITY SCORE</span>
+        <span>TRUST RESILIENCE SCORE</span>
         <strong id="finalScore">0</strong>
         <small>/ 100</small>
       </div>
       <div>
         <p class="kicker">DEBRIEF</p>
-        <h2 id="resultTitle">你守住了判斷力。</h2>
+        <h2 id="resultTitle">你守住了信任邊界。</h2>
         <p id="resultCopy"></p>
         <div id="resultFlags" class="result-flags"></div>
         <div class="result-actions">
@@ -109,9 +105,8 @@
           <button id="showWhyBtn" class="secondary-btn" type="button">為什麼一定要 Avatar？</button>
         </div>
         <div id="whyBox" class="why-box hidden">
-          <strong>The avatar is the pressure.</strong>
-          <p>文字可以教你「詐騙有哪些紅旗」；但 ScamShield 練的是：當一個會看著你、說話、催促、被打斷後改變反應的對象就在你面前時，你還能不能停下來驗證。拿掉 Avatar，就只剩知識測驗。</p>
-          <p><strong>Safety by design:</strong> deployed gameplay is allowlisted simulation only；沒有自由 prompt、第三方聯絡能力或真實金流欄位。</p>
+          <strong>The avatar is the trust attack.</strong>
+          <p>當詐騙開始冒充「人」而不只是造假文字，防詐也必須訓練人在面對一個像真的對象時仍能停下來驗證。ScamShield 使用合成 Perxona Avatar 模擬這種社交壓力；不複製真人臉或聲音。拿掉 Avatar，就失去「即使看起來像可信的人，也不要把外貌當成身分證明」這個核心體驗。</p>
         </div>
       </div>
     </section>
@@ -123,14 +118,14 @@
         <div><p class="kicker">PERXONA CONNECT KIT</p><h2>連線設定</h2></div>
         <button class="icon-btn" value="cancel" aria-label="關閉">×</button>
       </div>
-      <p class="settings-copy">Hackathon 版只接受 <strong>Publishable Connect Key</strong>，並在 Connect catalog 與 Presenter 初始化成功後才會解鎖遊戲。Secret key 不應放在瀏覽器，也不要貼在這裡。</p>
+      <p class="settings-copy">ScamShield 只需要 <strong>Publishable Connect Key</strong>。Secret key 不應放在瀏覽器，也不要貼在這裡。</p>
       <label>Publishable key<input id="connectKeyInput" type="password" autocomplete="off" placeholder="Paste publishable Connect key" /></label>
-      <div id="catalogStatus" class="catalog-status">正在檢查 Connect Kit…</div>
+      <div id="catalogStatus" class="catalog-status">尚未載入 catalog。</div>
       <div class="settings-actions">
         <button id="connectBtn" type="button" class="primary-btn">連接 Perxona</button>
         <button id="clearKeyBtn" type="button" class="text-btn">清除本機設定</button>
       </div>
-      <p class="tiny">Key 只存於此瀏覽器 localStorage。請在 Perxona Console 將 GitHub Pages 網域加入 publishable key 的 allowed domains。部署版沒有任何欄位會要求真實 OTP、密碼、銀行帳號或轉帳。</p>
+      <p class="tiny">Safety lock：部署版只播放已審核的防詐模擬台詞，沒有自由生成詐騙話術、真實人物複製、對外訊息或付款功能。Key 只存於此瀏覽器 localStorage。</p>
     </form>
   </dialog>
 
