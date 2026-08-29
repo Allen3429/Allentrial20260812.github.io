@@ -50,10 +50,11 @@
 
         <div id="avatarStage" class="avatar-stage">
           <sv-presenter></sv-presenter>
+          <div id="agentMount" class="hidden" style="position:absolute;inset:0;z-index:3;overflow:hidden"></div>
           <div id="avatarFallback" class="avatar-fallback">
             <div class="fallback-face">◉</div>
             <p>Perxona Avatar required</p>
-            <small>Connect Kit 成功連線後才可開始</small>
+            <small>Connect Kit 或相容 renderer 成功連線後才可開始</small>
           </div>
           <div class="video-ui" aria-hidden="true">
             <span class="rec-dot"></span><span>SIMULATION ONLY · SYNTHETIC AVATAR</span>
@@ -118,14 +119,14 @@
         <div><p class="kicker">PERXONA CONNECT KIT</p><h2>連線設定</h2></div>
         <button class="icon-btn" value="cancel" aria-label="關閉">×</button>
       </div>
-      <p class="settings-copy">ScamShield 只需要 <strong>Publishable Connect Key</strong>。Secret key 不應放在瀏覽器，也不要貼在這裡。</p>
+      <p class="settings-copy">ScamShield 優先使用 <strong>Publishable Connect Key</strong>。Secret key 不應放在瀏覽器，也不要貼在這裡。</p>
       <label>Publishable key<input id="connectKeyInput" type="password" autocomplete="off" placeholder="Paste publishable Connect key" /></label>
       <div id="catalogStatus" class="catalog-status">尚未載入 catalog。</div>
       <div class="settings-actions">
         <button id="connectBtn" type="button" class="primary-btn">連接 Perxona</button>
         <button id="clearKeyBtn" type="button" class="text-btn">清除本機設定</button>
       </div>
-      <p class="tiny">Safety lock：部署版只播放已審核的防詐模擬台詞，沒有自由生成詐騙話術、真實人物複製、對外訊息或付款功能。Key 只存於此瀏覽器 localStorage。</p>
+      <p class="tiny">若舊版 Chrome 阻擋 Connect catalog 的跨網域請求，網站會自動切換到同網域既有的 Perxona 3D renderer，確保 Demo 可執行。Safety lock：只播放已審核台詞，沒有真人複製、自由詐騙話術、對外訊息或付款功能。</p>
     </form>
   </dialog>
 
