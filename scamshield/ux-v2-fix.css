@@ -1,0 +1,11 @@
+/* Prevent the legacy fixed timer from visually expiring while Perxona is still speaking. */
+.pressure-expired .ux-pressure-message {
+  animation: none !important;
+  background: linear-gradient(90deg, rgba(123,7,34,.92), rgba(36,4,13,.92)) !important;
+}
+.pressure-expired .avatar-stage {
+  border-color: rgba(255,59,87,.52);
+}
+.pressure-expired .ux2-adaptive-clock {
+  animation: ux2ClockPulse .55s ease-in-out infinite alternate;
+}
