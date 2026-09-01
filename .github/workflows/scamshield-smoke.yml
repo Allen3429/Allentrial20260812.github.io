@@ -33,5 +33,6 @@ jobs:
           node --check scamshield/product-host.js
           node --check scamshield/campaign-data.js
           node --check scamshield/product.js
+          node --check scamshield/onboarding.js
       - name: Validate active product contract
         run: node scamshield/tests/smoke.mjs
