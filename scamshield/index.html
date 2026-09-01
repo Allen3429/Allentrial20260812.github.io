@@ -6,12 +6,18 @@
   <meta name="theme-color" content="#0b1020" />
   <title>ScamShield — Trust Under Attack</title>
   <meta name="description" content="用 Perxona AI Avatar 在安全環境中練習識破身分盜用與社交工程詐騙。" />
+  <link rel="preconnect" href="https://cdn.perxona.ai" crossorigin />
+  <link rel="preconnect" href="https://console.perxona.ai" crossorigin />
+  <link rel="dns-prefetch" href="https://cdn.perxona.ai" />
+  <link rel="dns-prefetch" href="https://console.perxona.ai" />
+  <script type="module" src="https://cdn.perxona.ai/asia/prod/latest/widget/entry/index.js"></script>
   <link rel="stylesheet" href="./style.css" />
   <link rel="stylesheet" href="./ux-upgrade.css" />
   <link rel="stylesheet" href="./ux-v2.css" />
   <link rel="stylesheet" href="./ux-v2-fix.css" />
   <link rel="stylesheet" href="./campaign.css" />
   <link rel="stylesheet" href="./reviewer-ready.css" />
+  <link rel="stylesheet" href="./reviewer-loading.css" />
 </head>
 <body>
   <div class="noise" aria-hidden="true"></div>
@@ -86,6 +92,7 @@
     </form>
   </dialog>
 
+  <script src="./reviewer-fastboot.js"></script>
   <script src="./compat.js"></script>
   <script src="./ux-upgrade.js"></script>
   <script src="./ux-v2.js"></script>
@@ -94,6 +101,7 @@
   <script src="./voice-match.js"></script>
   <script src="./voice-match-guard.js"></script>
   <script src="./campaign-data.js"></script>
+  <script src="./reviewer-loading.js"></script>
   <script type="module" src="./app.js"></script>
   <script type="module" src="./campaign.js"></script>
   <script src="./reviewer-ready.js"></script>
