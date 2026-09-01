@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="./ux-v2.css" />
   <link rel="stylesheet" href="./ux-v2-fix.css" />
   <link rel="stylesheet" href="./campaign.css" />
+  <link rel="stylesheet" href="./reviewer-ready.css" />
 </head>
 <body>
   <div class="noise" aria-hidden="true"></div>
@@ -37,100 +38,51 @@
         <div><span>闖關模式</span><strong>3 階段 · 12 回合</strong></div>
         <div><span>特殊技</span><strong>BREAK THE SPELL</strong></div>
       </div>
-      <button id="startBtn" class="primary-btn" type="button" disabled>先連線 Perxona <span>⚙</span></button>
+      <button id="startBtn" class="primary-btn" type="button" disabled>正在載入 Perxona Avatar… <span>◌</span></button>
     </section>
 
     <section id="gamePanel" class="game-grid hidden" aria-live="polite">
       <div class="stage-card card">
         <div class="stage-head">
-          <div>
-            <p class="kicker" id="roundLabel">ROUND 1 / 4</p>
-            <h2 id="roundTitle">權威 + 急迫</h2>
-          </div>
-          <div class="lives" aria-label="Shield health">
-            <span>TRUST SHIELD</span><div class="shield-track"><i id="shieldBar"></i></div><strong id="shieldValue">100</strong>
-          </div>
+          <div><p class="kicker" id="roundLabel">ROUND 1 / 4</p><h2 id="roundTitle">權威 + 急迫</h2></div>
+          <div class="lives" aria-label="Shield health"><span>TRUST SHIELD</span><div class="shield-track"><i id="shieldBar"></i></div><strong id="shieldValue">100</strong></div>
         </div>
-
         <div id="avatarStage" class="avatar-stage">
           <sv-presenter></sv-presenter>
           <div id="agentMount" class="hidden" style="position:absolute;inset:0;z-index:3;overflow:hidden"></div>
-          <div id="avatarFallback" class="avatar-fallback">
-            <div class="fallback-face">◉</div>
-            <p>Perxona Avatar required</p>
-            <small>Connect Kit 或相容 renderer 成功連線後才可開始</small>
-          </div>
-          <div class="video-ui" aria-hidden="true">
-            <span class="rec-dot"></span><span>SIMULATION ONLY · SYNTHETIC AVATAR</span>
-          </div>
+          <div id="avatarFallback" class="avatar-fallback"><div class="fallback-face">◉</div><p>Loading live Perxona Avatar…</p><small>Public interactive demo</small></div>
+          <div class="video-ui" aria-hidden="true"><span class="rec-dot"></span><span>LIVE PERXONA · SIMULATION ONLY · SYNTHETIC AVATAR</span></div>
         </div>
-
         <div class="interrupt-zone">
-          <button id="interruptBtn" class="interrupt-btn" type="button" disabled>
-            <span>🚨</span>
-            <strong>BREAK THE SPELL</strong>
-            <small>聽到可疑操控時，直接打斷對方</small>
-          </button>
+          <button id="interruptBtn" class="interrupt-btn" type="button" disabled><span>🚨</span><strong>BREAK THE SPELL</strong><small>聽到可疑操控時，直接打斷對方</small></button>
           <p id="interruptFeedback" class="microcopy">Avatar 說話時按下，可獲得「主動識破」加分。</p>
         </div>
       </div>
-
       <aside class="decision-card card">
-        <div class="evidence-head">
-          <span>YOUR TRUST NOTES</span>
-          <strong id="scoreValue">0 pts</strong>
-        </div>
-        <div id="redFlags" class="red-flags">
-          <div class="empty-state">你抓到的紅旗會出現在這裡。</div>
-        </div>
-
-        <div id="dialogueBox" class="dialogue-box">
-          <span class="speaker" id="speakerLabel">CLAIMED IDENTITY</span>
-          <p id="dialogueText">準備好後開始演練。</p>
-        </div>
-
-        <div id="choiceArea" class="choice-area"></div>
-        <div id="lessonBox" class="lesson hidden"></div>
+        <div class="evidence-head"><span>YOUR TRUST NOTES</span><strong id="scoreValue">0 pts</strong></div>
+        <div id="redFlags" class="red-flags"><div class="empty-state">你抓到的紅旗會出現在這裡。</div></div>
+        <div id="dialogueBox" class="dialogue-box"><span class="speaker" id="speakerLabel">CLAIMED IDENTITY</span><p id="dialogueText">Perxona Avatar 載入後會直接開始演練。</p></div>
+        <div id="choiceArea" class="choice-area"></div><div id="lessonBox" class="lesson hidden"></div>
       </aside>
     </section>
 
     <section id="resultPanel" class="result card hidden">
-      <div class="result-score">
-        <span>TRUST RESILIENCE SCORE</span>
-        <strong id="finalScore">0</strong>
-        <small>/ 100</small>
-      </div>
-      <div>
-        <p class="kicker">DEBRIEF</p>
-        <h2 id="resultTitle">你守住了信任邊界。</h2>
-        <p id="resultCopy"></p>
-        <div id="resultFlags" class="result-flags"></div>
-        <div class="result-actions">
-          <button id="replayBtn" class="primary-btn" type="button">再練一次</button>
-          <button id="showWhyBtn" class="secondary-btn" type="button">為什麼一定要 Avatar？</button>
-        </div>
-        <div id="whyBox" class="why-box hidden">
-          <strong>The avatar is the trust attack.</strong>
-          <p>當詐騙開始冒充「人」而不只是造假文字，防詐也必須訓練人在面對一個像真的對象時仍能停下來驗證。ScamShield 使用合成 Perxona Avatar 模擬這種社交壓力；不複製真人臉或聲音。拿掉 Avatar，就失去「即使看起來像可信的人，也不要把外貌當成身分證明」這個核心體驗。</p>
-        </div>
+      <div class="result-score"><span>TRUST RESILIENCE SCORE</span><strong id="finalScore">0</strong><small>/ 100</small></div>
+      <div><p class="kicker">DEBRIEF</p><h2 id="resultTitle">你守住了信任邊界。</h2><p id="resultCopy"></p><div id="resultFlags" class="result-flags"></div>
+        <div class="result-actions"><button id="replayBtn" class="primary-btn" type="button">再練一次</button><button id="showWhyBtn" class="secondary-btn" type="button">為什麼一定要 Avatar？</button></div>
+        <div id="whyBox" class="why-box hidden"><strong>The avatar is the trust attack.</strong><p>當詐騙開始冒充「人」而不只是造假文字，防詐也必須訓練人在面對一個像真的對象時仍能停下來驗證。ScamShield 使用合成 Perxona Avatar 模擬這種社交壓力；不複製真人臉或聲音。</p></div>
       </div>
     </section>
   </main>
 
   <dialog id="settingsDialog" class="settings-dialog">
     <form method="dialog" class="settings-card" id="settingsForm">
-      <div class="settings-head">
-        <div><p class="kicker">PERXONA CONNECT KIT</p><h2>連線設定</h2></div>
-        <button class="icon-btn" value="cancel" aria-label="關閉">×</button>
-      </div>
-      <p class="settings-copy">ScamShield 優先使用 <strong>Publishable Connect Key</strong>。Secret key 不應放在瀏覽器，也不要貼在這裡。</p>
-      <label>Publishable key<input id="connectKeyInput" type="password" autocomplete="off" placeholder="Paste publishable Connect key" /></label>
-      <div id="catalogStatus" class="catalog-status">尚未載入 catalog。</div>
-      <div class="settings-actions">
-        <button id="connectBtn" type="button" class="primary-btn">連接 Perxona</button>
-        <button id="clearKeyBtn" type="button" class="text-btn">清除本機設定</button>
-      </div>
-      <p class="tiny">若舊版 Chrome 阻擋 Connect catalog 的跨網域請求，網站會自動切換到同網域既有的 Perxona 3D renderer，確保 Demo 可執行。Safety lock：只播放已審核台詞，沒有真人複製、自由詐騙話術、對外訊息或付款功能。</p>
+      <div class="settings-head"><div><p class="kicker">PERXONA CONNECT KIT</p><h2>進階連線設定</h2></div><button class="icon-btn" value="cancel" aria-label="關閉">×</button></div>
+      <p class="settings-copy">公開驗收網址會自動載入可公開操作的 Perxona Avatar。開發者也可在此貼上 <strong>Publishable Connect Key</strong> 測試 Connect Kit；Secret key 不應放在瀏覽器。</p>
+      <label>Publishable key<input id="connectKeyInput" type="password" autocomplete="off" placeholder="Optional publishable Connect key" /></label>
+      <div id="catalogStatus" class="catalog-status">正在載入公開 Perxona Avatar。</div>
+      <div class="settings-actions"><button id="connectBtn" type="button" class="primary-btn">連接 Connect Kit</button><button id="clearKeyBtn" type="button" class="text-btn">清除本機設定</button></div>
+      <p class="tiny">Safety lock：只播放已審核防詐情境；沒有真人複製、自由詐騙話術、對外訊息或付款功能。</p>
     </form>
   </dialog>
 
@@ -144,5 +96,6 @@
   <script src="./campaign-data.js"></script>
   <script type="module" src="./app.js"></script>
   <script type="module" src="./campaign.js"></script>
+  <script src="./reviewer-ready.js"></script>
 </body>
 </html>
