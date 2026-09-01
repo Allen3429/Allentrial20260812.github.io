@@ -147,6 +147,40 @@
     stack.appendChild(hint);
   }
 
+  function scrollTrainingIntoView(correctAfterLayout = false) {
+    const training = $(SELECTOR.training);
+    if (!training || training.hidden) return;
+
+    const headerHeight = $(".site-header")?.getBoundingClientRect().height || 72;
+    const targetTop = () => Math.max(
+      0,
+      Math.round(training.getBoundingClientRect().top + window.scrollY - headerHeight - 12)
+    );
+    const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+
+    try {
+      window.scrollTo({ top: targetTop(), behavior: reduceMotion ? "auto" : "smooth" });
+    } catch {
+      window.scrollTo(0, targetTop());
+    }
+
+    if (correctAfterLayout) {
+      window.setTimeout(() => {
+        if (training.hidden) return;
+        const correctedTop = targetTop();
+        if (Math.abs(window.scrollY - correctedTop) > 24) {
+          window.scrollTo(0, correctedTop);
+        }
+      }, 520);
+    }
+  }
+
+  function queueTrainingScroll() {
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => scrollTrainingIntoView(true));
+    });
+  }
+
   function bindGuideEvents() {
     const start = $(SELECTOR.start);
     const dialog = $("#missionBriefingDialog");
@@ -185,6 +219,7 @@
         const result = document.querySelector("#presenter")?.interruptPresentation?.();
         result?.catch?.(() => {});
       } catch {}
+      window.setTimeout(queueTrainingScroll, 80);
     }, true);
 
     document.addEventListener("click", (event) => {
@@ -307,8 +342,8 @@
       document.body.classList.remove("has-next-action-dock");
       const dock = $("#nextActionDock");
       if (dock) dock.hidden = true;
-      window.scrollTo({ top: 0, behavior: "smooth" });
-      setTimeout(syncCoachState, 120);
+      queueTrainingScroll();
+      setTimeout(syncCoachState, 180);
     } else if (!active && state.trainingActive) {
       state.trainingActive = false;
       const coach = $("#firstRoundCoach");
