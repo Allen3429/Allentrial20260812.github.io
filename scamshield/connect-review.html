@@ -8,6 +8,8 @@
   <meta name="description" content="Directly operable ScamShield demo built with Perxona Connect Kit.">
   <link rel="preconnect" href="https://cdn.perxona.ai" crossorigin>
   <link rel="preconnect" href="https://console.perxona.ai" crossorigin>
+  <link rel="dns-prefetch" href="https://cdn.perxona.ai">
+  <link rel="dns-prefetch" href="https://console.perxona.ai">
   <link rel="stylesheet" href="./review.css">
   <link rel="stylesheet" href="./connect-review.css">
 </head>
@@ -26,7 +28,7 @@
 
       <section id="keySetup" class="key-setup">
         <strong>建立可直接驗收的分享網址</strong>
-        <p>只貼 <b>Publishable Connect Key</b>。Key 會放在網址 fragment（# 後方），不會送到 GitHub Pages，也不會寫入 repository。</p>
+        <p>只貼 <b>Publishable Connect Key</b>。Key 會放在網址 fragment（# 後方），不會送到 GitHub Pages，也不會寫入 repository。絕對不要貼 Secret Key。</p>
         <input id="keyInput" type="password" autocomplete="off" placeholder="Paste Publishable Connect Key">
         <button id="buildLink" type="button">連線並建立分享網址</button>
       </section>
@@ -74,6 +76,7 @@
   </main>
 
   <footer><span>Publishable key is browser-side and domain-restricted</span><a href="./?game=1">Open full ScamShield campaign →</a></footer>
-  <script type="module" src="./connect-review.js"></script>
+  <script src="./compat.js"></script>
+  <script type="module" src="./connect-review.js?v=20260901c"></script>
 </body>
 </html>
