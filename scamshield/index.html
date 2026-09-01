@@ -10,11 +10,20 @@
   <link rel="preconnect" href="https://console.perxona.ai" crossorigin>
   <link rel="dns-prefetch" href="https://cdn.perxona.ai">
   <link rel="dns-prefetch" href="https://console.perxona.ai">
-  <link rel="stylesheet" href="./product.css?v=2.0.1">
-  <link rel="stylesheet" href="./product-host.css?v=2.0.1">
+  <link rel="stylesheet" href="./product.css?v=2.0.2">
+  <link rel="stylesheet" href="./product-host.css?v=2.0.2">
 </head>
 <body>
   <div class="ambient" aria-hidden="true"></div>
+
+  <div id="presenterHost" class="presenter-host" aria-label="Live Perxona AI Avatar">
+    <sv-presenter id="presenter"></sv-presenter>
+    <div id="avatarLoading" class="avatar-loading">
+      <div class="loading-silhouette"><i></i></div>
+      <strong id="loadingTitle">正在建立 Perxona Avatar</strong>
+      <p id="loadingDetail">下載角色、場景與動作資產。</p>
+    </div>
+  </div>
 
   <header class="site-header">
     <a class="brand" href="./" aria-label="ScamShield 首頁">
@@ -46,16 +55,7 @@
       <div class="landing-preview" aria-label="產品能力摘要">
         <div class="preview-top"><span>LIVE TRAINING SURFACE</span><b>SIMULATION ONLY</b></div>
         <div class="preview-center">
-          <div id="presenterHomeSlot" class="home-avatar-slot">
-            <div id="presenterHost" class="presenter-host">
-              <sv-presenter id="presenter"></sv-presenter>
-              <div id="avatarLoading" class="avatar-loading">
-                <div class="loading-silhouette"><i></i></div>
-                <strong id="loadingTitle">正在建立 Perxona Avatar</strong>
-                <p id="loadingDetail">下載角色、場景與動作資產。</p>
-              </div>
-            </div>
-          </div>
+          <div id="presenterHomeSlot" class="home-avatar-slot" aria-hidden="true"></div>
           <strong class="preview-caption">LIVE PERXONA CONNECT · 可直接操作</strong>
         </div>
         <div class="preview-grid">
@@ -148,10 +148,10 @@
   </div>
 
   <script src="./compat.js"></script>
-  <script src="./product-config.js?v=2.0.1"></script>
-  <script src="./campaign-data.js?v=2.0.1"></script>
-  <script src="./perxona-sdk-guard.js?v=2.0.1"></script>
-  <script type="module" src="./product.js?v=2.0.1"></script>
-  <script src="./product-host.js?v=2.0.1"></script>
+  <script src="./product-config.js?v=2.0.2"></script>
+  <script src="./campaign-data.js?v=2.0.2"></script>
+  <script src="./perxona-sdk-guard.js?v=2.0.2"></script>
+  <script src="./product-host.js?v=2.0.2"></script>
+  <script type="module" src="./product.js?v=2.0.2"></script>
 </body>
 </html>
