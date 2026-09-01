@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#070a11">
+  <title>ScamShield · Perxona Connect Reviewer Demo</title>
+  <meta name="description" content="Directly operable ScamShield demo built with Perxona Connect Kit.">
+  <link rel="preconnect" href="https://cdn.perxona.ai" crossorigin>
+  <link rel="preconnect" href="https://console.perxona.ai" crossorigin>
+  <link rel="stylesheet" href="./review.css">
+  <link rel="stylesheet" href="./connect-review.css">
+</head>
+<body>
+  <header>
+    <a href="./" class="brand"><b>S</b><span><strong>ScamShield</strong><small>PERXONA CONNECT KIT</small></span></a>
+    <div id="status" class="status loading"><i></i><span>等待 Connect Key</span></div>
+  </header>
+
+  <main>
+    <section class="intro">
+      <p class="kicker">DIRECT CONNECT KIT VALIDATION</p>
+      <h1>Trust the channel,<br><em>not the face.</em></h1>
+      <p>此頁直接使用 Perxona Connect Kit 的 <code>&lt;sv-presenter&gt;</code>、Avatar / Scene / Voice catalog、<code>present()</code>、<code>playMotion()</code> 與 <code>interruptPresentation()</code>。</p>
+      <div class="facts"><span>Real Connect Kit</span><span>PRESENTER_STATUS: Ready</span><span>No login for reviewer</span></div>
+
+      <section id="keySetup" class="key-setup">
+        <strong>建立可直接驗收的分享網址</strong>
+        <p>只貼 <b>Publishable Connect Key</b>。Key 會放在網址 fragment（# 後方），不會送到 GitHub Pages，也不會寫入 repository。</p>
+        <input id="keyInput" type="password" autocomplete="off" placeholder="Paste Publishable Connect Key">
+        <button id="buildLink" type="button">連線並建立分享網址</button>
+      </section>
+
+      <section id="shareBox" class="share-box" hidden>
+        <strong>這個網址可直接補交</strong>
+        <code id="shareUrl"></code>
+        <button id="copyUrl" type="button">複製驗收網址</button>
+      </section>
+    </section>
+
+    <section class="demo-card">
+      <div class="stage-head">
+        <div><span>LIVE PERXONA CONNECT AVATAR</span><strong id="phase">等待 Publishable Connect Key</strong></div>
+        <output id="progress">LOCKED</output>
+      </div>
+
+      <div id="avatarShell" class="avatar-shell" aria-busy="true">
+        <sv-presenter id="liveAvatar"></sv-presenter>
+        <div id="loadingLayer" class="loading-layer">
+          <div class="silhouette"><i></i></div>
+          <strong>Perxona Connect Kit</strong>
+          <p id="loadingDetail">有 Key 後會載入 Avatar、Scene、Voice 與 Motion。</p>
+        </div>
+        <div class="live-label"><i></i> PERXONA CONNECT</div>
+      </div>
+
+      <div class="controls">
+        <button id="playBtn" class="primary" type="button" disabled>Avatar 尚未 ready</button>
+        <button id="interruptBtn" class="danger" type="button" disabled>BREAK THE SPELL</button>
+        <button id="reactBtn" class="secondary" type="button" disabled>播放 Motion</button>
+      </div>
+
+      <div id="transcript" class="transcript" aria-live="polite">
+        <span>FIXED DEFENSIVE SIMULATION</span>
+        <p>「我是公司資訊部。你的帳號正在遭到入侵，現在立刻核准手機上的 MFA 通知，不要掛斷。」</p>
+      </div>
+
+      <div id="errorBox" class="error-box" hidden>
+        <strong>Connect Kit 尚未成功</strong>
+        <p id="errorText"></p>
+        <button id="retryBtn" type="button">重新整理</button>
+      </div>
+    </section>
+  </main>
+
+  <footer><span>Publishable key is browser-side and domain-restricted</span><a href="./?game=1">Open full ScamShield campaign →</a></footer>
+  <script type="module" src="./connect-review.js"></script>
+</body>
+</html>
