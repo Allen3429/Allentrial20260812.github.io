@@ -1,0 +1,37 @@
+name: ScamShield smoke test
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "scamshield/**"
+      - ".github/workflows/scamshield-smoke.yml"
+  pull_request:
+    paths:
+      - "scamshield/**"
+      - ".github/workflows/scamshield-smoke.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Check JavaScript syntax
+        run: |
+          node --check scamshield/compat.js
+          node --check scamshield/product-config.js
+          node --check scamshield/perxona-sdk-guard.js
+          node --check scamshield/product-host.js
+          node --check scamshield/campaign-data.js
+          node --check scamshield/product.js
+      - name: Validate active product contract
+        run: node scamshield/tests/smoke.mjs
