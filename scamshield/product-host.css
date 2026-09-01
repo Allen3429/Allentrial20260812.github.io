@@ -1,5 +1,24 @@
-/* The same initialized <sv-presenter> is shown on the landing page and moved into the training stage without reconnecting. */
-.home-avatar-slot{position:relative;width:100%;height:390px;border:1px solid rgba(114,231,194,.23);border-radius:18px;overflow:hidden;background:radial-gradient(circle at 50% 25%,#263246,#070a10 73%);box-shadow:inset 0 0 50px rgba(114,231,194,.05)}
-.presenter-host{position:absolute;inset:0;overflow:hidden}.presenter-host sv-presenter{display:block;position:absolute;inset:0;width:100%;height:100%}
-.avatar-stage>.presenter-host{z-index:2}.preview-caption{font-size:11px!important;letter-spacing:.12em;color:#bdf9e7}.preview-center{align-content:center}.preview-center .avatar-loading{border-radius:17px}
-@media(max-width:680px){.home-avatar-slot{height:300px}.preview-caption{font-size:9px!important}}
+/*
+ * Persistent Presenter portal.
+ * The <sv-presenter> stays connected to the document for its whole lifetime;
+ * JavaScript positions this host over either the landing preview or the live
+ * training stage. This avoids disconnecting and rebuilding the WebGL session.
+ */
+.home-avatar-slot{
+  position:relative;width:100%;height:390px;border:1px solid rgba(114,231,194,.23);
+  border-radius:18px;overflow:hidden;background:radial-gradient(circle at 50% 25%,#263246,#070a10 73%);
+  box-shadow:inset 0 0 50px rgba(114,231,194,.05)
+}
+.presenter-host{
+  position:fixed;left:0;top:0;width:1px;height:1px;z-index:3;overflow:hidden;
+  border-radius:18px;opacity:0;visibility:hidden;pointer-events:none;
+  background:radial-gradient(circle at 50% 30%,#20293a,#07090e 72%);
+  transition:opacity .18s ease;transform .18s ease,width .18s ease,height .18s ease;
+  will-change:transform,width,height
+}
+.presenter-host.is-positioned{opacity:1;visibility:visible;pointer-events:auto}
+.presenter-host sv-presenter{display:block;position:absolute;inset:0;width:100%;height:100%}
+.presenter-host .avatar-loading{border-radius:17px}
+.preview-caption{font-size:11px!important;letter-spacing:.12em;color:#bdf9e7}
+.preview-center{align-content:center}
+@media(max-width:680px){.home-avatar-slot{height:300px}.preview-caption{font-size:9px!important}.presenter-host{transition:none}}
