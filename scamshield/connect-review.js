@@ -1,5 +1,6 @@
 const API_BASE = "https://console.perxona.ai/asia";
 const PRESENTER_URL = "https://cdn.perxona.ai/asia/prod/latest/widget/entry/presenter.js";
+const STORAGE_KEY = "scamshield.perxona.publishableKey";
 const SAFE_LINE = "我是公司資訊部。你的帳號正在遭到入侵，現在立刻核准手機上的 MFA 通知，不要掛斷。";
 
 const presenter = document.querySelector("#liveAvatar");
@@ -28,6 +29,7 @@ let speaking = false;
 let motions = [];
 let readyTimeout = null;
 let engineLoaded = false;
+let initializationStarted = false;
 
 function keyFromHash() {
   const raw = location.hash.replace(/^#/, "");
@@ -66,10 +68,13 @@ function showError(message) {
   ready = false;
   speaking = false;
   setStatus("error", "Perxona Connect 未 ready");
-  setPhase("Connect Kit 連線未完成", "請確認 Publishable Key 的 allowed domain 包含 allen3429.github.io。", "ERROR");
+  setPhase("Connect Kit 連線未完成", "請確認這是 Publishable Key，且 allowed domain 包含 allen3429.github.io。", "ERROR");
   setControls(false);
   els.errorText.textContent = message;
   els.errorBox.hidden = false;
+  els.keySetup.hidden = false;
+  els.buildLink.disabled = false;
+  initializationStarted = false;
 }
 
 function loadPresenterEngine() {
@@ -120,10 +125,11 @@ function markReady() {
   setPhase("PRESENTER_STATUS: Ready", "現在可播放台詞、播放 Motion，或在說話途中中斷。", "READY");
   setControls(true);
   els.errorBox.hidden = true;
+  els.buildLink.disabled = false;
 }
 
-// Official Connect sample: subscribe before initialization. Ready is an event,
-// not readable state.
+// Subscribe before initialization. Per the official Connect sample, Ready is
+// an event and cannot be inferred from method presence or connection-done.
 presenter.addEventListener("PRESENTER_STATUS", (event) => {
   const status = event.detail?.status;
   console.info("Perxona PRESENTER_STATUS", status, event.detail);
@@ -132,16 +138,20 @@ presenter.addEventListener("PRESENTER_STATUS", (event) => {
 });
 
 async function initialize(key) {
-  if (!key) return;
+  if (!key || initializationStarted) return;
+  initializationStarted = true;
+  localStorage.setItem(STORAGE_KEY, key);
+  els.keyInput.value = key;
   els.keySetup.hidden = true;
   els.shareBox.hidden = false;
   els.shareUrl.textContent = directUrl(key);
+  els.buildLink.disabled = true;
   setStatus("loading", "Perxona Connect 初始化中");
   setPhase("載入 Perxona Presenter SDK", "正在建立真實 Connect Kit 流程。", "1/4");
 
   try {
     await loadPresenterEngine();
-    setPhase("讀取 Avatar / Scene / Voice catalog", "使用 Publishable Connect Key 直接讀取公開 catalog。", "2/4");
+    setPhase("讀取 Avatar / Scene / Voice catalog", "使用 Publishable Connect Key 直接讀取 catalog。", "2/4");
 
     const [avatars, scenes, voices] = await Promise.all([
       connectApi("/api/v1/connect/assets/avatars?page=1&size=50", key),
@@ -152,9 +162,7 @@ async function initialize(key) {
     const avatarId = avatars.items?.[0]?.avatar_id;
     const sceneId = scenes.items?.[0]?.scene_id;
     const voiceId = voices.items?.[0]?.id;
-    if (!avatarId || !sceneId || !voiceId) {
-      throw new Error("Connect catalog 缺少 Avatar、Scene 或 Voice");
-    }
+    if (!avatarId || !sceneId || !voiceId) throw new Error("Connect catalog 缺少 Avatar、Scene 或 Voice");
 
     setPhase("載入 Avatar Motion catalog", "正在準備可直接操作的動作。", "3/4");
     const motionData = await connectApi(
@@ -165,7 +173,7 @@ async function initialize(key) {
 
     setPhase("初始化 3D Avatar", "只有收到 PRESENTER_STATUS: Ready 才會解鎖。", "4/4");
     readyTimeout = setTimeout(() => {
-      if (!ready) showError("初始化後 35 秒仍未收到 PRESENTER_STATUS: Ready。請重新建立 Publishable Key，並確認 allowed domain 為 allen3429.github.io。 ");
+      if (!ready) showError("初始化後 35 秒仍未收到 PRESENTER_STATUS: Ready。請重新建立 Publishable Key，並確認 allowed domain 為 allen3429.github.io。");
     }, 35000);
 
     await presenter.initializeWithConnectKey(key, { avatarId, sceneId, voiceId });
@@ -185,9 +193,7 @@ async function play() {
   try {
     await presenter.resumeAudioPlayback?.();
     const result = await presenter.present(SAFE_LINE);
-    if (!result?.success) {
-      throw new Error(`${result?.code || "PRESENT_FAILED"}: ${result?.message || "present() returned success=false"}`);
-    }
+    if (!result?.success) throw new Error(`${result?.code || "PRESENT_FAILED"}: ${result?.message || "present() returned success=false"}`);
   } catch (error) {
     if (speaking) {
       els.errorText.textContent = `Avatar 已顯示，但台詞播放失敗：${error?.message || error}`;
@@ -231,6 +237,7 @@ async function react() {
 els.buildLink.addEventListener("click", () => {
   const key = els.keyInput.value.trim();
   if (!key) return;
+  localStorage.setItem(STORAGE_KEY, key);
   location.replace(directUrl(key));
 });
 
@@ -252,9 +259,13 @@ els.interrupt.addEventListener("click", interrupt);
 els.react.addEventListener("click", react);
 els.retry.addEventListener("click", () => location.reload());
 
-const key = keyFromHash();
-if (key) initialize(key);
-else {
+const hashKey = keyFromHash();
+const savedKey = localStorage.getItem(STORAGE_KEY) || "";
+const startupKey = hashKey || savedKey;
+if (startupKey) {
+  if (!hashKey) history.replaceState(null, "", directUrl(startupKey));
+  initialize(startupKey);
+} else {
   setStatus("loading", "等待 Publishable Connect Key");
   setPhase("建立直接驗收網址", "在左側貼上 Publishable Connect Key；網址 fragment 不會傳到 GitHub Pages。", "LOCKED");
   setControls(false);
