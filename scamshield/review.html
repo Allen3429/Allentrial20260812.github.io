@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#070a11">
+  <title>ScamShield · Live Perxona Avatar</title>
+  <meta name="description" content="A public, directly operable Perxona AI Avatar demonstration for ScamShield.">
+  <link rel="preconnect" href="https://cdn.perxona.ai" crossorigin>
+  <link rel="preconnect" href="https://console.perxona.ai" crossorigin>
+  <link rel="dns-prefetch" href="https://cdn.perxona.ai">
+  <link rel="stylesheet" href="./review.css">
+  <script type="module" src="https://cdn.perxona.ai/asia/prod/latest/widget/entry/index.js"></script>
+</head>
+<body>
+  <header>
+    <a href="./" class="brand"><b>S</b><span><strong>ScamShield</strong><small>PUBLIC PERXONA VALIDATION</small></span></a>
+    <div id="status" class="status loading"><i></i><span>正在連線 Perxona Avatar</span></div>
+  </header>
+
+  <main>
+    <section class="intro">
+      <p class="kicker">LIVE · DIRECTLY OPERABLE · NO LOGIN</p>
+      <h1>Trust the channel,<br><em>not the face.</em></h1>
+      <p>這是 ScamShield 的公開驗收頁。下方使用真正的 Perxona AI Avatar；待角色顯示為「可互動」後，點一下按鈕即可讓 Avatar 說話、做動作，並可在台詞中途直接中斷。</p>
+      <div class="facts"><span>Perxona 3D Avatar</span><span>Speech + Motion</span><span>Interruptible</span></div>
+    </section>
+
+    <section class="demo-card">
+      <div class="stage-head">
+        <div><span>LIVE PERXONA AVATAR</span><strong id="phase">正在下載 3D 資產</strong></div>
+        <output id="progress">0%</output>
+      </div>
+
+      <div id="avatarShell" class="avatar-shell" aria-busy="true">
+        <sv-agent
+          id="liveAvatar"
+          apiKey="9208afe0-ae4b-4ab6-a26b-0f39519225a4"
+          agentProfileId="01KZTY7DR2FC4AT24YS0YKF1H5"
+          displayMode="3DPresentation"
+          conversationMode="inputText"
+          readyToShowPolicy="showWhenAssetsLoading"
+          cameraAngle="halfBody"
+          initFov='{"distance":1,"horizontal":0,"vertical":0}'
+          enableUserActivationCheck="true"
+          appearanceMode="dark"
+          aria-label="Live Perxona AI Avatar">
+        </sv-agent>
+        <div id="loadingLayer" class="loading-layer">
+          <div class="silhouette"><i></i></div>
+          <strong>正在建立 Perxona 3D Avatar</strong>
+          <p id="loadingDetail">首次載入會下載角色、動作與場景資產。</p>
+        </div>
+        <div class="live-label"><i></i> PERXONA LIVE</div>
+      </div>
+
+      <div class="controls">
+        <button id="playBtn" class="primary" type="button" disabled>Avatar 載入中…</button>
+        <button id="interruptBtn" class="danger" type="button" disabled>中斷 Avatar</button>
+        <button id="reactBtn" class="secondary" type="button" disabled>播放反應動作</button>
+      </div>
+
+      <div id="transcript" class="transcript" aria-live="polite">
+        <span>SIMULATION SCRIPT</span>
+        <p>「我是公司資訊部。你的帳號正在遭到入侵，現在立刻核准手機上的 MFA 通知，不要掛斷。」</p>
+      </div>
+
+      <div id="errorBox" class="error-box" hidden>
+        <strong>Avatar 尚未成功連線</strong>
+        <p id="errorText"></p>
+        <button id="retryBtn" type="button">重新載入 Avatar</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>Built with Perxona Presentation SDK</span>
+    <a href="./">Open full ScamShield campaign →</a>
+  </footer>
+  <script src="./review.js"></script>
+</body>
+</html>
