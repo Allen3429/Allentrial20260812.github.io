@@ -44,6 +44,10 @@ for (const cue of [
 ]) {
   assert.ok(onboarding.includes(cue), `Missing player guidance cue: ${cue}`);
 }
+for (const scrollContract of ["scrollTrainingIntoView", "queueTrainingScroll", "window.scrollTo"]) {
+  assert.ok(onboarding.includes(scrollContract), `Missing automatic training scroll behavior: ${scrollContract}`);
+}
+assert.match(html, /onboarding\.js\?v=2\.1\.1/, "Onboarding cache version must expose the auto-scroll release");
 assert.match(onboardingCss, /\.next-step-guide/, "Landing next-step guide styling is missing");
 assert.match(onboardingCss, /\.next-action-dock/, "Persistent next-action dock styling is missing");
 assert.match(onboardingCss, /\.first-round-coach/, "First-round coach styling is missing");
@@ -60,4 +64,4 @@ assert.equal(data.stages.length, 3, "Campaign must contain three stages");
 assert.equal(data.stages.reduce((sum, stage) => sum + stage.rounds.length, 0), 12, "Campaign must contain twelve main rounds");
 assert.ok(Object.keys(data.recovery).length >= 5, "Campaign must include recovery paths");
 
-console.log("ScamShield smoke test passed: Connect Kit, guided next action, first-round coaching, 3 stages, 12 rounds, and recovery paths are present.");
+console.log("ScamShield smoke test passed: Connect Kit, guided next action, automatic training scroll, first-round coaching, 3 stages, 12 rounds, and recovery paths are present.");
