@@ -27,6 +27,7 @@
       <span><strong>ScamShield</strong><small>TRUST UNDER ATTACK</small></span>
     </a>
     <div class="top-actions">
+      <a href="./review.html" style="color:#baf7e3;text-decoration:none;font-size:11px">Avatar 驗收頁</a>
       <span id="connectionBadge" class="badge badge-offline">Perxona connecting…</span>
       <button id="settingsBtn" class="icon-btn" type="button" title="Perxona 設定">⚙</button>
     </div>
@@ -56,7 +57,7 @@
         <div id="avatarStage" class="avatar-stage">
           <sv-presenter></sv-presenter>
           <div id="agentMount" class="hidden" style="position:absolute;inset:0;z-index:3;overflow:hidden"></div>
-          <div id="avatarFallback" class="avatar-fallback"><div class="fallback-face">◉</div><p>Loading live Perxona Avatar…</p><small>Public interactive demo</small></div>
+          <div id="avatarFallback" class="avatar-fallback"><div class="fallback-face">◉</div><p>Loading live Perxona Avatar…</p><small>Campaign remains locked until the SDK emits ready</small></div>
           <div class="video-ui" aria-hidden="true"><span class="rec-dot"></span><span>LIVE PERXONA · SIMULATION ONLY · SYNTHETIC AVATAR</span></div>
         </div>
         <div class="interrupt-zone">
@@ -67,7 +68,7 @@
       <aside class="decision-card card">
         <div class="evidence-head"><span>YOUR TRUST NOTES</span><strong id="scoreValue">0 pts</strong></div>
         <div id="redFlags" class="red-flags"><div class="empty-state">你抓到的紅旗會出現在這裡。</div></div>
-        <div id="dialogueBox" class="dialogue-box"><span class="speaker" id="speakerLabel">CLAIMED IDENTITY</span><p id="dialogueText">Perxona Avatar 載入後會直接開始演練。</p></div>
+        <div id="dialogueBox" class="dialogue-box"><span class="speaker" id="speakerLabel">CLAIMED IDENTITY</span><p id="dialogueText">Perxona Avatar 真正 ready 後才會開始演練。</p></div>
         <div id="choiceArea" class="choice-area"></div><div id="lessonBox" class="lesson hidden"></div>
       </aside>
     </section>
@@ -92,7 +93,8 @@
     </form>
   </dialog>
 
-  <script src="./reviewer-fastboot.js"></script>
+  <script src="./reviewer-fastboot.js?v=20260901b"></script>
+  <script src="./reviewer-stability.js?v=20260901b"></script>
   <script src="./compat.js"></script>
   <script src="./ux-upgrade.js"></script>
   <script src="./ux-v2.js"></script>
@@ -101,9 +103,9 @@
   <script src="./voice-match.js"></script>
   <script src="./voice-match-guard.js"></script>
   <script src="./campaign-data.js"></script>
-  <script src="./reviewer-loading.js"></script>
+  <script src="./reviewer-loading.js?v=20260901b"></script>
   <script type="module" src="./app.js"></script>
   <script type="module" src="./campaign.js"></script>
-  <script src="./reviewer-ready.js"></script>
+  <script src="./reviewer-ready.js?v=20260901b"></script>
 </body>
 </html>
