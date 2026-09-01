@@ -1,56 +1,76 @@
-# ScamShield — Hackathon Final Release
+# ScamShield 2.0 — Customer-Ready Connect Release
 
-**Event:** Perxona Taipei Hackathon 2026  
-**Finalized:** 2026-08-29  
-**Status:** Public open-source hackathon prototype
+**Released:** 2026-09-01  
+**Deployment:** GitHub Pages  
+**Product URL:** https://allen3429.github.io/Allentrial20260812.github.io/scamshield/
 
-## What is included
+ScamShield 2.0 replaces the hackathon-era redirect, reviewer page, local-key dependency, and compatibility renderer with one customer-facing product at the originally submitted URL.
 
-### Product
-- Perxona Connect integration
-- synthetic 3D caller experience
-- avatar / scene / voice / motion catalog support
-- participant-selectable caller appearance, voice, and pressure profile
-- BREAK THE SPELL interruption mechanic
-- high-pressure call UI
-- scenario-specific evidence / equipment overlays
-- Quick Mode (4 rounds)
-- Campaign Mode (3 stages / 12 rounds)
-- Trust Shield, combo, red flags, checkpoints, stars, final score
-- Recovery Checks after selected unsafe decisions
+## Major changes
 
-### Scenarios
-- authority + urgency
-- family / AI impersonation
-- OTP theft
-- “safe account” fraud
-- vendor bank-account change
-- MFA push fatigue
-- CEO urgent-payment fraud
-- payroll modification
-- legal-secrecy trap
-- multi-channel consistency illusion
-- stolen shared secret
-- fake incident commander
+### One public product URL
 
-### Documentation
-- public README
-- final judging brief
-- security / anti-abuse model
-- Perxona Community share copy and reward checklist
-- historical hackathon pitch / UX notes
-- MIT license for original ScamShield project code
+- The submitted `/scamshield/` URL is now the application itself.
+- No reviewer-only route, URL fragment, setup modal, or manual key entry is required.
+- The live Perxona avatar is visible on the landing page.
+- The same initialized Presenter instance moves into the training interface, avoiding a second 3D session startup.
 
-## Public URLs
+### Direct Perxona Connect Kit integration
 
-Live demo:  
-https://allen3429.github.io/Allentrial20260812.github.io/scamshield/
+- Uses `<sv-presenter>` from the official Presenter SDK.
+- Loads Avatar, Scene, Voice, Voice Detail, and Motion catalogs.
+- Calls `initializeWithConnectKey()` with an explicit target.
+- Unlocks the product only on `PRESENTER_STATUS: Ready`.
+- Uses `present()` for reviewed scenario speech and lip sync.
+- Uses motion cues and `playMotion()` for reactions.
+- Uses `interruptPresentation()` for BREAK THE SPELL.
+- Uses only a browser-scoped Publishable Connect Key restricted to `allen3429.github.io`; no Secret Connect Key is shipped.
 
-Source:  
-https://github.com/Allen3429/Allentrial20260812.github.io/tree/main/scamshield
+### Reliability
 
-## Important limitations
+- Parallel catalog loading with timeouts.
+- Professional adult/business avatar ranking.
+- Office-like scene ranking.
+- Mandarin/Taiwan formal and lower-pitch voice ranking using voice detail metadata when available.
+- Automatic retry with an alternate avatar/scene/voice target.
+- Real error state on initialization failure; no false “ready” indicator or countdown behind a missing avatar.
+- Compatibility polyfills retained for older Chrome versions.
 
-This is a static hackathon prototype, not a production security-control product. Real production deployment should move scenario authorization, abuse prevention, analytics, organization policy, and audit logging to trusted server-side infrastructure.
+### Product experience
 
-The MIT License applies to original ScamShield project code only. Perxona / XRSPACE SDKs, services, trademarks, avatars, and other third-party assets remain under their own terms.
+- Full Campaign: 3 stages / 12 rounds.
+- Quick Mode: 4 rounds.
+- Trust Shield, score, combo, interruptions, captured red flags, checkpoints, star ratings, and final score.
+- Recovery Checks after selected unsafe actions.
+- Avatar, scene, and voice settings with deliberate session rebuild.
+- Responsive desktop and mobile interface.
+
+### Safety
+
+- Fixed reviewed defensive scenarios only.
+- No free-text scam-script generation.
+- No real-person face or voice cloning.
+- No outbound messaging or calling capability.
+- No real OTP, bank credential, QR code, or payment destination input.
+- Expanded credential and production-hardening documentation in `SECURITY.md`.
+
+## Repository structure
+
+The active product path is now:
+
+```text
+index.html
+product-config.js
+product.js
+product.css
+product-host.js
+product-host.css
+campaign-data.js
+compat.js
+```
+
+Earlier hackathon files remain in the repository as project history but are not loaded by the product entry point.
+
+## Known production roadmap
+
+The public release is a single-tenant static deployment. A commercial multi-tenant edition should add authenticated organizations, server-side scenario governance, privacy-preserving analytics, audit logs, role-based administration, LMS/SSO integration, monitoring, rate limits, and controlled key rotation.
