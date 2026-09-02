@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="./product-host.css?v=2.0.3">
   <link rel="stylesheet" href="./onboarding.css?v=2.1.0">
   <link rel="stylesheet" href="./direct-avatar.css?v=1.0.0">
+  <link rel="stylesheet" href="./speed-pressure.css?v=1.0.0">
 </head>
 <body>
   <div class="ambient" aria-hidden="true"></div>
@@ -68,19 +69,19 @@
             <span id="directAvatarState" class="direct-avatar-state">等待 Avatar Ready</span>
           </div>
           <div class="direct-avatar-actions">
-            <button type="button" data-avatar-action="start" disabled><b>▶ 播放可疑來電</b><span>讓 Avatar 立即開始施壓情境</span></button>
+            <button type="button" data-avatar-action="start" disabled><b>▶ 播放可疑來電</b><span>讓急躁的男性 Avatar 立即開始施壓</span></button>
             <button type="button" data-avatar-action="verify" disabled><b>✓ 我要獨立驗證</b><span>看 Avatar 如何回應你的防守</span></button>
             <button type="button" data-avatar-action="otp" disabled><b>✕ 我拒絕提供 OTP</b><span>測試對方下一步的施壓話術</span></button>
             <button type="button" data-avatar-action="stop" class="is-danger" disabled><b>■ 立即中斷 Avatar</b><span>直接呼叫 interruptPresentation()</span></button>
           </div>
           <div id="directAvatarLog" class="direct-avatar-log" aria-live="polite"><strong>系統：</strong>Avatar Ready 後即可直接點擊上方按鈕互動，不需要先進入闖關。</div>
-          <p class="direct-avatar-hint">這些是封閉式防詐訓練情境：不會撥電話、不會發訊息、不會收集 OTP，也不會執行付款。</p>
+          <p class="direct-avatar-hint">預設角色為成熟男性商務人士，語氣刻意急躁、命令式；情境為封閉式防詐訓練，不會撥電話、發訊息、收集 OTP 或執行付款。</p>
         </section>
 
         <div class="preview-grid">
           <div><span>01</span><b>BREAK THE SPELL</b><small>直接中斷正在說話的角色</small></div>
           <div><span>02</span><b>RECOVERY CHECK</b><small>犯錯後仍要快速止損</small></div>
-          <div><span>03</span><b>MEASURABLE</b><small>追蹤決策、盾值與中斷行為</small></div>
+          <div><span>03</span><b>SPEED SCORE</b><small>安全判斷越快，分數越高</small></div>
         </div>
       </div>
     </section>
@@ -153,7 +154,7 @@
   <dialog id="settingsDialog" class="settings-dialog">
     <form method="dialog" class="settings-card">
       <div class="settings-heading"><div><p class="eyebrow">PERXONA CASTING</p><h2>角色與聲線</h2></div><button value="cancel" class="close-button" aria-label="關閉">×</button></div>
-      <p>選擇一個看起來可信的角色，而不是一眼就能辨認的壞人。變更後會重新建立 Perxona session。</p>
+      <p>預設為成熟男性商務角色與較低沉、較快的中文聲線；你仍可在此更換。</p>
       <label>Avatar<select id="avatarSelect"></select></label>
       <label>Scene<select id="sceneSelect"></select></label>
       <label>Voice<select id="voiceSelect"></select></label>
@@ -167,6 +168,7 @@
   </div>
 
   <script src="./compat.js"></script>
+  <script src="./persona-preboot.js?v=1.0.0"></script>
   <script src="./product-config.js?v=2.0.4"></script>
   <script src="./latency-bootstrap.js?v=2.1.0"></script>
   <script src="./campaign-data.js?v=2.0.2"></script>
@@ -175,5 +177,6 @@
   <script type="module" src="./product.js?v=2.0.4"></script>
   <script src="./onboarding.js?v=2.1.1"></script>
   <script src="./direct-avatar.js?v=1.0.0"></script>
+  <script src="./speed-pressure.js?v=1.0.0"></script>
 </body>
 </html>
