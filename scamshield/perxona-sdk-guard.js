@@ -1,14 +1,17 @@
 /*
  * ScamShield lifecycle adapter for the Perxona Presenter SDK.
  *
- * The official Connect Kit contract has two useful readiness signals:
- *   1. PRESENTER_STATUS reaches Ready.
- *   2. initializeWithConnectKey() resolves after initialization.
+ * Perxona readiness is event-driven: the product becomes usable when the
+ * presenter emits PRESENTER_STATUS: Ready. Some Presenter builds can emit
+ * that real Ready event while initializeWithConnectKey() itself remains
+ * pending. ScamShield must not keep the customer blocked in that case.
  *
- * Different Presenter builds have emitted PRESENTER_STATUS as either
- * event.detail.status or event.detail. This adapter normalizes both shapes,
- * bridges a resolved initialization back to a Ready event when necessary,
- * and never launches a second initialization while the first is still active.
+ * This adapter therefore:
+ *   - normalizes PRESENTER_STATUS event shapes;
+ *   - resolves the wrapped initialization as soon as either the upstream
+ *     initialize promise resolves OR a real Ready event arrives;
+ *   - never fabricates a Ready event from a resolved promise;
+ *   - preserves key rejection and renderer resize handling.
  */
 (() => {
   "use strict";
@@ -20,12 +23,6 @@
     const detail = event?.detail;
     if (typeof detail === "string") return detail;
     return String(detail?.status || detail?.state || detail?.value || "");
-  }
-
-  function nextPaint() {
-    return new Promise((resolve) => {
-      requestAnimationFrame(() => requestAnimationFrame(resolve));
-    });
   }
 
   function nudgeRenderer(element) {
@@ -68,9 +65,17 @@
     if (typeof originalInitialize === "function") {
       prototype.initializeWithConnectKey = function stableInitialize(connectKey, target) {
         const element = this;
-        let sawReady = false;
         let settled = false;
         let cleanupTimer = 0;
+        let resolveReady;
+        let rejectKey;
+
+        const realReady = new Promise((resolve) => {
+          resolveReady = resolve;
+        });
+        const keyRejected = new Promise((_, reject) => {
+          rejectKey = reject;
+        });
 
         const cleanup = () => {
           if (settled) return;
@@ -84,29 +89,20 @@
           const status = readStatus(event);
           if (!status) return;
 
-          // Some Presenter versions expose e.detail as the status string,
-          // while product.js consumes e.detail.status. Re-emit one normalized
-          // event so both SDK shapes follow the same application lifecycle.
-          if (
-            typeof event.detail === "string" &&
-            !event.detail?.__scamShieldNormalized
-          ) {
+          // Some Presenter versions expose e.detail as a bare status string.
+          // Product code consumes e.detail.status, so normalize that shape once.
+          if (typeof event.detail === "string" && !event.detail?.__scamShieldNormalized) {
             emitNormalizedStatus(element, status, "status-shape-normalizer");
           }
 
           if (status === READY) {
-            sawReady = true;
             nudgeRenderer(element);
+            resolveReady?.({ source: "PRESENTER_STATUS", status: READY });
           }
         }
 
-        let rejectKey;
-        const keyRejected = new Promise((_, reject) => {
-          rejectKey = reject;
-        });
-
         function onRejected() {
-          rejectKey(new Error(
+          rejectKey?.(new Error(
             "Perxona Publishable Connect Key 被拒絕，請檢查 allowed domain 或方案狀態。"
           ));
         }
@@ -116,8 +112,6 @@
 
         let initialization;
         try {
-          // Exactly one upstream initialization call. Concurrent retries can
-          // reset the same WebGL session back to Initializing indefinitely.
           initialization = Promise.resolve(
             originalInitialize.call(element, connectKey, target)
           );
@@ -126,18 +120,19 @@
           return Promise.reject(error);
         }
 
+        // Critical behavior: if the SDK emits a genuine Ready event before its
+        // initialization promise settles, release ScamShield immediately.
+        // product.js independently waits for the same Ready event, so this does
+        // not weaken the application's readiness gate or invent readiness.
+        const completion = Promise.race([
+          initialization,
+          realReady,
+          keyRejected
+        ]);
+
         cleanupTimer = setTimeout(cleanup, 120000);
 
-        return Promise.race([initialization, keyRejected]).then(async (value) => {
-          // Perxona documents a resolved initialize promise as ready. Give the
-          // renderer two frames to publish its event; if that event is absent,
-          // emit the normalized Ready signal expected by the product UI.
-          await nextPaint();
-          if (!sawReady && element.isConnected) {
-            emitNormalizedStatus(element, READY, "initialize-promise-resolved");
-            sawReady = true;
-            nudgeRenderer(element);
-          }
+        return completion.then((value) => {
           cleanup();
           return value;
         }, (error) => {
