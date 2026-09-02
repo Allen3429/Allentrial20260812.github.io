@@ -55,12 +55,23 @@ addEventListener("scroll", positionPresenter, {passive:true});
 function waitReady(){
   return new Promise((resolve,reject)=>{
     let done=false;
-    const finish=(err)=>{ if(done)return; done=true; clearTimeout(timer); presenter.removeEventListener("PRESENTER_STATUS",onStatus); presenter.removeEventListener("CONNECT_KEY_REJECTED",onReject); err?reject(err):resolve(); };
+    const slowTimer=setTimeout(()=>{
+      if(done)return;
+      setStatus("loading","Perxona 仍在載入");
+      setLoading("Avatar 仍在載入","Perxona 尚未 Ready，繼續等待；頁面不會因 15 秒而中止。");
+    },15000);
+    const finish=(err)=>{
+      if(done)return;
+      done=true;
+      clearTimeout(slowTimer);
+      presenter.removeEventListener("PRESENTER_STATUS",onStatus);
+      presenter.removeEventListener("CONNECT_KEY_REJECTED",onReject);
+      err?reject(err):resolve();
+    };
     const onStatus=e=>{ const s=String(e.detail?.status||""); if(s) setLoading(`Perxona：${s}`,`Presenter 狀態：${s}`); if(s==="Ready") finish(); };
     const onReject=()=>finish(new Error("Publishable Connect Key 被拒絕"));
     presenter.addEventListener("PRESENTER_STATUS",onStatus);
     presenter.addEventListener("CONNECT_KEY_REJECTED",onReject);
-    const timer=setTimeout(()=>finish(new Error("Avatar 初始化超過 15 秒")),15000);
   });
 }
 function waitVisual(){
