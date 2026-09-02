@@ -58,32 +58,22 @@
         </div>
       </div>
       <div class="next-step-flow" aria-label="遊戲操作流程">
-        <span><b>1</b><em>選擇模式</em></span>
-        <i>→</i>
-        <span><b>2</b><em>開始通話</em></span>
-        <i>→</i>
+        <span><b>1</b><em>選擇模式</em></span><i>→</i>
+        <span><b>2</b><em>開始通話</em></span><i>→</i>
         <span><b>3</b><em>中斷或回應</em></span>
       </div>`;
     landingCopy.insertBefore(guide, modeSwitch);
 
     const helperRow = document.createElement("div");
     helperRow.className = "start-helper-row";
-    helperRow.innerHTML = `
-      <span id="startHelperText">準備完成後，綠色按鈕會亮起。</span>
-      <button id="howToPlayBtn" type="button">怎麼玩？</button>`;
+    helperRow.innerHTML = `<span id="startHelperText">準備完成後，綠色按鈕會亮起。</span><button id="howToPlayBtn" type="button">怎麼玩？</button>`;
     start.insertAdjacentElement("afterend", helperRow);
 
     const dock = document.createElement("div");
     dock.id = "nextActionDock";
     dock.className = "next-action-dock";
     dock.hidden = true;
-    dock.innerHTML = `
-      <div>
-        <small>AVATAR READY · 下一步</small>
-        <strong id="dockTitle">開始第 1 關</strong>
-        <span id="dockMeta">完整闖關 · 3 階段 · 12 回合</span>
-      </div>
-      <button id="dockStartBtn" type="button"><span>開始</span><b>→</b></button>`;
+    dock.innerHTML = `<div><small>AVATAR READY · 下一步</small><strong id="dockTitle">開始第 1 關</strong><span id="dockMeta">完整闖關 · 3 階段 · 12 回合</span></div><button id="dockStartBtn" type="button"><span>開始</span><b>→</b></button>`;
     document.body.appendChild(dock);
 
     const dialog = document.createElement("dialog");
@@ -96,23 +86,11 @@
         <h2>接聽第一通可疑視訊，遊戲才正式開始。</h2>
         <p class="mission-copy">每一關只要記得兩個動作，不需要先讀完規則。</p>
         <div class="mission-actions">
-          <article>
-            <b>1</b>
-            <div><strong>聽，或直接中斷</strong><span>Avatar 施壓時，紅色 <em>BREAK THE SPELL</em> 可以立刻停止對話。</span></div>
-          </article>
-          <article>
-            <b>2</b>
-            <div><strong>選一個安全回應</strong><span>語音結束後，右側會出現選項；選完即可前往下一關。</span></div>
-          </article>
+          <article><b>1</b><div><strong>聽，或直接中斷</strong><span>Avatar 施壓時，紅色 <em>BREAK THE SPELL</em> 可以立刻停止對話。</span></div></article>
+          <article><b>2</b><div><strong>選一個安全回應</strong><span>語音結束後，右側會出現選項；選完即可前往下一關。</span></div></article>
         </div>
-        <div class="briefing-mode">
-          <span>目前模式</span>
-          <strong id="briefingModeName">完整闖關</strong>
-          <small id="briefingModeMeta">3 階段 · 12 回合</small>
-        </div>
-        <button id="briefingStartBtn" class="briefing-start" type="button">
-          <span id="briefingStartLabel">開始第 1 關</span><b>→</b>
-        </button>
+        <div class="briefing-mode"><span>目前模式</span><strong id="briefingModeName">完整闖關</strong><small id="briefingModeMeta">3 階段 · 12 回合</small></div>
+        <button id="briefingStartBtn" class="briefing-start" type="button"><span id="briefingStartLabel">開始第 1 關</span><b>→</b></button>
         <button id="briefingQuickBtn" class="briefing-secondary" type="button">改成 3 分鐘快速演練</button>
       </div>`;
     document.body.appendChild(dialog);
@@ -121,10 +99,7 @@
     coach.id = "firstRoundCoach";
     coach.className = "first-round-coach";
     coach.hidden = true;
-    coach.innerHTML = `
-      <span id="coachIcon">1</span>
-      <div><small>第一關操作提示</small><strong id="coachTitle">先聽 Avatar 說話</strong><p id="coachText">不想繼續聽時，可以直接按紅色 BREAK THE SPELL。</p></div>
-      <button id="coachDismissBtn" type="button" aria-label="關閉操作提示">懂了</button>`;
+    coach.innerHTML = `<span id="coachIcon">1</span><div><small>第一關操作提示</small><strong id="coachTitle">先聽 Avatar 說話</strong><p id="coachText">不想繼續聽時，可以直接按紅色 BREAK THE SPELL。</p></div><button id="coachDismissBtn" type="button" aria-label="關閉操作提示">懂了</button>`;
     training.prepend(coach);
 
     enhanceStartButton(start);
@@ -147,49 +122,13 @@
     stack.appendChild(hint);
   }
 
-  function scrollTrainingIntoView(correctAfterLayout = false) {
-    const training = $(SELECTOR.training);
-    if (!training || training.hidden) return;
-
-    const headerHeight = $(".site-header")?.getBoundingClientRect().height || 72;
-    const targetTop = () => Math.max(
-      0,
-      Math.round(training.getBoundingClientRect().top + window.scrollY - headerHeight - 12)
-    );
-    const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
-
-    try {
-      window.scrollTo({ top: targetTop(), behavior: reduceMotion ? "auto" : "smooth" });
-    } catch {
-      window.scrollTo(0, targetTop());
-    }
-
-    if (correctAfterLayout) {
-      window.setTimeout(() => {
-        if (training.hidden) return;
-        const correctedTop = targetTop();
-        if (Math.abs(window.scrollY - correctedTop) > 24) {
-          window.scrollTo(0, correctedTop);
-        }
-      }, 520);
-    }
-  }
-
-  function queueTrainingScroll() {
-    window.requestAnimationFrame(() => {
-      window.requestAnimationFrame(() => scrollTrainingIntoView(true));
-    });
-  }
-
   function bindGuideEvents() {
     const start = $(SELECTOR.start);
     const dialog = $("#missionBriefingDialog");
 
     $("#howToPlayBtn")?.addEventListener("click", openBriefing);
     $("#closeBriefingBtn")?.addEventListener("click", () => dialog?.close());
-    dialog?.addEventListener("click", (event) => {
-      if (event.target === dialog) dialog.close();
-    });
+    dialog?.addEventListener("click", (event) => { if (event.target === dialog) dialog.close(); });
 
     $("#briefingQuickBtn")?.addEventListener("click", () => {
       document.querySelector('[data-mode="quick"]')?.click();
@@ -209,17 +148,13 @@
     });
 
     $("#coachDismissBtn")?.addEventListener("click", dismissCoach);
-
-    document.querySelectorAll("[data-mode]").forEach((button) => {
-      button.addEventListener("click", () => requestAnimationFrame(updateReadyCopy));
-    });
+    document.querySelectorAll("[data-mode]").forEach((button) => button.addEventListener("click", () => requestAnimationFrame(updateReadyCopy)));
 
     start?.addEventListener("click", () => {
       try {
         const result = document.querySelector("#presenter")?.interruptPresentation?.();
         result?.catch?.(() => {});
       } catch {}
-      window.setTimeout(queueTrainingScroll, 80);
     }, true);
 
     document.addEventListener("click", (event) => {
@@ -236,7 +171,7 @@
     updateReadyCopy();
     state.briefingOpened = true;
     dialog.showModal();
-    requestAnimationFrame(() => $("#briefingStartBtn")?.focus());
+    requestAnimationFrame(() => $("#briefingStartBtn")?.focus({ preventScroll: true }));
   }
 
   function updateReadyCopy() {
@@ -246,7 +181,6 @@
     const start = $(SELECTOR.start);
     const ready = Boolean(start && !start.disabled && $(SELECTOR.badge)?.classList.contains("is-ready"));
     state.ready = ready;
-
     guide?.classList.toggle("is-loading", !ready);
     guide?.classList.toggle("is-ready", ready);
 
@@ -271,14 +205,11 @@
     $("#briefingModeMeta").textContent = details.rounds;
     $("#briefingStartLabel").textContent = details.action;
     $("#briefingQuickBtn").hidden = details.name === "快速演練";
-
     syncDock();
 
     const landingVisible = !$(SELECTOR.landing)?.hidden;
     if (ready && landingVisible && !state.briefingOpened && localStorage.getItem(STORAGE.briefingSeen) !== "1") {
-      setTimeout(() => {
-        if (state.ready && !$(SELECTOR.landing)?.hidden) openBriefing();
-      }, 500);
+      setTimeout(() => { if (state.ready && !$(SELECTOR.landing)?.hidden) openBriefing(); }, 500);
     }
   }
 
@@ -299,7 +230,6 @@
     const coach = $("#firstRoundCoach");
     if (!coach) return;
     clearFocusTargets();
-
     if (kind === "speaking") {
       $("#coachIcon").textContent = "1";
       $("#coachTitle").textContent = "先聽 Avatar 說話，或直接中斷";
@@ -316,7 +246,6 @@
       $("#coachText").textContent = "閱讀回饋後，按下綠色按鈕繼續。";
       $("#nextAction")?.classList.add("ux-focus-target");
     }
-
     coach.hidden = false;
   }
 
@@ -333,7 +262,6 @@
     const landing = $(SELECTOR.landing);
     const training = $(SELECTOR.training);
     if (!landing || !training) return;
-
     const active = !training.hidden;
     if (active && !state.trainingActive) {
       state.trainingActive = true;
@@ -342,7 +270,6 @@
       document.body.classList.remove("has-next-action-dock");
       const dock = $("#nextActionDock");
       if (dock) dock.hidden = true;
-      queueTrainingScroll();
       setTimeout(syncCoachState, 180);
     } else if (!active && state.trainingActive) {
       state.trainingActive = false;
@@ -351,7 +278,6 @@
       clearFocusTargets();
       updateReadyCopy();
     }
-
     syncDock();
   }
 
@@ -359,10 +285,7 @@
     const training = $(SELECTOR.training);
     if (!training || training.hidden || state.coachDismissed) return;
     const round = $(SELECTOR.roundCount)?.textContent?.trim() || "";
-    if (round && !round.startsWith("1/")) {
-      dismissCoach();
-      return;
-    }
+    if (round && !round.startsWith("1/")) { dismissCoach(); return; }
     if ($(`${SELECTOR.choices} #nextAction`)) showCoach("next");
     else if ($(`${SELECTOR.choices} .choice-button`)) showCoach("choosing");
     else if ($(SELECTOR.avatarStage)?.classList.contains("is-speaking")) showCoach("speaking");
@@ -375,20 +298,14 @@
     const training = $(SELECTOR.training);
     const avatarStage = $(SELECTOR.avatarStage);
     const choices = $(SELECTOR.choices);
-
     const readyObserver = new MutationObserver(updateReadyCopy);
     if (badge) readyObserver.observe(badge, { attributes: true, attributeFilter: ["class"], childList: true, subtree: true });
     if (start) readyObserver.observe(start, { attributes: true, attributeFilter: ["disabled"], childList: true, subtree: true });
-
-    const viewObserver = new MutationObserver(() => {
-      syncTrainingState();
-      syncCoachState();
-    });
+    const viewObserver = new MutationObserver(() => { syncTrainingState(); syncCoachState(); });
     if (landing) viewObserver.observe(landing, { attributes: true, attributeFilter: ["hidden"] });
     if (training) viewObserver.observe(training, { attributes: true, attributeFilter: ["hidden"] });
     if (avatarStage) viewObserver.observe(avatarStage, { attributes: true, attributeFilter: ["class"] });
     if (choices) viewObserver.observe(choices, { childList: true, subtree: true });
-
     window.addEventListener("resize", syncDock, { passive: true });
     updateReadyCopy();
     syncTrainingState();
@@ -396,10 +313,7 @@
 
   function mount() {
     if (state.mounted) return;
-    if (!buildGuide()) {
-      setTimeout(mount, 80);
-      return;
-    }
+    if (!buildGuide()) { setTimeout(mount, 80); return; }
     observeProduct();
   }
 
