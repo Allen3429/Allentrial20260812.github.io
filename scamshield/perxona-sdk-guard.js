@@ -41,9 +41,11 @@
 
   function saveFastTarget(target) {
     if (!validTarget(target)) return;
-    try {
-      localStorage.setItem(FAST_TARGET_KEY, JSON.stringify(normalizeTarget(target)));
-    } catch {}
+    try { localStorage.setItem(FAST_TARGET_KEY, JSON.stringify(normalizeTarget(target))); } catch {}
+  }
+
+  function clearFastTarget() {
+    try { localStorage.removeItem(FAST_TARGET_KEY); } catch {}
   }
 
   function loadFastTarget() {
@@ -51,6 +53,7 @@
       const parsed = JSON.parse(localStorage.getItem(FAST_TARGET_KEY) || "null");
       return validTarget(parsed) ? normalizeTarget(parsed) : null;
     } catch {
+      clearFastTarget();
       return null;
     }
   }
@@ -82,8 +85,6 @@
     ]).finally(() => clearTimeout(timer));
   }
 
-  // Do not wait for product.js to decide it needs the SDK. Start fetching and
-  // evaluating the official Presenter module as soon as this guard is parsed.
   if (!customElements.get("sv-presenter") && CONFIG?.presenterUrl) {
     const existing = document.querySelector('script[data-perxona-presenter="1"]');
     if (!existing) {
@@ -98,8 +99,8 @@
   customElements.whenDefined("sv-presenter").then(() => {
     const Presenter = customElements.get("sv-presenter");
     const prototype = Presenter?.prototype;
-    if (!prototype || prototype.__scamShieldLifecycleV23) return;
-    Object.defineProperty(prototype, "__scamShieldLifecycleV23", { value: true });
+    if (!prototype || prototype.__scamShieldLifecycleV24) return;
+    Object.defineProperty(prototype, "__scamShieldLifecycleV24", { value: true });
 
     const originalInitialize = prototype.initializeWithConnectKey;
     const originalPresent = prototype.present;
@@ -111,11 +112,7 @@
         const element = this;
         const key = targetKey(target);
 
-        // product.js may arrive after warm-start has already reached real Ready.
-        // Reusing that same target must be a no-op, not a second WebGL boot.
-        if (key && element.__scamShieldReadyTargetKey === key) {
-          return Promise.resolve();
-        }
+        if (key && element.__scamShieldReadyTargetKey === key) return Promise.resolve();
         if (key && element.__scamShieldInitializingTargetKey === key && element.__scamShieldInitPromise) {
           return element.__scamShieldInitPromise;
         }
@@ -147,6 +144,9 @@
             cleanup();
             element.__scamShieldInitializingTargetKey = "";
             element.__scamShieldInitPromise = null;
+            // If a formerly successful target is rejected later (asset removed,
+            // voice disabled, plan change, etc.), never keep replaying it.
+            if (key && targetKey(loadFastTarget()) === key) clearFastTarget();
             reject(error instanceof Error ? error : new Error(String(error)));
           };
           function onStatus(event) {
@@ -161,7 +161,7 @@
           element.addEventListener(STATUS_EVENT, onStatus);
           element.addEventListener("CONNECT_KEY_REJECTED", onRejected);
           timer = setTimeout(() => {
-            fail(new Error(`Perxona Avatar 冷啟動逾時${lastStatus ? `（最後狀態：${lastStatus}）` : ""}，正在切換備援角色重新連線。`));
+            fail(new Error(`Perxona Avatar 冷啟動逾時${lastStatus ? `（最後狀態：${lastStatus}）` : ""}。`));
           }, INIT_TIMEOUT_MS);
 
           try {
@@ -181,31 +181,18 @@
     }
 
     prototype.present = function boundedPresent(...args) {
-      if (typeof originalPresent !== "function") {
-        return Promise.resolve({ success: false, code: "PRESENT_UNAVAILABLE" });
-      }
+      if (typeof originalPresent !== "function") return Promise.resolve({ success: false, code: "PRESENT_UNAVAILABLE" });
       try {
-        return bounded(
-          originalPresent.apply(this, args),
-          PRESENT_TIMEOUT_MS,
-          "Perxona 語音請求超過 12 秒未回應。",
-          () => originalInterrupt?.call(this)
-        );
+        return bounded(originalPresent.apply(this, args), PRESENT_TIMEOUT_MS, "Perxona 語音請求超過 12 秒未回應。", () => originalInterrupt?.call(this));
       } catch (error) {
         return Promise.reject(error);
       }
     };
 
     prototype.playMotion = function boundedMotion(...args) {
-      if (typeof originalPlayMotion !== "function") {
-        return Promise.resolve({ success: false, code: "MOTION_UNAVAILABLE" });
-      }
+      if (typeof originalPlayMotion !== "function") return Promise.resolve({ success: false, code: "MOTION_UNAVAILABLE" });
       try {
-        return bounded(
-          originalPlayMotion.apply(this, args),
-          MOTION_TIMEOUT_MS,
-          "Perxona motion timeout"
-        ).catch((error) => {
+        return bounded(originalPlayMotion.apply(this, args), MOTION_TIMEOUT_MS, "Perxona motion timeout").catch((error) => {
           console.warn("Perxona motion skipped", error);
           return { success: false, code: "MOTION_TIMEOUT" };
         });
@@ -216,24 +203,22 @@
 
     prototype.interruptPresentation = function safeInterrupt(...args) {
       try {
-        return typeof originalInterrupt === "function"
-          ? originalInterrupt.apply(this, args)
-          : undefined;
+        return typeof originalInterrupt === "function" ? originalInterrupt.apply(this, args) : undefined;
       } catch (error) {
         console.warn("Perxona interrupt failed", error);
         return undefined;
       }
     };
 
-    // Warm-start only after the following synchronous scripts (especially the
-    // presenter host geometry manager) have had a chance to attach this tick.
     const fastTarget = loadFastTarget();
     if (fastTarget && CONFIG?.publishableConnectKey) {
       setTimeout(() => {
         const element = document.querySelector("#presenter");
         if (!element?.initializeWithConnectKey || element.__scamShieldReadyTargetKey) return;
-        element.initializeWithConnectKey(CONFIG.publishableConnectKey, fastTarget)
-          .catch((error) => console.warn("Perxona warm-start skipped", error));
+        element.initializeWithConnectKey(CONFIG.publishableConnectKey, fastTarget).catch((error) => {
+          clearFastTarget();
+          console.warn("Perxona warm-start discarded; falling back to verified catalog target", error);
+        });
       }, 0);
     }
   }).catch((error) => console.warn("Perxona lifecycle adapter could not attach", error));
