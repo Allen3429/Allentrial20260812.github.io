@@ -28,6 +28,7 @@ jobs:
       - name: Check JavaScript syntax
         run: |
           node --check scamshield/compat.js
+          node --check scamshield/persona-preboot.js
           node --check scamshield/product-config.js
           node --check scamshield/latency-bootstrap.js
           node --check scamshield/perxona-sdk-guard.js
@@ -35,5 +36,7 @@ jobs:
           node --check scamshield/campaign-data.js
           node --check scamshield/product.js
           node --check scamshield/onboarding.js
+          node --check scamshield/direct-avatar.js
+          node --check scamshield/speed-pressure.js
       - name: Validate active product contract
         run: node scamshield/tests/smoke.mjs
