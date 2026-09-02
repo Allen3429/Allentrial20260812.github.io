@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#080b12">
+  <meta name="description" content="ScamShield MEGA 2026：臉與聲音都可能被偽造，驗證通道不要交給對方。以 Perxona AI Avatar 練習停、換、查。">
+  <title>ScamShield MEGA 2026 — 換一條線，真相就現形</title>
+  <link rel="preconnect" href="https://cdn.perxona.ai" crossorigin>
+  <link rel="preconnect" href="https://console.perxona.ai" crossorigin>
+  <link rel="modulepreload" href="https://cdn.perxona.ai/asia/prod/latest/widget/entry/presenter.js" crossorigin>
+  <script src="./product-config.js?v=2.3.0"></script>
+  <script type="module" src="https://cdn.perxona.ai/asia/prod/latest/widget/entry/presenter.js"></script>
+  <link rel="stylesheet" href="./product.css?v=2.0.2">
+  <link rel="stylesheet" href="./product-host.css?v=2.0.3">
+  <link rel="stylesheet" href="./direct-avatar.css?v=1.0.0">
+  <link rel="stylesheet" href="./speed-pressure.css?v=1.0.0">
+  <link rel="stylesheet" href="./mega2026.css?v=1.0.0">
+</head>
+<body>
+  <div class="ambient" aria-hidden="true"></div>
+  <div id="presenterHost" class="presenter-host" aria-label="Live Perxona AI Avatar">
+    <sv-presenter id="presenter"></sv-presenter>
+    <div id="avatarLoading" class="avatar-loading"><div class="loading-silhouette"><i></i></div><strong id="loadingTitle">正在建立 Perxona Avatar</strong><p id="loadingDetail">直接載入固定 Avatar / Scene / Voice；不改動原版網站。</p></div>
+  </div>
+
+  <header class="site-header">
+    <a class="brand" href="./"><span class="brand-mark">S</span><span><strong>ScamShield</strong><small>MEGA 2026 · 換一條線</small></span></a>
+    <nav class="header-actions">
+      <a class="director-link" href="./director.html">🎬 導演模式</a>
+      <span id="connectionBadge" class="connection is-loading"><i></i><span>正在連線 Perxona</span></span>
+    </nav>
+  </header>
+
+  <div class="competition-strip">
+    <span><b>2026「MEGA 做夥來」參賽副本</b> · 原版獨立保留、不受本頁修改影響</span>
+    <a href="../scamshield/">開啟原版 ScamShield ↗</a>
+  </div>
+
+  <main class="page-shell">
+    <section id="landingPanel" class="landing-panel">
+      <div class="landing-copy">
+        <p class="eyebrow">全民識詐 × 金融素養 × AI 媒體識讀</p>
+        <h1>臉可以假，聲音可以假。<br><em>驗證通道不要交給對方。</em></h1>
+        <p class="lede">一通看似真實的視訊、一封完整的付款郵件，都可能仍在詐騙者控制的通道裡。ScamShield 用「停、換、查」把判斷變成能在壓力下做出的行動。</p>
+
+        <div class="mega-steps" aria-label="防詐三步驟">
+          <article><span>停</span><div><b>先停止操作</b><small>不匯款、不交 OTP、不被倒數牽著走</small></div></article>
+          <article><span>換</span><div><b>換到自己掌控的通道</b><small>自行找官方電話、原存聯絡人或正式系統</small></div></article>
+          <article><span>查</span><div><b>獨立查證再行動</b><small>疑似詐騙撥 165；緊急或已受害撥 110</small></div></article>
+        </div>
+
+        <div class="mode-switch" role="group"><button type="button" data-mode="campaign" class="is-selected"><b>完整互動闖關</b><span>3 階段 · 12 回合</span></button><button type="button" data-mode="quick"><b>影片精華演練</b><span>4 回合 · 適合錄影</span></button></div>
+        <button id="startBtn" class="primary-button" type="button" disabled><span class="button-label">正在準備 Perxona Avatar</span><i>◌</i></button>
+        <div class="production-actions">
+          <a href="./director.html" class="ghost-production">開啟 4 分 20 秒導演／提詞模式</a>
+          <a href="./docs/MEGA2026_VIDEO_SCRIPT.md" class="text-production">查看完整腳本</a>
+        </div>
+        <p id="startupDetail" class="startup-detail" aria-live="polite">最短路徑：SDK → 固定 target → initialize → Ready。</p>
+      </div>
+
+      <div class="landing-preview">
+        <div class="preview-top"><span>LIVE TRAINING SURFACE</span><b>SIMULATION ONLY</b></div>
+        <div class="preview-center"><div id="presenterHomeSlot" class="home-avatar-slot"></div><strong class="preview-caption">PERXONA CONNECT · 正在載入 AVATAR</strong></div>
+        <section class="direct-avatar-panel">
+          <div class="direct-avatar-head"><div><small>TRY IT NOW</small><strong>直接與 AI Avatar 互動</strong></div><span id="directAvatarState" class="direct-avatar-state">正在建立 Avatar…</span></div>
+          <div class="direct-avatar-actions"><button type="button" data-avatar-action="start" disabled><b>▶ 播放可疑來電</b><span>假主管以急迫付款施壓</span></button><button type="button" data-avatar-action="verify" disabled><b>✓ 我要換線查證</b><span>使用自己找到的正式通道</span></button><button type="button" data-avatar-action="otp" disabled><b>✕ 我拒絕提供 OTP</b><span>驗證碼就是數位鑰匙</span></button><button type="button" data-avatar-action="stop" class="is-danger" disabled><b>■ 立即中斷 Avatar</b><span>BREAK THE SPELL</span></button></div>
+          <div id="directAvatarLog" class="direct-avatar-log" aria-live="polite"><strong>系統：</strong>Avatar 真正 Ready 並顯示後才解鎖。</div>
+        </section>
+        <div class="preview-grid"><div><span>01</span><b>STOP</b><small>停止匯款與交付憑證</small></div><div><span>02</span><b>SWITCH</b><small>離開對方控制的通道</small></div><div><span>03</span><b>VERIFY</b><small>獨立查證後再決策</small></div></div>
+      </div>
+    </section>
+
+    <section id="trainingPanel" class="training-layout" hidden>
+      <div class="mega-training-note"><b>記住：</b>同一張臉、同一個聲音、同一串郵件，都不等於同一個人。敏感行動必須換線查證。</div>
+      <div class="campaign-bar"><div id="stagePath" class="stage-path"></div><div class="campaign-metrics"><span>ROUND <b id="roundCount">1/12</b></span><span>COMBO <b id="comboValue">×0</b></span><span>INTERRUPTS <b id="interruptCount">0</b></span></div></div>
+      <section class="avatar-card panel-card">
+        <div class="card-heading"><div><p id="roundEyebrow" class="eyebrow">STAGE 1 · ROUND 1</p><h2 id="roundTitle">權威 + 急迫</h2></div><div class="shield-meter"><span>TRUST SHIELD</span><div><i id="shieldBar"></i></div><b id="shieldValue">100</b></div></div>
+        <div id="avatarStage" class="avatar-stage"><div class="stage-hud"><span><i></i> LIVE PERXONA CONNECT</span><b>IDENTITY UNVERIFIED</b></div><div id="pressureMeter" class="pressure-meter"><span>PRESSURE SIGNAL</span><div><i></i></div></div><div id="propCard" class="prop-card"></div></div>
+        <button id="interruptBtn" class="interrupt-button" type="button" disabled><span>✕</span><strong>BREAK THE SPELL</strong><small>先停下，奪回決策節奏</small></button>
+      </section>
+      <aside class="decision-card panel-card">
+        <div class="decision-top"><div><span>TRUST RESILIENCE</span><b id="scoreValue">0</b></div><button id="exitBtn" class="text-button" type="button">返回首頁</button></div>
+        <div class="speaker-box"><span id="speakerLabel">CLAIMED IDENTITY</span><p id="speechText">準備中。</p></div>
+        <div id="choiceArea" class="choice-area" aria-live="polite"></div><div id="feedbackBox" class="feedback-box" hidden></div>
+        <div class="flag-section"><span>CAPTURED RED FLAGS</span><div id="flagList" class="flag-list"><small>尚未辨認紅旗。</small></div></div>
+      </aside>
+    </section>
+  </main>
+
+  <aside class="hotline-dock" aria-label="反詐求助資訊">
+    <div><small>可疑訊息／匯款前</small><strong>165</strong><span>反詐騙諮詢</span></div>
+    <div><small>已受害／緊急狀況</small><strong>110</strong><span>立即報案</span></div>
+  </aside>
+
+  <dialog id="checkpointDialog" class="modal-dialog"><div class="modal-card"><p id="checkpointEyebrow" class="eyebrow">CHECKPOINT</p><h2 id="checkpointTitle">階段完成</h2><div id="checkpointStars" class="checkpoint-stars">★★★</div><p id="checkpointCopy"></p><div id="checkpointStats" class="checkpoint-stats"></div><button id="checkpointBtn" class="primary-button" type="button"><span class="button-label">繼續</span><i>→</i></button></div></dialog>
+  <dialog id="resultDialog" class="modal-dialog"><div class="modal-card result-card"><p class="eyebrow">TRUST RESILIENCE SCORE</p><div class="final-score"><strong id="finalScore">0</strong><span>/100</span></div><h2 id="resultTitle"></h2><p id="resultCopy"></p><div id="resultStats" class="checkpoint-stats"></div><div class="result-hotline"><b>先停、換線、查證</b><span>疑似詐騙撥 <strong>165</strong>；緊急或已受害撥 <strong>110</strong></span></div><div class="modal-actions"><button id="replayBtn" class="primary-button" type="button"><span class="button-label">再訓練一次</span><i>↻</i></button><button id="homeBtn" class="ghost-button" type="button">返回首頁</button></div></div></dialog>
+  <div id="fatalError" class="fatal-error" hidden><div><span>PERXONA CONNECTION ERROR</span><h2>AI Avatar 暫時無法啟動</h2><p id="fatalErrorText"></p><button id="retryBtn" class="primary-button" type="button"><span class="button-label">重新連線</span><i>↻</i></button></div></div>
+
+  <script src="./compat.js"></script>
+  <script src="./campaign-data.js?v=2.0.2"></script>
+  <script type="module" src="./product-lite.js?v=1.1.1"></script>
+</body>
+</html>
