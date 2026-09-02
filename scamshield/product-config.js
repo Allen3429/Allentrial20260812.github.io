@@ -11,6 +11,7 @@ window.SCAMSHIELD_CONFIG = Object.freeze({
   publishableConnectKey: atob(
     "cHhjXzAxTTE1WDlSWFRaQVc4SDZQV1ozREROTVpLX0RfTENNYUZLRkhGTVpPUl9NVVdFMmlFOHdJLUhlTUlBeTkxYlJrR0lVQ00="
   ),
+  fixedAvatarId: "cc006_male_finance",
   preferredAvatarIds: ["cc006_male_finance"],
-  productVersion: "2.0.3"
+  productVersion: "2.1.0"
 });
