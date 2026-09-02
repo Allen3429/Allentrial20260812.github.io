@@ -6,8 +6,8 @@
 
   const nativeFetch = window.fetch.bind(window);
   const CATALOG_TTL_MS = 5 * 60 * 1000;
+  const AVATAR_PATH = "/api/v1/connect/assets/avatars?page=1&size=100";
   const exactCatalogPaths = [
-    "/api/v1/connect/assets/avatars?page=1&size=100",
     "/api/v1/connect/assets/scenes?page=1&size=100",
     "/api/v1/connect/voices?page=1&size=100"
   ];
@@ -72,11 +72,29 @@
     memory.set(url, promise);
   }
 
+  // ScamShield intentionally has exactly one attacker persona. Do not spend a
+  // network request downloading an Avatar catalog that the customer can never
+  // choose from. product.js still sees a normal catalog-shaped response.
+  const fixedAvatarUrl = catalogUrl(AVATAR_PATH);
+  const fixedAvatarCatalog = Object.freeze({
+    items: [{
+      id: CONFIG.fixedAvatarId || "cc006_male_finance",
+      avatar_id: CONFIG.fixedAvatarId || "cc006_male_finance",
+      name: "ScamShield Impatient Male",
+      display_name: "ScamShield Impatient Male",
+      tags: ["male", "adult", "finance", "business", "fixed"]
+    }]
+  });
+
   exactCatalogPaths.map(catalogUrl).forEach(prime);
 
   window.fetch = function lowLatencyFetch(input, init) {
     const url = typeof input === "string" ? input : input?.url;
     const method = String(init?.method || input?.method || "GET").toUpperCase();
+
+    if (method === "GET" && url === fixedAvatarUrl) {
+      return Promise.resolve(responseFrom(fixedAvatarCatalog));
+    }
     if (method === "GET" && memory.has(url)) {
       return memory.get(url)
         .then((data) => responseFrom(data))
@@ -84,6 +102,11 @@
     }
     return nativeFetch(input, init);
   };
+
+  // Keep the persisted persona aligned with the single allowed Avatar.
+  try {
+    localStorage.setItem("scamshield.product.avatar", CONFIG.fixedAvatarId || "cc006_male_finance");
+  } catch {}
 
   // AudioContext unlock must happen inside a user gesture. Do it on pointerdown,
   // before page transitions or round rendering consume that gesture.
