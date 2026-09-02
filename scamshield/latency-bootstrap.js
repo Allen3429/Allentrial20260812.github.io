@@ -7,10 +7,9 @@
   const nativeFetch = window.fetch.bind(window);
   const CATALOG_TTL_MS = 5 * 60 * 1000;
   const AVATAR_PATH = "/api/v1/connect/assets/avatars?page=1&size=100";
-  const exactCatalogPaths = [
-    "/api/v1/connect/assets/scenes?page=1&size=100",
-    "/api/v1/connect/voices?page=1&size=100"
-  ];
+  const SCENE_PATH = "/api/v1/connect/assets/scenes?page=1&size=100";
+  const VOICE_PATH = "/api/v1/connect/voices?page=1&size=100";
+  const exactCatalogPaths = [AVATAR_PATH, SCENE_PATH, VOICE_PATH];
   const memory = new Map();
 
   function storageKey(url) {
@@ -33,21 +32,14 @@
   }
 
   function writeSession(url, data) {
-    try {
-      sessionStorage.setItem(storageKey(url), JSON.stringify({ time: Date.now(), data }));
-    } catch {}
+    try { sessionStorage.setItem(storageKey(url), JSON.stringify({ time: Date.now(), data })); } catch {}
   }
 
   function responseFrom(data) {
-    return new Response(JSON.stringify(data), {
-      status: 200,
-      headers: { "Content-Type": "application/json" }
-    });
+    return new Response(JSON.stringify(data), { status: 200, headers: { "Content-Type": "application/json" } });
   }
 
-  function catalogUrl(path) {
-    return `${CONFIG.apiBase}${path}`;
-  }
+  const catalogUrl = (path) => `${CONFIG.apiBase}${path}`;
 
   function prime(url) {
     const cached = readSession(url);
@@ -72,44 +64,52 @@
     memory.set(url, promise);
   }
 
-  // ScamShield intentionally has exactly one attacker persona. Do not spend a
-  // network request downloading an Avatar catalog that the customer can never
-  // choose from. product.js still sees a normal catalog-shaped response.
-  const fixedAvatarUrl = catalogUrl(AVATAR_PATH);
-  const fixedAvatarCatalog = Object.freeze({
-    items: [{
-      id: CONFIG.fixedAvatarId || "cc006_male_finance",
-      avatar_id: CONFIG.fixedAvatarId || "cc006_male_finance",
-      name: "ScamShield Impatient Male",
-      display_name: "ScamShield Impatient Male",
-      tags: ["male", "adult", "finance", "business", "fixed"]
-    }]
-  });
-
   exactCatalogPaths.map(catalogUrl).forEach(prime);
+
+  function idOf(item) {
+    return String(item?.avatar_id || item?.id || "");
+  }
+
+  function textOf(item) {
+    try { return JSON.stringify(item).toLowerCase(); } catch { return ""; }
+  }
+
+  function singleAvatarCatalog(data) {
+    const items = Array.isArray(data?.items) ? data.items : [];
+    if (!items.length) return data;
+
+    const preferred = String(CONFIG.fixedAvatarId || "cc006_male_finance");
+    let chosen = items.find((item) => idOf(item) === preferred);
+    if (!chosen) {
+      chosen = items
+        .map((item) => {
+          const text = textOf(item);
+          let score = 0;
+          for (const term of ["male", "man", "adult", "business", "finance", "professional", "executive", "formal", "suit"]) if (text.includes(term)) score += 2;
+          for (const term of ["female", "child", "kid", "cute", "anime", "cartoon", "mascot"]) if (text.includes(term)) score -= 3;
+          return { item, score };
+        })
+        .sort((a, b) => b.score - a.score)[0]?.item || items[0];
+    }
+
+    // Persist only a REAL catalog ID. This keeps ScamShield single-character
+    // while preventing a guessed/synthetic ID from poisoning Presenter init.
+    try { localStorage.setItem("scamshield.product.avatar", idOf(chosen)); } catch {}
+    return { ...data, items: [chosen] };
+  }
 
   window.fetch = function lowLatencyFetch(input, init) {
     const url = typeof input === "string" ? input : input?.url;
     const method = String(init?.method || input?.method || "GET").toUpperCase();
-
-    if (method === "GET" && url === fixedAvatarUrl) {
-      return Promise.resolve(responseFrom(fixedAvatarCatalog));
-    }
     if (method === "GET" && memory.has(url)) {
-      return memory.get(url)
-        .then((data) => responseFrom(data))
-        .catch(() => nativeFetch(input, init));
+      return memory.get(url).then((data) => {
+        const shaped = url === catalogUrl(AVATAR_PATH) ? singleAvatarCatalog(data) : data;
+        return responseFrom(shaped);
+      }).catch(() => nativeFetch(input, init));
     }
     return nativeFetch(input, init);
   };
 
-  // Keep the persisted persona aligned with the single allowed Avatar.
-  try {
-    localStorage.setItem("scamshield.product.avatar", CONFIG.fixedAvatarId || "cc006_male_finance");
-  } catch {}
-
-  // AudioContext unlock must happen inside a user gesture. Do it on pointerdown,
-  // before page transitions or round rendering consume that gesture.
   document.addEventListener("pointerdown", (event) => {
     if (!event.target.closest?.("#startBtn,#briefingStartBtn,#dockStartBtn,#replayBtn")) return;
     const presenter = document.querySelector("#presenter");
