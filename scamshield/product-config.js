@@ -12,5 +12,5 @@ window.SCAMSHIELD_CONFIG = Object.freeze({
     "cHhjXzAxTTE1WDlSWFRaQVc4SDZQV1ozREROTVpLX0RfTENNYUZLRkhGTVpPUl9NVVdFMmlFOHdJLUhlTUlBeTkxYlJrR0lVQ00="
   ),
   preferredAvatarIds: ["cc006_male_finance"],
-  productVersion: "2.0.0"
+  productVersion: "2.0.3"
 });

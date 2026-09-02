@@ -37,6 +37,17 @@ for (const capability of [
 ]) {
   assert.ok(product.includes(capability), `Missing Connect Kit capability: ${capability}`);
 }
+for (const lifecycleContract of ["ALL_PERFORMANCE_FINISHED", "waitForPerformanceFinished", "cancelPerformanceWait"]) {
+  assert.ok(product.includes(lifecycleContract), `Missing Presenter speech lifecycle contract: ${lifecycleContract}`);
+}
+assert.match(product, /\[MOTION \$\{motionId\}:1\]/, "Motion markup must include an explicit priority");
+assert.match(html, /product\.js\?v=2\.0\.3/, "Product cache version must expose the speech lifecycle release");
+const waitIndex = product.indexOf("const finishedPromise = waitForPerformanceFinished()");
+const presentIndex = product.indexOf("await presenter.present(payload)");
+const finishedIndex = product.indexOf("await finishedPromise");
+const choicesIndex = product.indexOf("renderChoices(round)", finishedIndex);
+assert.ok(waitIndex >= 0 && waitIndex < presentIndex, "Performance listener must be attached before present()");
+assert.ok(presentIndex < finishedIndex && finishedIndex < choicesIndex, "Choices must remain locked until playback finishes");
 
 for (const cue of [
   "missionBriefingDialog", "nextActionDock", "firstRoundCoach",

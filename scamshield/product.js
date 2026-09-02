@@ -55,7 +55,8 @@ const state = {
   stageRisky: 0,
   stageInterrupts: 0,
   recoveries: 0,
-  pendingCheckpoint: false
+  pendingCheckpoint: false,
+  performanceRelease: null
 };
 
 function escapeHtml(value) {
@@ -145,7 +146,11 @@ function searchable(item) {
 function rankAvatar(item) {
   const id = itemId("avatar", item);
   const text = searchable(item);
-  let score = CONFIG.preferredAvatarIds.includes(id) ? 1000 : 0;
+  const preferred = CONFIG.preferredAvatarIds.some((reference) => {
+    const normalized = String(reference || "").toLowerCase();
+    return normalized === id.toLowerCase() || (normalized && text.includes(normalized));
+  });
+  let score = preferred ? 1000 : 0;
   for (const term of ["professional", "business", "finance", "office", "executive", "formal", "adult", "male", "suit", "security"]) if (text.includes(term)) score += 18;
   for (const term of ["cute", "chibi", "child", "kid", "cartoon", "anime", "mascot", "trip", "fashion"]) if (text.includes(term)) score -= 25;
   return score;
@@ -235,9 +240,9 @@ function updateVoiceMeta() {
 async function fetchCatalogs() {
   setStartup("正在讀取 Perxona catalog…", "讀取 Avatar、Scene 與 Voice catalog。");
   const [avatars, scenes, voices] = await Promise.all([
-    connectApi("/api/v1/connect/assets/avatars?page=1&size=100"),
-    connectApi("/api/v1/connect/assets/scenes?page=1&size=100"),
-    connectApi("/api/v1/connect/voices?page=1&size=100")
+    connectApi("/api/v1/connect/assets/avatars?page=1&size=100", 30000),
+    connectApi("/api/v1/connect/assets/scenes?page=1&size=100", 30000),
+    connectApi("/api/v1/connect/voices?page=1&size=100", 30000)
   ]);
   state.catalogs.avatars = avatars.items || [];
   state.catalogs.scenes = scenes.items || [];
@@ -245,7 +250,6 @@ async function fetchCatalogs() {
   if (!state.catalogs.avatars.length || !state.catalogs.scenes.length || !state.catalogs.voices.length) {
     throw new Error("Perxona catalog 缺少 Avatar、Scene 或 Voice。請在 Perxona Console 檢查組織資產。");
   }
-  await hydrateVoiceDetails(state.catalogs.voices);
 }
 
 function chooseAssets(overrides = {}) {
@@ -313,8 +317,18 @@ async function initializePresenter(target) {
   UI.customize.disabled = false;
   setConnection("ready", "Perxona Avatar ready");
   setStartup("Perxona Avatar 已可操作", "Avatar、語音、動作與中斷控制均已連線。");
-  const greeting = findMotion("greeting", "welcome", "idle");
-  if (greeting) presenter.playMotion?.(greeting).catch(() => {});
+}
+
+function warmOptionalAssets(avatarId) {
+  Promise.all([
+    fetchMotions(avatarId),
+    hydrateVoiceDetails(state.catalogs.voices)
+  ]).then(() => {
+    if (state.asset.avatarId !== avatarId) return;
+    updateVoiceMeta();
+    const greeting = findMotion("greeting", "welcome", "idle");
+    if (greeting && !state.active && !state.presenting) presenter.playMotion?.(greeting).catch(() => {});
+  }).catch((error) => console.warn("Optional Perxona assets unavailable", error));
 }
 
 async function initializeProduct(overrides = {}, allowRetry = true) {
@@ -326,11 +340,12 @@ async function initializeProduct(overrides = {}, allowRetry = true) {
   UI.start.disabled = true;
   UI.customize.disabled = true;
   try {
-    await loadPresenterEngine();
-    if (!state.catalogs.avatars.length) await fetchCatalogs();
+    const enginePromise = loadPresenterEngine();
+    if (!state.catalogs.avatars.length) await Promise.all([enginePromise, fetchCatalogs()]);
+    else await enginePromise;
     chooseAssets(overrides);
-    await fetchMotions(state.asset.avatarId);
     await initializePresenter(state.asset);
+    warmOptionalAssets(state.asset.avatarId);
   } catch (error) {
     console.error("ScamShield initialization failed", error);
     if (allowRetry && state.catalogs.avatars.length > 1) {
@@ -343,8 +358,8 @@ async function initializeProduct(overrides = {}, allowRetry = true) {
           voiceId: itemId("voice", sorted.voices.find((item) => itemId("voice", item) !== state.asset.voiceId) || sorted.voices[0])
         };
         state.asset = fallback;
-        await fetchMotions(fallback.avatarId);
         await initializePresenter(fallback);
+        warmOptionalAssets(fallback.avatarId);
       } catch (retryError) {
         showFatal(retryError);
       }
@@ -428,6 +443,33 @@ function stopPresentationVisuals() {
   UI.interrupt.disabled = true;
 }
 
+function cancelPerformanceWait() {
+  const release = state.performanceRelease;
+  state.performanceRelease = null;
+  release?.();
+}
+
+function waitForPerformanceFinished(timeoutMs = 60000) {
+  cancelPerformanceWait();
+  return new Promise((resolve, reject) => {
+    let settled = false;
+    let timer = 0;
+    const onFinished = () => finish();
+    const release = () => finish();
+    const finish = (error) => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      presenter.removeEventListener("ALL_PERFORMANCE_FINISHED", onFinished);
+      if (state.performanceRelease === release) state.performanceRelease = null;
+      error ? reject(error) : resolve();
+    };
+    state.performanceRelease = release;
+    presenter.addEventListener("ALL_PERFORMANCE_FINISHED", onFinished);
+    timer = setTimeout(() => finish(new Error("Perxona 語音播放逾時。")), timeoutMs);
+  });
+}
+
 async function playRoundSpeech(round) {
   const token = ++state.speechToken;
   state.presenting = true;
@@ -439,15 +481,19 @@ async function playRoundSpeech(round) {
   try {
     await presenter.resumeAudioPlayback?.();
     const motionId = motionForRound(round);
-    const payload = motionId ? `[MOTION ${motionId}] ${round.speech}` : round.speech;
+    const payload = motionId ? `[MOTION ${motionId}:1] ${round.speech}` : round.speech;
+    const finishedPromise = waitForPerformanceFinished();
     const result = await presenter.present(payload);
-    if (token !== state.speechToken || state.interrupted) return;
     if (result && result.success === false) {
+      cancelPerformanceWait();
       throw new Error(`${result.code || "PRESENT_FAILED"}：${result.message || "Perxona present() returned success=false"}`);
     }
+    await finishedPromise;
+    if (token !== state.speechToken || state.interrupted) return;
     stopPresentationVisuals();
     renderChoices(round);
   } catch (error) {
+    cancelPerformanceWait();
     if (token !== state.speechToken || state.interrupted) return;
     stopPresentationVisuals();
     UI.feedback.hidden = false;
@@ -496,6 +542,7 @@ async function interruptSpeech() {
   state.score += 5;
   addFlag(currentRound()?.flag || "主動中斷操控");
   try { presenter.interruptPresentation?.(); } catch (error) { console.warn(error); }
+  cancelPerformanceWait();
   stopPresentationVisuals();
   UI.feedback.hidden = false;
   UI.feedback.className = "feedback-box";
@@ -631,6 +678,7 @@ function finishCampaign() {
 }
 
 function resetGame() {
+  cancelPerformanceWait();
   Object.assign(state, {
     active: true, stageIndex: 0, roundIndex: 0, score: 0, shield: 100, safe: 0, risky: 0,
     combo: 0, maxCombo: 0, interruptCount: 0, flags: [], interrupted: false, presenting: false,
@@ -651,6 +699,7 @@ function goHome() {
   state.active = false;
   state.speechToken += 1;
   try { presenter.interruptPresentation?.(); } catch {}
+  cancelPerformanceWait();
   stopPresentationVisuals();
   UI.training.hidden = true;
   UI.landing.hidden = false;
