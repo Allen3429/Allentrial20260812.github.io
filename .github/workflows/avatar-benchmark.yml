@@ -31,7 +31,7 @@ jobs:
           exit 1
       - name: Run cold-start comparisons
         run: |
-          cat > /tmp/bench.mjs <<'EOF'
+          cat > bench.mjs <<'EOF'
           import { chromium } from 'playwright';
           const base='https://allen3429.github.io/Allentrial20260812.github.io/scamshield/avatar-benchmark.html';
           const fixed='cc006_male_finance';
@@ -68,7 +68,7 @@ jobs:
           console.log('BENCHMARK_JSON='+JSON.stringify(results));
           await browser.close();
           EOF
-          node /tmp/bench.mjs | tee /tmp/avatar-benchmark.log
+          node bench.mjs | tee /tmp/avatar-benchmark.log
       - name: Upload benchmark log
         uses: actions/upload-artifact@v4
         with:
