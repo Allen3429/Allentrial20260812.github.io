@@ -12,11 +12,14 @@ const config = read("product-config.js");
 const campaign = read("campaign-data.js");
 const onboarding = read("onboarding.js");
 const onboardingCss = read("onboarding.css");
+const direct = read("direct-avatar.js");
+const speed = read("speed-pressure.js");
+const persona = read("persona-preboot.js");
 
 const requiredIds = [
   "connectionBadge", "presenterHost", "presenterHomeSlot", "presenter", "avatarLoading",
   "landingPanel", "trainingPanel", "startBtn", "avatarStage", "interruptBtn", "choiceArea",
-  "checkpointDialog", "resultDialog", "settingsDialog", "fatalError"
+  "checkpointDialog", "resultDialog", "settingsDialog", "fatalError", "directAvatarState", "directAvatarLog"
 ];
 for (const id of requiredIds) {
   assert.match(html, new RegExp(`id=["']${id}["']`), `Missing required DOM id: ${id}`);
@@ -29,7 +32,8 @@ assert.doesNotMatch(html, /<sv-agent/i, "The active product must use Connect Kit
 
 for (const file of [
   "product-config.js", "latency-bootstrap.js", "campaign-data.js", "perxona-sdk-guard.js",
-  "product-host.js", "product.js", "onboarding.js", "onboarding.css"
+  "product-host.js", "product.js", "onboarding.js", "onboarding.css", "direct-avatar.js",
+  "direct-avatar.css", "speed-pressure.js", "speed-pressure.css", "persona-preboot.js"
 ]) {
   assert.match(html, new RegExp(file.replace(".", "\\.")), `Active product asset is not loaded: ${file}`);
 }
@@ -67,6 +71,18 @@ assert.match(latency, /exactCatalogPaths/, "Catalog prewarming must be enabled")
 assert.match(host, /Size, not viewport intersection/, "Presenter sizing must not depend on viewport intersection");
 assert.doesNotMatch(host, /rect\.bottom > 0 && rect\.top < innerHeight/, "Presenter must not collapse merely because its target is offscreen");
 
+assert.match(direct, /\.present\(text\)/, "Landing-page controls must call Perxona present() directly");
+assert.match(direct, /interruptPresentation/, "Landing-page controls must be able to interrupt the Avatar directly");
+assert.match(html, /data-avatar-action="start"/, "Public page must expose a direct Avatar start interaction");
+assert.match(html, /直接與 AI Avatar 互動/, "Public page must visibly advertise direct Avatar interaction");
+
+assert.match(persona, /cc006_male_finance/, "Default ScamShield attacker must use the mature male finance avatar");
+assert.match(persona, /removeItem\("scamshield\.product\.voice"\)/, "Persona bootstrap must re-rank voice rather than preserving an incompatible stored voice");
+assert.match(speed, /ROUND_LIMIT_MS = 12000/, "Player decision speed must have a visible 12-second pressure window");
+assert.match(speed, /FAST_MS = 3500/, "Fast safe decisions must receive a speed bonus");
+assert.match(speed, /normalizedSpeed/, "Final score must incorporate reaction speed");
+assert.match(html, /SPEED SCORE/, "Landing page must explain that response speed affects scoring");
+
 for (const cue of [
   "missionBriefingDialog", "nextActionDock", "firstRoundCoach",
   "開始第 1 關", "BREAK THE SPELL", "選一個安全回應"
@@ -83,7 +99,7 @@ assert.match(onboardingCss, /\.first-round-coach/, "First-round coach styling is
 
 assert.match(config, /publishableConnectKey/, "Browser config must define a publishable key");
 assert.match(config, /atob\(/, "Publishable configuration should remain separated from product logic");
-for (const file of [config, onboarding, guard, latency]) {
+for (const file of [config, onboarding, guard, latency, direct, speed, persona]) {
   assert.doesNotMatch(file, /secretConnectKey|PERXONA_CONNECT_SECRET_KEY|sk_live|sk_test/i, "A secret credential appears in browser code");
 }
 
@@ -94,4 +110,4 @@ assert.equal(data.stages.length, 3, "Campaign must contain three stages");
 assert.equal(data.stages.reduce((sum, stage) => sum + stage.rounds.length, 0), 12, "Campaign must contain twelve main rounds");
 assert.ok(Object.keys(data.recovery).length >= 5, "Campaign must include recovery paths");
 
-console.log("ScamShield smoke test passed: preloaded Connect Kit, real Ready lifecycle, bounded latency, stable Presenter sizing, guided flow, 12 rounds, and recovery paths are present.");
+console.log("ScamShield smoke test passed: direct Perxona interaction, impatient male persona, reaction-speed scoring, real Ready lifecycle, bounded latency, 12 rounds, and recovery paths are present.");
