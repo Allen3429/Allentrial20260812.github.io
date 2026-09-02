@@ -50,9 +50,11 @@ const choicesIndex = product.indexOf("renderChoices(round)", finishedIndex);
 assert.ok(waitIndex >= 0 && waitIndex < presentIndex, "Performance listener must be attached before present()");
 assert.ok(presentIndex < finishedIndex && finishedIndex < choicesIndex, "Choices must remain locked until playback finishes");
 
-assert.match(html, /perxona-sdk-guard\.js\?v=2\.0\.5/, "The public page must load the stable Presenter lifecycle adapter");
-assert.match(guard, /typeof detail === "string"/, "The guard must normalize the documented string status payload");
-assert.match(guard, /initialize-promise-resolved/, "A resolved initialization must bridge a missing Ready event");
+assert.match(html, /perxona-sdk-guard\.js\?v=2\.0\.6/, "The public page must load the current Presenter lifecycle adapter");
+assert.match(guard, /typeof detail === "string"/, "The guard must normalize bare-string Presenter status payloads");
+assert.match(guard, /const realReady = new Promise/, "The adapter must be able to resolve on the genuine Ready event");
+assert.match(guard, /Promise\.race\(\[\s*initialization,\s*realReady,\s*keyRejected/s, "Initialization must unblock on either upstream completion, genuine Ready, or key rejection");
+assert.doesNotMatch(guard, /initialize-promise-resolved|emitNormalizedStatus\(element, READY/, "The adapter must not fabricate readiness from initialization completion");
 assert.doesNotMatch(guard, /WATCHDOG_RETRY_MS|retrying the same target|const invoke =/, "The guard must not launch concurrent initialization retries");
 assert.equal(
   (guard.match(/originalInitialize\.call\(/g) || []).length,
@@ -87,4 +89,4 @@ assert.equal(data.stages.length, 3, "Campaign must contain three stages");
 assert.equal(data.stages.reduce((sum, stage) => sum + stage.rounds.length, 0), 12, "Campaign must contain twelve main rounds");
 assert.ok(Object.keys(data.recovery).length >= 5, "Campaign must include recovery paths");
 
-console.log("ScamShield smoke test passed: stable single-call Connect Kit initialization, guided next action, automatic training scroll, speech lifecycle, 3 stages, 12 rounds, and recovery paths are present.");
+console.log("ScamShield smoke test passed: genuine Ready-event Connect Kit lifecycle, guided next action, automatic training scroll, speech lifecycle, 3 stages, 12 rounds, and recovery paths are present.");
