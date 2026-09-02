@@ -21,28 +21,21 @@ const requiredIds = [
   "landingPanel", "trainingPanel", "startBtn", "avatarStage", "interruptBtn", "choiceArea",
   "checkpointDialog", "resultDialog", "settingsDialog", "fatalError", "directAvatarState", "directAvatarLog"
 ];
-for (const id of requiredIds) {
-  assert.match(html, new RegExp(`id=["']${id}["']`), `Missing required DOM id: ${id}`);
-}
+for (const id of requiredIds) assert.match(html, new RegExp(`id=["']${id}["']`), `Missing required DOM id: ${id}`);
 
 assert.match(html, /<sv-presenter\s+id=["']presenter["']/, "The product must expose a live sv-presenter");
 assert.doesNotMatch(html, /http-equiv=["']refresh["']/i, "The customer URL must not redirect");
 assert.doesNotMatch(html, /connect-review\.html/i, "The customer URL must not depend on a reviewer-only page");
-assert.doesNotMatch(html, /<sv-agent/i, "The active product must use Connect Kit presenter, not the legacy widget fallback");
+assert.doesNotMatch(html, /<sv-agent/i, "The active product must use Connect Kit presenter");
 
 for (const file of [
   "product-config.js", "latency-bootstrap.js", "campaign-data.js", "perxona-sdk-guard.js",
   "product-host.js", "product.js", "onboarding.js", "onboarding.css", "direct-avatar.js",
   "direct-avatar.css", "speed-pressure.js", "speed-pressure.css", "persona-preboot.js"
-]) {
-  assert.match(html, new RegExp(file.replace(".", "\\.")), `Active product asset is not loaded: ${file}`);
-}
+]) assert.match(html, new RegExp(file.replace(".", "\\.")), `Active product asset is not loaded: ${file}`);
 assert.match(html, /rel="modulepreload"[^>]+presenter\.js/, "Perxona presenter module must be preloaded");
 
-for (const capability of [
-  "initializeWithConnectKey", "PRESENTER_STATUS", 'status === "Ready"',
-  "present(", "playMotion", "interruptPresentation", "X-Connect-Key"
-]) {
+for (const capability of ["initializeWithConnectKey", "PRESENTER_STATUS", 'status === "Ready"', "present(", "playMotion", "interruptPresentation", "X-Connect-Key"]) {
   assert.ok(product.includes(capability), `Missing Connect Kit capability: ${capability}`);
 }
 for (const lifecycleContract of ["ALL_PERFORMANCE_FINISHED", "waitForPerformanceFinished", "cancelPerformanceWait"]) {
@@ -55,14 +48,14 @@ const waitIndex = product.indexOf("const finishedPromise = waitForPerformanceFin
 const presentIndex = product.indexOf("await presenter.present(payload)");
 const finishedIndex = product.indexOf("await finishedPromise");
 const choicesIndex = product.indexOf("renderChoices(round)", finishedIndex);
-assert.ok(waitIndex >= 0 && waitIndex < presentIndex, "Performance listener must be attached before present()");
+assert.ok(waitIndex >= 0 && waitIndex < presentIndex, "Performance listener must attach before present()");
 assert.ok(presentIndex < finishedIndex && finishedIndex < choicesIndex, "Choices must remain locked until playback finishes");
 
-assert.match(html, /perxona-sdk-guard\.js\?v=2\.1\.0/, "Public page must load the low-latency Presenter adapter");
-assert.match(guard, /INIT_TIMEOUT_MS = 20000/, "Presenter initialization must have a hard latency ceiling");
-assert.match(guard, /PRESENT_TIMEOUT_MS = 12000/, "Speech request latency must be bounded");
-assert.match(guard, /if \(readStatus\(event\) === READY\) finishReady\(\)/, "Real Ready must unlock initialization immediately");
-assert.doesNotMatch(guard, /emitNormalizedStatus|initialize-promise-resolved/, "The adapter must not fabricate readiness");
+assert.match(html, /perxona-sdk-guard\.js\?v=2\.2\.0/, "Public page must load the resilient Presenter adapter");
+assert.match(guard, /INIT_TIMEOUT_MS = 44000/, "Cold 3D starts must not be falsely cut off at 20 seconds");
+assert.match(guard, /PRESENT_TIMEOUT_MS = 12000/, "Speech request latency must remain bounded");
+assert.match(guard, /if \(status === READY\) finishReady\(\)/, "Real Ready must unlock initialization immediately");
+assert.doesNotMatch(guard, /20 秒內未 Ready|emitNormalizedStatus|initialize-promise-resolved/, "Old false-failure or synthetic Ready logic must be gone");
 assert.equal((guard.match(/originalInitialize\.call\(/g) || []).length, 1, "One product attempt must call upstream initialize once");
 
 assert.match(latency, /CATALOG_TTL_MS = 5 \* 60 \* 1000/, "Catalog data should be session-cached briefly");
@@ -73,20 +66,20 @@ assert.doesNotMatch(host, /rect\.bottom > 0 && rect\.top < innerHeight/, "Presen
 
 assert.match(direct, /\.present\(text\)/, "Landing-page controls must call Perxona present() directly");
 assert.match(direct, /interruptPresentation/, "Landing-page controls must be able to interrupt the Avatar directly");
+assert.match(direct, /PRESENTER_STATUS/, "Direct controls must listen to the real Presenter Ready event");
+assert.match(direct, /bindPresenterEvents/, "Direct controls must survive automatic Presenter replacement");
+assert.match(html, /direct-avatar\.js\?v=1\.1\.0/, "Direct interaction cache must be busted");
 assert.match(html, /data-avatar-action="start"/, "Public page must expose a direct Avatar start interaction");
 assert.match(html, /直接與 AI Avatar 互動/, "Public page must visibly advertise direct Avatar interaction");
 
-assert.match(persona, /cc006_male_finance/, "Default ScamShield attacker must use the mature male finance avatar");
-assert.match(persona, /removeItem\("scamshield\.product\.voice"\)/, "Persona bootstrap must re-rank voice rather than preserving an incompatible stored voice");
+assert.match(persona, /cc006_male_finance/, "Default attacker must use the mature male finance avatar");
+assert.match(persona, /removeItem\("scamshield\.product\.voice"\)/, "Persona bootstrap must re-rank voice");
 assert.match(speed, /ROUND_LIMIT_MS = 12000/, "Player decision speed must have a visible 12-second pressure window");
 assert.match(speed, /FAST_MS = 3500/, "Fast safe decisions must receive a speed bonus");
 assert.match(speed, /normalizedSpeed/, "Final score must incorporate reaction speed");
 assert.match(html, /SPEED SCORE/, "Landing page must explain that response speed affects scoring");
 
-for (const cue of [
-  "missionBriefingDialog", "nextActionDock", "firstRoundCoach",
-  "開始第 1 關", "BREAK THE SPELL", "選一個安全回應"
-]) {
+for (const cue of ["missionBriefingDialog", "nextActionDock", "firstRoundCoach", "開始第 1 關", "BREAK THE SPELL", "選一個安全回應"]) {
   assert.ok(onboarding.includes(cue), `Missing player guidance cue: ${cue}`);
 }
 for (const scrollContract of ["scrollTrainingIntoView", "queueTrainingScroll", "window.scrollTo"]) {
@@ -110,4 +103,4 @@ assert.equal(data.stages.length, 3, "Campaign must contain three stages");
 assert.equal(data.stages.reduce((sum, stage) => sum + stage.rounds.length, 0), 12, "Campaign must contain twelve main rounds");
 assert.ok(Object.keys(data.recovery).length >= 5, "Campaign must include recovery paths");
 
-console.log("ScamShield smoke test passed: direct Perxona interaction, impatient male persona, reaction-speed scoring, real Ready lifecycle, bounded latency, 12 rounds, and recovery paths are present.");
+console.log("ScamShield smoke test passed: direct Perxona interaction, resilient cold-start Ready lifecycle, impatient male persona, speed scoring, 12 rounds, and recovery paths are present.");
