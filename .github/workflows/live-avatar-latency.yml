@@ -1,0 +1,64 @@
+name: Live ScamShield avatar latency
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  bench:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install Playwright
+        run: |
+          npm init -y >/dev/null 2>&1
+          npm install playwright@1.55.0 >/dev/null 2>&1
+          npx playwright install --with-deps chromium >/dev/null 2>&1
+      - name: Measure real production page
+        run: |
+          cat > live-bench.mjs <<'EOF'
+          import { chromium } from 'playwright';
+          const url='https://allen3429.github.io/Allentrial20260812.github.io/scamshield/';
+          const browser=await chromium.launch({headless:true,args:['--use-gl=swiftshader','--enable-webgl','--ignore-gpu-blocklist']});
+          const runs=[];
+          for(let i=1;i<=5;i++){
+            const context=await browser.newContext();
+            const page=await context.newPage();
+            const t0=Date.now();
+            const marks={};
+            await page.goto(url+'?latency_run='+Date.now()+'_'+i,{waitUntil:'domcontentloaded',timeout:30000});
+            marks.domMs=Date.now()-t0;
+            let readyMs=null, visibleMs=null, error=null;
+            try{
+              await page.waitForFunction(()=>document.querySelector('#connectionBadge span')?.textContent?.includes('Ready'),{timeout:60000});
+              readyMs=Date.now()-t0;
+            }catch(e){ error='ready-timeout'; }
+            if(!error){
+              try{
+                await page.waitForFunction(()=>{
+                  const loading=document.querySelector('#avatarLoading');
+                  const state=document.querySelector('#directAvatarState')?.textContent||'';
+                  const hidden=loading?.classList.contains('is-hidden');
+                  return hidden && state.includes('Avatar 已顯示');
+                },{timeout:15000});
+                visibleMs=Date.now()-t0;
+              }catch(e){ error='visual-timeout'; }
+            }
+            runs.push({run:i,domMs:marks.domMs,readyMs,visibleMs,error});
+            await context.close();
+          }
+          const vals=runs.map(r=>r.visibleMs).filter(Boolean).sort((a,b)=>a-b);
+          const median=vals.length?vals[Math.floor(vals.length/2)]:null;
+          const avg=vals.length?Math.round(vals.reduce((a,b)=>a+b,0)/vals.length):null;
+          console.log('LIVE_AVATAR_LATENCY='+JSON.stringify({runs,medianVisibleMs:median,avgVisibleMs:avg}));
+          await browser.close();
+          EOF
+          node live-bench.mjs | tee /tmp/live-avatar-latency.log
+      - name: Upload result
+        uses: actions/upload-artifact@v4
+        with:
+          name: live-avatar-latency
+          path: /tmp/live-avatar-latency.log
