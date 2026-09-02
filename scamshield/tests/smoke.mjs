@@ -6,6 +6,8 @@ const read = (name) => fs.readFileSync(new URL(`../${name}`, import.meta.url), "
 const html = read("index.html");
 const product = read("product.js");
 const guard = read("perxona-sdk-guard.js");
+const host = read("product-host.js");
+const latency = read("latency-bootstrap.js");
 const config = read("product-config.js");
 const campaign = read("campaign-data.js");
 const onboarding = read("onboarding.js");
@@ -26,11 +28,12 @@ assert.doesNotMatch(html, /connect-review\.html/i, "The customer URL must not de
 assert.doesNotMatch(html, /<sv-agent/i, "The active product must use Connect Kit presenter, not the legacy widget fallback");
 
 for (const file of [
-  "product-config.js", "campaign-data.js", "perxona-sdk-guard.js", "product-host.js",
-  "product.js", "onboarding.js", "onboarding.css"
+  "product-config.js", "latency-bootstrap.js", "campaign-data.js", "perxona-sdk-guard.js",
+  "product-host.js", "product.js", "onboarding.js", "onboarding.css"
 ]) {
   assert.match(html, new RegExp(file.replace(".", "\\.")), `Active product asset is not loaded: ${file}`);
 }
+assert.match(html, /rel="modulepreload"[^>]+presenter\.js/, "Perxona presenter module must be preloaded");
 
 for (const capability of [
   "initializeWithConnectKey", "PRESENTER_STATUS", 'status === "Ready"',
@@ -42,7 +45,8 @@ for (const lifecycleContract of ["ALL_PERFORMANCE_FINISHED", "waitForPerformance
   assert.ok(product.includes(lifecycleContract), `Missing Presenter speech lifecycle contract: ${lifecycleContract}`);
 }
 assert.match(product, /\[MOTION \$\{motionId\}:1\]/, "Motion markup must include an explicit priority");
-assert.match(html, /product\.js\?v=2\.0\.3/, "Product cache version must expose the speech lifecycle release");
+assert.match(html, /product\.js\?v=2\.0\.4/, "Product cache version must expose the latency release");
+
 const waitIndex = product.indexOf("const finishedPromise = waitForPerformanceFinished()");
 const presentIndex = product.indexOf("await presenter.present(payload)");
 const finishedIndex = product.indexOf("await finishedPromise");
@@ -50,17 +54,18 @@ const choicesIndex = product.indexOf("renderChoices(round)", finishedIndex);
 assert.ok(waitIndex >= 0 && waitIndex < presentIndex, "Performance listener must be attached before present()");
 assert.ok(presentIndex < finishedIndex && finishedIndex < choicesIndex, "Choices must remain locked until playback finishes");
 
-assert.match(html, /perxona-sdk-guard\.js\?v=2\.0\.6/, "The public page must load the current Presenter lifecycle adapter");
-assert.match(guard, /typeof detail === "string"/, "The guard must normalize bare-string Presenter status payloads");
-assert.match(guard, /const realReady = new Promise/, "The adapter must be able to resolve on the genuine Ready event");
-assert.match(guard, /Promise\.race\(\[\s*initialization,\s*realReady,\s*keyRejected/s, "Initialization must unblock on either upstream completion, genuine Ready, or key rejection");
-assert.doesNotMatch(guard, /initialize-promise-resolved|emitNormalizedStatus\(element, READY/, "The adapter must not fabricate readiness from initialization completion");
-assert.doesNotMatch(guard, /WATCHDOG_RETRY_MS|retrying the same target|const invoke =/, "The guard must not launch concurrent initialization retries");
-assert.equal(
-  (guard.match(/originalInitialize\.call\(/g) || []).length,
-  1,
-  "The lifecycle adapter must call initializeWithConnectKey exactly once per product attempt"
-);
+assert.match(html, /perxona-sdk-guard\.js\?v=2\.1\.0/, "Public page must load the low-latency Presenter adapter");
+assert.match(guard, /INIT_TIMEOUT_MS = 20000/, "Presenter initialization must have a hard latency ceiling");
+assert.match(guard, /PRESENT_TIMEOUT_MS = 12000/, "Speech request latency must be bounded");
+assert.match(guard, /if \(readStatus\(event\) === READY\) finishReady\(\)/, "Real Ready must unlock initialization immediately");
+assert.doesNotMatch(guard, /emitNormalizedStatus|initialize-promise-resolved/, "The adapter must not fabricate readiness");
+assert.equal((guard.match(/originalInitialize\.call\(/g) || []).length, 1, "One product attempt must call upstream initialize once");
+
+assert.match(latency, /CATALOG_TTL_MS = 5 \* 60 \* 1000/, "Catalog data should be session-cached briefly");
+assert.match(latency, /resumeAudioPlayback/, "Audio must be pre-unlocked from the start gesture");
+assert.match(latency, /exactCatalogPaths/, "Catalog prewarming must be enabled");
+assert.match(host, /Size, not viewport intersection/, "Presenter sizing must not depend on viewport intersection");
+assert.doesNotMatch(host, /rect\.bottom > 0 && rect\.top < innerHeight/, "Presenter must not collapse merely because its target is offscreen");
 
 for (const cue of [
   "missionBriefingDialog", "nextActionDock", "firstRoundCoach",
@@ -78,9 +83,9 @@ assert.match(onboardingCss, /\.first-round-coach/, "First-round coach styling is
 
 assert.match(config, /publishableConnectKey/, "Browser config must define a publishable key");
 assert.match(config, /atob\(/, "Publishable configuration should remain separated from product logic");
-assert.doesNotMatch(config, /secretConnectKey|PERXONA_CONNECT_SECRET_KEY|sk_live|sk_test/i, "A secret credential appears in browser configuration");
-assert.doesNotMatch(onboarding, /secretConnectKey|PERXONA_CONNECT_SECRET_KEY|sk_live|sk_test/i, "A secret credential appears in onboarding logic");
-assert.doesNotMatch(guard, /secretConnectKey|PERXONA_CONNECT_SECRET_KEY|sk_live|sk_test/i, "A secret credential appears in Presenter lifecycle logic");
+for (const file of [config, onboarding, guard, latency]) {
+  assert.doesNotMatch(file, /secretConnectKey|PERXONA_CONNECT_SECRET_KEY|sk_live|sk_test/i, "A secret credential appears in browser code");
+}
 
 const context = { window: {}, Object };
 vm.runInNewContext(campaign, context, { filename: "campaign-data.js" });
@@ -89,4 +94,4 @@ assert.equal(data.stages.length, 3, "Campaign must contain three stages");
 assert.equal(data.stages.reduce((sum, stage) => sum + stage.rounds.length, 0), 12, "Campaign must contain twelve main rounds");
 assert.ok(Object.keys(data.recovery).length >= 5, "Campaign must include recovery paths");
 
-console.log("ScamShield smoke test passed: genuine Ready-event Connect Kit lifecycle, guided next action, automatic training scroll, speech lifecycle, 3 stages, 12 rounds, and recovery paths are present.");
+console.log("ScamShield smoke test passed: preloaded Connect Kit, real Ready lifecycle, bounded latency, stable Presenter sizing, guided flow, 12 rounds, and recovery paths are present.");
