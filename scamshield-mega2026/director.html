@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#050914">
+  <meta name="description" content="ScamShield MEGA 2026 影音競賽導演與提詞模式。">
+  <title>ScamShield MEGA 2026 — 導演模式</title>
+  <link rel="stylesheet" href="./director.css?v=1.0.0">
+</head>
+<body>
+  <header class="director-header">
+    <a href="./">← 互動網站</a>
+    <div><strong>ScamShield · 導演模式</strong><small>《換一條線，真相就現形》· 目標片長 4:20</small></div>
+    <button id="fullscreenBtn" type="button">全螢幕</button>
+  </header>
+
+  <main class="director-shell">
+    <section class="preview-column">
+      <div class="timeline-head"><span id="sceneCounter">SCENE 1 / 8</span><b id="timecode">00:00 / 04:20</b></div>
+      <div class="timeline"><i id="timelineFill"></i></div>
+      <div id="filmFrame" class="film-frame" data-visual="cold-open">
+        <div class="safe-area"></div>
+        <div id="visualContent" class="visual-content"></div>
+        <div class="caption-safe"><span id="screenCaption"></span></div>
+      </div>
+      <div class="transport">
+        <button id="prevBtn" type="button">← 上一幕</button>
+        <button id="playBtn" class="primary" type="button">▶ 播放計時</button>
+        <button id="nextBtn" type="button">下一幕 →</button>
+      </div>
+    </section>
+
+    <aside class="prompt-column">
+      <p class="kicker">MEGA 2026 PRODUCTION CONTROL</p>
+      <h1 id="sceneTitle"></h1>
+      <p id="scenePurpose" class="scene-purpose"></p>
+      <section><h2>旁白／台詞</h2><p id="voiceover" class="teleprompter"></p></section>
+      <section><h2>畫面與演出</h2><p id="shot"></p></section>
+      <section><h2>這幕一定要讓觀眾記得</h2><p id="takeaway" class="takeaway"></p></section>
+      <div class="prompt-actions">
+        <a href="./?video=1" target="_blank" rel="noopener">開啟競賽版 Live Avatar ↗</a>
+        <a href="./docs/MEGA2026_VIDEO_SCRIPT.md" target="_blank" rel="noopener">完整腳本 ↗</a>
+      </div>
+      <div class="keyboard-help"><kbd>←</kbd><kbd>→</kbd> 換幕 · <kbd>Space</kbd> 播放／暫停 · <kbd>F</kbd> 全螢幕</div>
+    </aside>
+  </main>
+
+  <footer>錄影規格：橫式 16:9 · 1920×1080 以上 · 總長 3–5 分鐘 · 片尾必須清楚出現 165 與 110</footer>
+  <script src="./director.js?v=1.0.0"></script>
+</body>
+</html>
