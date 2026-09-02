@@ -26,7 +26,7 @@ assert.match(html, /director\.html/, "Director mode must be discoverable");
 
 for (const phrase of [
   "臉可以假，聲音可以假", "停", "換", "查", "165", "110",
-  "反詐騙諮詢", "報案專線", "MEGA 做夥來"
+  "反詐騙諮詢", "立即報案", "MEGA 做夥來"
 ]) {
   assert.ok(html.includes(phrase), `Missing required competition message: ${phrase}`);
 }
