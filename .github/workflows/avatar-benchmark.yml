@@ -1,0 +1,76 @@
+name: Avatar latency benchmark
+on:
+  push:
+    branches: [main]
+    paths:
+      - "scamshield/avatar-benchmark.html"
+      - ".github/workflows/avatar-benchmark.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  bench:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install Playwright
+        run: |
+          npm init -y >/dev/null 2>&1
+          npm install playwright@1.55.0 >/dev/null 2>&1
+          npx playwright install --with-deps chromium >/dev/null 2>&1
+      - name: Wait for benchmark page deployment
+        run: |
+          for i in $(seq 1 24); do
+            if curl -fsS "https://allen3429.github.io/Allentrial20260812.github.io/scamshield/avatar-benchmark.html?probe=$GITHUB_SHA" | grep -q "BENCH_RESULT\|__BENCH_RESULT"; then exit 0; fi
+            sleep 5
+          done
+          exit 1
+      - name: Run cold-start comparisons
+        run: |
+          cat > /tmp/bench.mjs <<'EOF'
+          import { chromium } from 'playwright';
+          const base='https://allen3429.github.io/Allentrial20260812.github.io/scamshield/avatar-benchmark.html';
+          const fixed='cc006_male_finance';
+          async function getCatalog(browser){
+            const p=await browser.newPage();
+            await p.goto(base+'?probe=catalog',{waitUntil:'domcontentloaded',timeout:30000});
+            const list=await p.evaluate(async()=>{
+              const cfg=window.SCAMSHIELD_CONFIG;
+              const r=await fetch(cfg.apiBase+'/api/v1/connect/assets/avatars?page=1&size=100',{headers:{'X-Connect-Key':cfg.publishableConnectKey},cache:'no-store'});
+              const d=await r.json(); return (d.items||[]).map(x=>x.avatar_id||x.id).filter(Boolean);
+            });
+            await p.close(); return list;
+          }
+          async function one(browser,avatarId,run){
+            const context=await browser.newContext();
+            const page=await context.newPage();
+            const url=base+'?avatar='+encodeURIComponent(avatarId)+'&r='+Date.now()+'_'+run;
+            const started=Date.now();
+            await page.goto(url,{waitUntil:'domcontentloaded',timeout:30000});
+            await page.waitForFunction(()=>window.__BENCH_RESULT!==undefined,{timeout:50000});
+            const result=await page.evaluate(()=>window.__BENCH_RESULT);
+            result.wallMs=Date.now()-started;
+            await context.close(); return result;
+          }
+          const browser=await chromium.launch({headless:true,args:['--use-gl=swiftshader','--enable-webgl','--ignore-gpu-blocklist']});
+          const ids=await getCatalog(browser);
+          const alternate=ids.find(x=>x!==fixed);
+          if(!alternate) throw new Error('No alternate avatar in catalog');
+          const results={fixed,alternate,fixedRuns:[],alternateRuns:[]};
+          for(let i=1;i<=3;i++) results.fixedRuns.push(await one(browser,fixed,i));
+          for(let i=1;i<=3;i++) results.alternateRuns.push(await one(browser,alternate,i));
+          const med=a=>{const s=a.filter(x=>x.ok).map(x=>x.ms).sort((x,y)=>x-y); return s.length?s[Math.floor(s.length/2)]:null};
+          results.fixedMedianMs=med(results.fixedRuns); results.alternateMedianMs=med(results.alternateRuns);
+          console.log('BENCHMARK_JSON='+JSON.stringify(results));
+          await browser.close();
+          EOF
+          node /tmp/bench.mjs | tee /tmp/avatar-benchmark.log
+      - name: Upload benchmark log
+        uses: actions/upload-artifact@v4
+        with:
+          name: avatar-benchmark-log
+          path: /tmp/avatar-benchmark.log
