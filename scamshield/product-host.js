@@ -9,27 +9,45 @@
   if (!host || !homeTarget || !stageTarget || !landing || !training) return;
 
   let frame = 0;
-  let currentTarget = homeTarget;
+  let retryFrame = 0;
+  let lastRect = null;
 
   function targetForCurrentView() {
-    if (!training.hidden) return stageTarget;
-    return homeTarget;
+    return !training.hidden ? stageTarget : homeTarget;
+  }
+
+  function applyRect(target, rect) {
+    lastRect = rect;
+    host.style.transform = `translate3d(${Math.round(rect.left)}px,${Math.round(rect.top)}px,0)`;
+    host.style.width = `${Math.max(1, Math.round(rect.width))}px`;
+    host.style.height = `${Math.max(1, Math.round(rect.height))}px`;
+    host.style.borderRadius = getComputedStyle(target).borderRadius || "18px";
+    host.classList.add("is-positioned");
   }
 
   function positionNow() {
     frame = 0;
-    currentTarget = targetForCurrentView();
-    const rect = currentTarget.getBoundingClientRect();
-    const visible = rect.width > 8 && rect.height > 8 && rect.bottom > 0 && rect.top < innerHeight;
-    if (!visible) {
-      host.classList.remove("is-positioned");
+    const target = targetForCurrentView();
+    const rect = target.getBoundingClientRect();
+
+    // Size, not viewport intersection, is what matters to the WebGL presenter.
+    // Keeping real dimensions while the target is offscreen prevents the SDK
+    // from being initialized into a 1x1 surface and stalling at Initializing.
+    if (rect.width > 8 && rect.height > 8) {
+      applyRect(target, rect);
       return;
     }
-    host.style.transform = `translate3d(${Math.round(rect.left)}px,${Math.round(rect.top)}px,0)`;
-    host.style.width = `${Math.round(rect.width)}px`;
-    host.style.height = `${Math.round(rect.height)}px`;
-    host.style.borderRadius = getComputedStyle(currentTarget).borderRadius || "18px";
-    host.classList.add("is-positioned");
+
+    // During landing -> training swaps there can be a brief zero-size frame.
+    // Never collapse the already-running Presenter; keep the previous geometry
+    // and try again on the next two paints.
+    if (lastRect) host.classList.add("is-positioned");
+    if (!retryFrame) {
+      retryFrame = requestAnimationFrame(() => {
+        retryFrame = 0;
+        requestAnimationFrame(schedulePosition);
+      });
+    }
   }
 
   function schedulePosition() {
@@ -53,16 +71,22 @@
   addEventListener("resize", schedulePosition, { passive: true });
   addEventListener("scroll", schedulePosition, { passive: true });
   document.addEventListener("click", (event) => {
-    if (event.target.closest?.("#startBtn,#replayBtn,#exitBtn,#homeBtn,#checkpointBtn")) {
-      requestAnimationFrame(schedulePosition);
-      setTimeout(schedulePosition, 60);
-      setTimeout(schedulePosition, 220);
+    if (event.target.closest?.("#startBtn,#briefingStartBtn,#dockStartBtn,#replayBtn,#exitBtn,#homeBtn,#checkpointBtn")) {
+      schedulePosition();
+      setTimeout(schedulePosition, 40);
+      setTimeout(schedulePosition, 140);
+      setTimeout(schedulePosition, 360);
     }
   }, true);
 
   document.addEventListener("visibilitychange", () => {
-    if (!document.hidden) schedulePosition();
+    if (!document.hidden) {
+      schedulePosition();
+      setTimeout(schedulePosition, 100);
+    }
   });
 
+  // Establish a real-size surface before product.js starts initialization.
   positionNow();
+  requestAnimationFrame(schedulePosition);
 })();
