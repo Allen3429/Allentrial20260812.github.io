@@ -47,13 +47,13 @@ function connectApi(path, timeoutMs = 5000) {
 function text(item){ try{return JSON.stringify(item).toLowerCase()}catch{return ""} }
 function id(kind,item){ if(kind==="avatar") return item?.avatar_id||item?.id||""; if(kind==="scene") return item?.scene_id||item?.id||""; return item?.id||item?.voice_id||""; }
 function pickAvatar(items){
-  return items.find(x=>id("avatar",x)===CONFIG.fixedAvatarId) || [...items].sort((a,b)=>rankAvatar(b)-rankAvatar(a))[0];
+  return items.find(x=>id("avatar",x)===CONFIG.fixedAvatarId) || items[0];
 }
-function rankAvatar(x){ const s=text(x); let n=0; for(const k of ["male","man","adult","business","finance","executive","professional","suit"]) if(s.includes(k)) n+=3; for(const k of ["female","child","kid","cute","anime","cartoon"]) if(s.includes(k)) n-=5; return n; }
-function pickScene(items){ return [...items].sort((a,b)=>rankScene(b)-rankScene(a))[0]; }
-function rankScene(x){ const s=text(x); let n=0; for(const k of ["office","meeting","business","boardroom","studio","room"]) if(s.includes(k)) n+=2; return n; }
-function pickVoice(items){ return [...items].sort((a,b)=>rankVoice(b)-rankVoice(a))[0]; }
-function rankVoice(x){ const s=text(x); let n=0; for(const k of ["zh","taiwan","mandarin","chinese","male","man","deep","mature","serious"]) if(s.includes(k)) n+=2; for(const k of ["female","child","cute","bright"]) if(s.includes(k)) n-=3; return n; }
+// The isolated benchmark that consistently reached Ready in ~3.6–4.6s used
+// the first available scene and voice. Production deliberately mirrors that
+// exact asset-selection path instead of ranking into potentially heavier assets.
+function pickScene(items){ return items[0]; }
+function pickVoice(items){ return items[0]; }
 
 function positionPresenter(){
   const target = ui.training?.hidden ? ui.homeSlot : ui.stage;
@@ -99,7 +99,7 @@ async function boot(){
   try{
     positionPresenter();
     setStatus("loading","正在載入 Perxona");
-    setLoading("正在建立 Avatar","讀取必要的 Avatar / Scene / Voice 資產。其他資料不會阻塞啟動。");
+    setLoading("正在建立 Avatar","使用已實測較快的固定 Avatar + 第一組 Scene / Voice。");
     await customElements.whenDefined("sv-presenter");
     const [a,s,v]=await Promise.all([
       connectApi("/api/v1/connect/assets/avatars?page=1&size=20"),
