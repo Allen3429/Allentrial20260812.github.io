@@ -1,22 +1,58 @@
 /*
- * ScamShield lifecycle adapter for the Perxona Presenter SDK.
+ * ScamShield lifecycle + warm-start adapter for the Perxona Presenter SDK.
  * A REAL PRESENTER_STATUS: Ready event unlocks immediately. No synthetic Ready.
- * Cold 3D/WebGL starts are allowed enough time to finish; product-level retry
- * remains responsible for switching assets when a session genuinely stalls.
+ * After one successful load, the last-known-good avatar/scene/voice target is
+ * reused on the next visit so the Presenter can boot before catalog reads.
  */
 (() => {
   "use strict";
 
+  const CONFIG = window.SCAMSHIELD_CONFIG;
   const STATUS_EVENT = "PRESENTER_STATUS";
   const READY = "Ready";
   const INIT_TIMEOUT_MS = 44000;
   const PRESENT_TIMEOUT_MS = 12000;
   const MOTION_TIMEOUT_MS = 6000;
+  const FAST_TARGET_KEY = "scamshield.perxona.fastTarget.v1";
 
   function readStatus(event) {
     const detail = event?.detail;
     if (typeof detail === "string") return detail;
     return String(detail?.status || detail?.state || detail?.value || "");
+  }
+
+  function normalizeTarget(target) {
+    return {
+      avatarId: String(target?.avatarId || ""),
+      sceneId: String(target?.sceneId || ""),
+      voiceId: String(target?.voiceId || "")
+    };
+  }
+
+  function targetKey(target) {
+    const t = normalizeTarget(target);
+    return `${t.avatarId}|${t.sceneId}|${t.voiceId}`;
+  }
+
+  function validTarget(target) {
+    const t = normalizeTarget(target);
+    return Boolean(t.avatarId && t.sceneId && t.voiceId);
+  }
+
+  function saveFastTarget(target) {
+    if (!validTarget(target)) return;
+    try {
+      localStorage.setItem(FAST_TARGET_KEY, JSON.stringify(normalizeTarget(target)));
+    } catch {}
+  }
+
+  function loadFastTarget() {
+    try {
+      const parsed = JSON.parse(localStorage.getItem(FAST_TARGET_KEY) || "null");
+      return validTarget(parsed) ? normalizeTarget(parsed) : null;
+    } catch {
+      return null;
+    }
   }
 
   function nudgeRenderer(element) {
@@ -46,11 +82,24 @@
     ]).finally(() => clearTimeout(timer));
   }
 
+  // Do not wait for product.js to decide it needs the SDK. Start fetching and
+  // evaluating the official Presenter module as soon as this guard is parsed.
+  if (!customElements.get("sv-presenter") && CONFIG?.presenterUrl) {
+    const existing = document.querySelector('script[data-perxona-presenter="1"]');
+    if (!existing) {
+      const script = document.createElement("script");
+      script.type = "module";
+      script.src = CONFIG.presenterUrl;
+      script.dataset.perxonaPresenter = "1";
+      document.head.appendChild(script);
+    }
+  }
+
   customElements.whenDefined("sv-presenter").then(() => {
     const Presenter = customElements.get("sv-presenter");
     const prototype = Presenter?.prototype;
-    if (!prototype || prototype.__scamShieldLifecycleV22) return;
-    Object.defineProperty(prototype, "__scamShieldLifecycleV22", { value: true });
+    if (!prototype || prototype.__scamShieldLifecycleV23) return;
+    Object.defineProperty(prototype, "__scamShieldLifecycleV23", { value: true });
 
     const originalInitialize = prototype.initializeWithConnectKey;
     const originalPresent = prototype.present;
@@ -60,7 +109,18 @@
     if (typeof originalInitialize === "function") {
       prototype.initializeWithConnectKey = function resilientInitialize(connectKey, target) {
         const element = this;
-        return new Promise((resolve, reject) => {
+        const key = targetKey(target);
+
+        // product.js may arrive after warm-start has already reached real Ready.
+        // Reusing that same target must be a no-op, not a second WebGL boot.
+        if (key && element.__scamShieldReadyTargetKey === key) {
+          return Promise.resolve();
+        }
+        if (key && element.__scamShieldInitializingTargetKey === key && element.__scamShieldInitPromise) {
+          return element.__scamShieldInitPromise;
+        }
+
+        const promise = new Promise((resolve, reject) => {
           let settled = false;
           let timer = 0;
           let lastStatus = "";
@@ -74,6 +134,10 @@
             if (settled) return;
             settled = true;
             cleanup();
+            element.__scamShieldReadyTargetKey = key;
+            element.__scamShieldInitializingTargetKey = "";
+            element.__scamShieldInitPromise = null;
+            saveFastTarget(target);
             nudgeRenderer(element);
             resolve();
           };
@@ -81,6 +145,8 @@
             if (settled) return;
             settled = true;
             cleanup();
+            element.__scamShieldInitializingTargetKey = "";
+            element.__scamShieldInitPromise = null;
             reject(error instanceof Error ? error : new Error(String(error)));
           };
           function onStatus(event) {
@@ -95,9 +161,6 @@
           element.addEventListener(STATUS_EVENT, onStatus);
           element.addEventListener("CONNECT_KEY_REJECTED", onRejected);
           timer = setTimeout(() => {
-            // Do not interrupt at the old 20-second mark. Cold WebGL/asset starts
-            // can legitimately be slow. At 44s the product-level 45s watchdog
-            // can safely switch to its alternate asset set.
             fail(new Error(`Perxona Avatar 冷啟動逾時${lastStatus ? `（最後狀態：${lastStatus}）` : ""}，正在切換備援角色重新連線。`));
           }, INIT_TIMEOUT_MS);
 
@@ -110,6 +173,10 @@
             fail(error);
           }
         });
+
+        element.__scamShieldInitializingTargetKey = key;
+        element.__scamShieldInitPromise = promise;
+        return promise;
       };
     }
 
@@ -157,5 +224,17 @@
         return undefined;
       }
     };
+
+    // Warm-start only after the following synchronous scripts (especially the
+    // presenter host geometry manager) have had a chance to attach this tick.
+    const fastTarget = loadFastTarget();
+    if (fastTarget && CONFIG?.publishableConnectKey) {
+      setTimeout(() => {
+        const element = document.querySelector("#presenter");
+        if (!element?.initializeWithConnectKey || element.__scamShieldReadyTargetKey) return;
+        element.initializeWithConnectKey(CONFIG.publishableConnectKey, fastTarget)
+          .catch((error) => console.warn("Perxona warm-start skipped", error));
+      }, 0);
+    }
   }).catch((error) => console.warn("Perxona lifecycle adapter could not attach", error));
 })();
