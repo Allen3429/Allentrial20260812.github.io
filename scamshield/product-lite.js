@@ -1,6 +1,6 @@
 const CONFIG = window.SCAMSHIELD_CONFIG;
 const CONTENT = window.SCAMSHIELD_CAMPAIGN_DATA;
-if (!CONFIG?.publishableConnectKey || !CONTENT?.stages?.length) throw new Error("ScamShield config missing");
+if (!CONFIG?.publishableConnectKey || !CONFIG?.fixedAvatarId || !CONFIG?.fixedSceneId || !CONFIG?.fixedVoiceId || !CONTENT?.stages?.length) throw new Error("ScamShield config missing");
 
 const $ = (s) => document.querySelector(s);
 const presenter = $("#presenter");
@@ -37,23 +37,6 @@ function setLoading(title, detail) {
   if (ui.loadingDetail) ui.loadingDetail.textContent = detail;
   if (ui.startup) ui.startup.textContent = detail;
 }
-function connectApi(path, timeoutMs = 5000) {
-  const c = new AbortController();
-  const t = setTimeout(() => c.abort(), timeoutMs);
-  return fetch(`${CONFIG.apiBase}${path}`, {headers:{"X-Connect-Key":CONFIG.publishableConnectKey}, mode:"cors", cache:"default", signal:c.signal})
-    .then(async r => { const data = await r.json().catch(()=>({})); if (!r.ok) throw new Error(data?.detail || data?.error || `HTTP ${r.status}`); return data; })
-    .finally(()=>clearTimeout(t));
-}
-function text(item){ try{return JSON.stringify(item).toLowerCase()}catch{return ""} }
-function id(kind,item){ if(kind==="avatar") return item?.avatar_id||item?.id||""; if(kind==="scene") return item?.scene_id||item?.id||""; return item?.id||item?.voice_id||""; }
-function pickAvatar(items){
-  return items.find(x=>id("avatar",x)===CONFIG.fixedAvatarId) || items[0];
-}
-// The isolated benchmark that consistently reached Ready in ~3.6–4.6s used
-// the first available scene and voice. Production deliberately mirrors that
-// exact asset-selection path instead of ranking into potentially heavier assets.
-function pickScene(items){ return items[0]; }
-function pickVoice(items){ return items[0]; }
 
 function positionPresenter(){
   const target = ui.training?.hidden ? ui.homeSlot : ui.stage;
@@ -99,18 +82,12 @@ async function boot(){
   try{
     positionPresenter();
     setStatus("loading","正在載入 Perxona");
-    setLoading("正在建立 Avatar","使用已實測較快的固定 Avatar + 第一組 Scene / Voice。");
+    setLoading("正在建立 Avatar","直接初始化已實測成功的 Avatar / Scene / Voice；不等待 catalog。");
+    state.assets={avatarId:CONFIG.fixedAvatarId,sceneId:CONFIG.fixedSceneId,voiceId:CONFIG.fixedVoiceId};
     await customElements.whenDefined("sv-presenter");
-    const [a,s,v]=await Promise.all([
-      connectApi("/api/v1/connect/assets/avatars?page=1&size=20"),
-      connectApi("/api/v1/connect/assets/scenes?page=1&size=20"),
-      connectApi("/api/v1/connect/voices?page=1&size=20")
-    ]);
-    const avatar=pickAvatar(a.items||[]), scene=pickScene(s.items||[]), voice=pickVoice(v.items||[]);
-    if(!avatar||!scene||!voice) throw new Error("Perxona catalog 缺少可用資產");
-    state.assets={avatarId:id("avatar",avatar),sceneId:id("scene",scene),voiceId:id("voice",voice)};
     const readyPromise=waitReady();
-    presenter.initializeWithConnectKey(CONFIG.publishableConnectKey,state.assets).catch(()=>{});
+    const initPromise=presenter.initializeWithConnectKey(CONFIG.publishableConnectKey,state.assets);
+    initPromise?.catch?.(err=>console.warn("Perxona initialize promise:",err));
     await readyPromise;
     state.ready=true;
     setStatus("ready","Perxona Ready");
