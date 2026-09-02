@@ -5,6 +5,7 @@ import vm from "node:vm";
 const read = (name) => fs.readFileSync(new URL(`../${name}`, import.meta.url), "utf8");
 const html = read("index.html");
 const product = read("product.js");
+const guard = read("perxona-sdk-guard.js");
 const config = read("product-config.js");
 const campaign = read("campaign-data.js");
 const onboarding = read("onboarding.js");
@@ -49,6 +50,16 @@ const choicesIndex = product.indexOf("renderChoices(round)", finishedIndex);
 assert.ok(waitIndex >= 0 && waitIndex < presentIndex, "Performance listener must be attached before present()");
 assert.ok(presentIndex < finishedIndex && finishedIndex < choicesIndex, "Choices must remain locked until playback finishes");
 
+assert.match(html, /perxona-sdk-guard\.js\?v=2\.0\.5/, "The public page must load the stable Presenter lifecycle adapter");
+assert.match(guard, /typeof detail === "string"/, "The guard must normalize the documented string status payload");
+assert.match(guard, /initialize-promise-resolved/, "A resolved initialization must bridge a missing Ready event");
+assert.doesNotMatch(guard, /WATCHDOG_RETRY_MS|retrying the same target|const invoke =/, "The guard must not launch concurrent initialization retries");
+assert.equal(
+  (guard.match(/originalInitialize\.call\(/g) || []).length,
+  1,
+  "The lifecycle adapter must call initializeWithConnectKey exactly once per product attempt"
+);
+
 for (const cue of [
   "missionBriefingDialog", "nextActionDock", "firstRoundCoach",
   "開始第 1 關", "BREAK THE SPELL", "選一個安全回應"
@@ -67,6 +78,7 @@ assert.match(config, /publishableConnectKey/, "Browser config must define a publ
 assert.match(config, /atob\(/, "Publishable configuration should remain separated from product logic");
 assert.doesNotMatch(config, /secretConnectKey|PERXONA_CONNECT_SECRET_KEY|sk_live|sk_test/i, "A secret credential appears in browser configuration");
 assert.doesNotMatch(onboarding, /secretConnectKey|PERXONA_CONNECT_SECRET_KEY|sk_live|sk_test/i, "A secret credential appears in onboarding logic");
+assert.doesNotMatch(guard, /secretConnectKey|PERXONA_CONNECT_SECRET_KEY|sk_live|sk_test/i, "A secret credential appears in Presenter lifecycle logic");
 
 const context = { window: {}, Object };
 vm.runInNewContext(campaign, context, { filename: "campaign-data.js" });
@@ -75,4 +87,4 @@ assert.equal(data.stages.length, 3, "Campaign must contain three stages");
 assert.equal(data.stages.reduce((sum, stage) => sum + stage.rounds.length, 0), 12, "Campaign must contain twelve main rounds");
 assert.ok(Object.keys(data.recovery).length >= 5, "Campaign must include recovery paths");
 
-console.log("ScamShield smoke test passed: Connect Kit, guided next action, automatic training scroll, first-round coaching, 3 stages, 12 rounds, and recovery paths are present.");
+console.log("ScamShield smoke test passed: stable single-call Connect Kit initialization, guided next action, automatic training scroll, speech lifecycle, 3 stages, 12 rounds, and recovery paths are present.");
