@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="./product.css?v=2.0.2">
   <link rel="stylesheet" href="./product-host.css?v=2.0.3">
   <link rel="stylesheet" href="./onboarding.css?v=2.1.0">
+  <link rel="stylesheet" href="./direct-avatar.css?v=1.0.0">
 </head>
 <body>
   <div class="ambient" aria-hidden="true"></div>
@@ -60,6 +61,22 @@
           <div id="presenterHomeSlot" class="home-avatar-slot" aria-hidden="true"></div>
           <strong class="preview-caption">LIVE PERXONA CONNECT · 可直接操作</strong>
         </div>
+
+        <section class="direct-avatar-panel" aria-label="直接操作 Perxona AI Avatar">
+          <div class="direct-avatar-head">
+            <div><small>TRY IT NOW</small><strong>直接與 AI Avatar 互動</strong></div>
+            <span id="directAvatarState" class="direct-avatar-state">等待 Avatar Ready</span>
+          </div>
+          <div class="direct-avatar-actions">
+            <button type="button" data-avatar-action="start" disabled><b>▶ 播放可疑來電</b><span>讓 Avatar 立即開始施壓情境</span></button>
+            <button type="button" data-avatar-action="verify" disabled><b>✓ 我要獨立驗證</b><span>看 Avatar 如何回應你的防守</span></button>
+            <button type="button" data-avatar-action="otp" disabled><b>✕ 我拒絕提供 OTP</b><span>測試對方下一步的施壓話術</span></button>
+            <button type="button" data-avatar-action="stop" class="is-danger" disabled><b>■ 立即中斷 Avatar</b><span>直接呼叫 interruptPresentation()</span></button>
+          </div>
+          <div id="directAvatarLog" class="direct-avatar-log" aria-live="polite"><strong>系統：</strong>Avatar Ready 後即可直接點擊上方按鈕互動，不需要先進入闖關。</div>
+          <p class="direct-avatar-hint">這些是封閉式防詐訓練情境：不會撥電話、不會發訊息、不會收集 OTP，也不會執行付款。</p>
+        </section>
+
         <div class="preview-grid">
           <div><span>01</span><b>BREAK THE SPELL</b><small>直接中斷正在說話的角色</small></div>
           <div><span>02</span><b>RECOVERY CHECK</b><small>犯錯後仍要快速止損</small></div>
@@ -157,5 +174,6 @@
   <script src="./product-host.js?v=2.0.3"></script>
   <script type="module" src="./product.js?v=2.0.4"></script>
   <script src="./onboarding.js?v=2.1.1"></script>
+  <script src="./direct-avatar.js?v=1.0.0"></script>
 </body>
 </html>
