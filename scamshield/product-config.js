@@ -4,6 +4,9 @@
  * use and restricted in Perxona Console to allen3429.github.io. It is encoded
  * only to keep configuration separate from application logic; this is not
  * encryption and no secret Connect key is shipped to the client.
+ *
+ * Avatar is deliberately locked to a real ID returned by the current Perxona
+ * Connect catalog and verified by the latency benchmark on 2026-09-02.
  */
 window.SCAMSHIELD_CONFIG = Object.freeze({
   apiBase: "https://console.perxona.ai/asia",
@@ -11,7 +14,7 @@ window.SCAMSHIELD_CONFIG = Object.freeze({
   publishableConnectKey: atob(
     "cHhjXzAxTTE1WDlSWFRaQVc4SDZQV1ozREROTVpLX0RfTENNYUZLRkhGTVpPUl9NVVdFMmlFOHdJLUhlTUlBeTkxYlJrR0lVQ00="
   ),
-  fixedAvatarId: "cc006_male_finance",
-  preferredAvatarIds: ["cc006_male_finance"],
-  productVersion: "2.1.0"
+  fixedAvatarId: "01KVQ59VW18PC6P2HQET51NMYS",
+  preferredAvatarIds: ["01KVQ59VW18PC6P2HQET51NMYS"],
+  productVersion: "2.2.0"
 });
