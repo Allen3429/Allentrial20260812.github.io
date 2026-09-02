@@ -12,9 +12,9 @@ for (const id of ["presenter","presenterHomeSlot","avatarStage","startBtn","trai
   assert.match(html,new RegExp(`id=["']${id}["']`),`Missing ${id}`);
 }
 assert.match(html,/<sv-presenter\s+id=["']presenter["']/,"Must use sv-presenter");
-assert.match(html,/product-lite\.js\?v=1\.0\.0/,"Minimal controller must be active");
+assert.match(html,/product-lite\.js\?v=1\.0\.1/,"Minimal controller must be active");
 assert.match(html,/presenter\.js/,"Official Perxona presenter module must load directly");
-for (const removed of ["latency-bootstrap.js","perxona-sdk-guard.js","product-host.js","product.js?v=","onboarding.js","game-jump.js","direct-avatar.js","speed-pressure.js"]) {
+for (const removed of ["latency-bootstrap.js","perxona-sdk-guard.js","product-host.js","product.js?v=","onboarding.js","game-jump.js","direct-avatar.js","speed-pressure.js","fast-assets.js"]) {
   assert.doesNotMatch(html,new RegExp(removed.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")),`Layered runtime must be removed: ${removed}`);
 }
 for (const capability of ["initializeWithConnectKey","PRESENTER_STATUS","present(","interruptPresentation","ALL_PERFORMANCE_FINISHED"]) {
@@ -37,4 +37,4 @@ const data=context.window.SCAMSHIELD_CAMPAIGN_DATA;
 assert.equal(data.stages.length,3);
 assert.equal(data.stages.reduce((n,s)=>n+s.rounds.length,0),12);
 
-console.log("ScamShield smoke test passed: one Perxona controller, verified fixed Avatar, visual interaction gate, 12 rounds, and speed scoring.");
+console.log("ScamShield smoke test passed: one Perxona controller, direct official catalog boot, verified fixed Avatar, visual interaction gate, 12 rounds, and speed scoring.");
