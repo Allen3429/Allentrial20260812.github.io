@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://console.perxona.ai" crossorigin>
   <link rel="modulepreload" href="https://cdn.perxona.ai/asia/prod/latest/widget/entry/presenter.js" crossorigin>
   <script src="./product-config.js?v=2.2.0"></script>
+  <script src="./fast-assets.js?v=1.0.0"></script>
   <script type="module" src="https://cdn.perxona.ai/asia/prod/latest/widget/entry/presenter.js"></script>
   <link rel="stylesheet" href="./product.css?v=2.0.2">
   <link rel="stylesheet" href="./product-host.css?v=2.0.3">
@@ -20,7 +21,7 @@
   <div class="ambient" aria-hidden="true"></div>
   <div id="presenterHost" class="presenter-host" aria-label="Live Perxona AI Avatar">
     <sv-presenter id="presenter"></sv-presenter>
-    <div id="avatarLoading" class="avatar-loading"><div class="loading-silhouette"><i></i></div><strong id="loadingTitle">正在建立 Perxona Avatar</strong><p id="loadingDetail">只載入必要的 Avatar、Scene、Voice。</p></div>
+    <div id="avatarLoading" class="avatar-loading"><div class="loading-silhouette"><i></i></div><strong id="loadingTitle">正在建立 Perxona Avatar</strong><p id="loadingDetail">固定 Avatar，Scene / Voice 只在必要時讀取。</p></div>
   </div>
   <header class="site-header">
     <a class="brand" href="./"><span class="brand-mark">S</span><span><strong>ScamShield</strong><small>TRUST UNDER ATTACK</small></span></a>
@@ -34,7 +35,7 @@
         <p class="lede">ScamShield 讓使用者在 AI Avatar 的即時社交壓力下，練習中斷操控、拒絕交付憑證，以及改用正式流程獨立驗證身分。</p>
         <div class="mode-switch" role="group"><button type="button" data-mode="campaign" class="is-selected"><b>完整闖關</b><span>3 階段 · 12 回合</span></button><button type="button" data-mode="quick"><b>快速演練</b><span>4 回合</span></button></div>
         <button id="startBtn" class="primary-button" type="button" disabled><span class="button-label">正在準備 Perxona Avatar</span><i>◌</i></button>
-        <p id="startupDetail" class="startup-detail" aria-live="polite">最短路徑：SDK → 3 個必要 catalog → initialize → Ready。</p>
+        <p id="startupDetail" class="startup-detail" aria-live="polite">最短路徑：SDK → 固定 Avatar → Scene / Voice → initialize → Ready。</p>
       </div>
       <div class="landing-preview">
         <div class="preview-top"><span>LIVE TRAINING SURFACE</span><b>SIMULATION ONLY</b></div>
