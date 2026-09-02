@@ -36,12 +36,8 @@ for (const file of [
 assert.match(html, /rel="modulepreload"[^>]+presenter\.js/, "Perxona presenter module must be preloaded");
 assert.match(html, /<script type="module" src="https:\/\/cdn\.perxona\.ai\/asia\/prod\/latest\/widget\/entry\/presenter\.js" data-perxona-presenter="1"><\/script>/, "Official Presenter SDK must execute directly from head");
 
-for (const capability of ["initializeWithConnectKey", "PRESENTER_STATUS", 'status === "Ready"', "present(", "playMotion", "interruptPresentation", "X-Connect-Key"]) {
-  assert.ok(product.includes(capability), `Missing Connect Kit capability: ${capability}`);
-}
-for (const lifecycleContract of ["ALL_PERFORMANCE_FINISHED", "waitForPerformanceFinished", "cancelPerformanceWait"]) {
-  assert.ok(product.includes(lifecycleContract), `Missing Presenter speech lifecycle contract: ${lifecycleContract}`);
-}
+for (const capability of ["initializeWithConnectKey", "PRESENTER_STATUS", 'status === "Ready"', "present(", "playMotion", "interruptPresentation", "X-Connect-Key"]) assert.ok(product.includes(capability), `Missing Connect Kit capability: ${capability}`);
+for (const lifecycleContract of ["ALL_PERFORMANCE_FINISHED", "waitForPerformanceFinished", "cancelPerformanceWait"]) assert.ok(product.includes(lifecycleContract), `Missing Presenter speech lifecycle contract: ${lifecycleContract}`);
 assert.match(product, /\[MOTION \$\{motionId\}:1\]/, "Motion markup must include an explicit priority");
 
 assert.match(guard, /FAST_TARGET_KEY = "scamshield\.perxona\.fastTarget\.v1"/, "Successful Presenter target must be cached for warm start");
@@ -54,7 +50,7 @@ assert.doesNotMatch(guard, /20 秒內未 Ready|emitNormalizedStatus|initialize-p
 
 assert.match(config, /fixedAvatarId:\s*"cc006_male_finance"/, "ScamShield must lock to one mature male Avatar");
 assert.match(latency, /AVATAR_PATH = "\/api\/v1\/connect\/assets\/avatars\?page=1&size=100"/, "Avatar catalog path must be recognized");
-assert.match(latency, /filterAvatarCatalog/, "Real Avatar catalog must be filtered to the single product Avatar");
+assert.match(latency, /singleAvatarCatalog/, "Real Avatar catalog must be filtered to the single product Avatar");
 assert.match(latency, /nativeFetch/, "Single-avatar verification must use a real Perxona response rather than a fabricated ID");
 assert.doesNotMatch(latency, /fixedAvatarCatalog/, "Fabricated Avatar catalogs must not be used");
 assert.match(latency, /CATALOG_TTL_MS = 5 \* 60 \* 1000/, "Catalog data should be session-cached briefly");
@@ -79,18 +75,14 @@ assert.match(speed, /FAST_MS = 3500/, "Fast safe decisions must receive a speed 
 assert.match(speed, /normalizedSpeed/, "Final score must incorporate reaction speed");
 assert.match(html, /SPEED SCORE/, "Landing page must explain that response speed affects scoring");
 
-for (const cue of ["missionBriefingDialog", "nextActionDock", "firstRoundCoach", "開始第 1 關", "BREAK THE SPELL", "選一個安全回應"]) {
-  assert.ok(onboarding.includes(cue), `Missing player guidance cue: ${cue}`);
-}
+for (const cue of ["missionBriefingDialog", "nextActionDock", "firstRoundCoach", "開始第 1 關", "BREAK THE SPELL", "選一個安全回應"]) assert.ok(onboarding.includes(cue), `Missing player guidance cue: ${cue}`);
 assert.match(onboardingCss, /\.next-step-guide/, "Landing next-step guide styling is missing");
 assert.match(onboardingCss, /\.next-action-dock/, "Persistent next-action dock styling is missing");
 assert.match(onboardingCss, /\.first-round-coach/, "First-round coach styling is missing");
 
 assert.match(config, /publishableConnectKey/, "Browser config must define a publishable key");
 assert.match(config, /atob\(/, "Publishable configuration should remain separated from product logic");
-for (const file of [config, onboarding, guard, latency, direct, speed, persona]) {
-  assert.doesNotMatch(file, /secretConnectKey|PERXONA_CONNECT_SECRET_KEY|sk_live|sk_test/i, "A secret credential appears in browser code");
-}
+for (const file of [config, onboarding, guard, latency, direct, speed, persona]) assert.doesNotMatch(file, /secretConnectKey|PERXONA_CONNECT_SECRET_KEY|sk_live|sk_test/i, "A secret credential appears in browser code");
 
 const context = { window: {}, Object };
 vm.runInNewContext(campaign, context, { filename: "campaign-data.js" });
