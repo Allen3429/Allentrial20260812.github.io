@@ -31,8 +31,14 @@ jobs:
         run: node scamshield-mega2026/tests/smoke.mjs
       - name: Confirm original ScamShield was not imported as runtime
         run: |
-          if grep -R -E '(src|href)=["'"']\.\./scamshield/[^"'"']+' scamshield-mega2026/index.html; then
-            echo "MEGA site imports original runtime assets" >&2
-            exit 1
-          fi
-          echo "MEGA runtime is self-contained."
+          node --input-type=module <<'EOF'
+          import fs from 'node:fs';
+          const html = fs.readFileSync('scamshield-mega2026/index.html', 'utf8');
+          const imports = [...html.matchAll(/(?:src|href)=["']([^"']+)["']/g)].map(m => m[1]);
+          const bad = imports.filter(value => value.startsWith('../scamshield/') && value !== '../scamshield/');
+          if (bad.length) {
+            console.error('MEGA site imports original runtime assets:', bad);
+            process.exit(1);
+          }
+          console.log('MEGA runtime is self-contained; the only original-site reference is a navigation link.');
+          EOF
