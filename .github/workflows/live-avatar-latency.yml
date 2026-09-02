@@ -1,5 +1,9 @@
 name: Live ScamShield avatar latency
 on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/live-avatar-latency.yml"
   workflow_dispatch:
 permissions:
   contents: read
