@@ -62,9 +62,15 @@ assert.match(guard, /PRESENT_TIMEOUT_MS = 12000/, "Speech request latency must r
 assert.match(guard, /if \(status === READY\) finishReady\(\)/, "Real Ready must unlock initialization immediately");
 assert.doesNotMatch(guard, /20 秒內未 Ready|emitNormalizedStatus|initialize-promise-resolved/, "Old false-failure or synthetic Ready logic must be gone");
 
-assert.match(latency, /CATALOG_TTL_MS = 5 \* 60 \* 1000/, "Catalog data should be session-cached briefly");
+assert.match(config, /fixedAvatarId:\s*"cc006_male_finance"/, "ScamShield must lock to one mature male Avatar");
+assert.match(html, /product-config\.js\?v=2\.1\.0/, "Public page must load the fixed-avatar config");
+assert.match(html, /latency-bootstrap\.js\?v=2\.2\.0/, "Public page must load the fixed-avatar fast path");
+assert.match(latency, /AVATAR_PATH = "\/api\/v1\/connect\/assets\/avatars\?page=1&size=100"/, "Avatar catalog path must be intercepted locally");
+assert.match(latency, /fixedAvatarCatalog/, "A single local catalog-shaped Avatar response must exist");
+assert.match(latency, /url === fixedAvatarUrl/, "Avatar catalog requests must resolve locally without network I/O");
+assert.doesNotMatch(latency, /exactCatalogPaths = \[\s*"\/api\/v1\/connect\/assets\/avatars/, "Avatar catalog must not be network-prewarmed");
+assert.match(latency, /CATALOG_TTL_MS = 5 \* 60 \* 1000/, "Scene and voice catalog data should be session-cached briefly");
 assert.match(latency, /resumeAudioPlayback/, "Audio must be pre-unlocked from the start gesture");
-assert.match(latency, /exactCatalogPaths/, "Catalog prewarming must be enabled");
 assert.match(host, /Size, not viewport intersection/, "Presenter sizing must not depend on viewport intersection");
 assert.doesNotMatch(host, /rect\.bottom > 0 && rect\.top < innerHeight/, "Presenter must not collapse merely because its target is offscreen");
 
@@ -101,4 +107,4 @@ assert.equal(data.stages.length, 3, "Campaign must contain three stages");
 assert.equal(data.stages.reduce((sum, stage) => sum + stage.rounds.length, 0), 12, "Campaign must contain twelve main rounds");
 assert.ok(Object.keys(data.recovery).length >= 5, "Campaign must include recovery paths");
 
-console.log("ScamShield smoke test passed: direct Perxona interaction, last-known-good warm start, resilient Ready lifecycle, impatient male persona, speed scoring, 12 rounds, and recovery paths are present.");
+console.log("ScamShield smoke test passed: single fixed Avatar, direct Perxona interaction, warm start, resilient Ready lifecycle, speed scoring, 12 rounds, and recovery paths are present.");
