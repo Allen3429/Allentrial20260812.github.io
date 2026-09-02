@@ -27,7 +27,7 @@ assert.match(lite,/Avatar Ready · 等待畫面顯示/,"Ready must not be mislab
 assert.match(lite,/Avatar 已顯示 · 可直接互動/,"Direct interaction requires the visual gate");
 assert.match(lite,/speedBonus/,"Speed scoring must remain in the main controller");
 assert.match(lite,/12000/,"Decision pressure window must remain 12 seconds");
-assert.match(config,/fixedAvatarId:\s*"cc006_male_finance"/,"Preferred male attacker persona must remain fixed");
+assert.match(config,/fixedAvatarId:\s*"01KVQ59VW18PC6P2HQET51NMYS"/,"Verified production Avatar must remain fixed");
 assert.match(config,/publishableConnectKey/,"Publishable key is required");
 assert.doesNotMatch(lite,/secretConnectKey|PERXONA_CONNECT_SECRET_KEY|sk_live|sk_test/i,"No secret may be shipped");
 
@@ -37,4 +37,4 @@ const data=context.window.SCAMSHIELD_CAMPAIGN_DATA;
 assert.equal(data.stages.length,3);
 assert.equal(data.stages.reduce((n,s)=>n+s.rounds.length,0),12);
 
-console.log("ScamShield smoke test passed: one Perxona controller, parallel minimal boot, visual interaction gate, 12 rounds, and speed scoring.");
+console.log("ScamShield smoke test passed: one Perxona controller, verified fixed Avatar, visual interaction gate, 12 rounds, and speed scoring.");
