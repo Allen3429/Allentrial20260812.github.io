@@ -1,0 +1,38 @@
+name: ScamShield MEGA 2026 smoke test
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "scamshield-mega2026/**"
+      - ".github/workflows/scamshield-mega2026-smoke.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Check JavaScript syntax
+        run: |
+          node --check scamshield-mega2026/product-lite.js
+          node --check scamshield-mega2026/director.js
+          node --check scamshield-mega2026/campaign-data.js
+      - name: Validate competition product contract
+        run: node scamshield-mega2026/tests/smoke.mjs
+      - name: Confirm original ScamShield was not imported as runtime
+        run: |
+          if grep -R -E '(src|href)=["'"']\.\./scamshield/[^"'"']+' scamshield-mega2026/index.html; then
+            echo "MEGA site imports original runtime assets" >&2
+            exit 1
+          fi
+          echo "MEGA runtime is self-contained."
