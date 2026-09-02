@@ -1,13 +1,15 @@
 /*
- * ScamShield low-latency lifecycle adapter for the Perxona Presenter SDK.
+ * ScamShield lifecycle adapter for the Perxona Presenter SDK.
  * A REAL PRESENTER_STATUS: Ready event unlocks immediately. No synthetic Ready.
+ * Cold 3D/WebGL starts are allowed enough time to finish; product-level retry
+ * remains responsible for switching assets when a session genuinely stalls.
  */
 (() => {
   "use strict";
 
   const STATUS_EVENT = "PRESENTER_STATUS";
   const READY = "Ready";
-  const INIT_TIMEOUT_MS = 20000;
+  const INIT_TIMEOUT_MS = 44000;
   const PRESENT_TIMEOUT_MS = 12000;
   const MOTION_TIMEOUT_MS = 6000;
 
@@ -47,8 +49,8 @@
   customElements.whenDefined("sv-presenter").then(() => {
     const Presenter = customElements.get("sv-presenter");
     const prototype = Presenter?.prototype;
-    if (!prototype || prototype.__scamShieldLowLatency) return;
-    Object.defineProperty(prototype, "__scamShieldLowLatency", { value: true });
+    if (!prototype || prototype.__scamShieldLifecycleV22) return;
+    Object.defineProperty(prototype, "__scamShieldLifecycleV22", { value: true });
 
     const originalInitialize = prototype.initializeWithConnectKey;
     const originalPresent = prototype.present;
@@ -56,11 +58,12 @@
     const originalInterrupt = prototype.interruptPresentation;
 
     if (typeof originalInitialize === "function") {
-      prototype.initializeWithConnectKey = function lowLatencyInitialize(connectKey, target) {
+      prototype.initializeWithConnectKey = function resilientInitialize(connectKey, target) {
         const element = this;
         return new Promise((resolve, reject) => {
           let settled = false;
           let timer = 0;
+          let lastStatus = "";
 
           const cleanup = () => {
             clearTimeout(timer);
@@ -81,7 +84,9 @@
             reject(error instanceof Error ? error : new Error(String(error)));
           };
           function onStatus(event) {
-            if (readStatus(event) === READY) finishReady();
+            const status = readStatus(event);
+            if (status) lastStatus = status;
+            if (status === READY) finishReady();
           }
           function onRejected() {
             fail(new Error("Perxona Publishable Connect Key 被拒絕，請檢查 allowed domain 或方案狀態。"));
@@ -90,14 +95,13 @@
           element.addEventListener(STATUS_EVENT, onStatus);
           element.addEventListener("CONNECT_KEY_REJECTED", onRejected);
           timer = setTimeout(() => {
-            try { originalInterrupt?.call(element); } catch {}
-            fail(new Error("Perxona Avatar 20 秒內未 Ready，已停止等待並可重新連線。"));
+            // Do not interrupt at the old 20-second mark. Cold WebGL/asset starts
+            // can legitimately be slow. At 44s the product-level 45s watchdog
+            // can safely switch to its alternate asset set.
+            fail(new Error(`Perxona Avatar 冷啟動逾時${lastStatus ? `（最後狀態：${lastStatus}）` : ""}，正在切換備援角色重新連線。`));
           }, INIT_TIMEOUT_MS);
 
           try {
-            // Resolution alone is not treated as Ready. A rejection before real
-            // Ready is still surfaced immediately. If Ready arrives first, this
-            // upstream promise may finish later without blocking the product.
             Promise.resolve(originalInitialize.call(element, connectKey, target)).catch((error) => {
               if (!settled) fail(error);
               else console.warn("Perxona initialize rejected after Ready", error);
@@ -153,5 +157,5 @@
         return undefined;
       }
     };
-  }).catch((error) => console.warn("Perxona low-latency adapter could not attach", error));
+  }).catch((error) => console.warn("Perxona lifecycle adapter could not attach", error));
 })();
