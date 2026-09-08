@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="sport99">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="2026新北國民體育日免費運動導航：9/9全館運動設施免費，9/19、9/29體適能與游泳池免費。16座國民運動中心快速篩選與白跑防呆。">
+<title>Sport99 Now｜今天免費去哪運動？</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#65717e;--line:#dbe3ea;--ok:#176b45;--warn:#936000}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1120px;margin:auto;padding:24px 14px 72px}.kicker{font-weight:850;color:var(--muted);font-size:14px}
+h1{font-size:clamp(34px,6vw,58px);line-height:1.04;margin:.12em 0 .25em}h2{margin:.1em 0 .65em}.lead{font-size:18px;color:var(--muted);line-height:1.75;max-width:920px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:11px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:9px}.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:21px;margin-top:4px}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:11px 13px;border-radius:9px;line-height:1.7;margin:10px 0}.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}
+.big{font-size:clamp(22px,4vw,31px);font-weight:900}label{display:block;font-weight:760;margin-bottom:5px}select,input,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}textarea{min-height:170px}
+button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}
+.venues{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px}.venue{border:1px solid var(--line);border-radius:15px;padding:13px}.venue h3{margin:.25em 0 .4em}.tag{display:inline-block;padding:3px 8px;border-radius:999px;background:#edf1f5;font-size:12px;font-weight:850}
+.muted{color:var(--muted);line-height:1.6;font-size:14px}.selected{outline:3px solid #17212b}.small{font-size:13px;color:var(--muted);line-height:1.6}
+@media print{button,.actions{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · 新北市 · 最後查證 2026/09/09 00:30</div>
+<h1>Sport99 Now<br>今天免費去哪運動？</h1>
+<p class="lead">9/9 國民體育日，新北市公告<strong>新北運動中心與新北運動聚點的館內運動設施免費使用</strong>；9/19、9/29再加碼<strong>體適能與游泳池免費</strong>。真正容易白跑的是「只知道免費，卻沒確認這一館今天的時段、預約與器材規則」。這頁先幫你選館，再給出發前30秒防呆。</p>
+
+<section class="card">
+<h2>1｜今天到底是哪種免費？</h2>
+<div id="todayMode"></div>
+<div class="stats">
+  <div class="stat"><span>新北大型國民運動中心</span><b>16座</b></div>
+  <div class="stat"><span>9/9</span><b>館內運動設施免費</b></div>
+  <div class="stat"><span>9/19、9/29</span><b>泳池＋體適能免費</b></div>
+</div>
+<div class="actions">
+<a class="btn ghost" target="_blank" rel="noopener" href="https://www.ntpc.gov.tw/ch/home.jsp?dataserno=c19c40fe95d7554ae33eeea99bc6d9fc&id=e8ca970cde5c00e1">新北市9/3官方公告</a>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://www.t-sports.ntpc.gov.tw/">新北市體育局</a>
+</div>
+</section>
+
+<section class="card">
+<h2>2｜先選你想做什麼</h2>
+<div class="grid">
+<div><label>今天想做</label><select id="activity"><option>游泳</option><option>健身／體適能</option><option>球類／其他館內設施</option><option>還不知道，先找最近的館</option></select></div>
+<div><label>行政區</label><select id="district"><option value="">全部16區</option><option>新莊區</option><option>蘆洲區</option><option>淡水區</option><option>三重區</option><option>土城區</option><option>中和區</option><option>板橋區</option><option>泰山區</option><option>樹林區</option><option>汐止區</option><option>永和區</option><option>鶯歌區</option><option>三峽區</option><option>新店區</option><option>林口區</option><option>五股區</option></select></div>
+</div>
+<div id="activityHint" class="note"></div>
+<div id="venues" class="venues">
+<article class="venue" data-district="新莊區"><span class="tag">新莊區</span><h3>新莊國民運動中心</h3><p class="muted">9/9：新北市公告館內運動設施免費；實際開放時段、需不需要預約與個別設施規則仍以該館當日公告為準。</p><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=新莊國民運動中心%20新北市">開地圖</a><button class="choose" data-name="新莊國民運動中心">我選這間</button></div></article>
+<article class="venue" data-district="蘆洲區"><span class="tag">蘆洲區</span><h3>蘆洲國民運動中心</h3><p class="muted">9/9：新北市公告館內運動設施免費；實際開放時段、需不需要預約與個別設施規則仍以該館當日公告為準。</p><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=蘆洲國民運動中心%20新北市">開地圖</a><button class="choose" data-name="蘆洲國民運動中心">我選這間</button></div></article>
+<article class="venue" data-district="淡水區"><span class="tag">淡水區</span><h3>淡水國民運動中心</h3><p class="muted">9/9：新北市公告館內運動設施免費；實際開放時段、需不需要預約與個別設施規則仍以該館當日公告為準。</p><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=淡水國民運動中心%20新北市">開地圖</a><button class="choose" data-name="淡水國民運動中心">我選這間</button></div></article>
+<article class="venue" data-district="三重區"><span class="tag">三重區</span><h3>三重國民運動中心</h3><p class="muted">9/9：新北市公告館內運動設施免費；實際開放時段、需不需要預約與個別設施規則仍以該館當日公告為準。</p><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=三重國民運動中心%20新北市">開地圖</a><button class="choose" data-name="三重國民運動中心">我選這間</button></div></article>
+<article class="venue" data-district="土城區"><span class="tag">土城區</span><h3>土城國民運動中心</h3><p class="muted">9/9：新北市公告館內運動設施免費；實際開放時段、需不需要預約與個別設施規則仍以該館當日公告為準。</p><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=土城國民運動中心%20新北市">開地圖</a><button class="choose" data-name="土城國民運動中心">我選這間</button></div></article>
+<article class="venue" data-district="中和區"><span class="tag">中和區</span><h3>中和國民運動中心</h3><p class="muted">9/9：新北市公告館內運動設施免費；實際開放時段、需不需要預約與個別設施規則仍以該館當日公告為準。</p><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=中和國民運動中心%20新北市">開地圖</a><button class="choose" data-name="中和國民運動中心">我選這間</button></div></article>
+<article class="venue" data-district="板橋區"><span class="tag">板橋區</span><h3>板橋國民運動中心</h3><p class="muted">9/9：新北市公告館內運動設施免費；實際開放時段、需不需要預約與個別設施規則仍以該館當日公告為準。</p><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=板橋國民運動中心%20新北市">開地圖</a><button class="choose" data-name="板橋國民運動中心">我選這間</button></div></article>
+<article class="venue" data-district="泰山區"><span class="tag">泰山區</span><h3>泰山國民運動中心</h3><p class="muted">9/9：新北市公告館內運動設施免費；實際開放時段、需不需要預約與個別設施規則仍以該館當日公告為準。</p><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=泰山國民運動中心%20新北市">開地圖</a><button class="choose" data-name="泰山國民運動中心">我選這間</button></div></article>
+<article class="venue" data-district="樹林區"><span class="tag">樹林區</span><h3>樹林國民運動中心</h3><p class="muted">9/9：新北市公告館內運動設施免費；實際開放時段、需不需要預約與個別設施規則仍以該館當日公告為準。</p><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=樹林國民運動中心%20新北市">開地圖</a><button class="choose" data-name="樹林國民運動中心">我選這間</button></div></article>
+<article class="venue" data-district="汐止區"><span class="tag">汐止區</span><h3>汐止國民運動中心</h3><p class="muted">9/9：新北市公告館內運動設施免費；實際開放時段、需不需要預約與個別設施規則仍以該館當日公告為準。</p><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=汐止國民運動中心%20新北市">開地圖</a><button class="choose" data-name="汐止國民運動中心">我選這間</button></div></article>
+<article class="venue" data-district="永和區"><span class="tag">永和區</span><h3>永和國民運動中心</h3><p class="muted">9/9：新北市公告館內運動設施免費；實際開放時段、需不需要預約與個別設施規則仍以該館當日公告為準。</p><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=永和國民運動中心%20新北市">開地圖</a><button class="choose" data-name="永和國民運動中心">我選這間</button></div></article>
+<article class="venue" data-district="鶯歌區"><span class="tag">鶯歌區</span><h3>鶯歌國民運動中心</h3><p class="muted">9/9：新北市公告館內運動設施免費；實際開放時段、需不需要預約與個別設施規則仍以該館當日公告為準。</p><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=鶯歌國民運動中心%20新北市">開地圖</a><button class="choose" data-name="鶯歌國民運動中心">我選這間</button></div></article>
+<article class="venue" data-district="三峽區"><span class="tag">三峽區</span><h3>三鶯國民運動中心</h3><p class="muted">9/9：新北市公告館內運動設施免費；實際開放時段、需不需要預約與個別設施規則仍以該館當日公告為準。</p><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=三鶯國民運動中心%20新北市">開地圖</a><button class="choose" data-name="三鶯國民運動中心">我選這間</button></div></article>
+<article class="venue" data-district="新店區"><span class="tag">新店區</span><h3>新店國民運動中心</h3><p class="muted">9/9：新北市公告館內運動設施免費；實際開放時段、需不需要預約與個別設施規則仍以該館當日公告為準。</p><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=新店國民運動中心%20新北市">開地圖</a><button class="choose" data-name="新店國民運動中心">我選這間</button></div></article>
+<article class="venue" data-district="林口區"><span class="tag">林口區</span><h3>林口國民運動中心</h3><p class="muted">9/9：新北市公告館內運動設施免費；實際開放時段、需不需要預約與個別設施規則仍以該館當日公告為準。</p><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=林口國民運動中心%20新北市">開地圖</a><button class="choose" data-name="林口國民運動中心">我選這間</button></div></article>
+<article class="venue" data-district="五股區"><span class="tag">五股區</span><h3>五股國民運動中心</h3><p class="muted">9/9：新北市公告館內運動設施免費；實際開放時段、需不需要預約與個別設施規則仍以該館當日公告為準。</p><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=五股國民運動中心%20新北市">開地圖</a><button class="choose" data-name="五股國民運動中心">我選這間</button></div></article>
+</div>
+</section>
+
+<section class="card"><h2>3｜出發前30秒：避免「到了才發現不能用」</h2><div class="grid">
+<label><input class="pre" type="checkbox"> 我已確認該館今天的實際免費時段</label><label><input class="pre" type="checkbox"> 若要打球／使用特定場地，我已確認是否需預約或額滿</label><label><input class="pre" type="checkbox"> 若要游泳，我已確認泳帽／泳裝等現場規定</label><label><input class="pre" type="checkbox"> 若要體適能，我已確認年齡、服裝／鞋類與入場規定</label><label><input class="pre" type="checkbox"> 我知道9/9官方雖寫全館運動設施免費，但細節仍以各館公告為準</label>
+</div><div id="readyOut"></div></section>
+
+<section class="card"><h2>4｜一鍵產生「今天去哪運動」小卡</h2><textarea id="plan"></textarea><div class="actions"><button onclick="copyPlan()">複製給朋友</button><button class="ghost" onclick="downloadPlan()">下載TXT</button></div></section>
+
+<section class="card"><h2>5｜如果你真的去了，請幫忙驗證一件事：哪種資訊最容易讓人白跑？</h2><p>我們不是只看頁面瀏覽。這個專案會公開記錄<strong>獨立使用者、完成選館、回饋人數，以及「真的去運動」的人數</strong>。如果你遇到免費時段、額滿／預約、器材規定、年齡限制或現場公告不一致，請留一句不含個資的回饋。</p><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/4">回報白跑／成功進場經驗</a></div></section>
+
+<section class="card"><h2>6｜今晚可直接轉貼的推廣文</h2><textarea id="promo">【9/9國民體育日｜新北免費運動不要白跑】
+今天新北運動中心／運動聚點館內運動設施免費；9/19、9/29還有泳池＋體適能免費。
+我整理了一個 Sport99 Now：先選行政區和想游泳／健身／打球，再做30秒出發前檢查。
+重點：免費不代表所有場地都不用預約，各館時段與規則仍以當日公告為準。
+如果你真的去了，也幫忙回報「有沒有成功免費進場、最容易卡在哪」，讓明年不是只發一張活動海報。</textarea><div class="actions"><button onclick="copyText('promo')">複製推廣文</button><button class="ghost" onclick="shareLine()">LINE分享</button><button class="ghost" onclick="shareFB()">Facebook分享</button></div></section>
+
+<section class="card"><h2>資料邊界</h2><p class="small">2026/9/9免費方案與9/19、9/29加碼內容依新北市政府2026/9/3公告。官方同時提醒：各場館免費開放時段、適用設施與活動細節依各場館公告為準。本頁不把「免費」誤寫成「所有課程、租借與器材都無條件免費」。若出發前資訊不一致，優先以場館當日公告或櫃檯回覆為準。</p></section>
+</main>
+<script>
+const $=id=>document.getElementById(id);let selected='';
+function twDate(){const f=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Taipei',year:'numeric',month:'2-digit',day:'2-digit'});return f.format(new Date())}
+function mode(){const d=twDate();let html='';if(d==='2026-09-09')html='<div class="note ok"><div class="big">今天 9/9：新北公告館內運動設施免費</div>先選場館；球場、特殊設施、開放時段與是否預約，仍要看各館當日公告。</div>';else if(d==='2026-09-19'||d==='2026-09-29')html='<div class="note ok"><div class="big">今天是加碼日：體適能＋游泳池免費</div>依各場館當日公告使用。</div>';else if(d<'2026-09-09')html='<div class="note">下一個免費日：9/9。先收藏，出發當天再確認場館公告。</div>';else if(d<'2026-09-19')html='<div class="note">9/9已過；下一個加碼免費日是9/19（體適能＋游泳池）。</div>';else if(d<'2026-09-29')html='<div class="note">下一個加碼免費日是9/29（體適能＋游泳池）。</div>';else html='<div class="note warn">2026年9月的三個免費日已結束。本頁保留作需求驗證，不再把平日標成免費。</div>';$('todayMode').innerHTML=html}
+function filter(){const d=$('district').value;document.querySelectorAll('.venue').forEach(v=>v.style.display=(!d||v.dataset.district===d)?'block':'none');const a=$('activity').value;let t='';if(a==='游泳')t='先找有泳池的運動中心；9/9依各館公告免費，9/19與9/29官方明確加碼泳池免費。出發前確認泳池時段與裝備規定。';else if(a==='健身／體適能')t='9/9依各館公告免費；9/19、9/29官方明確加碼體適能免費。出發前確認年齡、服裝鞋類與當日入場規則。';else if(a==='球類／其他館內設施')t='這類最容易白跑：官方9/9寫「全館運動設施免費」，但球場／特殊設施是否需預約、名額與時段仍以各館公告為準。先查再出發。';else t='先用行政區縮小到一間，再點地圖。若要使用特定設施，出發前再查該館當日公告。';$('activityHint').textContent=t;buildPlan()}
+document.querySelectorAll('.choose').forEach(b=>b.addEventListener('click',()=>{selected=b.dataset.name;document.querySelectorAll('.venue').forEach(v=>v.classList.remove('selected'));b.closest('.venue').classList.add('selected');if(window.PGLabImpact)PGLabImpact.core('venue-selected');buildPlan();$('readyOut').scrollIntoView({behavior:'smooth',block:'center'})}));
+function ready(){const a=[...document.querySelectorAll('.pre')],n=a.filter(x=>x.checked).length;$('readyOut').innerHTML=n===a.length?'<div class="note ok">5/5 已確認。現在比較不容易因規則沒查而白跑。</div>':`<div class="note warn">已完成 ${n}/5。至少把「免費時段＋需不需要預約」確認完再出發。</div>`;buildPlan()}
+function buildPlan(){const n=[...document.querySelectorAll('.pre')].filter(x=>x.checked).length;$('plan').value=`【Sport99 Now｜今天去哪運動】\n日期：${twDate()}\n想做：${$('activity').value}\n選定場館：${selected||'還沒選'}\n出發前檢查：${n}/5\n\n我會在出發前確認：\n1. 今天免費開放的實際時段\n2. 特定場地是否需預約／是否額滿\n3. 游泳或健身的服裝、裝備與年齡規則\n4. 以場館當日公告為準\n\n新北市官方活動：\nhttps://www.ntpc.gov.tw/ch/home.jsp?dataserno=c19c40fe95d7554ae33eeea99bc6d9fc&id=e8ca970cde5c00e1\n\n如果真的進場，我會回到 Sport99 Now 按「我今天真的去運動了」，讓這個專案不是只有瀏覽量。`}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}async function copyPlan(){await copyText('plan');if(window.PGLabImpact)PGLabImpact.core('plan-copied')}
+function downloadPlan(){const b=new Blob([$('plan').value],{type:'text/plain;charset=utf-8'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download='Sport99_今天去哪運動.txt';a.click();URL.revokeObjectURL(u);if(window.PGLabImpact)PGLabImpact.core('plan-downloaded')}
+function pageURL(){return location.protocol.startsWith('http')?location.href:'https://allen3429.github.io/Allentrial20260812.github.io/public-good/sport99/'}function shareLine(){window.open('https://social-plugins.line.me/lineit/share?url='+encodeURIComponent(pageURL()),'_blank')}function shareFB(){window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(pageURL()),'_blank')}
+$('district').addEventListener('change',filter);$('activity').addEventListener('change',filter);document.querySelectorAll('.pre').forEach(x=>x.addEventListener('change',ready));mode();filter();ready();
+</script>
+<script src="../impact.js" data-project="sport99" data-action-text="我已選好今天要去的場館" data-real-text="我今天真的去運動了" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/4"></script>
+</body></html>
