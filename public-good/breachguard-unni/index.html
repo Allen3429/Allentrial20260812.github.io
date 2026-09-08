@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="breachguard-unni">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="BreachGuard Unni TW：針對2026/9 Gangnam Unni／歐尼 Unni 個資外洩，協助台灣使用者查官方暴露項目、建立二次詐騙防護規則與本機可疑聯絡紀錄。">
+<title>BreachGuard Unni TW｜醫美平台個資外洩後續防護</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#65717e;--line:#dbe3ea;--ok:#176b45;--warn:#936000;--bad:#a32323}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1120px;margin:auto;padding:24px 14px 72px}.kicker{font-weight:850;color:var(--muted);font-size:14px}
+h1{font-size:clamp(34px,6vw,58px);line-height:1.04;margin:.12em 0 .25em}h2{margin:.1em 0 .65em}.lead{font-size:18px;color:var(--muted);line-height:1.75;max-width:940px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:11px}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:9px}.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:21px;margin-top:4px}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:11px 13px;border-radius:9px;line-height:1.7;margin:10px 0}.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}
+label{display:block;font-weight:760;margin-bottom:5px}select,input,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}textarea{min-height:185px;resize:vertical}
+button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}.danger{background:#feeaea;color:#8b1d1d}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}
+.big{font-size:clamp(22px,4vw,31px);font-weight:900}.small,.muted{color:var(--muted);line-height:1.6}.small{font-size:13px}
+.ck{width:auto;transform:scale(1.12);margin-right:7px}.checkgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:9px}
+.tag{display:inline-block;padding:4px 8px;border-radius:999px;background:#edf1f5;font-size:12px;font-weight:850;margin:3px 4px 3px 0}
+.logitem{border:1px solid var(--line);border-radius:12px;padding:10px;margin:8px 0}.logitem b{display:block}
+@media print{button,.actions{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · Taiwan · 2026/09/09</div>
+<h1>BreachGuard Unni TW<br>醫美平台個資外洩後續防護</h1>
+<p class="lead">2026/9/7，Gangnam Unni／歐尼 Unni 營運方 Healing Paper 公告個資外洩；受影響共 219,665 人，其中<strong>台灣 4,218 人</strong>。這頁不要求你把療程、照片或付款資料再交給另一個網站，而是把「官方查詢 → 風險對應 → 可疑聯絡驗證 → 本機紀錄」做成 5 分鐘流程。</p>
+
+<section class="card">
+<h2>1｜先確認你是否需要處理</h2>
+<div class="grid">
+<div><label>你是否曾使用 Unni／Gangnam Unni？</label><select id="used"><option value="unknown">不確定</option><option value="yes">有</option><option value="no">沒有</option></select></div>
+<div><label>是否收到平台個別外洩通知？</label><select id="notice"><option value="unknown">還沒確認</option><option value="yes">有</option><option value="no">沒有</option></select></div>
+</div>
+<div id="needOut"></div>
+<div class="actions">
+<a class="btn" target="_blank" rel="noopener" href="https://www.gangnamunni.com/tw">直接開 Unni 官方網站</a>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://165.npa.gov.tw/">165 全民防騙網</a>
+</div>
+<p class="small">營運方表示已個別通知受影響者，並在官方網站提供「實際外洩項目」查詢，期間為公告日起 30 天。請從你平常使用的 App 或自行輸入官方網站進入，不要從陌生簡訊裡的連結登入。</p>
+</section>
+
+<section class="card">
+<h2>2｜只勾「官方通知確認有外洩」的項目</h2>
+<p class="small">新聞列的是「可能包含的資料類別」，每個人的實際外洩項目不同。沒有在官方通知看到的，不要因新聞自己推定已外洩。</p>
+<div class="checkgrid">
+<label><input class="ck leak" type="checkbox" value="name">姓名</label>
+<label><input class="ck leak" type="checkbox" value="phone">電話</label>
+<label><input class="ck leak" type="checkbox" value="email">Email</label>
+<label><input class="ck leak" type="checkbox" value="dob">出生年月日</label>
+<label><input class="ck leak" type="checkbox" value="clinic">曾諮詢的診所／醫師</label>
+<label><input class="ck leak" type="checkbox" value="time">偏好預約時間</label>
+<label><input class="ck leak" type="checkbox" value="reason">諮詢原因／狀態</label>
+<label><input class="ck leak" type="checkbox" value="photo">諮詢照片</label>
+<label><input class="ck leak" type="checkbox" value="procedure">曾諮詢／接受的療程資料</label>
+<label><input class="ck leak" type="checkbox" value="payment">付款相關資訊（若你的通知有列）</label>
+</div>
+<div id="riskPlan"></div>
+</section>
+
+<section class="card">
+<h2>3｜最重要的防詐規則：對方「知道你的療程」也不能證明他是真的</h2>
+<div class="note bad"><b>這次外洩的危險不是只有垃圾簡訊。</b>如果診所、醫師、療程、預約時間或照片也被取得，詐騙者可以講出很像內部人員才知道的細節。把「他知道很多」當成身分驗證，反而是這次最危險的錯誤。</div>
+<div class="grid">
+<div><label>對方透過什麼聯絡？</label><select id="channel"><option>簡訊</option><option>LINE／WhatsApp／其他聊天軟體</option><option>電話</option><option>Email</option><option>社群私訊</option></select></div>
+<div><label>對方自稱</label><select id="claim"><option>Unni／Gangnam Unni 客服</option><option>我曾諮詢的診所／醫師</option><option>付款／退款客服</option><option>警方／政府單位</option><option>其他</option></select></div>
+</div>
+<p><b>對方要求了什麼？</b></p>
+<div class="checkgrid">
+<label><input class="ck ask" type="checkbox" value="discount">以折扣／補償／退款為理由聯絡</label>
+<label><input class="ck ask" type="checkbox" value="link">點擊連結</label>
+<label><input class="ck ask" type="checkbox" value="login">重新登入／輸入驗證碼</label>
+<label><input class="ck ask" type="checkbox" value="info">提供個資或照片</label>
+<label><input class="ck ask" type="checkbox" value="money">提供金融資料／付款／轉帳</label>
+<label><input class="ck ask" type="checkbox" value="install">下載 App／檔案／遠端控制</label>
+<label><input class="ck ask" type="checkbox" value="none">目前只通知，沒有要求任何動作</label>
+</div>
+<div id="contactOut"></div>
+<div class="actions"><button onclick="assessContact(true)">重新判讀</button><button class="ghost" onclick="saveContact()">把這次可疑聯絡記在本機</button></div>
+</section>
+
+<section class="card">
+<h2>4｜產生「不用相信來電者」的驗證流程</h2>
+<textarea id="verifyCard"></textarea>
+<div class="actions"><button onclick="buildVerify(true)">更新驗證卡</button><button class="ghost" onclick="copyText('verifyCard')">複製驗證卡</button></div>
+<div class="note">如果你已經點了可疑連結、提供金融資料或發現未授權交易，不要等對方回覆。停止互動，從官方 App／網站或帳單上的官方電話聯絡相關平台、診所或金融機構；遇到詐騙疑慮可撥 165。若有恐嚇、勒索或人身威脅，直接保存證據並報警。</div>
+</section>
+
+<section class="card">
+<h2>5｜30 天觀察清單</h2>
+<div class="checkgrid">
+<label><input class="ck watch" type="checkbox"> 已從官方 App／網站確認我的實際外洩項目</label>
+<label><input class="ck watch" type="checkbox"> 不再用「對方知道療程細節」作為真實身分證明</label>
+<label><input class="ck watch" type="checkbox"> 遇到折扣／退款訊息，改從官方 App／官網重新進入查證</label>
+<label><input class="ck watch" type="checkbox"> 若我的官方通知列有付款資料，我已檢查近期交易／付款紀錄</label>
+<label><input class="ck watch" type="checkbox"> 我已保存平台通知，但沒有把通知截圖公開貼到社群</label>
+<label><input class="ck watch" type="checkbox"> 可疑聯絡只記錄必要資訊，不在這個工具輸入療程、照片或個資</label>
+</div>
+<div id="watchOut"></div>
+</section>
+
+<section class="card">
+<h2>6｜本機可疑聯絡紀錄</h2>
+<p class="small">只記「何時、哪個管道、對方自稱什麼、要求什麼」；不要記電話號碼、姓名、療程或完整連結。紀錄只存這台瀏覽器。</p>
+<div id="logList"></div>
+<div class="actions"><button class="ghost" onclick="exportLog()">匯出 JSON</button><button class="danger" onclick="clearLog()">清除本機紀錄</button></div>
+</section>
+
+<section class="card">
+<h2>7｜這個工具刻意不做</h2>
+<div class="note">
+<ul>
+<li>不要求上傳平台通知、醫美照片、療程名稱、診所名稱或付款資料。</li>
+<li>不判定某封訊息「100% 是詐騙」；高風險時一律改走獨立官方管道查證。</li>
+<li>不宣稱密碼已外洩；目前公開資訊的外洩類別以平台通知為準。</li>
+<li>不提供如何隱藏身分、規避平台或警方追查的方法。</li>
+</ul>
+</div>
+</section>
+
+<section class="card">
+<h2>8｜推廣：轉給真的可能用過 Unni 的人，不要公開猜誰做過醫美</h2>
+<textarea id="promo">【台灣有 4,218 人受影響｜Unni 個資外洩後不要只「小心詐騙」】
+如果你曾用過 Gangnam Unni／歐尼 Unni：
+1. 從你平常用的 App 或自己輸入官方網址，確認官方列出的實際外洩項目
+2. 之後有人講得出你問過哪間診所、哪個療程，也不能因此相信他是真的
+3. 遇到「折扣、補償、退款」＋要求點連結／提供金融資料，先停，改從官方管道重新聯絡
+4. 不要把外洩通知截圖、療程或照片公開貼到社群
+
+BreachGuard Unni TW 會依你「官方確認外洩的資料類別」產生風險清單，並提供不含敏感資料的本機可疑聯絡紀錄。</textarea>
+<div class="actions"><button onclick="copyText('promo')">複製推廣文</button><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/10">公開回饋區</a></div>
+</section>
+
+<section class="card">
+<h2>資料來源與時效</h2>
+<p class="small">截至 2026/09/09 凌晨的公開資訊：Healing Paper 於 9/4 發現諮詢紀錄 API 遭異常存取，9/5 同一攻擊者再嘗試其他路徑；受影響 219,665 人，台灣 4,218 人。平台表示已個別通知受影響者，並提供 30 天官方查詢；可能外洩類別依個人而異，包含聯絡資料，以及部分使用者的診所／醫師、諮詢與預約、照片、療程或付款相關資料。營運方並提醒警戒冒充 Unni 或醫療機構、以折扣等理由要求點連結或提供個人／金融資訊的二次釣魚。</p>
+<div class="actions">
+<a class="btn ghost" target="_blank" rel="noopener" href="https://www.ajupress.com/view/20260908154935133">事件英文報導／公司說明摘要</a>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://www.koreaherald.com/article/10866388">Korea Herald</a>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://165.npa.gov.tw/">台灣 165 全民防騙網</a>
+</div>
+</section>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+function selected(cls){return [...document.querySelectorAll('.'+cls+':checked')].map(x=>x.value)}
+function need(){
+ const u=$('used').value,n=$('notice').value;
+ let cls='warn',txt='';
+ if(u==='no'){cls='ok';txt='<b>你表示沒有使用過 Unni。</b>目前不需要因這起事件做帳號層級處理；若仍收到自稱平台的外洩／退款訊息，反而要提高警覺。';}
+ else if(n==='yes'){cls='bad';txt='<b>你已收到官方個別通知。</b>下一步不是再猜「到底漏了什麼」，而是從官方 App／網站確認你的實際外洩項目，再做下面的對應防護。';}
+ else if(u==='yes'){txt='<b>你曾使用 Unni，但還沒確認官方通知。</b>請直接從原本 App 或自行輸入官方網站登入查詢；不要從陌生簡訊的連結進入。';}
+ else txt='<b>先確認是否曾有帳號／諮詢紀錄。</b>不需要因新聞把自己的醫美資訊輸入任何第三方頁面。';
+ $('needOut').innerHTML=`<div class="note ${cls}">${txt}</div>`;
+}
+function plan(){
+ const a=new Set(selected('leak'));let rows=[];
+ if(a.size===0)rows.push('尚未勾選。請只依官方通知勾選，新聞提到的類別不等於你的資料一定外洩。');
+ if([...a].some(x=>['name','phone','email','dob'].includes(x)))rows.push('聯絡／識別資料：預期可能出現更精準的冒名訊息。陌生聯絡知道你的姓名或生日，不是可信身分證明。');
+ if([...a].some(x=>['clinic','time','reason','procedure'].includes(x)))rows.push('醫美諮詢脈絡：把「知道你問過哪家診所／哪個療程」視為可能已外洩的資訊，不要拿它驗證客服真偽。');
+ if(a.has('photo'))rows.push('照片：不要因恐嚇或「協助刪除照片」訊息付款或再上傳資料。若有人以照片勒索，保存證據並報警。');
+ if(a.has('payment'))rows.push('付款相關：先看官方通知實際列了什麼；檢查近期交易，發現未授權交易時直接聯絡金融機構。不要把完整卡號／帳戶輸入本工具。');
+ $('riskPlan').innerHTML='<div class="note '+(a.size?'warn':'')+'"><b>你的對應防護：</b><ul>'+rows.map(x=>'<li>'+x+'</li>').join('')+'</ul></div>';
+}
+function assessContact(countCore){
+ const asks=selected('ask'),risky=asks.filter(x=>x!=='none');
+ let cls='ok',title='目前沒有看到高風險要求',body='即使對方只是通知，也不要用對方提供的連結作為唯一查證來源。';
+ if(risky.length){cls='bad';title='先不要照對方指示操作';body='這次事件的官方提醒特別包括：冒充 Unni／醫療機構，以折扣或資訊為由要求點連結、提供個人或金融資料。請終止原對話，自己開官方 App／官網或使用既有官方聯絡方式重新查證。';}
+ if(asks.includes('install'))body+=' 涉及下載檔案、App 或遠端控制時，風險更高，請不要安裝。';
+ if(asks.includes('money'))body+=' 涉及轉帳／付款／金融資料時，不要先付款再查證。';
+ $('contactOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${body}</div>`;
+ buildVerify(false);
+ if(countCore&&window.PGLabImpact)PGLabImpact.core('contact-assessed');
+}
+function buildVerify(countCore){
+ const ch=$('channel').value,cl=$('claim').value,asks=selected('ask');
+ $('verifyCard').value=`【BreachGuard Unni｜獨立驗證卡】
+收到管道：${ch}
+對方自稱：${cl}
+對方要求：${asks.length?asks.join('、'):'尚未勾選'}
+
+我的處理方式：
+1. 不點原訊息裡的連結，不用原訊息提供的電話／帳號回撥。
+2. 自己打開我原本使用的 Unni App、自己輸入官方網址，或使用我先前已保存的診所／金融機構官方聯絡方式。
+3. 只問「是否真的有這項通知／退款／折扣／付款異常」，不先補充更多個資。
+4. 對方即使知道我曾諮詢的診所、醫師、療程或時間，也不當成身分驗證。
+5. 若要求金融資料、轉帳、驗證碼、下載檔案或遠端控制：先停止。詐騙疑慮撥 165；若有恐嚇／勒索／未授權交易，保存證據並聯絡警方／金融機構。
+
+重要：這張卡不判定對方身分，只把查證移到「我自己發起的官方管道」。`;
+ if(countCore&&window.PGLabImpact)PGLabImpact.core('verification-card');
+}
+function watch(){
+ const a=[...document.querySelectorAll('.watch')],n=a.filter(x=>x.checked).length;
+ $('watchOut').innerHTML=`<div class="note ${n===a.length?'ok':'warn'}">完成 ${n}/${a.length}。${n===a.length?'基本後續防護已跑完。':'優先完成「官方確認外洩項目」和「獨立管道查證」兩件事。'}</div>`;
+ if(n===a.length&&window.PGLabImpact)PGLabImpact.core('watchlist-complete');
+}
+function saveContact(){
+ const logs=JSON.parse(localStorage.getItem('breachguard-unni-log-v1')||'[]');
+ logs.push({time:new Date().toISOString(),channel:$('channel').value,claim:$('claim').value,asks:selected('ask')});
+ localStorage.setItem('breachguard-unni-log-v1',JSON.stringify(logs));renderLog();
+ if(window.PGLabImpact)PGLabImpact.core('suspicious-contact-logged');
+}
+function renderLog(){
+ const logs=JSON.parse(localStorage.getItem('breachguard-unni-log-v1')||'[]');
+ $('logList').innerHTML=logs.length?logs.slice().reverse().map(x=>`<div class="logitem"><b>${new Date(x.time).toLocaleString('zh-TW')}</b><span class="tag">${x.channel}</span><span class="tag">${x.claim}</span><div class="small">要求：${x.asks.length?x.asks.join('、'):'未填'}</div></div>`).join(''):'<div class="note">目前沒有本機紀錄。</div>';
+}
+function exportLog(){
+ const logs=localStorage.getItem('breachguard-unni-log-v1')||'[]',b=new Blob([logs],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');
+ a.href=u;a.download='BreachGuard_Unni_可疑聯絡匿名紀錄.json';a.click();URL.revokeObjectURL(u);
+}
+function clearLog(){if(confirm('確定清除這台瀏覽器的紀錄？')){localStorage.removeItem('breachguard-unni-log-v1');renderLog()}}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+['used','notice'].forEach(id=>$(id).addEventListener('change',need));
+document.querySelectorAll('.leak').forEach(x=>x.addEventListener('change',plan));
+document.querySelectorAll('.ask').forEach(x=>x.addEventListener('change',()=>assessContact(false)));
+['channel','claim'].forEach(id=>$(id).addEventListener('change',()=>assessContact(false)));
+document.querySelectorAll('.watch').forEach(x=>x.addEventListener('change',watch));
+need();plan();assessContact(false);watch();renderLog();buildVerify(false);
+</script>
+<script src="../impact.js" data-project="breachguard-unni" data-action-text="我已完成外洩後續防護" data-real-text="我已用官方管道查證／處理可疑聯絡" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/10"></script>
+</body></html>
