@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="kinmen-pork-pause">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="2026/9/8–9/14 金門豬肉及加工品暫停輸往台灣本島與其他離島。旅客出發前 60 秒合法防疫快篩。">
+<title>Kinmen Pork Pause｜金門離島肉品出發前快篩</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dbe3ea;--ok:#176b45;--warn:#936000;--bad:#a32323}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}.wrap{max-width:1080px;margin:auto;padding:24px 14px 72px}.kicker{font-weight:850;color:var(--muted);font-size:14px}h1{font-size:clamp(34px,6vw,58px);line-height:1.04;margin:.12em 0 .25em}h2{margin:.1em 0 .65em}.lead{font-size:18px;color:var(--muted);line-height:1.75;max-width:900px}.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:11px}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:9px}.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:21px;margin-top:4px}.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:11px 13px;border-radius:9px;line-height:1.7;margin:10px 0}.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}.big{font-size:clamp(22px,4vw,31px);font-weight:900}label{display:block;font-weight:760;margin-bottom:5px}select,input,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}textarea{min-height:180px;resize:vertical}button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}.small{font-size:13px;color:var(--muted);line-height:1.6}.steps{counter-reset:s}.step{border:1px solid var(--line);border-radius:14px;padding:13px}.step:before{counter-increment:s;content:counter(s);display:inline-grid;place-items:center;width:26px;height:26px;border-radius:99px;background:#17212b;color:#fff;font-weight:900;margin-right:7px}@media print{button,.actions{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style></head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · Kinmen · 最後核對 2026/09/09</div>
+<h1>Kinmen Pork Pause<br>金門肉品出發前 60 秒快篩</h1>
+<p class="lead">金門海漂豬再驗出非洲豬瘟病毒核酸陽性。官方自 <strong>2026/9/8 至 9/14</strong> 暫停金門地區豬肉及其加工產品輸往臺灣本島及其他離島；至少連續一週無疫情才可能解除。不要到了機場／港口才猜伴手禮能不能帶。</p>
+
+<section class="card"><h2>1｜現在的管制重點</h2>
+<div class="stats"><div class="stat"><span>本次陽性</span><b>今年第4例</b></div><div class="stat"><span>暫停期間</span><b>9/8–9/14</b></div><div class="stat"><span>範圍</span><b>豬肉＋加工品</b></div><div class="stat"><span>解除條件</span><b>至少1週無疫情</b></div></div>
+<div class="note warn"><b>不要把 9/14 當成自動解禁日。</b>官方文字是「至少須連續1週無疫情發生，始得解除」。若期間再出現疫情，管制可能延長；9/15之後也應先看最新公告。</div>
+<div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://www.kmdn.gov.tw/1117/1271/1272/590022/">金門最新公告摘要</a><a class="btn ghost" target="_blank" rel="noopener" href="https://www.aphia.gov.tw/">農業部防檢署</a></div>
+</section>
+
+<section class="card"><h2>2｜你手上的東西先不要猜：做快篩</h2>
+<div class="grid">
+<div><label>出發日期</label><input id="travelDate" type="date" value="2026-09-09"></div>
+<div><label>從金門前往</label><select id="dest"><option>臺灣本島</option><option>澎湖</option><option>馬祖</option><option>其他離島</option><option>留在金門／不離境</option></select></div>
+<div><label>商品類型</label><select id="kind"><option value="fresh">生鮮／冷藏／冷凍豬肉</option><option value="processed">肉乾、肉鬆、香腸、臘肉等豬肉加工品</option><option value="mixed">糕餅、貢糖、燒餅、調理包等「可能含豬肉」食品</option><option value="nonpork">確定不含豬肉的食品</option><option value="unknown">看不懂成分／不知道</option></select></div>
+<div><label>包裝上能否確認完整業者＋品名＋成分？</label><select id="label"><option value="yes">可以</option><option value="no">不行／散裝／看不清楚</option></select></div>
+<div><label>是否能確認這個「特定產品」在政府風險評估通過的例外範圍？</label><select id="approved"><option value="no">不能確認／不知道</option><option value="yes">可以，已有官方或業者明確證明</option></select></div>
+</div><div class="actions"><button onclick="decide(true)">完成判斷</button></div><div id="decision"></div>
+</section>
+
+<section class="card"><h2>3｜判斷原則只有三句</h2><div class="grid">
+<div class="step"><b>鮮豬肉：本次管制期不要帶。</b><p class="small">本次公告明確擴大暫停豬肉及其加工產品輸往臺灣本島與其他離島。</p></div>
+<div class="step"><b>加工品：不知道是否例外，就先當作不能帶。</b><p class="small">目前存在「經防檢署口蹄疫風險評估通過」的特定偶蹄類加工產品例外，但不是看到知名品牌或真空包裝就自動合格。</p></div>
+<div class="step"><b>不確定就問，不要靠外觀猜。</b><p class="small">保留完整原包裝，向販售業者或出發地檢疫／相關人員確認；別用「以前帶過沒事」推論這一週也可以。</p></div>
+</div></section>
+
+<section class="card"><h2>4｜如果是知名伴手禮，也不能只看品牌</h2>
+<div class="note">前一輪金門縣公告曾列出經農業部防檢署風險評估通過的特定業者／產品類別，例如部分肉乾（鬆）、含肉鬆貢糖、肉餡燒餅、調理包等；本次 9/9 公告也再次說明，符合該風險評估規範的偶蹄類加工產品仍可依規定輸出。<b>關鍵是「特定產品＋特定業者＋符合規範」，不是品牌整間店全面放行。</b></div>
+<div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://www.kmdn.gov.tw/1117/1271/1272/589674/">查看縣府前次公布的例外產品／業者清單</a></div>
+</section>
+
+<section class="card"><h2>5｜出發前產生一張防呆卡</h2><textarea id="card"></textarea><div class="actions"><button onclick="copyText('card')">複製給同行者</button><button class="ghost" onclick="downloadCard()">下載 TXT</button></div></section>
+
+<section class="card"><h2>6｜真的遇到摩擦，請回報哪一步最難懂</h2>
+<p>我們追的不是頁面瀏覽，而是：<strong>多少人完成判斷、多少人真的改帶非肉品／先確認，以及哪個規則最容易誤解。</strong>不要貼機票、身分證、住址或任何規避檢查的方法。</p>
+<div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/7">Kinmen Pork Pause 公開回饋區</a></div>
+</section>
+
+<section class="card"><h2>7｜可直接轉貼</h2><textarea id="promo">【9/8–9/14 從金門回台／其他離島：豬肉伴手禮先別直接帶】
+金門海漂豬再驗出非洲豬瘟陽性，官方暫停金門豬肉及加工品輸往台灣本島和其他離島，至少要連續一週無疫情才可能解除。
+
+我整理了 Kinmen Pork Pause：出發前60秒選「日期＋去哪裡＋商品類型」，會告訴你這件東西應直接不帶、先停下來確認，還是本次豬肉暫停措施沒有直接涵蓋。
+
+注意：確實有經政府風險評估通過的特定加工品例外，但不是知名品牌／真空包裝就自動可以。看不懂就先問業者或檢疫人員，不要到機場才猜。</textarea><div class="actions"><button onclick="copyText('promo')">複製推廣文</button></div></section>
+
+<section class="card"><h2>資料與安全邊界</h2><p class="small">本頁依 2026/9/8–9/9 金門縣公開資訊整理，只做旅客合法防疫決策的保守快篩，不提供夾藏、規避或逃避檢查的方法。非洲豬瘟不感染人，但會對豬隻與養豬產業造成重大風險。實際是否可輸出仍以當日最新官方公告、產品資格與現場檢查為準。</p></section>
+</main>
+<script>
+const $=id=>document.getElementById(id);let last='';
+function decide(count){const date=$('travelDate').value,dest=$('dest').value,kind=$('kind').value,label=$('label').value,approved=$('approved').value;const leaving=dest!=='留在金門／不離境';const active=date>='2026-09-08'&&date<='2026-09-14';let cls='ok',title='',body='';
+if(!leaving){title='這次沒有跨出金門';body='本工具處理的是「金門輸往臺灣本島或其他離島」的這一輪管制；留在金門不是這個判斷場景。';}
+else if(date>'2026-09-14'){cls='warn';title='不要假設 9/15 已自動解禁';body='官方要求至少連續一週無疫情才可解除。請在出發當天先確認最新公告，再決定是否攜帶。';}
+else if(date<'2026-09-08'){cls='warn';title='這個日期不在本輪 9/8–9/14 管制期';body='請改查該日期當時的官方規定。';}
+else if(kind==='fresh'){cls='bad';title='本輪管制期：不要帶這件豬肉離開金門';body='生鮮／冷藏／冷凍豬肉屬本次暫停輸出範圍。改買非肉品伴手禮最省事。';}
+else if(kind==='processed'||kind==='mixed'){if(approved==='yes'&&label==='yes'){cls='warn';title='可能屬官方例外，但出發前仍要核對「這個特定產品」';body='目前確有經防檢署風險評估通過的特定加工產品例外。請保留完整原包裝，核對業者＋品名＋產品類別，必要時向業者或檢疫人員確認後再攜帶。';}else{cls='bad';title='先不要帶：目前無法證明它屬例外';body='加工品也在本次暫停範圍。真空包裝、熟食、知名品牌都不等於自動例外；最簡單是改買非肉品，或先取得特定產品符合例外的明確證明。';}}
+else if(kind==='unknown'){cls='bad';title='成分不確定，就先不要帶';body='如果連是否含豬肉都無法確認，不適合在臨時管制期間靠猜測通關。改買標示清楚的非肉品，或先向業者確認。';}
+else{cls='ok';title='本次「豬肉及加工品暫停」沒有直接涵蓋你所選的確定非豬肉食品';body='但金門往臺灣／其他離島還可能有其他動植物產品檢查規則；若含其他偶蹄類肉品或農產品，仍應依原本規定確認。';}
+last=`【Kinmen Pork Pause｜出發前防呆卡】\n日期：${date||'未填'}\n行程：金門 → ${dest}\n判斷：${title}\n\n下一步：${body}\n\n官方重點：2026/9/8–9/14 暫停金門豬肉及其加工產品輸往臺灣本島與其他離島；至少連續一週無疫情才可能解除。特定經政府風險評估通過的加工產品可依規定輸出。\n\n最新資訊請以金門縣／農業部防檢署公告與現場檢查為準。`; $('card').value=last;$('decision').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div><br>${body}</div>`;if(count&&window.PGLabImpact)PGLabImpact.core('travel-check-completed');}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+function downloadCard(){decide(false);const b=new Blob([last],{type:'text/plain;charset=utf-8'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download='Kinmen_Pork_Pause_防呆卡.txt';a.click();URL.revokeObjectURL(u);if(window.PGLabImpact)PGLabImpact.core('card-downloaded')}
+['travelDate','dest','kind','label','approved'].forEach(id=>{$(id).addEventListener('change',()=>decide(false));$(id).addEventListener('input',()=>decide(false))});decide(false);
+</script>
+<script src="../impact.js" data-project="kinmen-pork-pause" data-action-text="我已完成出發前判斷" data-real-text="我已改帶非肉品／先向業者或檢疫確認" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/7"></script>
+</body></html>
