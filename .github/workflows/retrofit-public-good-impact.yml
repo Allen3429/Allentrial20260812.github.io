@@ -1,0 +1,43 @@
+name: Retrofit Public Good Lab impact tracking
+
+on:
+  push:
+    paths:
+      - '.github/workflows/retrofit-public-good-impact.yml'
+      - 'public-good/impact.js'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  inject:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Inject tracker into every deployed project
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          root = Path('public-good')
+          changed=[]
+          for p in root.glob('*/index.html'):
+              text=p.read_text(encoding='utf-8')
+              if 'impact.js' in text:
+                  continue
+              slug=p.parent.name
+              tag=f'<script src="../impact.js" data-project="{slug}" data-auto="true"></script>'
+              if '</body>' in text:
+                  text=text.replace('</body>',tag+'\n</body>',1)
+                  p.write_text(text,encoding='utf-8')
+                  changed.append(str(p))
+          print('Injected:', changed)
+          PY
+      - name: Commit retrofit
+        run: |
+          if git diff --quiet; then exit 0; fi
+          git config user.name "public-good-lab-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add public-good/*/index.html
+          git commit -m "Retrofit impact tracking across Public Good Lab"
+          git push
