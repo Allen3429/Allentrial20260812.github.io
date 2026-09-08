@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="給營造、道路維修、外送、農事等戶外工作者的高溫班前風險快篩。依勞動部高氣溫作業熱危害預防指引第三版整理。">
+<title>HeatShift TW｜戶外高溫班前防呆器</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--g:#176b45;--y:#936000;--r:#a32323}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1100px;margin:auto;padding:24px 14px 70px}.kicker{font-weight:850;color:var(--muted);font-size:14px}
+h1{font-size:clamp(34px,6vw,58px);line-height:1.04;margin:.12em 0 .25em}h2{margin:.1em 0 .65em}
+.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:900px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:11px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:9px}.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:21px;margin-top:4px}
+label{display:block;font-weight:760;margin-bottom:5px}input,select,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}
+textarea{min-height:210px;resize:vertical}.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:11px 13px;border-radius:9px;line-height:1.7;margin:10px 0}.ok{border-left-color:var(--g)}.warn{border-left-color:var(--y)}.bad{border-left-color:var(--r)}
+.big{font-size:clamp(22px,4vw,31px);font-weight:900}.small{color:var(--muted);font-size:13px;line-height:1.6}
+button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}
+table{width:100%;border-collapse:collapse;min-width:780px;font-size:13px}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:12px}th,td{padding:9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{background:#f9fafb}
+.ck{width:auto;transform:scale(1.12);margin-right:7px}.bar{height:12px;border-radius:999px;background:#e9edf1;overflow:hidden}.bar>i{display:block;height:100%;background:#17212b;width:0%}
+@media print{button,.actions,.share{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · Taiwan · 2026/09/08</div>
+<h1>HeatShift TW<br>戶外高溫班前防呆器</h1>
+<p class="lead">給小型營造、道路維修、外送、農事、臨時舉牌等戶外工作。先把<strong>溫度＋濕度</strong>換成熱指數，再依「直曬／不透氣防護衣、重體力、新進或剛恢復高溫作業」加上班表防呆。資料只留在你的瀏覽器，不上傳姓名或健康資料。</p>
+
+<section class="card">
+<h2>1｜班前 60 秒風險快篩</h2>
+<div class="grid">
+<div><label>氣溫 °C</label><input id="temp" type="number" step="0.1" value="34"></div>
+<div><label>相對濕度 %</label><input id="rh" type="number" min="1" max="100" value="70"></div>
+<div><label>陽光直曬</label><select id="sun"><option value="0">否／已有有效遮陽</option><option value="1">是</option></select></div>
+<div><label>不透氣厚重／抗滲透防護衣</label><select id="ppe"><option value="0">否</option><option value="1">是</option></select></div>
+<div><label>工作負荷</label><select id="heavy"><option value="0">一般</option><option value="1">重體力作業</option></select></div>
+<div><label>工作型態</label><select id="mobile"><option value="0">固定作業點</option><option value="1">移動型：外送／道路／舉牌／農事等</option></select></div>
+</div>
+<div id="riskOut"></div>
+</section>
+
+<section class="card">
+<h2>2｜熱適應：新進／休息一段時間後，不要第一天就排滿</h2>
+<div class="grid">
+<div><label>熱適應狀態</label>
+<select id="accl">
+<option value="normal">近期持續在高溫環境作業</option>
+<option value="new">未曾在高溫環境作業的新進工作者</option>
+<option value="experienced">有經驗，但近期缺乏熱暴露／重新上工</option>
+</select></div>
+<div><label>目前第幾天</label><select id="day"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
+<div><label>正常班的高溫暴露時數</label><input id="normalHours" type="number" min="0" max="12" step="0.5" value="8"></div>
+</div>
+<div id="acclOut"></div>
+</section>
+
+<section class="card">
+<h2>3｜今天至少要做到的現場防護</h2>
+<div class="grid">
+<label><input class="ck req" type="checkbox"> 陰涼休息處已確認</label>
+<label><input class="ck req" type="checkbox"> 清涼飲水／電解質飲品容易取得</label>
+<label><input class="ck req" type="checkbox"> 有人負責巡視與注意身體不適</label>
+<label><input class="ck req" type="checkbox"> 已避開或縮短最熱時段連續作業</label>
+<label><input class="ck req" type="checkbox"> 班前已講清楚熱疾病通報／停工方式</label>
+<label><input class="ck req" type="checkbox"> 若風險升級，班表可立即跟著調整</label>
+</div>
+<div id="checkOut"></div>
+<div class="note"><b>飲水建議：</b>官方指引建議每 15–20 分鐘補充 150–200 mL；若作業限制無法照此頻率，至少以每小時 2–4 杯為原則（1杯約240 mL）。不要等口渴才喝。</div>
+</section>
+
+<section class="card">
+<h2>4｜移動型工作：先填兩個真的能停下來降溫的點</h2>
+<div class="grid">
+<div><label>休息點 A</label><input id="restA" placeholder="例：○○圖書館／合作店家"></div>
+<div><label>休息點 B</label><input id="restB" placeholder="例：量販店／政府機關"></div>
+</div>
+<div class="note">2025年修正版指引特別把外送員與變動性、臨時性作業納入：可善用對外開放的政府機關、圖書館、量販店或合作店家作為休息及補水場所；雇主也應建立即時健康通報機制。</div>
+</section>
+
+<section class="card">
+<h2>5｜一鍵產生「今日班前熱危害卡」</h2>
+<textarea id="shiftCard"></textarea>
+<div class="actions">
+<button onclick="build()">更新</button>
+<button class="ghost" onclick="copyText('shiftCard')">複製給群組</button>
+<button class="ghost" onclick="saveLog()">存本機紀錄</button>
+<button class="ghost" onclick="exportCSV()">匯出紀錄 CSV</button>
+</div>
+</section>
+
+<section class="card">
+<h2>6｜發現現場沒有遮陽／水／休息處？匿名回報給社群</h2>
+<p>不收姓名、身分證或病歷。請只描述「產業、縣市、缺什麼、怎麼影響工作」，讓後續可以整理出哪些小型工作場域最常卡在同一個防護缺口。</p>
+<div class="actions">
+<a class="btn" id="communityLink" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/1" target="_blank" rel="noopener">到 Public Good Lab 社群回報</a>
+<a class="btn ghost" href="https://hiosha.osha.gov.tw/" target="_blank" rel="noopener">先查職安署官方熱危害風險</a>
+</div>
+</section>
+
+<section class="card">
+<h2>7｜分享給工地主任、包商、外送群</h2>
+<div class="actions share">
+<button onclick="shareLine()">LINE 分享</button>
+<button class="ghost" onclick="shareFB()">Facebook 分享</button>
+<button class="ghost" onclick="copyPromo()">複製推廣文</button>
+</div>
+<textarea id="promo">【戶外工作班前先查 60 秒】
+高溫不是只看「今天幾度」。HeatShift TW 會把氣溫＋濕度換成熱指數，並把直曬、不透氣防護衣、重體力、新進工作者的風險一起算進去。
+
+適合：營造、道路維修、外送、農事、臨時舉牌。
+免費、不登入、不上傳姓名或健康資料。
+
+若是重體力作業，官方指引要求每小時至少給 20 分鐘充足休息；第4級熱危害也有遮陽、降溫與休息場所要求。
+
+請把它丟進你們的工地／外送／包商群組，明天上工前先跑一次。</textarea>
+</section>
+
+<section class="card">
+<h2>判斷依據與責任邊界</h2>
+<div class="tablewrap"><table>
+<thead><tr><th>熱危害風險</th><th>熱指數</th><th>官方管理原則摘要</th></tr></thead>
+<tbody>
+<tr><td>第1級</td><td>26.7–&lt;32.2</td><td>基本熱暴露防護；重體力作業仍提高警覺。</td></tr>
+<tr><td>第2級</td><td>32.2–&lt;40.6</td><td>實施危害預防措施並提升危害認知。</td></tr>
+<tr><td>第3級</td><td>40.6–&lt;54.4</td><td>強化防護，避免高氣溫時段戶外作業，注意身體狀況。</td></tr>
+<tr><td>第4級</td><td>≥54.4</td><td>原則上避免戶外作業；若必要，須強化措施與緊急應變。另依法規設置遮陽、降溫設備、適當休息處並供水。</td></tr>
+</tbody></table></div>
+<div class="note bad"><b>重要：</b>本頁的熱指數為依溫度與濕度的估算，用於班前防呆，不取代職安署「高氣溫作業防護資訊網」或現場量測。依官方指引，若第1–3級工作同時有<strong>陽光直曬或不透氣厚重／抗滲透防護衣</strong>，風險等級應再提升1級。重體力作業每小時至少20分鐘充足休息；最高等級原則上應避免重體力及不透氣厚重防護衣戶外作業。</div>
+<div class="actions">
+<a class="btn ghost" href="https://www.osha.gov.tw/48110/48713/48735/60221/post" target="_blank" rel="noopener">勞動部指引第三版</a>
+<a class="btn ghost" href="https://hiosha.osha.gov.tw/" target="_blank" rel="noopener">官方高氣溫作業防護資訊網</a>
+</div>
+<p class="small">若工作者出現意識改變、昏倒、嚴重不適或疑似熱中暑，先停止作業、移到陰涼處降溫並尋求醫療協助；有急迫危險請119。這不是醫療診斷工具，也不替代雇主依法應負的職安責任。</p>
+</section>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+let last={};
+
+function heatIndexC(T,R){
+  let F=T*9/5+32;
+  let simple=0.5*(F+61+(F-68)*1.2+R*0.094);
+  let HI=(simple+F)/2;
+  if(HI<80) return (HI-32)*5/9;
+  HI=-42.379+2.04901523*F+10.14333127*R-0.22475541*F*R
+    -0.00683783*F*F-0.05481717*R*R+0.00122874*F*F*R
+    +0.00085282*F*R*R-0.00000199*F*F*R*R;
+  if(R<13 && F>=80 && F<=112){
+    HI-=((13-R)/4)*Math.sqrt((17-Math.abs(F-95))/17);
+  }else if(R>85 && F>=80 && F<=87){
+    HI+=((R-85)/10)*((87-F)/5);
+  }
+  return (HI-32)*5/9;
+}
+function baseLevel(hi){
+  if(hi>=54.4)return 4;
+  if(hi>=40.6)return 3;
+  if(hi>=32.2)return 2;
+  if(hi>=26.7)return 1;
+  return 0;
+}
+function levelText(l){
+  return ['未達第1級門檻','第1級','第2級','第3級','第4級'][l];
+}
+function advice(l){
+  if(l===4)return '原則上避免戶外作業；若確有必要，必須強化遮陽、降溫、休息、供水與緊急應變。';
+  if(l===3)return '強化防護，避開高氣溫時段、縮短連續作業並加強巡視。';
+  if(l===2)return '實施熱危害預防、提供休息與飲水並提升警覺。';
+  if(l===1)return '落實基本防護；重體力仍需提高警覺。';
+  return '目前估算未達第1級，但仍應視日照、風速、衣著與個人狀況調整。';
+}
+function build(){
+  const T=+$('temp').value||0,R=Math.min(100,Math.max(1,+$('rh').value||1));
+  const hi=heatIndexC(T,R);
+  const raw=baseLevel(hi);
+  let adjusted=raw;
+  const bump=(+$('sun').value||+$('ppe').value) && raw>=1 && raw<=3;
+  if(bump) adjusted=Math.min(4,raw+1);
+  const heavy=+$('heavy').value===1;
+  const mobile=+$('mobile').value===1;
+  const cls=adjusted>=4?'bad':adjusted>=2?'warn':'ok';
+  $('riskOut').innerHTML=`<div class="stats">
+    <div class="stat"><span>估算熱指數</span><b>${hi.toFixed(1)}</b></div>
+    <div class="stat"><span>基礎風險</span><b>${levelText(raw)}</b></div>
+    <div class="stat"><span>調整後</span><b>${levelText(adjusted)}</b></div>
+  </div>
+  <div class="note ${cls}"><div class="big">${levelText(adjusted)}｜${advice(adjusted)}</div>
+  ${bump?'<br><b>已因陽光直曬／不透氣厚重防護衣，依官方指引上調1級。</b>':''}
+  ${heavy?'<br><b>重體力：</b>每小時至少20分鐘充足休息；最高等級原則上避免重體力戶外作業。':''}
+  ${mobile?'<br><b>移動型工作：</b>請先填好兩個可降溫／補水的實際休息點。':''}</div>`;
+
+  const a=$('accl').value,day=+$('day').value,h=+$('normalHours').value||0;
+  let pct=100,msg='近期持續作業者仍需依當日風險調整。';
+  if(a==='new'){pct=Math.min(100,day*20);msg='新進、未曾高溫作業：第1天最多20%，其後每天最多增加20%。';}
+  if(a==='experienced'){
+    pct=day===1?50:day===2?60:day===3?80:100;
+    msg='有經驗但重新熱暴露：第1天50%、第2天60%、第3天80%、第4天可恢復正常。';
+  }
+  const maxH=h*pct/100;
+  $('acclOut').innerHTML=`<div class="stats">
+   <div class="stat"><span>今日上限比例</span><b>${pct}%</b></div>
+   <div class="stat"><span>對應高溫暴露</span><b>${maxH.toFixed(1)} 小時</b></div>
+  </div><div class="note ${a==='normal'?'ok':'warn'}">${msg}</div>`;
+
+  const checks=[...document.querySelectorAll('.req')],done=checks.filter(x=>x.checked).length;
+  $('checkOut').innerHTML=done===checks.length
+    ?'<div class="note ok">班前6項都已確認。</div>'
+    :`<div class="note warn">班前防護完成 ${done}/6。風險較高時不要只靠個人「撐一下」。</div>`;
+
+  const now=new Date().toLocaleString('zh-TW');
+  const ra=$('restA').value||'未填',rb=$('restB').value||'未填';
+  $('shiftCard').value=`【HeatShift TW｜今日班前熱危害卡】
+時間：${now}
+氣溫／濕度：${T.toFixed(1)}°C／${R}%
+估算熱指數：${hi.toFixed(1)}
+基礎風險：${levelText(raw)}
+調整後風險：${levelText(adjusted)}${bump?'（直曬／不透氣厚重防護衣，上調1級）':''}
+
+今天的安排：
+- ${advice(adjusted)}
+- ${heavy?'重體力作業：每小時至少20分鐘充足休息。':'非重體力；仍需減少高溫時段連續暴露。'}
+- 熱適應：${pct}%；正常高溫暴露${h}小時 → 今日建議上限${maxH.toFixed(1)}小時
+- 飲水：每15–20分鐘150–200mL；受限時至少每小時2–4杯
+- 現場防護確認：${done}/6
+${mobile?`- 移動型休息點A：${ra}\n- 移動型休息點B：${rb}`:''}
+
+若風險升級，立即依較高等級調整。
+若有人出現明顯熱疾病症狀：停止作業、移至陰涼處、降溫、求助；意識改變／昏倒等急迫情況打119。
+
+官方確認：https://hiosha.osha.gov.tw/
+本卡為班前防呆，不取代職安署官方風險或雇主法定責任。`;
+
+  last={time:new Date().toISOString(),T,R,hi:hi.toFixed(1),raw,adjusted,heavy:heavy?'yes':'no',accl:a,day,pct,maxH:maxH.toFixed(1),done};
+}
+function saveLog(){
+  build();
+  const logs=JSON.parse(localStorage.getItem('heatshift_logs_v1')||'[]');
+  logs.push(last); localStorage.setItem('heatshift_logs_v1',JSON.stringify(logs));
+  alert('已存到這台裝置的瀏覽器');
+}
+function exportCSV(){
+  const logs=JSON.parse(localStorage.getItem('heatshift_logs_v1')||'[]');
+  const h=['time','temp_c','rh','heat_index','base_level','adjusted_level','heavy','acclimation','day','exposure_pct','max_exposure_hours','checks_done'];
+  const rows=logs.map(x=>[x.time,x.T,x.R,x.hi,x.raw,x.adjusted,x.heavy,x.accl,x.day,x.pct,x.maxH,x.done]);
+  const q=x=>'"'+String(x??'').replaceAll('"','""')+'"';
+  const csv='\ufeff'+h.map(q).join(',')+'\n'+rows.map(r=>r.map(q).join(',')).join('\n');
+  const b=new Blob([csv],{type:'text/csv;charset=utf-8'}),u=URL.createObjectURL(b),a=document.createElement('a');
+  a.href=u;a.download='heatshift_log.csv';a.click();URL.revokeObjectURL(u);
+}
+async function copyText(id){
+ try{await navigator.clipboard.writeText($(id).value);alert('已複製')}
+ catch(e){$(id).select();document.execCommand('copy')}
+}
+function copyPromo(){copyText('promo')}
+function pageURL(){return location.protocol.startsWith('http')?location.href:'https://allen3429.github.io/Allentrial20260812.github.io/public-good/heatshift/'}
+function shareLine(){window.open('https://social-plugins.line.me/lineit/share?url='+encodeURIComponent(pageURL()),'_blank')}
+function shareFB(){window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(pageURL()),'_blank')}
+['temp','rh','sun','ppe','heavy','mobile','accl','day','normalHours','restA','restB'].forEach(id=>{
+ $(id).addEventListener('input',build);$(id).addEventListener('change',build);
+});
+document.querySelectorAll('.req').forEach(x=>x.addEventListener('change',build));
+build();
+</script>
+</body></html>
