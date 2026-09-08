@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="rentstart">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="RentStart TW：開學租屋10分鐘防詐＋交屋存證。付款前檢查新型假租屋寄鑰匙詐騙、押金與電費規則，入住照片在瀏覽器本機產生SHA-256證據清單，不上傳照片。">
+<title>RentStart TW｜開學租屋10分鐘防詐＋交屋存證</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--ink:#17212b;--muted:#65717e;--line:#dbe3ea;--ok:#176b45;--warn:#936000;--bad:#a32323}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}.wrap{max-width:1120px;margin:auto;padding:24px 14px 74px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}h1{font-size:clamp(34px,6vw,58px);line-height:1.04;margin:.12em 0 .25em}h2{margin:.1em 0 .65em}.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:940px}.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:11px}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:9px}.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:20px;margin-top:4px}.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:11px 13px;border-radius:9px;line-height:1.72;margin:10px 0}.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}.big{font-size:clamp(21px,4vw,30px);font-weight:900}label{display:block;font-weight:760;margin-bottom:5px}input,select,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}textarea{min-height:180px;resize:vertical}.ck{width:auto;transform:scale(1.1);margin-right:7px}button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}.danger{background:#feeaea;color:#8b1d1d}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:12px}table{width:100%;border-collapse:collapse;min-width:880px;font-size:13px}th,td{padding:9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{background:#f9fafb}.tag{display:inline-block;padding:3px 8px;border-radius:999px;background:#edf1f5;font-size:12px;font-weight:850}.small{font-size:13px;color:var(--muted);line-height:1.62}.file{border:1px solid var(--line);border-radius:12px;padding:10px;margin:8px 0}.hash{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;word-break:break-all;font-size:11px;color:var(--muted)}@media print{button,.actions{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style></head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · Taiwan · 2026/09/09</div>
+<h1>RentStart TW<br>開學租屋10分鐘防詐＋交屋存證</h1>
+<p class="lead">今年開學季刑事局提醒新的「假房東寄鑰匙」釣魚手法：假房東說人在外地，先寄鑰匙，再丟一個假超商物流／實名認證連結，最後引導操作網銀。這頁把<strong>付款前防詐、契約／押金／電費、防止退租扯皮的入住存證</strong>串成一條流程。照片只在你的瀏覽器處理，不上傳本站。</p>
+
+<section class="card"><h2>1｜付款前：先過三道門</h2>
+<div class="grid">
+<label><input class="ck gate" id="seen" type="checkbox">我本人或可信任的人已實際看到房屋</label>
+<label><input class="ck gate" id="identity" type="checkbox">我已核對出租人身分與出租權源／授權</label>
+<label><input class="ck gate" id="contract" type="checkbox">付款前已看過並確認書面租約</label>
+</div>
+<h3>有沒有出現近期高風險話術？</h3>
+<div class="grid">
+<label><input class="ck flag critical" id="keymail" type="checkbox">「我人在外地，先寄鑰匙給你自己看」</label>
+<label><input class="ck flag critical" id="logistics" type="checkbox">收到超商物流／寄件「實名認證」連結</label>
+<label><input class="ck flag critical" id="bankverify" type="checkbox">對方要我操作網銀做「認證／驗證」</label>
+<label><input class="ck flag" id="prepay" type="checkbox">還沒實際確認房屋／身分就催押金、訂金或租金</label>
+<label><input class="ck flag" id="cheap" type="checkbox">價格明顯低於附近行情、照片過度精美</label>
+<label><input class="ck flag" id="rush" type="checkbox">用「很多人搶、現在不付就沒了」壓縮查證時間</label>
+</div><div id="scamOut"></div>
+<div class="actions"><a class="btn danger" href="tel:165">有疑問先打165</a><a class="btn ghost" target="_blank" rel="noopener" href="https://165.npa.gov.tw/">165全民防騙網</a></div></section>
+
+<section class="card"><h2>2｜簽約：4個最容易日後吵起來的欄位</h2>
+<div class="grid"><div><label>月租金（元）</label><input id="rent" type="number" min="0" value="12000"></div><div><label>押金（元）</label><input id="deposit" type="number" min="0" value="24000"></div><div><label>電費約定</label><select id="electric"><option value="meter">按用電度數計費</option><option value="notmeter">不是按度數計費／包裹式計費</option><option value="included">已含在租金</option></select></div><div><label>是否使用／對照內政部住宅租賃契約</label><select id="template"><option value="yes">是</option><option value="no">沒有／不確定</option></select></div></div>
+<div id="contractOut"></div>
+<div class="grid">
+<label><input class="ck contractck" type="checkbox">租金、租期、押金與返還條件寫清楚</label>
+<label><input class="ck contractck" type="checkbox">修繕責任與設備清單寫清楚</label>
+<label><input class="ck contractck" type="checkbox">電費計算方式與可查核資訊寫清楚</label>
+<label><input class="ck contractck" type="checkbox">付款留轉帳紀錄／收據，不只口頭說已收</label>
+</div>
+<div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://pip.moi.gov.tw/Publicize/Info/G1020">內政部契約範本</a><a class="btn ghost" href="tel:1950">消費者服務1950</a></div></section>
+
+<section class="card"><h2>3｜入住當天：把「原本就壞的」變成可回看的證據清單</h2>
+<p>拍：房門／鎖、牆面、天花板滲水痕、地板、窗戶、冷氣、冰箱、洗衣機、熱水器、浴室、家具、電表／水表，以及任何刮傷或缺件。照片仍留在你的裝置；本工具只讀檔名、大小並在本機算 SHA-256。</p>
+<div class="grid"><div><label>這批照片分類</label><select id="category"><option>全屋廣角</option><option>牆面／天花板／滲漏水</option><option>家具／家電</option><option>浴室／熱水器</option><option>門窗／鎖／消防</option><option>水電表</option><option>既有損傷</option><option>其他</option></select></div><div><label>補充說明</label><input id="batchNote" placeholder="例：房門右下角入住前已有刮痕"></div><div><label>選照片／影片（可多選）</label><input id="files" type="file" multiple accept="image/*,video/*"></div></div>
+<div class="actions"><button id="hashBtn">加入證據清單並計算雜湊</button><button class="ghost" id="clearBtn">清空本機清單</button></div><div id="fileOut"></div>
+<div class="note warn"><b>SHA-256不是公證或可信時間戳。</b>它只能幫你日後證明「這份檔案內容是否和當時保存的版本完全相同」，不能單獨證明照片拍攝時間、地點或法律責任。完成後仍建議把原始照片＋本頁輸出的清單一起備份到你控制的雲端／Email，並把點交摘要立即傳給房東留存對話時間。</div>
+<div class="actions"><button id="jsonBtn">下載 manifest.json</button><button class="ghost" id="csvBtn">下載 CSV</button><button class="ghost" id="copyLandlord">複製給房東的點交訊息</button></div></section>
+
+<section class="card"><h2>4｜一鍵產生「租屋付款／入住摘要」</h2><textarea id="summary"></textarea><div class="actions"><button id="copySummary">複製摘要</button><button class="ghost" id="downloadSummary">下載TXT</button></div></section>
+
+<section class="card"><h2>5｜遇到糾紛，別只剩群組吵架</h2><div class="grid"><div class="note"><b>先保留：</b><br>租約、轉帳／收據、電費資訊、入住／退租照片、修繕對話與雙方點交紀錄。</div><div class="note"><b>一般消費爭議：</b><br>可先洽1950消費者服務專線或所在地地政／消保單位。</div><div class="note"><b>115年度住宅租賃法律扶助：</b><br>符合相關資格者，在調解／調處仍無法解決後，可依規定向法律扶助基金會申請法律文件撰擬、律師代理等協助。</div></div><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://www.laf.org.tw/">法律扶助基金會</a><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/5">RentStart 社群回饋</a></div></section>
+
+<section class="card"><h2>6｜第一週驗證：不是看流量，是看有沒有真的避免一個坑</h2><div class="stats"><div class="stat"><span>目標獨立使用者</span><b>50</b></div><div class="stat"><span>完成付款前快篩</span><b>30</b></div><div class="stat"><span>匯出入住證據清單</span><b>15</b></div><div class="stat"><span>文字回饋</span><b>10</b></div></div><p class="small">另外看兩個質性成果：是否有人因「寄鑰匙＋物流認證」而停止付款查證；以及是否有人把入住點交摘要真的傳給房東。工具頁尾會用 Public Good Lab 共用 Impact 元件統計獨立瀏覽器、完成使用、回饋與自我確認的現實行動。</p></section>
+
+<section class="card"><h2>資料／法律邊界</h2><p class="small">本工具是租屋流程防呆，不是律師意見，也不替你確認對方真實身分或房屋權利。押金與電費提示依現行住宅租賃規則整理；特殊租賃型態可能有不同法律關係。照片與影片不會由本站上傳，但瀏覽器仍會在本機讀取你選取的檔案以計算 SHA-256；請勿把含身分證、銀行帳戶、完整租約或他人敏感個資的內容貼到公開 GitHub 回饋區。</p></section>
+</main>
+<script>
+const $=id=>document.getElementById(id);let evidence=JSON.parse(localStorage.getItem('rentstart_evidence_v1')||'[]');
+function assessScam(){const gates=[seen,identity,contract].filter(x=>x.checked).length;const crit=[keymail,logistics,bankverify].filter(x=>x.checked).length;const flags=[keymail,logistics,bankverify,prepay,cheap,rush].filter(x=>x.checked).length;let cls='ok',title='目前沒有勾到明顯高風險話術';let body='仍不能因此保證安全；付款前維持「看得到房、核得到人、看得到租約」三道門。';if(crit){cls='bad';title='先停：出現刑事局近期提醒的高風險模式';body='「人在外地寄鑰匙」、假物流／實名認證連結、要求操作網銀驗證，都是近期警方特別提醒的租屋詐騙路徑。不要繼續操作連結或轉帳，改由165或官方管道查證。';}else if(flags||gates<3){cls='warn';title='還不要付款：查證沒有走完';body=`三道門完成 ${gates}/3，高風險訊號 ${flags} 項。先補齊實際看屋、出租權源／身分與書面租約，再談付款。`;}$('scamOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div><br>${body}</div>`;buildSummary();if(gates===3&&window.PGLabImpact)PGLabImpact.core('payment-check-completed');}
+function assessContract(){const rent=+$('rent').value||0,dep=+$('deposit').value||0,months=rent?dep/rent:0;let notes=[];if(rent&&dep>rent*2)notes.push(`<b>押金警示：</b>目前輸入約 ${months.toFixed(1)} 個月租金，住宅租賃押金原則上最高不得超過2個月租金總額。`);else if(rent)notes.push(`押金約 ${months.toFixed(1)} 個月租金。`);const e=$('electric').value;if(e==='meter')notes.push('按度數收電費：每度不得高於電費單「當期每度平均電價」，房東收費時應提供可查核資訊。');if(e==='notmeter')notes.push('非按度數收電費：收取總額不得超過該期電費總額，並應有資訊可查核。');if(e==='included')notes.push('電費寫為含在租金：仍建議把是否有例外、超額或公共電費寫進契約，避免口頭約定。');if($('template').value==='no')notes.push('<b>建議：</b>拿內政部住宅租賃契約範本逐條對照。');$('contractOut').innerHTML=`<div class="note ${notes.some(x=>x.includes('警示'))?'warn':'ok'}">${notes.join('<br>')}</div>`;buildSummary();}
+function buildSummary(){const gate=[['實際看屋',seen.checked],['出租人身分／權源',identity.checked],['書面租約',contract.checked]];const flags=[['人在外地寄鑰匙',keymail.checked],['物流／實名認證連結',logistics.checked],['網銀驗證',bankverify.checked],['查證前催付款',prepay.checked],['異常低價',cheap.checked],['催促立即付款',rush.checked]].filter(x=>x[1]).map(x=>x[0]);const rent=+$('rent').value||0,dep=+$('deposit').value||0;$('summary').value=`【RentStart TW｜租屋付款／入住摘要】\n\n付款前三道門：\n${gate.map(x=>`- ${x[0]}：${x[1]?'已完成':'尚未完成'}`).join('\n')}\n\n高風險訊號：${flags.length?flags.join('、'):'目前未勾選'}\n\n契約：\n- 月租：${rent} 元\n- 押金：${dep} 元${rent?`（約 ${(dep/rent).toFixed(1)} 個月）`:''}\n- 電費：${$('electric').options[$('electric').selectedIndex].text}\n- 對照內政部契約範本：${$('template').value==='yes'?'是':'沒有／不確定'}\n\n入住存證：${evidence.length} 個檔案已建立本機 SHA-256 清單。\n\n我要保留：租約、付款紀錄、電費資訊、原始入住照片／影片、manifest、修繕與點交對話。\n\n提醒：如遇「寄鑰匙＋物流認證／網銀驗證」等話術先停止付款並打165；一般租屋消費爭議可洽1950。`;}
+async function sha256(file){const buf=await file.arrayBuffer();const hash=await crypto.subtle.digest('SHA-256',buf);return [...new Uint8Array(hash)].map(b=>b.toString(16).padStart(2,'0')).join('');}
+async function addFiles(){const fs=[...$('files').files];if(!fs.length){alert('先選照片或影片');return}const btn=$('hashBtn');btn.disabled=true;btn.textContent='計算中…';for(const f of fs){const hash=await sha256(f);evidence.push({name:f.name,size:f.size,type:f.type||'',lastModified:new Date(f.lastModified).toISOString(),category:$('category').value,note:$('batchNote').value.trim(),sha256:hash,addedAt:new Date().toISOString()});}localStorage.setItem('rentstart_evidence_v1',JSON.stringify(evidence));$('files').value='';$('batchNote').value='';btn.disabled=false;btn.textContent='加入證據清單並計算雜湊';renderFiles();buildSummary();if(window.PGLabImpact)PGLabImpact.core('evidence-hashed');}
+function renderFiles(){$('fileOut').innerHTML=evidence.length?evidence.map((x,i)=>`<div class="file"><span class="tag">${x.category}</span><b>${x.name}</b><div class="small">${(x.size/1024/1024).toFixed(2)} MB｜裝置檔案時間 ${x.lastModified}${x.note?`｜${x.note}`:''}</div><div class="hash">SHA-256 ${x.sha256}</div><button class="ghost" onclick="removeFile(${i})">移除這筆</button></div>`).join(''):'<div class="note">尚未加入檔案。原始照片不會被本站保存。</div>';}
+function removeFile(i){evidence.splice(i,1);localStorage.setItem('rentstart_evidence_v1',JSON.stringify(evidence));renderFiles();buildSummary();}
+function clearFiles(){if(confirm('只會清掉瀏覽器中的證據清單，不會刪除你手機／電腦原始照片。確定？')){evidence=[];localStorage.removeItem('rentstart_evidence_v1');renderFiles();buildSummary();}}
+function dl(name,text,type='text/plain;charset=utf-8'){const b=new Blob([text],{type}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=name;a.click();URL.revokeObjectURL(u);}
+function exportJSON(){dl('RentStart_movein_manifest.json',JSON.stringify({tool:'RentStart TW',generatedAt:new Date().toISOString(),warning:'SHA-256 verifies file-content consistency only; it is not a trusted timestamp or notarization.',files:evidence},null,2),'application/json;charset=utf-8');if(window.PGLabImpact)PGLabImpact.core('manifest-exported');}
+function exportCSV(){const q=s=>'"'+String(s??'').replaceAll('"','""')+'"';const rows=[['name','category','note','size_bytes','mime','file_last_modified','sha256','manifest_added_at'],...evidence.map(x=>[x.name,x.category,x.note,x.size,x.type,x.lastModified,x.sha256,x.addedAt])];dl('RentStart_movein_manifest.csv','\ufeff'+rows.map(r=>r.map(q).join(',')).join('\n'),'text/csv;charset=utf-8');if(window.PGLabImpact)PGLabImpact.core('manifest-exported');}
+async function copy(text){try{await navigator.clipboard.writeText(text);alert('已複製')}catch(e){const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();}}
+function landlordText(){const cat=[...new Set(evidence.map(x=>x.category))].join('、')||'尚未分類';return `您好，今天完成入住／交屋點交。為避免之後雙方記憶不同，我已保留入住當天的原始照片／影片與檔案清單，共 ${evidence.length} 份，主要包含：${cat}。\n\n目前另註記的既有狀況：${evidence.filter(x=>x.note).map(x=>x.note).join('；')||'無額外文字註記'}。\n\n如果其中有與我們現場確認不一致的地方，麻煩近期回覆，我會一起補進點交紀錄；若無，也請保留這段對話作為雙方入住時狀況紀錄。謝謝。`;}
+function downloadSummary(){dl('RentStart_租屋付款入住摘要.txt',$('summary').value);if(window.PGLabImpact)PGLabImpact.core('summary-downloaded');}
+[...document.querySelectorAll('.gate,.flag')].forEach(x=>x.addEventListener('change',assessScam));['rent','deposit','electric','template'].forEach(id=>{$(id).addEventListener('input',assessContract);$(id).addEventListener('change',assessContract)});$('hashBtn').onclick=addFiles;$('clearBtn').onclick=clearFiles;$('jsonBtn').onclick=exportJSON;$('csvBtn').onclick=exportCSV;$('copyLandlord').onclick=()=>{copy(landlordText());if(window.PGLabImpact)PGLabImpact.core('landlord-message-copied')};$('copySummary').onclick=()=>{copy($('summary').value);if(window.PGLabImpact)PGLabImpact.core('summary-copied')};$('downloadSummary').onclick=downloadSummary;renderFiles();assessScam();assessContract();
+</script>
+<script src="../impact.js" data-project="rentstart" data-action-text="我已完成付款前租屋快篩" data-real-text="我已實際看屋／簽約／完成點交" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/5"></script>
+</body></html>
