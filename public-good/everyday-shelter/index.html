@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="everyday-shelter">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="EverydayShelter TW：把庇護工場從節慶公益禮盒，變成洗衣、清潔、衛生紙、咖啡、食品、洗車等日常消費選項。">
+<title>EverydayShelter TW｜庇護工場日常替代器</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--ink:#17212b;--muted:#65717e;--line:#dbe3ea;--accent:#17212b;--ok:#176b45}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1120px;margin:auto;padding:24px 14px 72px}.kicker{font-size:13px;color:var(--muted);font-weight:850}h1{font-size:clamp(34px,6vw,58px);line-height:1.04;margin:.12em 0 .25em}h2{margin:.1em 0 .65em}
+.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:920px}.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:11px}label{display:block;font-weight:780;margin-bottom:5px}select,input,textarea{width:100%;font:inherit;border:1px solid #cad5df;border-radius:12px;padding:10px;background:#fff}
+textarea{min-height:170px;resize:vertical}button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:var(--accent);color:#fff;font:inherit;font-weight:850;text-decoration:none;cursor:pointer}.ghost{background:#edf1f5;color:var(--ink)}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.note{border-left:5px solid #aeb9c5;background:#fafbfd;border-radius:9px;padding:11px 13px;line-height:1.7;margin:10px 0}.ok{border-left-color:var(--ok)}.muted,.small{color:var(--muted);line-height:1.6}.small{font-size:13px}
+.items{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:10px}.item{border:1px solid var(--line);border-radius:15px;padding:14px;background:#fff}.item h3{margin:.4em 0}.item p{line-height:1.6}.meta{color:var(--muted);line-height:1.55}
+.tag{display:inline-block;padding:4px 8px;border-radius:999px;background:#edf1f5;font-weight:850;font-size:12px;margin-right:4px}.chosen{outline:3px solid #17212b}.count{font-size:34px;font-weight:900}.challenge{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:9px}.step{border:1px solid var(--line);border-radius:14px;padding:12px}
+@media print{.actions,button{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · Taiwan · 最後查證 2026/09/09</div>
+<h1>EverydayShelter TW<br>把「做公益」改成「本來就要買」。</h1>
+<p class="lead">庇護工場不只賣中秋、過年禮盒。這個小工具先從<strong>洗衣、清潔、衛生紙、日用品、食品／咖啡、洗車</strong>開始：你先選「本來就需要什麼」，再看勞動部官方型錄裡有沒有可替代的庇護商品或服務。沒有需要，就不用為了公益硬買。</p>
+
+<section class="card">
+<h2>1｜先從你本來就會花的錢開始</h2>
+<div class="grid">
+<div><label>我現在需要</label><select id="cat"><option value="">全部日常需求</option><option>洗衣</option><option>清潔</option><option>日用品</option><option>食品／飲品</option><option>洗車</option></select></div>
+<div><label>地區</label><select id="city"><option value="">不限地區／可看訂購方式</option><option>臺北市</option><option>新北市</option><option>苗栗縣</option><option>彰化縣</option><option>雲林縣</option></select></div>
+</div>
+<div class="note">原則很簡單：<b>先有真實需求，再比較品質、價格、距離與訂購方式。</b>如果不符合你的需求，就選一般商家；庇護工場要成為可持續的市場選項，而不是靠罪惡感成交。</div>
+</section>
+
+<section class="card">
+<h2>2｜日常選項：全部連到勞動部官方商品型錄</h2>
+<p class="small">以下是本輪人工查核的代表性日常品項，不是全台完整名單，也不代表 Public Good Lab 背書品質或價格。產品、售價與訂購方式可能變動，下單前以官方型錄／工場最新資訊為準。</p>
+<div id="results" class="items"><article class="item" data-cat="洗衣" data-city="新北市">
+      <div><span class="tag">洗衣</span><span class="tag">新北市</span></div>
+      <h3>慈佑庇護工場｜衣物洗滌</h3>
+      <p>收衣、分類、洗衣、烘乾、整燙到包裝的一般洗衣服務。</p>
+      <div class="meta"><b>依實際衣物估價</b><br>大台北地區</div>
+      <div class="actions"><a class="btn official" data-item="laundry" href="https://orsd.wda.gov.tw/sheltered_products/detail/375" target="_blank" rel="noopener">看勞動部官方型錄</a><button class="ghost pick" data-name="慈佑庇護工場｜衣物洗滌">放進我的日常替代清單</button></div>
+    </article>
+<article class="item" data-cat="清潔" data-city="新北市">
+      <div><span class="tag">清潔</span><span class="tag">新北市</span></div>
+      <h3>大安庇護工場｜清潔服務</h3>
+      <p>廁所、室外、學校、公家機關、活動中心等客製化清潔。</p>
+      <div class="meta"><b>依規格報價</b><br>雙北、桃園為主</div>
+      <div class="actions"><a class="btn official" data-item="clean-ntpc" href="https://orsd.wda.gov.tw/sheltered_products/detail/386" target="_blank" rel="noopener">看勞動部官方型錄</a><button class="ghost pick" data-name="大安庇護工場｜清潔服務">放進我的日常替代清單</button></div>
+    </article>
+<article class="item" data-cat="清潔" data-city="臺北市">
+      <div><span class="tag">清潔</span><span class="tag">臺北市</span></div>
+      <h3>阿萬師清潔工作隊｜辦公大樓、校舍清潔</h3>
+      <p>辦公大樓與校舍清潔，適合企業、學校與機構詢價。</p>
+      <div class="meta"><b>場勘面議</b><br>臺北市／依案件確認</div>
+      <div class="actions"><a class="btn official" data-item="clean-tpe" href="https://orsd.wda.gov.tw/sheltered_products/detail/425" target="_blank" rel="noopener">看勞動部官方型錄</a><button class="ghost pick" data-name="阿萬師清潔工作隊｜辦公大樓、校舍清潔">放進我的日常替代清單</button></div>
+    </article>
+<article class="item" data-cat="日用品" data-city="苗栗縣">
+      <div><span class="tag">日用品</span><span class="tag">苗栗縣</span></div>
+      <h3>阿昌清潔庇護工場｜環保抽取式衛生紙</h3>
+      <p>100%再生紙漿、環保標章；屬於真正可以固定補貨的日用品。</p>
+      <div class="meta"><b>官方型錄：1箱64包 NT$1,066</b><br>可先查官方訂購資訊</div>
+      <div class="actions"><a class="btn official" data-item="tissue" href="https://orsd.wda.gov.tw/sheltered_products/detail/206" target="_blank" rel="noopener">看勞動部官方型錄</a><button class="ghost pick" data-name="阿昌清潔庇護工場｜環保抽取式衛生紙">放進我的日常替代清單</button></div>
+    </article>
+<article class="item" data-cat="日用品" data-city="臺北市">
+      <div><span class="tag">日用品</span><span class="tag">臺北市</span></div>
+      <h3>小貝殼工作坊｜艾草平安皂</h3>
+      <p>日常潔膚用手工皂，不必等節慶才購買。</p>
+      <div class="meta"><b>官方型錄：NT$100／個</b><br>臺北市大同區</div>
+      <div class="actions"><a class="btn official" data-item="soap" href="https://orsd.wda.gov.tw/sheltered_products/detail/414" target="_blank" rel="noopener">看勞動部官方型錄</a><button class="ghost pick" data-name="小貝殼工作坊｜艾草平安皂">放進我的日常替代清單</button></div>
+    </article>
+<article class="item" data-cat="日用品" data-city="臺北市">
+      <div><span class="tag">日用品</span><span class="tag">臺北市</span></div>
+      <h3>地熱谷庇護工場｜湯花溫泉皂</h3>
+      <p>北投地熱谷湯花製作的日常清潔用品。</p>
+      <div class="meta"><b>官方型錄：NT$290／個</b><br>臺北市北投區</div>
+      <div class="actions"><a class="btn official" data-item="hotspring-soap" href="https://orsd.wda.gov.tw/sheltered_products/detail/437" target="_blank" rel="noopener">看勞動部官方型錄</a><button class="ghost pick" data-name="地熱谷庇護工場｜湯花溫泉皂">放進我的日常替代清單</button></div>
+    </article>
+<article class="item" data-cat="食品／飲品" data-city="雲林縣">
+      <div><span class="tag">食品／飲品</span><span class="tag">雲林縣</span></div>
+      <h3>糧莘庇護農場｜發芽紅藜麵</h3>
+      <p>可當日常主食補貨，而不是只作禮盒。</p>
+      <div class="meta"><b>官方型錄：NT$150／300g</b><br>雲林縣古坑鄉／查官方訂購</div>
+      <div class="actions"><a class="btn official" data-item="noodle" href="https://orsd.wda.gov.tw/sheltered_products/detail/118" target="_blank" rel="noopener">看勞動部官方型錄</a><button class="ghost pick" data-name="糧莘庇護農場｜發芽紅藜麵">放進我的日常替代清單</button></div>
+    </article>
+<article class="item" data-cat="食品／飲品" data-city="雲林縣">
+      <div><span class="tag">食品／飲品</span><span class="tag">雲林縣</span></div>
+      <h3>圓夢庇護工場｜精選咖啡豆</h3>
+      <p>咖啡屬高頻日常消費，適合測試『固定回購』而不是一次性公益。</p>
+      <div class="meta"><b>官方型錄：NT$380／1磅</b><br>雲林縣斗六市／查官方訂購</div>
+      <div class="actions"><a class="btn official" data-item="coffee" href="https://orsd.wda.gov.tw/sheltered_products/detail/114" target="_blank" rel="noopener">看勞動部官方型錄</a><button class="ghost pick" data-name="圓夢庇護工場｜精選咖啡豆">放進我的日常替代清單</button></div>
+    </article>
+<article class="item" data-cat="洗車" data-city="彰化縣">
+      <div><span class="tag">洗車</span><span class="tag">彰化縣</span></div>
+      <h3>加點愛庇護工場｜手工洗車</h3>
+      <p>一般消費者可直接比較的手工洗車服務。</p>
+      <div class="meta"><b>官方型錄：小型車 NT$400 起</b><br>彰化縣員林市</div>
+      <div class="actions"><a class="btn official" data-item="carwash" href="https://orsd.wda.gov.tw/sheltered_products/detail/152" target="_blank" rel="noopener">看勞動部官方型錄</a><button class="ghost pick" data-name="加點愛庇護工場｜手工洗車">放進我的日常替代清單</button></div>
+    </article></div>
+<div id="noResult" class="note" style="display:none">目前這個小型清單沒有符合項目。可以直接到勞動部「找庇護商品」查完整型錄；也請回饋你希望下一版補哪一種日常需求。</div>
+<div class="actions"><a class="btn ghost" href="https://orsd.wda.gov.tw/sheltered_products" target="_blank" rel="noopener">勞動部完整庇護商品型錄</a></div>
+</section>
+
+<section class="card">
+<h2>3｜我的「這週替代一筆」清單</h2>
+<p>不要一次買很多。先把一筆原本就會發生的消費，換成同類型的庇護商品／服務，才看得出這件事能不能變成日常。</p>
+<div id="chosen"><div class="muted">尚未加入。從上面的項目選一個。</div></div>
+<textarea id="plan"></textarea>
+<div class="actions"><button onclick="copyPlan()">複製我的替代清單</button><button class="ghost" onclick="clearPlan()">清空</button></div>
+</section>
+
+<section class="card">
+<h2>4｜三天最小實驗</h2>
+<div class="challenge">
+<div class="step"><b>Day 1｜找需求</b><br><span class="small">不要問「我要買什麼公益品」；問「這週本來就要洗什麼、補什麼、吃什麼？」</span></div>
+<div class="step"><b>Day 2｜比較</b><br><span class="small">至少點進一個官方型錄，確認價格、地點、訂購方式是否真的可接受。</span></div>
+<div class="step"><b>Day 3｜完成一筆</b><br><span class="small">真的詢價／購買／使用後再按頁尾「我真的採取了下一步」。沒買也回饋卡在哪。</span></div>
+</div>
+</section>
+
+<section class="card">
+<h2>5｜為什麼做這個，而不是再推一輪中秋禮盒？</h2>
+<div class="note ok">最近的公開討論已把問題講得很清楚：庇護工場若只在中秋、過年被想起來，支持很難永續；真正需要的是「平常吃飯、洗車、買東西時也能被想到」。勞動部目前已有正式產品型錄，而且其中確實有洗衣、清潔、衛生紙、咖啡、麵食、手工皂等日常選項。這個 MVP 做的是把入口從「節慶送禮」改成「我今天本來需要什麼」。</div>
+</section>
+
+<section class="card">
+<h2>6｜真實回饋：我們要知道「為什麼最後沒買」</h2>
+<p>Public Good Lab 會看獨立使用者、真的點進／加入選項、回饋人數，以及自我確認真的詢價／購買／使用的人數。若大家只是看看，沒有人真的轉換，這個題目就不能算驗證。</p>
+<div class="actions"><a class="btn ghost" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/9" target="_blank" rel="noopener">到公開回饋區</a></div>
+</section>
+
+<section class="card">
+<h2>7｜直接轉貼的推廣文</h2>
+<textarea id="promo">【不要等中秋才想到庇護工場】
+如果你這週本來就要洗衣、找清潔、補衛生紙、買咖啡／食品、洗車，可以先看 EverydayShelter TW。
+
+它不叫你「為了公益多買一份」，而是先選你本來就有的需求，再連到勞動部官方庇護商品型錄比較。
+
+真正要驗證的是：把庇護工場放進一般消費選項後，有沒有人真的詢價、購買、回購？如果最後沒買，也請回報卡在價格、距離、運費、訂購流程或品項不足。</textarea>
+<div class="actions"><button onclick="copyText('promo')">複製推廣文</button><button class="ghost" onclick="shareLine()">LINE 分享</button><button class="ghost" onclick="shareFB()">Facebook 分享</button></div>
+</section>
+
+<section class="card"><h2>資料與責任邊界</h2><p class="small">本頁只整理勞動部勞動力發展署「身心障礙者就業資源網」已公開的商品／服務範例，沒有代替庇護工場接單，也不保證庫存、售價、配送或服務範圍。請以官方型錄與實際工場回覆為準。Impact 統計不收姓名、Email、地址或訂單內容。</p></section>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+let selected=JSON.parse(localStorage.getItem('everyday-shelter-plan-v1')||'[]');
+
+function filter(){
+ const cat=$('cat').value,city=$('city').value;let shown=0;
+ document.querySelectorAll('.item').forEach(x=>{
+   const ok=(!cat||x.dataset.cat===cat)&&(!city||x.dataset.city===city);
+   x.style.display=ok?'block':'none'; if(ok)shown++;
+ });
+ $('noResult').style.display=shown?'none':'block';
+}
+function render(){
+ $('chosen').innerHTML=selected.length?selected.map((x,i)=>`<div class="note chosen"><b>${x}</b> <button class="ghost" onclick="removePick(${i})">移除</button></div>`).join(''):'<div class="muted">尚未加入。從上面的項目選一個。</div>';
+ $('plan').value=`【EverydayShelter TW｜這週替代一筆】\n${selected.length?selected.map((x,i)=>`${i+1}. ${x}`).join('\n'):'尚未選擇'}\n\n我的規則：只有在我本來就有這個需求、品質／價格／距離／訂購方式可接受時才買。完成詢價／購買／使用後，再回來回報是否真的轉換。`;
+}
+document.querySelectorAll('.pick').forEach(b=>b.addEventListener('click',()=>{
+ if(!selected.includes(b.dataset.name))selected.push(b.dataset.name);
+ localStorage.setItem('everyday-shelter-plan-v1',JSON.stringify(selected));render();
+ if(window.PGLabImpact)PGLabImpact.core('added-daily-alternative');
+}));
+document.querySelectorAll('.official').forEach(a=>a.addEventListener('click',()=>{
+ if(window.PGLabImpact)PGLabImpact.core('official-catalog-click');
+}));
+function removePick(i){selected.splice(i,1);localStorage.setItem('everyday-shelter-plan-v1',JSON.stringify(selected));render()}
+function clearPlan(){selected=[];localStorage.removeItem('everyday-shelter-plan-v1');render()}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+async function copyPlan(){await copyText('plan');if(window.PGLabImpact)PGLabImpact.core('plan-copied')}
+function pageURL(){return location.protocol.startsWith('http')?location.href:'https://allen3429.github.io/Allentrial20260812.github.io/public-good/everyday-shelter/'}
+function shareLine(){window.open('https://social-plugins.line.me/lineit/share?url='+encodeURIComponent(pageURL()),'_blank')}
+function shareFB(){window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(pageURL()),'_blank')}
+$('cat').addEventListener('change',filter);$('city').addEventListener('change',filter);filter();render();
+</script>
+<script src="../impact.js" data-project="everyday-shelter" data-action-text="我已找到一個日常替代選項" data-real-text="我真的詢價／購買／使用了" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/9"></script>
+</body></html>
