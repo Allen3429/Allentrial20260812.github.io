@@ -1,10 +1,12 @@
 (()=>{
 'use strict';
 const script=document.currentScript;
-const project=(script?.dataset.project||document.documentElement.dataset.project||'unknown').toLowerCase().replace(/[^a-z0-9-]/g,'-');
+const inferred=(location.pathname.match(/\/public-good\/([^/]+)\/?/)||[])[1]||'unknown';
+const project=(script?.dataset.project||document.documentElement.dataset.project||inferred).toLowerCase().replace(/[^a-z0-9-]/g,'-');
 const actionText=script?.dataset.actionText||'完成核心操作';
 const realText=script?.dataset.realText||'我真的採取了下一步';
 const issue=script?.dataset.issue||'';
+const auto=script?.dataset.auto==='true';
 const NS='pglab-allen3429-20260908-a93f5b';
 const BASE='https://abacus.jasoncameron.dev';
 const k=(name)=>`${project}-${name}`;
@@ -25,9 +27,10 @@ function mount(){
  document.getElementById('pglab-no').onclick=()=>feedback(false,document.getElementById('pglab-reason').value);
  document.getElementById('pglab-real').onclick=()=>{real('confirmed');document.getElementById('pglab-real').textContent='已記錄，謝謝';document.getElementById('pglab-real').disabled=true};
  if(localStorage.getItem(onceKey('feedback-done')))renderFeedbackThanks();
+ if(auto){let fired=false;document.addEventListener('click',e=>{const b=e.target.closest('button,.btn');if(!b||fired||b.closest('.pglab-impact'))return;fired=true;core('auto-interaction');},{capture:true});}
  refresh();
 }
-window.PGLabImpact={core,real,feedback,refresh};
+window.PGLabImpact={core,real,feedback,refresh,count:hit,read:get};
 once('unique-browsers');hit('pageviews');
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mount);else mount();
 })();
