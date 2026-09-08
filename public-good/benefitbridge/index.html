@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="benefitbridge">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="BenefitBridge TW：115學年度第1學期失業勞工在學子女生活扶助金資格快篩、補助試算、文件清單與官方申請入口。">
+<title>BenefitBridge TW｜失業家庭在學子女生活扶助快篩</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--ink:#17212b;--muted:#65717e;--line:#dbe3ea;--ok:#176b45;--warn:#936000;--bad:#a32323}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1120px;margin:auto;padding:24px 14px 72px}.kicker{font-weight:850;color:var(--muted);font-size:14px}
+h1{font-size:clamp(34px,6vw,58px);line-height:1.04;margin:.12em 0 .25em}h2{margin:.1em 0 .65em}.lead{font-size:18px;color:var(--muted);line-height:1.75;max-width:930px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:11px}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:9px}.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:21px;margin-top:4px}
+label{display:block;font-weight:760;margin-bottom:5px}input,select,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}textarea{min-height:180px;resize:vertical}
+button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:11px 13px;border-radius:9px;line-height:1.7;margin:10px 0}.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}.big{font-size:clamp(22px,4vw,31px);font-weight:900}
+.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:12px}table{width:100%;border-collapse:collapse;min-width:820px;font-size:13px}th,td{padding:9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{background:#f9fafb}.ck{width:auto;transform:scale(1.12);margin-right:7px}.small{font-size:13px;color:var(--muted);line-height:1.6}
+@media print{button,.actions{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · Taiwan · 規則依勞動部 2026/09/08 最新資料</div>
+<h1>BenefitBridge TW<br>失業家庭在學子女生活扶助快篩</h1>
+<p class="lead">這次新制最容易被舊資訊誤導的兩件事：<strong>沒有所得限制</strong>，而且自115學年度第1學期起，<strong>可與高中職免學費、私立大學定額減免等政府學雜費減免／補助同時請領</strong>。先用3分鐘確認值不值得正式送件，再直接進勞動部申請系統。</p>
+
+<section class="card"><h2>1｜先打掉兩個最常見的「我應該不符合吧」</h2><div class="stats"><div class="stat"><span>本期申請</span><b>9/8–10/19</b></div><div class="stat"><span>所得限制</span><b>沒有</b></div><div class="stat"><span>可與學雜費減免併領</span><b>可以</b></div><div class="stat"><span>私立大專每名</span><b>最高31,200元</b></div></div><div class="note warn"><b>為什麼特別做這頁：</b>網路上仍可看到舊制「有所得門檻、政府補助只能擇一」的整理。115學年度第1學期已改制，正式資格請以勞動部9/8最新簡章與審查為準。</div></section>
+
+<section class="card"><h2>2｜申請人資格快篩</h2><div class="grid"><div><label>是否為非自願離職失業勞工？</label><select id="involuntary"><option value="">請選</option><option value="yes">是</option><option value="no">不是／不確定</option></select></div><div><label>截至 2026/10/19 前是否已請領老年給付？</label><select id="oldage"><option value="">請選</option><option value="no">沒有</option><option value="yes">有</option></select></div><div><label>你符合哪一條失業／求職時間條件？</label><select id="path"><option value="">請選最接近的一項</option><option value="p1">A｜2026/7/20–10/19 已核付失業給付或職訓生活津貼</option><option value="p2">B｜2025/10/20–2026/10/19 曾核付，且 2026/7/20–10/19 就業未超過30日</option><option value="p3">C｜2025/10/20–2026/10/19 曾核付，且該一年就業未超過3個月</option><option value="p4">D｜2026/9/8–10/19 到公立就業服務機構辦求職登記</option><option value="none">都不是／不確定</option></select></div></div><div id="eligOut"></div></section>
+
+<section class="card"><h2>3｜子女學籍與補助試算</h2><p class="small">正式學籍才可；研究生、公費生、各類在職班、學分班、假日班、空中大學／空中進修學院、學士後各學系與延畢學生等不在補助範圍。申請人本人就學也不能以自己為子女名額申請。</p><div class="grid"><div><label>公立高中職／五專前3年（人數）</label><input id="pubHs" type="number" min="0" value="0"></div><div><label>私立高中職／五專前3年（人數）</label><input id="priHs" type="number" min="0" value="0"></div><div><label>公立大專／五專後2年（人數）</label><input id="pubUni" type="number" min="0" value="0"></div><div><label>私立大專／五專後2年（人數）</label><input id="priUni" type="number" min="0" value="0"></div><div><label>是否符合「獨力負擔家計」？</label><select id="single"><option value="no">否／不確定</option><option value="yes">是</option></select></div></div><div id="moneyOut"></div><div class="note">加給20%的條件是：符合「獨力負擔家計」，或<strong>符合核給規定的子女有2人以上就讀大專校院</strong>。兩者同時符合也只加20%，不會加40%。</div></section>
+
+<section class="card"><h2>4｜文件清單：只勾你準備好了沒有</h2><div class="grid"><label><input class="ck doc" type="checkbox"> 申請書（申請人簽名）</label><label><input class="ck doc" type="checkbox"> 申請人金融機構存摺封面</label><label><input class="ck doc" type="checkbox"> 申請人、配偶、子女戶口名簿；不同戶另附</label><label><input class="ck doc" type="checkbox"> 子女本學期已完成註冊的證明（在學證明／繳費收據／就貸通知／信用卡繳費證明／符合規定學生證擇一）</label><label><input class="ck doc" type="checkbox"> 如配偶／申請人屬外國人等身分，已備居留證影本</label><label><input class="ck doc" type="checkbox"> 如申請20%獨力家計加給，已備對應證明</label></div><div id="docOut"></div></section>
+
+<section class="card"><h2>5｜一鍵產生「我現在該做什麼」行動卡</h2><textarea id="plan"></textarea><div class="actions"><button onclick="build(true)">更新行動卡</button><button class="ghost" onclick="copyText('plan')">複製</button><button class="ghost" onclick="downloadPlan()">下載 TXT</button><a class="btn" id="applyBtn" target="_blank" rel="noopener" href="https://uwes.mol.gov.tw/login">進勞動部正式申請</a><a class="btn ghost" target="_blank" rel="noopener" href="https://www.mol.gov.tw/1607/28162/28540/28582/66175/post">看勞動部最新規則</a></div><div class="note ok"><b>線上申請不一定要自然人憑證：</b>勞動部本期也開放以「身分證號＋健保卡號」方式進行線上申請。不要把敏感資料填在本工具；請只在勞動部官方系統輸入。</div></section>
+
+<section class="card"><h2>6｜D類申請人特別提醒</h2><div class="note warn">如果你走的是「9/8–10/19到公立就業服務機構辦理求職登記」這一條，仍要在<strong>2026/11/18以前</strong>經核付失業給付或職業訓練生活津貼，才會核給這筆生活扶助金。不要只做求職登記就以為整個條件已完成。</div></section>
+
+<section class="card"><h2>7｜推廣與真實使用驗證</h2><textarea id="promo">【失業家庭有高中／大學生｜這學期規則真的改了】
+勞動部115-1「失業勞工在學子女生活扶助金」9/8開始申請、10/19截止。
+
+兩個最容易被舊資訊誤導的地方：
+1. 這學期「沒有所得限制」。
+2. 已有高中職免學費、私立大學定額減免等政府學雜費減免／補助，也可以再申請，不必擇一。
+
+公立大專每名15,000；私立大專每名26,000；符合獨力負擔家計或2名以上符合資格子女讀大專，再加20%。
+
+BenefitBridge TW 可以先做3分鐘快篩、算金額、檢查文件，再直接進勞動部正式申請。請轉給最近「非自願離職、家裡還有孩子在學」的人。</textarea><div class="actions"><button onclick="copyText('promo')">複製推廣文</button><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/8">使用者回饋區</a></div></section>
+
+<section class="card"><h2>責任邊界</h2><p class="small">本頁是申請前快篩與準備工具，不代表勞動部核定。正式資格、就業期間計算、獨力負擔家計認定與文件是否足夠，以勞動部審查為準。若不確定失業給付／就業期間口徑，可撥勞動部1955詢問。本頁不收身分證、健保卡、銀行帳號、戶籍資料或子女姓名。</p></section>
+</main>
+<script>
+const $=id=>document.getElementById(id);const num=id=>Math.max(0,parseInt($(id).value||'0',10)||0);
+function eligibility(){const inv=$('involuntary').value,old=$('oldage').value,path=$('path').value;let cls='warn',title='還需要補一項資訊',body='把三個欄位選完，再決定值不值得正式送件。';if(inv==='no'){cls='bad';title='目前不符合核心身分條件';body='本方案對象是非自願離職失業勞工；若你不確定離職是否屬「非自願」，先向公立就業服務機構／勞動部確認。';}else if(old==='yes'){cls='bad';title='目前不符合本期條件';body='勞動部本期條件要求申請人在10/19以前未請領老年給付。';}else if(inv==='yes'&&old==='no'&&['p1','p2','p3','p4'].includes(path)){cls='ok';title='值得正式準備申請';body=path==='p4'?'你目前走「求職登記」路徑；記得還要在11/18以前經核付失業給付或職訓生活津貼。':'你選的失業／就業時間路徑屬勞動部本期列出的四類之一。仍需確認子女學籍與正式文件。';}else if(path==='none'){cls='warn';title='目前無法由快篩確認';body='若四條時間路徑都不符合，本期可能不適用；如果只是日期或「就業期間」不確定，先問1955再自行排除。';}$('eligOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${body}</div>`;return {inv,old,path,title};}
+function money(){const a=num('pubHs'),b=num('priHs'),c=num('pubUni'),d=num('priUni');const college=c+d,base=a*4000+b*6000+c*15000+d*26000;const bonus=($('single').value==='yes'||college>=2);const total=Math.round(base*(bonus?1.2:1));$('moneyOut').innerHTML=`<div class="stats"><div class="stat"><span>符合資格子女人數</span><b>${a+b+c+d}</b></div><div class="stat"><span>基本扶助試算</span><b>NT$${base.toLocaleString()}</b></div><div class="stat"><span>20%加給</span><b>${bonus?'可能適用':'目前未觸發'}</b></div><div class="stat"><span>試算合計</span><b>NT$${total.toLocaleString()}</b></div></div>`;return {a,b,c,d,college,base,bonus,total};}
+function docs(){const arr=[...document.querySelectorAll('.doc')],done=arr.filter(x=>x.checked).length;$('docOut').innerHTML=done===arr.length?'<div class="note ok">6/6 已檢查。若個別文件不適用，正式送件時仍以簡章要求為準。</div>':`<div class="note warn">目前勾選 ${done}/6。先把「註冊證明、戶口名簿、存摺封面」這三類最常需要的資料準備好。</div>`;return done;}
+function build(countCore=false){const e=eligibility(),m=money(),d=docs();const pathNames={p1:'A：7/20–10/19已核付失業給付／職訓生活津貼',p2:'B：過去一年曾核付＋近3個月就業≤30日',p3:'C：過去一年曾核付＋該一年就業≤3個月',p4:'D：9/8–10/19公立就服求職登記（11/18前仍須核付）',none:'未能確認','':'未填'};$('plan').value=`【BenefitBridge TW｜115-1 失業勞工在學子女生活扶助金行動卡】\n\n截止：2026/10/19\n所得限制：沒有\n其他政府學雜費減免／補助：本學期起可同時請領\n\n一、申請人快篩\n- 非自願離職：${e.inv==='yes'?'是':e.inv==='no'?'否／不確定':'未填'}\n- 10/19前已請領老年給付：${e.old==='yes'?'是':e.old==='no'?'否':'未填'}\n- 路徑：${pathNames[e.path]}\n\n二、子女與金額試算\n- 公立高中職／五專前3年：${m.a} 人\n- 私立高中職／五專前3年：${m.b} 人\n- 公立大專／五專後2年：${m.c} 人\n- 私立大專／五專後2年：${m.d} 人\n- 基本金額：NT$${m.base.toLocaleString()}\n- 20%加給：${m.bonus?'可能適用':'目前未觸發'}\n- 試算合計：NT$${m.total.toLocaleString()}\n\n三、文件檢查\n- 已勾選：${d}/6\n\n四、下一步\n1. 仍不確定「非自願離職／就業期間」口徑 → 先問勞動部1955。\n2. 確認子女屬正式學籍且不是排除類別。\n3. 準備申請書、存摺封面、戶口名簿、註冊證明等。\n4. 於10/19前進勞動部官方系統送件：https://uwes.mol.gov.tw/login\n${e.path==='p4'?'5. 你走D路徑：務必在11/18前完成失業給付／職訓生活津貼核付條件。':''}\n\n本卡只是申請前快篩；正式核定以勞動部為準。敏感個資只填在官方申請系統，不要貼到公開回饋區。`;if(countCore&&window.PGLabImpact)PGLabImpact.core('eligibility-and-amount-checked');}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}function downloadPlan(){build(false);const blob=new Blob([$('plan').value],{type:'text/plain;charset=utf-8'}),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download='BenefitBridge_申請行動卡.txt';a.click();URL.revokeObjectURL(u);if(window.PGLabImpact)PGLabImpact.core('plan-downloaded');}
+['involuntary','oldage','path','pubHs','priHs','pubUni','priUni','single'].forEach(id=>{$(id).addEventListener('input',()=>build(false));$(id).addEventListener('change',()=>build(false))});document.querySelectorAll('.doc').forEach(x=>x.addEventListener('change',()=>build(false)));$('applyBtn').addEventListener('click',()=>{if(window.PGLabImpact)PGLabImpact.core('official-apply-clicked')});build(false);
+</script>
+<script src="../impact.js" data-project="benefitbridge" data-action-text="我已完成資格＋金額快篩" data-real-text="我已送出正式申請" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/8"></script>
+</body></html>
