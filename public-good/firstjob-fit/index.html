@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="firstjob-fit">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="FirstJob Fit TW：給社會新鮮人的第一份工作面試前防呆。把工作內容、新人訓練、工時、加班、試用期、保險與求職紅旗整理成可直接問雇主的確認卡。">
+<title>FirstJob Fit TW｜第一份工作面試前 8 問</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#65717e;--line:#dbe3ea;--ok:#176b45;--warn:#936000;--bad:#a32323}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1100px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}
+h1{font-size:clamp(36px,7vw,62px);line-height:1.03;margin:.12em 0 .25em}h2{margin:.1em 0 .65em}.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:940px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:9px}
+.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:22px;margin-top:4px}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:11px 13px;border-radius:9px;line-height:1.7;margin:10px 0}.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}
+label{display:block;font-weight:760;margin-bottom:5px}select,input,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}textarea{min-height:190px;resize:vertical}
+button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}
+.checkgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(245px,1fr));gap:8px}.ck{width:auto;transform:scale(1.12);margin-right:7px}
+.small{font-size:13px;color:var(--muted);line-height:1.6}.big{font-size:clamp(22px,4vw,30px);font-weight:900}.pill{display:inline-block;padding:4px 8px;border-radius:999px;background:#edf1f5;font-size:12px;font-weight:850;margin:3px 4px 3px 0}
+.q{border:1px solid var(--line);border-radius:14px;padding:12px}.q strong{display:block;margin-bottom:6px}
+@media print{button,.actions{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · Taiwan · 求職季實作 · 2026/09/09</div>
+<h1>FirstJob Fit TW<br>第一份工作，不要只問薪水。</h1>
+<p class="lead">台灣 2026 年 7 月 15–24 歲失業率達 11.71%，同時企業第 4 季聘僱展望仍偏正向。真正的摩擦常不是「完全沒有職缺」，而是新鮮人在錄取前沒有把<strong>實際工作內容、新人訓練、工時、加班、試用期與發展路徑</strong>問清楚。這頁不幫你判斷哪家公司「好或壞」，而是把還沒問清楚的地方變成可以直接問 HR／主管的問題。</p>
+<section class="card"><h2>1｜先把工作「講清楚」：8 個錄取前一定要知道的欄位</h2><div class="grid">
+<div class="q"><strong>實際工作內容</strong><select class="clarity" data-key="tasks"><option value="0">還沒講清楚</option><option value="1">大概知道</option><option value="2">有具體例子／比例</option></select></div>
+<div class="q"><strong>新人訓練／帶教</strong><select class="clarity" data-key="training"><option value="0">沒提</option><option value="1">有提但模糊</option><option value="2">知道誰帶、多久、怎麼評估</option></select></div>
+<div class="q"><strong>正常工時／排班</strong><select class="clarity" data-key="hours"><option value="0">不清楚</option><option value="1">大概知道</option><option value="2">開始／結束／排班規則都知道</option></select></div>
+<div class="q"><strong>加班與補休／加班費</strong><select class="clarity" data-key="overtime"><option value="0">不清楚</option><option value="1">只聽到「偶爾會」</option><option value="2">知道申請、核准與給付／補休方式</option></select></div>
+<div class="q"><strong>試用期</strong><select class="clarity" data-key="probation"><option value="0">不清楚</option><option value="1">只知道幾個月</option><option value="2">知道期間、薪資與考核標準</option></select></div>
+<div class="q"><strong>薪資組成</strong><select class="clarity" data-key="pay"><option value="0">只看到月薪數字</option><option value="1">知道固定／變動大概</option><option value="2">底薪、津貼、獎金條件都知道</option></select></div>
+<div class="q"><strong>地點／輪調／出差</strong><select class="clarity" data-key="place"><option value="0">不清楚</option><option value="1">大概知道</option><option value="2">知道頻率與範圍</option></select></div>
+<div class="q"><strong>績效與職涯路徑</strong><select class="clarity" data-key="growth"><option value="0">沒談</option><option value="1">有一句話描述</option><option value="2">知道前 3–6 個月期待與下一階段</option></select></div>
+</div><div id="clarityOut"></div></section>
+<section class="card"><h2>2｜紅旗不是「不喜歡」，而是先停下來確認</h2><p class="small">勞動部的求職防騙原則包含不繳錢、不購買、不辦卡、證件不離身、不非法工作等。下面若有勾選，不代表一定違法，但應先不要急著報到或交付資料。</p><div class="checkgrid">
+<label><input class="ck red" type="checkbox" value="money"> 面試／報到前先繳保證金、訓練費、押金或其他費用</label><label><input class="ck red" type="checkbox" value="buy"> 要求先購買產品、課程或大量自費裝備</label><label><input class="ck red" type="checkbox" value="bank"> 要求交出提款卡、網銀密碼、OTP，或代辦不必要金融卡</label><label><input class="ck red" type="checkbox" value="id"> 要把身分證／護照等證件正本留在公司「保管」</label><label><input class="ck red" type="checkbox" value="different"> 實際工作與廣告／面試承諾明顯不同</label><label><input class="ck red" type="checkbox" value="illegal"> 工作內容可能涉及代領款、代收帳戶／包裹或其他不明合法性的任務</label><label><input class="ck red" type="checkbox" value="forced"> 要你當場立刻簽、不能帶回看或不能提問</label>
+</div><div id="redOut"></div></section>
+<section class="card"><h2>3｜一鍵產生「我還要問 HR 的問題」</h2><textarea id="questions"></textarea><div class="actions"><button onclick="build(true)">更新問題卡</button><button class="ghost" onclick="copyText('questions')">複製到面試備忘錄</button></div></section>
+<section class="card"><h2>4｜把「廣告承諾」跟「正式 offer／合約」對一次</h2><p class="small">不要把公司機密、個資或完整契約貼上來。下面只記「你自己需要核對的類別」，內容留在這台瀏覽器。</p><div class="checkgrid">
+<label><input class="ck compare" type="checkbox"> 薪資與獎金條件一致</label><label><input class="ck compare" type="checkbox"> 職稱與實際主要工作一致</label><label><input class="ck compare" type="checkbox"> 工作地點／輪調條件一致</label><label><input class="ck compare" type="checkbox"> 工時／排班／休假說法一致</label><label><input class="ck compare" type="checkbox"> 試用期條件一致</label><label><input class="ck compare" type="checkbox"> 沒有突然出現未曾說明的費用／違約金／購買要求</label>
+</div><div id="compareOut"></div><div class="actions"><button class="ghost" onclick="saveSnapshot()">把這次檢查結果存到本機</button><button class="ghost" onclick="exportSnapshots()">匯出 JSON</button></div></section>
+<section class="card"><h2>5｜幾個容易誤解的基本權益</h2><div class="note"><ul><li><b>試用期不是「沒有勞動權益」：</b>勞動部說明，試用期間相關勞動權益與一般受僱勞工並無不同。</li><li><b>加班不是公司一句「一律補休」就結束：</b>原則上依法應給加班費；勞工有意願且雇主同意時，才可換補休。</li><li><b>招募資訊不應與實際條件故意不一致：</b>勞動部最新求職防騙頁持續把不實招募廣告與求職陷阱列為重點。</li></ul></div><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://www.mol.gov.tw/1607/28690/87756/87759/">勞動部：求職防騙</a><a class="btn ghost" target="_blank" rel="noopener" href="https://www.mol.gov.tw/1607/28162/28296/28340/28342/28356/47085/">勞動部：試用期</a><a class="btn ghost" target="_blank" rel="noopener" href="https://www.mol.gov.tw/1607/28162/28166/28180/28198/28202/47031/">勞動部：加班補休</a><a class="btn ghost" href="tel:1955">1955 勞工諮詢申訴專線</a></div></section>
+<section class="card"><h2>6｜今天真正的完成條件</h2><div class="checkgrid"><label><input class="ck action" type="checkbox"> 我已把至少 3 個未釐清問題真的問 HR／主管</label><label><input class="ck action" type="checkbox"> 我已保存職缺廣告／offer／重要書面承諾供自己核對</label><label><input class="ck action" type="checkbox"> 若有紅旗，我沒有因「已經拿到 offer」就直接忽略</label></div><div id="actionOut"></div></section>
+<section class="card"><h2>7｜7 天內的本機比較紀錄</h2><div id="snapshots"></div><p class="small">只記「釐清度、紅旗數、完成核對項目數、時間」。不記公司名稱、薪資、姓名或職缺內容。</p></section>
+<section class="card"><h2>8｜真實使用驗證</h2><p>Public Good Lab 追：<strong>獨立使用者 → 完成面試前確認卡 → 留下非敏感回饋 → 確認真的問了雇主／保存證據後再決定</strong>。</p><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/19">FirstJob Fit 真實回饋區</a></div></section>
+<section class="card"><h2>9｜可直接轉貼給剛畢業的人</h2><textarea id="promo">【第一份工作不要只問薪水｜先問這 8 件事】
+最近台灣 15–24 歲青年失業率仍明顯高於整體，同時企業又持續喊缺工；很多問題其實發生在「進去後才發現和想的不一樣」。
+
+我做了一個 FirstJob Fit TW，不需要輸入公司名稱或薪資，只幫你在接受 offer 前確認：
+・實際工作內容
+・新人訓練／誰帶
+・正常工時與排班
+・加班費／補休
+・試用期考核
+・薪資組成
+・輪調／出差
+・前 3–6 個月的績效與發展路徑
+
+還會把沒問清楚的地方直接變成可複製的 HR 問題。
+真正的目標不是「打完分數」，而是至少真的問 3 個問題再決定。</textarea><div class="actions"><button onclick="copyText('promo')">複製轉貼文</button></div></section>
+<section class="card"><h2>資料來源與邊界</h2><p class="small">就業背景依 2026/9/7–9/9 最新公開報導所引主計總處 7 月青年失業數據、1111 人力銀行 8 月新鮮人職缺資料，以及 2026/9/8 ManpowerGroup 第 4 季就業展望；勞動權益部分以勞動部最新頁面為準。本工具不提供個案法律結論，也不替你判定公司違法。</p></section>
+</main>
+<script>
+const $=id=>document.getElementById(id);const KEY='firstjob-fit-v1';function vals(sel){return [...document.querySelectorAll(sel)]}
+function clarify(){const all=vals('.clarity'),score=all.reduce((a,x)=>a+(+x.value),0),max=all.length*2;const missing=all.filter(x=>+x.value<2).length;$('clarityOut').innerHTML=`<div class="note ${score>=13?'ok':score>=8?'warn':'bad'}"><div class="big">目前釐清度 ${score}/${max}</div>還有 ${missing} 個欄位沒到「具體可核對」。${score<8?'先不要因為拿到 offer 就停止提問。':'把剩下的模糊點問完，再做接受／拒絕決定。'}</div>`;return {score,max,missing}}
+function reds(){const n=document.querySelectorAll('.red:checked').length;$('redOut').innerHTML=`<div class="note ${n?'bad':'ok'}">${n?`目前勾到 ${n} 個需要停下來確認的紅旗。先不要交錢、交金融工具、交證件正本或做合法性不明的工作；必要時打 1955 或向地方勞工主管機關詢問。`:'目前沒有勾到這組典型求職紅旗；仍不代表工作一定適合你。'}</div>`;return n}
+function compare(){const a=vals('.compare'),n=a.filter(x=>x.checked).length;$('compareOut').innerHTML=`<div class="note ${n===a.length?'ok':'warn'}">已完成 ${n}/${a.length} 項「廣告／承諾 ↔ offer／合約」核對。${n===a.length?'至少在可核對條件上沒有漏項。':'把未勾選項目逐一確認，尤其是職務、工時、地點與突然新增的費用。'}</div>`;return n}
+const qmap={tasks:'這個職位前 3 個月最常做的 3 件事是什麼？大概各占多少時間？有沒有職缺頁沒寫、但實際會固定做的工作？',training:'新人前幾週由誰帶？有沒有教材／交接／shadowing？通常多久會被期待能獨立完成工作？',hours:'實際上下班時間與排班怎麼決定？臨時改班／輪班的頻率大概是多少？',overtime:'這個團隊通常什麼情況會加班？怎麼申請／記錄？加班費或補休的處理方式是什麼？',probation:'試用期多久？薪資是否相同？會用哪些具體標準判斷通過？',pay:'這個數字裡哪些是固定薪、哪些是變動獎金／津貼？獎金的取得條件可以用書面說明嗎？',place:'工作地點是否固定？輪調、支援其他據點或出差，大約多久一次、範圍到哪？',growth:'前 3–6 個月最重要的績效期待是什麼？做得好的新人下一步通常會增加什麼責任或能力？'};
+function build(countCore){const c=clarify(),r=reds();compare();const need=vals('.clarity').filter(x=>+x.value<2).map(x=>qmap[x.dataset.key]);let text='【FirstJob Fit TW｜接受 offer 前問題卡】\n';text+=`釐清度：${c.score}/${c.max}；典型紅旗：${r} 項\n\n`;if(need.length){text+='我還要問清楚：\n'+need.map((q,i)=>`${i+1}. ${q}`).join('\n')+'\n\n';}else text+='8 個欄位都已具體釐清；下一步是把口頭承諾和 offer／合約核對。\n\n';text+='我的決定規則：\n・至少把 3 個最重要的不確定點真的問完，再決定。\n・重要承諾盡量保存書面版本或自己的面試筆記。\n・若要求繳錢、交金融工具、留證件正本或做合法性不明工作，先停止並查證。\n・本卡不是法律意見；勞動權益疑義可洽 1955 或地方勞工主管機關。\n';$('questions').value=text;if(countCore&&window.PGLabImpact)PGLabImpact.core('offer-check-complete')}
+function actions(){const a=vals('.action'),n=a.filter(x=>x.checked).length;$('actionOut').innerHTML=`<div class="note ${n===a.length?'ok':'warn'}">現實行動 ${n}/${a.length}。${n===a.length?'這才算完成，不只是看過一張求職清單。':'至少先完成「真的問 3 個問題」這一步。'}</div>`;if(n===a.length&&window.PGLabImpact)PGLabImpact.core('asked-and-saved')}
+function saveSnapshot(){const c=clarify(),r=reds(),cp=compare();const data=JSON.parse(localStorage.getItem(KEY)||'[]');data.push({at:new Date().toISOString(),clarity:c.score,max:c.max,redFlags:r,compared:cp});localStorage.setItem(KEY,JSON.stringify(data.slice(-12)));renderSnapshots();if(window.PGLabImpact)PGLabImpact.core('snapshot-saved')}
+function renderSnapshots(){const data=JSON.parse(localStorage.getItem(KEY)||'[]');$('snapshots').innerHTML=data.length?data.slice().reverse().map(x=>`<div class="note"><b>${new Date(x.at).toLocaleString('zh-TW')}</b>　釐清 ${x.clarity}/${x.max}｜紅旗 ${x.redFlags}｜核對 ${x.compared}/6</div>`).join(''):'<div class="note">還沒有本機紀錄。可以在比較 offer 時各存一次，只記匿名分數。</div>'}
+function exportSnapshots(){const data=localStorage.getItem(KEY)||'[]',b=new Blob([data],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download='FirstJobFit_anonymous_snapshots.json';a.click();URL.revokeObjectURL(u)}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+vals('.clarity').forEach(x=>x.addEventListener('change',()=>build(false)));vals('.red').forEach(x=>x.addEventListener('change',()=>build(false)));vals('.compare').forEach(x=>x.addEventListener('change',()=>build(false)));vals('.action').forEach(x=>x.addEventListener('change',actions));build(false);actions();renderSnapshots();
+</script>
+<script src="../impact.js" data-project="firstjob-fit" data-action-text="我已完成面試前確認卡" data-real-text="我已真的問雇主／保存書面後再決定" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/19"></script>
+</body></html>
