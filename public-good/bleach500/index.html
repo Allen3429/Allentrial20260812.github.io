@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="bleach500">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bleach500 TW｜腸病毒清消換算器</title>
+<meta name="description" content="依疾管署腸病毒指引，把漂白水瓶身濃度換算成500 ppm一般環境或1000 ppm病童分泌物／排泄物污染表面的清消配方。資料只留本機。">
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#65717e;--line:#dbe3ea;--ok:#176b45;--warn:#936000;--bad:#a32323}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1080px;margin:auto;padding:24px 14px 72px}.kicker{font-weight:850;color:var(--muted);font-size:14px}
+h1{font-size:clamp(36px,7vw,62px);line-height:1.03;margin:.12em 0 .25em}h2{margin:.1em 0 .65em}.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:940px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:9px}.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:25px;margin-top:4px}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:11px 13px;border-radius:9px;line-height:1.7;margin:10px 0}.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}
+label{display:block;font-weight:760;margin-bottom:5px}input,select,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}textarea{min-height:180px;resize:vertical}
+button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}
+.small{font-size:13px;color:var(--muted);line-height:1.65}.ck{width:auto;transform:scale(1.14);margin-right:7px}.checkgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:8px}
+.big{font-size:30px;font-weight:900}.formula{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:#f2f4f7;border-radius:10px;padding:10px;overflow:auto}
+@media print{button,.actions{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head><body><main class="wrap">
+<div class="kicker">Public Good Lab · Taiwan · 2026/09/09</div>
+<h1>Bleach500 TW<br>腸病毒清消，不要只拿酒精噴一噴。</h1>
+<p class="lead">疾管署最新監測顯示腸病毒疫情正在上升；而酒精對腸病毒的毒殺效果有限。這頁把你家漂白水瓶身的<strong>次氯酸鈉濃度</strong>換算成疾管署建議的 500 ppm 一般環境清消，或 1000 ppm 病童分泌物／排泄物污染表面清消。它不收孩子姓名、學校或診斷。</p>
+<section class="card"><h2>1｜先選用途，不要用同一桶濃度到處擦</h2><div class="grid"><div><label>用途</label><select id="target"><option value="500">500 ppm｜一般環境／高接觸表面</option><option value="1000">1000 ppm｜病童分泌物或排泄物污染表面</option></select></div><div><label>想配製的總量</label><select id="volume"><option value="0.5">0.5 公升</option><option value="1">1 公升</option><option value="2">2 公升</option><option value="5">5 公升</option><option value="10" selected>10 公升</option></select></div><div><label>漂白水瓶身次氯酸鈉濃度（%）</label><input id="stock" type="number" inputmode="decimal" min="0.1" max="15" step="0.1" value="5"></div></div><div class="note warn"><b>請看瓶身標示再填。</b>不要因為「家用漂白水通常是5%」就猜。若瓶身無法確認濃度、產品不是含氯漂白水／次氯酸鈉，這個換算器不適用。</div><div id="mixOut"></div></section>
+<section class="card"><h2>2｜配製卡：把數字拿到水槽旁邊</h2><textarea id="mixCard"></textarea><div class="actions"><button onclick="build(true)">更新配製卡</button><button class="ghost" onclick="copyText('mixCard')">複製配製卡</button></div><div class="note bad"><b>安全底線：</b>漂白水不可與酸性清潔劑、鹽酸、醋、氨類清潔劑或其他不明清潔劑混合；保持通風，依疾管署建議穿戴防水手套、口罩、圍裙。不要拿漂白水擦皮膚、洗手或讓幼兒自行操作。</div></section>
+<section class="card"><h2>3｜這一輪要擦哪裡？高接觸表面優先</h2><p class="small">疾管署不建議為腸病毒做無差別大規模噴藥；重點是幼兒常接觸的表面與物品。</p><div class="checkgrid"><label><input class="ck clean" type="checkbox"> 門把／扶手／開關</label><label><input class="ck clean" type="checkbox"> 課桌椅／餐桌／兒童桌椅</label><label><input class="ck clean" type="checkbox"> 玩具／遊樂設施</label><label><input class="ck clean" type="checkbox"> 嬰兒床柵欄／常摸表面</label><label><input class="ck clean" type="checkbox"> 廁所常接觸處</label><label><input class="ck clean" type="checkbox"> 其他幼兒反覆摸到的表面</label></div><div id="cleanOut"></div></section>
+<section class="card"><h2>4｜完成前 6 個安全確認</h2><div class="checkgrid"><label><input class="ck safe" type="checkbox"> 已確認瓶身「次氯酸鈉」濃度</label><label><input class="ck safe" type="checkbox"> 已確認今天要用 500 ppm 還是 1000 ppm</label><label><input class="ck safe" type="checkbox"> 有防水手套並保持通風</label><label><input class="ck safe" type="checkbox"> 沒有和其他清潔劑混在一起</label><label><input class="ck safe" type="checkbox"> 容器會清楚標示「消毒用」，避免誤飲</label><label><input class="ck safe" type="checkbox"> 清消用品會放在幼兒拿不到的位置</label></div><div id="safeOut"></div></section>
+<section class="card"><h2>5｜酒精不是這一題的替代答案</h2><div class="note warn">疾管署近期再次提醒：<b>酒精對腸病毒的毒殺效果有限</b>。手部衛生仍以肥皂或洗手乳正確洗手為核心；環境表面則依官方建議使用合適濃度的含氯漂白水。不要把「有噴75%酒精」當成已完成腸病毒環境清消。</div><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://www.cdc.gov.tw/Category/Page/FgfRlDl6XxDkuqaOghuNfQ">疾管署：腸病毒疾病介紹／消毒</a><a class="btn ghost" target="_blank" rel="noopener" href="https://www.cdc.gov.tw/Category/MPage/CXsJFdlmDXUz3j5oh4M7Zw">疾管署：腸病毒防疫專區</a></div></section>
+<section class="card"><h2>6｜重症前兆不是清消工具能處理的</h2><div class="note bad">5歲以下嬰幼兒是重症高風險群。若幼兒經醫師診斷感染腸病毒後出現嗜睡／意識不清、活力不佳、手腳無力或麻痺、肌抽躍、持續嘔吐、呼吸急促或心跳加快等重症前兆，請立即就醫。這個網站不做診斷、不判斷是否需要停課，也不替代醫師或衛生單位。</div></section>
+<section class="card"><h2>7｜真的用過才算：回報「有沒有完成一輪清消」</h2><p>Public Good Lab 會分開追：<strong>獨立使用者 → 完成配製卡／清消清單 → 留下回饋 → 確認真的完成一次高接觸表面清消</strong>。不收健康資料。</p><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/13">Bleach500 TW 公開回饋區</a><a class="btn ghost" href="../">回 Public Good Lab</a></div></section>
+<section class="card"><h2>8｜可以直接轉給家長／老師／托育人員</h2><textarea id="promo">【腸病毒最近又升溫｜酒精不等於完成清消】
+疾管署最新監測：8/30–9/5 腸病毒門急診 8,475 人次，比前一週增加 17.7%。
+
+容易出錯的地方是：大家知道「要用漂白水」，但家裡瓶身可能是 5%、6% 或其他濃度，500 ppm 到底要倒幾 mL？
+
+Bleach500 TW：
+・先看瓶身次氯酸鈉 %
+・選 500 ppm 一般環境，或 1000 ppm 病童分泌物／排泄物污染表面
+・自動換算 mL
+・附高接觸表面與安全檢查
+・不收孩子姓名、學校或診斷
+
+重點不是「看過防疫文」，而是今天有沒有真的正確配一次、擦完一輪。</textarea><div class="actions"><button onclick="copyText('promo')">複製推廣文</button></div></section>
+<section class="card"><h2>計算依據與邊界</h2><p class="small">疾管署公式：Q = (V × D) / (10 × A)，Q 為需要的漂白水 mL、V 為欲配製總量 L、D 為目標 ppm、A 為原液次氯酸鈉濃度 %。例如 5% 原液配 10 L、500 ppm，需要 100 mL。若是無法區分的嘔吐／排泄物污染、特殊機構感染管制或其他病原情境，請依疾管署／衛生單位的事件特定指引，不要把本工具的腸病毒設定硬套到其他疾病。</p><div class="formula">Q (mL) = V (L) × D (ppm) ÷ [10 × A (%)]</div></section>
+</main><script>
+const $=id=>document.getElementById(id);function calc(){const D=+$('target').value,V=+$('volume').value,A=+$('stock').value;if(!Number.isFinite(A)||A<0.1||A>15)return null;const q=V*D/(10*A);return {D,V,A,q}}function fmt(n){return n<10?n.toFixed(1):Math.round(n).toString()}
+function build(countCore){const x=calc();if(!x){$('mixOut').innerHTML='<div class="note bad">請輸入瓶身標示的有效濃度（0.1%–15%）。若不知道濃度，不要猜。</div>';return}const kind=x.D===500?'一般環境／高接觸表面':'病童分泌物或排泄物污染表面';$('mixOut').innerHTML=`<div class="stats"><div class="stat"><span>原液濃度</span><b>${x.A}%</b></div><div class="stat"><span>目標</span><b>${x.D} ppm</b></div><div class="stat"><span>總量</span><b>${x.V} L</b></div><div class="stat"><span>需漂白水</span><b>${fmt(x.q)} mL</b></div></div><div class="note ok">精確總量法：量取約 <b>${fmt(x.q)} mL</b> 漂白水，加入部分自來水，再補水至總量 <b>${x.V} L</b>。用途：${kind}。</div>`;$('mixCard').value=`【Bleach500 TW｜腸病毒清消配製卡】\n用途：${kind}\n瓶身次氯酸鈉：${x.A}%\n目標濃度：${x.D} ppm\n配製總量：${x.V} L\n需要漂白水：約 ${fmt(x.q)} mL\n\n步驟：\n1. 再確認瓶身是含氯漂白水／次氯酸鈉，濃度為 ${x.A}%。\n2. 保持通風，穿戴防水手套、口罩、圍裙。\n3. 量取約 ${fmt(x.q)} mL 漂白水，加入部分自來水，再補水至總量 ${x.V} L。\n4. 容器清楚標示「消毒用」，避免幼兒接觸或誤飲。\n5. 絕對不要與酸性、氨類或其他不明清潔劑混合。\n6. 針對高接觸表面做重點清消，不把漂白水用於皮膚或洗手。\n\n依據：衛福部疾管署腸病毒防治資訊。\n這不是醫療診斷或個別感染管制指示。`;if(countCore&&window.PGLabImpact)PGLabImpact.core('mix-card-generated')}
+function assessClean(){const n=document.querySelectorAll('.clean:checked').length;$('cleanOut').innerHTML=`<div class="note ${n>=3?'ok':'warn'}">已選 ${n} 類高接觸表面。${n>=3?'先把幼兒反覆碰到的地方完成，比無差別到處噴更有意義。':'先找出孩子最常摸的門把、桌椅、玩具與廁所接觸面。'}</div>`}function assessSafe(){const a=[...document.querySelectorAll('.safe')],n=a.filter(x=>x.checked).length;$('safeOut').innerHTML=`<div class="note ${n===a.length?'ok':'warn'}">安全確認 ${n}/${a.length}。${n===a.length?'可以依配製卡進行；完成後再按 Impact 的「真的完成清消」。':'尚未完成安全確認，不建議開始調配。'}</div>`;if(n===a.length&&window.PGLabImpact)PGLabImpact.core('safety-check-complete')}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}['target','volume','stock'].forEach(id=>$(id).addEventListener('input',()=>build(false)));document.querySelectorAll('.clean').forEach(x=>x.addEventListener('change',assessClean));document.querySelectorAll('.safe').forEach(x=>x.addEventListener('change',assessSafe));build(false);assessClean();assessSafe();
+</script><script src="../impact.js" data-project="bleach500" data-action-text="我已完成配製卡／安全檢查" data-real-text="我今天真的完成一次高接觸表面清消" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/13"></script></body></html>
