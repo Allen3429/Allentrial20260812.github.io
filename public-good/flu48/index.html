@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="flu48">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Flu48 TW：2026/8/24–9/30 公費流感抗病毒藥劑擴大條件的就醫資訊卡。只做資格提醒與就醫溝通，不診斷、不收健康個資。">
+<title>Flu48 TW｜公費流感抗病毒資格／就醫資訊卡</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#65717e;--line:#dbe3ea;--ok:#176b45;--warn:#936000;--bad:#a32323}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1100px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}
+h1{font-size:clamp(36px,7vw,62px);line-height:1.03;margin:.12em 0 .25em}h2{margin:.1em 0 .65em}.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:940px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:9px}
+.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:22px;margin-top:4px}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:11px 13px;border-radius:9px;line-height:1.7;margin:10px 0}.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}
+label{display:block;font-weight:760;margin-bottom:5px}select,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}textarea{min-height:190px;resize:vertical}
+button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}
+.ck{width:auto;transform:scale(1.13);margin-right:7px}.checkgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:8px}.small{font-size:13px;color:var(--muted);line-height:1.6}.big{font-size:clamp(22px,4vw,30px);font-weight:900}
+@media print{button,.actions{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · Taiwan · 規則校對 2026/09/09</div>
+<h1>Flu48 TW<br>就醫時，別漏講你其實屬於「擴大公費條件」。</h1>
+<p class="lead">台灣流感已進入流行期。疾管署目前自 <strong>2026/8/24 至 9/30</strong> 暫時擴大公費流感抗病毒藥劑使用條件，新增學生、托育、長照、醫療工作者，以及<strong>與流感重症高風險者同住或照顧他們的人</strong>等高傳播族群。這頁只幫你把「應該告訴醫師的身分」整理成一張卡，不診斷流感、不決定是否用藥。</p>
+<section class="card"><h2>1｜為什麼現在值得做</h2><div class="stats"><div class="stat"><span>8/30–9/5 類流感就診</span><b>115,136</b></div><div class="stat"><span>較前週</span><b>+11.0%</b></div><div class="stat"><span>9/1–9/7 新增重症</span><b>105</b></div><div class="stat"><span>同週新增死亡</span><b>19</b></div></div><div class="note warn">疾管署 9/8 宣布國內流感已進入流行期。這一輪工具不是叫所有人「自己吃克流感」，而是避免符合擴大條件的人在看診時沒把關鍵身分講出來。</div></section>
+<section class="card"><h2>2｜你是否落在 8/24–9/30 的「擴大條件」？</h2><div class="grid"><div><label>你的身分類型</label><select id="role"><option value="none">以上都不是／不確定</option><option value="medical">醫療院所防疫相關人員（含醫事與非醫事人員）</option><option value="ltc">安養／長照等機構受照顧者或工作人員</option><option value="childcare">幼兒園／托育機構／居家托育人員（保母）</option><option value="student">幼兒園、國小、國中、高中、高職、五專1–3年級學生</option><option value="cohabit">與流感重症高風險族群同住，或是其照顧者</option><option value="animal">禽畜養殖、動物園、動物防疫相關人員</option><option value="dense">其他人口密集機構人員（例如軍營等）</option></select></div><div><label>目前是否有類流感症狀？</label><select id="sym"><option value="unknown">不確定</option><option value="yes">有發燒、咳嗽、喉嚨痛、流鼻水、肌肉痠痛等症狀</option><option value="no">目前沒有</option></select></div><div><label>症狀大約何時開始？</label><select id="onset"><option value="unknown">不確定</option><option value="today">今天</option><option value="yesterday">昨天</option><option value="2plus">2天以上前</option></select></div></div><div id="eligOut"></div><div class="note">若你不屬於這次「擴大」7類，<strong>不代表你一定不符合公費流感抗病毒藥劑資格</strong>；原本的公費條件仍存在。最終是否符合、是否需要使用藥物，都由醫師依官方規定與臨床狀況判斷。</div></section>
+<section class="card"><h2>3｜如果你選「與高風險者同住／照顧」</h2><p class="small">疾管署列的流感重症高風險族群包括：未滿5歲幼兒、65歲以上長者、重大傷病、免疫不全、流感高風險慢性疾病者、長期服用阿斯匹靈的未滿18歲兒少、孕婦及產後2週內婦女、肥胖者，以及護理之家／其他慢性照護機構住民等。這個網站不需要知道你家人是哪一類。</p><div class="checkgrid"><label><input class="ck" id="knowHigh" type="checkbox"> 我知道「同住／照顧高風險者」本身可能是這次擴大條件之一</label><label><input class="ck" id="tellDoc" type="checkbox"> 看診時我會主動告訴醫師這個身分，不只講症狀</label></div></section>
+<section class="card"><h2>4｜48 小時的重點：是「盡快就醫」，不是自己找藥</h2><div class="note ok">疾管署指出，流感抗病毒藥劑在症狀開始後 48 小時內使用效果最好；即使超過 48 小時仍可能有治療效益。是否需要用藥由醫師判斷。</div><div class="note">符合公費用藥條件者，醫師可依規定與臨床評估開立公費藥劑，<strong>不以一定要先做流感快篩為前提</strong>。這不是「不用診斷」，而是避免把快篩當成唯一門檻。</div></section>
+<section class="card"><h2>5｜一鍵產生「給醫師看的資訊卡」</h2><textarea id="card"></textarea><div class="actions"><button onclick="build(true)">更新資訊卡</button><button class="ghost" onclick="copyText('card')">複製到手機備忘錄</button><a class="btn ghost" target="_blank" rel="noopener" href="https://vaxmap.cdc.gov.tw/">找公費流感藥劑合約院所</a></div></section>
+<section class="card"><h2>6｜這些危險徵兆不要等工具判斷</h2><div class="note bad"><b>若出現呼吸困難／急促、發紺、血痰或痰液明顯變濃、胸痛、意識改變、低血壓，或高燒持續 72 小時等危險徵兆，應儘速就醫。</b>本工具不是急診分流器。</div><div class="actions"><a class="btn ghost" href="tel:1922">疾管署 1922</a><a class="btn ghost" target="_blank" rel="noopener" href="https://www.cdc.gov.tw/">疾管署官網</a></div></section>
+<section class="card"><h2>7｜隱私與產品邊界</h2><div class="note">本頁不要求姓名、身分證、健保卡、地址、診斷、快篩結果、藥名、劑量或病歷，也不把你勾選的內容上傳。它只是一張「就醫時不要漏講關鍵資格身分」的提醒卡。</div></section>
+<section class="card"><h2>8｜真實使用才算</h2><p>本專案追：<strong>獨立使用者 → 完成資格／就醫資訊卡 → 留下非敏感回饋 → 確認真的去官方合約院所／醫療院所就醫</strong>。</p><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/16">Flu48 TW 真實使用回饋</a></div></section>
+<section class="card"><h2>9｜可直接轉貼</h2><textarea id="promo">【流感已進流行期｜你可能符合到 9/30 的「擴大公費抗病毒藥劑條件」】
+疾管署目前 8/24–9/30 暫時擴大公費流感抗病毒藥劑使用條件，除了原本資格外，新增：
+・醫療院所防疫相關人員
+・安養／長照住民與工作人員
+・幼兒園／托育／保母
+・幼兒園到高中職、五專1–3年級學生
+・與流感重症高風險者同住或照顧他們的人
+・禽畜／動物園／動物防疫人員
+・其他人口密集機構人員
+
+如果有類流感症狀，看診時不要只講「我發燒咳嗽」，也要主動告訴醫師你屬於哪一類。
+Flu48 TW 不收健康個資，只幫你產生就醫資訊卡，最後由醫師判斷是否符合公費用藥。</textarea><div class="actions"><button onclick="copyText('promo')">複製轉貼文</button></div></section>
+<section class="card"><h2>資料來源與時效</h2><p class="small">依衛生福利部疾病管制署 2026/8/18 擴大公費流感抗病毒藥劑使用條件公告、2026/9/8 流感疫情新聞稿與疾管署流感抗病毒藥劑 Q&A 整理。擴大措施目前公告至 2026/9/30；政策若變更，以疾管署最新公告為準。</p></section>
+</main>
+<script>
+const $=id=>document.getElementById(id);const roleName=()=>$('role').selectedOptions[0].textContent;
+function eligible(){const r=$('role').value,s=$('sym').value,o=$('onset').value;let cls='warn',msg='';if(r!=='none'&&s==='yes'){cls='ok';msg='<b>你目前同時具「類流感症狀」＋這次公告的擴大身分類型。</b>看診時主動把這個身分告訴醫師，請醫師依官方規定與臨床狀況評估是否符合公費抗病毒藥劑。';}else if(r!=='none'&&s==='no'){msg='<b>你屬於擴大身分類型，但目前沒有類流感症狀。</b>這項擴大用藥條件是給「有類流感症狀」者；不要自行預先找藥。';}else if(r==='none'){msg='<b>你目前沒有選到這次新增的 7 類。</b>這不等於「一定不符合公費資格」；原本的公費使用條件仍存在，若有症狀請由醫師評估。';}else{msg='先確認目前是否有類流感症狀；這個工具不替你診斷。';}if(o==='today'||o==='yesterday')msg+=' 你填的發病時間大致仍在「及早就醫」的重要窗口，請不要為了等快篩或自己找藥而拖延就醫。';$('eligOut').innerHTML=`<div class="note ${cls}">${msg}</div>`;}
+function build(countCore){eligible();const onset=$('onset').selectedOptions[0].textContent;$('card').value=`【Flu48 TW｜就醫資訊卡】
+我目前的身分類型：${roleName()}
+目前類流感症狀：${$('sym').selectedOptions[0].textContent}
+症狀大約開始：${onset}
+
+看診時我想主動告訴醫師：
+「我看到疾管署目前 2026/8/24–9/30 有擴大公費流感抗病毒藥劑使用條件，我的身分類型是：${roleName()}。請依官方規定與我的臨床狀況，幫我評估是否符合公費抗病毒藥劑使用條件。」
+
+提醒自己：
+・我不自行要求特定藥物／劑量，最後由醫師判斷。
+・若不屬於本次擴大 7 類，也可能另有原本的公費資格。
+・抗病毒藥劑通常越早評估越好，但超過48小時不等於一定無效。
+・若有呼吸困難、發紺、胸痛、意識改變、低血壓或高燒持續72小時等危險徵兆，儘速就醫。
+
+官方合約院所：https://vaxmap.cdc.gov.tw/
+疾管署：1922
+本卡不含姓名、身分證、診斷或檢驗結果。`;if(countCore&&window.PGLabImpact)PGLabImpact.core('doctor-card-complete');}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+['role','sym','onset'].forEach(id=>$(id).addEventListener('change',()=>build(false)));build(false);
+</script>
+<script src="../impact.js" data-project="flu48" data-action-text="我已完成資格／就醫資訊卡" data-real-text="我已真的去官方合約院所／醫療院所就醫" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/16"></script>
+</body></html>
