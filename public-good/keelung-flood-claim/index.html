@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="keelung-flood-claim">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Keelung Flood Claim Prep：2026/9/4 基隆豪雨災後證據與申請準備工具。先拍照存證、整理房屋/車輛/財物損失、追蹤市府補助最新公告，不收姓名車牌地址。">
+<title>Keelung Flood Claim Prep｜基隆 9/4 豪雨災損申請準備</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--ok:#176b45;--warn:#936000;--bad:#a32323}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1100px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}
+h1{font-size:clamp(36px,7vw,62px);line-height:1.03;margin:.12em 0 .25em}.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:950px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:9px}
+.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:22px;margin-top:4px}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:11px 13px;border-radius:9px;line-height:1.7;margin:10px 0}.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}
+label{display:block;font-weight:760;margin-bottom:5px}select,input,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}textarea{min-height:190px;resize:vertical}
+button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}
+.ck{width:auto;transform:scale(1.13);margin-right:7px}.checkgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:8px}.small{font-size:13px;color:var(--muted);line-height:1.6}.big{font-size:clamp(22px,4vw,30px);font-weight:900}
+.badge{display:inline-block;padding:4px 8px;border-radius:999px;background:#edf1f5;font-size:12px;font-weight:850;margin:3px}
+@media print{button,.actions{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · Keelung · 最新公開資訊校對 2026/09/09 15:22</div>
+<h1>Keelung Flood Claim Prep<br>水退了，先把「能證明受災」的東西留下來。</h1>
+<p class="lead">2026/9/4 基隆強降雨造成多處住家、商家與車輛泡水。市府已表示房屋受災將從寬協助，並要新增汽機車受損補助；但截至本工具最後校對時間，<strong>我尚未在基隆市政府最新公開公告中找到這次汽機車補助的完整認定標準、金額與申請方式</strong>。所以現在最有價值的不是猜金額，而是先把證據、估價、時間與文件整理好。</p>
+
+<section class="card">
+<h2>1｜你要準備哪一類災損？</h2>
+<div class="checkgrid">
+<label><input class="ck loss" type="checkbox" value="home"> 住家／店面淹水或設備損壞</label>
+<label><input class="ck loss" type="checkbox" value="car"> 汽車泡水／毀損</label>
+<label><input class="ck loss" type="checkbox" value="moto"> 機車泡水／毀損</label>
+<label><input class="ck loss" type="checkbox" value="property"> 家具、家電、商品、營業設備等財物損失</label>
+<label><input class="ck loss" type="checkbox" value="tax"> 想同步確認稅捐減免</label>
+</div>
+<div id="lossOut"></div>
+</section>
+
+<section class="card">
+<h2>2｜現在最重要：清理前／修理前先留下 6 類證據</h2>
+<div class="checkgrid">
+<label><input class="ck evidence" type="checkbox"> 遠景：整個受災空間／車輛，能看出「在哪裡受損」</label>
+<label><input class="ck evidence" type="checkbox"> 水位：牆面、門、家具或車體可辨識的水痕／泥痕</label>
+<label><input class="ck evidence" type="checkbox"> 近照：每個主要損壞項目至少 1–2 張</label>
+<label><input class="ck evidence" type="checkbox"> 影片：從入口一路拍到主要受損處，保留現場關係</label>
+<label><input class="ck evidence" type="checkbox"> 修復前估價／維修單／拖吊單／清運單等</label>
+<label><input class="ck evidence" type="checkbox"> 清理後仍保留能對照的照片，不只剩「已清乾淨」畫面</label>
+</div>
+<div id="evidenceOut"></div>
+<div class="note warn"><b>安全優先。</b>若仍有漏電、積水、結構或油料危險，不要為了拍照進入危險區域。照片也不要公開貼身分證、車牌近照、門牌、帳戶或保單資料。</div>
+</section>
+
+<section class="card">
+<h2>3｜依你勾選的損失，自動產生文件包</h2>
+<div id="docsOut"></div>
+</section>
+
+<section class="card">
+<h2>4｜稅捐減免：別等市府慰助公告才處理</h2>
+<div class="note ok">財政部與地方稅務機關目前共同提醒：天然災害造成財產受損，應先<strong>拍照存證 → 檢附證明文件 → 申請減免</strong>。多項災害損失申報通常要求於災害發生後 30 日內辦理；車輛使用牌照稅還可能涉及向監理機關辦理停駛／報廢或檢具修車證明。</div>
+<p class="small">9/4 起算 30 日大約落在 10/4 前後，但實際申報期限、假日順延與個別稅目規則請以主管稅捐機關說明為準，不要只靠本頁日期。</p>
+<div class="actions">
+<a class="btn ghost" target="_blank" rel="noopener" href="https://www.etax.nat.gov.tw/">財政部稅務入口網</a>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://www.ntbna.gov.tw/multiplehtml/9188c0e8c00648b08b9f624da012ff74">北區國稅局災害損失減免專區</a>
+</div>
+</section>
+
+<section class="card">
+<h2>5｜汽機車補助：目前先「不猜」</h2>
+<div class="note warn"><b>本輪查證狀態：</b>9/5 基隆市府已公開表示，這次 9/4 豪雨除了房屋受災慰助外，將增加汽機車受損補助，並預計一週內公告認定標準、資格與申請方式。截至 9/9 15:22，我尚未在基隆市府最新公告頁找到這次的完整新辦法。</div>
+<p>所以本工具不把過去基隆泡水車補助金額當成今年確定金額。你現在應先保留：</p>
+<div class="checkgrid">
+<label><input class="ck vehicle" type="checkbox"> 車輛受災全景＋可見泡水高度／泥痕</label>
+<label><input class="ck vehicle" type="checkbox"> 維修廠初步檢測或估價單</label>
+<label><input class="ck vehicle" type="checkbox"> 拖吊／救援／清潔相關單據</label>
+<label><input class="ck vehicle" type="checkbox"> 若已無法使用，先詢問監理／稅務單位停駛或報廢對稅捐的影響</label>
+</div>
+<div class="actions">
+<a class="btn" target="_blank" rel="noopener" href="https://www.klcg.gov.tw/tw/klcg1/3168.html">基隆市政府市政新聞</a>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://www.klcg.gov.tw/tw">基隆市政府首頁</a>
+</div>
+</section>
+
+<section class="card">
+<h2>6｜一鍵產生「受災申請準備卡」</h2>
+<div class="grid">
+<div><label>目前清理狀態</label><select id="cleanup"><option>還沒開始清理／修車</option><option>正在清理／送修</option><option>已經清理／修完一部分</option></select></div>
+<div><label>是否已有估價／維修／清運單據？</label><select id="receipt"><option value="no">還沒有</option><option value="some">有一部分</option><option value="yes">大致齊全</option></select></div>
+</div>
+<textarea id="card"></textarea>
+<div class="actions"><button onclick="build(true)">更新準備卡</button><button class="ghost" onclick="copyText('card')">複製到備忘錄</button><button class="ghost" onclick="downloadChecklist()">下載 TXT 清單</button></div>
+</section>
+
+<section class="card">
+<h2>7｜第一輪需求驗證</h2>
+<p>本工具真正要驗證的不是「大家會不會點」，而是：<strong>獨立使用者 → 完成證據／文件包 → 回饋 → 確認真的完成至少一項正式申請／向官方確認</strong>。</p>
+<div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/20">回報哪一步最卡</a></div>
+<p class="small">公開回饋不要貼姓名、地址、車牌、保單、身分證、金融資料或受災照片原檔。</p>
+</section>
+
+<section class="card">
+<h2>8｜可直接轉給基隆受災戶</h2>
+<textarea id="promo">【9/4 基隆淹水後，先別急著把所有痕跡清掉】
+市府已說會從寬協助房屋受災，並新增汽機車受損補助；但汽機車的新認定標準／申請方式還在等正式公告。
+
+現在最重要的是先留證據：
+1. 受災空間／車輛全景
+2. 清楚可辨識的水痕、泥痕或泡水高度
+3. 各項損壞近照
+4. 修車／估價／拖吊／清運單
+5. 清理前後對照
+6. 災害稅損也別忘了問，很多項目有30日內申報規定
+
+Keelung Flood Claim Prep 不收地址、車牌或身分證，只幫你先把證據包和申請清單整理好，等市府正式公告出來就不會從零開始找資料。</textarea>
+<div class="actions"><button onclick="copyText('promo')">複製轉貼文</button></div>
+</section>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+const selected=cls=>[...document.querySelectorAll('.'+cls+':checked')].map(x=>x.value);
+function loss(){
+ const a=selected('loss');
+ $('lossOut').innerHTML=`<div class="note ${a.length?'ok':'warn'}">${a.length?`目前準備 ${a.length} 類損失。下面會依類別自動列文件。`:'先勾你受影響的類別，不需要輸入地址或金額。'}</div>`;
+}
+function evidence(){
+ const a=[...document.querySelectorAll('.evidence')],n=a.filter(x=>x.checked).length;
+ $('evidenceOut').innerHTML=`<div class="note ${n>=5?'ok':'warn'}">證據完成 ${n}/${a.length}。${n<4?'如果現場仍安全可進入，優先補「全景、水位、近照、單據」四類。':'已具有較完整的清理前後對照基礎。'}</div>`;
+}
+function docs(){
+ const a=new Set(selected('loss')),d=[];
+ if(a.has('home')) d.push('住家／店面：受災全景、水位痕跡、受損房屋／固定設備照片、清理前後照片、區公所／里鄰通報或其他可取得的受災證明。');
+ if(a.has('car')||a.has('moto')) d.push('車輛：全車照、泡水高度／泥痕、受損部位、維修廠檢測／估價、拖吊或救援單據；正式補助文件等市府公告後再補。');
+ if(a.has('property')) d.push('財物：品項簡表、受損照片、原購買憑證（有就留，沒有先別放棄）、維修／清運／重購估價或收據。');
+ if(a.has('tax')) d.push('稅捐：照片／影片、損失證明、取得憑證或可估列的取得時間／金額；車輛另確認監理停駛／報廢及使用牌照稅規則。');
+ if(!d.length)d.push('尚未選損失類型。');
+ $('docsOut').innerHTML='<div class="note"><ol>'+d.map(x=>'<li>'+x+'</li>').join('')+'</ol></div>';
+}
+function build(countCore){
+ loss();evidence();docs();
+ const losses=selected('loss').map(x=>({home:'住家／店面',car:'汽車',moto:'機車',property:'家具／家電／商品／設備',tax:'稅捐減免'}[x]));
+ const ev=[...document.querySelectorAll('.evidence')],en=ev.filter(x=>x.checked).length;
+ const veh=[...document.querySelectorAll('.vehicle')],vn=veh.filter(x=>x.checked).length;
+ $('card').value=`【Keelung Flood Claim Prep｜9/4 豪雨受災申請準備卡】
+我要處理：${losses.length?losses.join('、'):'尚未選擇'}
+清理狀態：${$('cleanup').value}
+單據狀態：${$('receipt').selectedOptions[0].textContent}
+證據清單：${en}/${ev.length}
+車輛證據：${vn}/${veh.length}
+
+現在先做：
+1. 在安全前提下，保留受災全景、水位／泥痕、主要損壞近照與清理前後對照。
+2. 把修車、估價、拖吊、救援、清運、維修、重購等單據集中保存。
+3. 不要因市府汽機車補助細節尚未公告，就延後拍照與估價。
+4. 同步確認災害損失稅捐減免；多項規定有「災害發生後30日內」申報要求。
+5. 追蹤基隆市政府正式公告；正式金額、資格與文件以最新公告為準。
+6. 不把地址、車牌、身分證、保單或金融資料貼到公開回饋區。
+
+本輪查證：截至 2026/9/9 15:22，我尚未在基隆市政府最新公開公告中找到這次9/4豪雨「新增汽機車受損補助」的完整認定標準、金額與申請方式，因此本卡不猜金額。`;
+ if(countCore && window.PGLabImpact) PGLabImpact.core('claim-pack-complete');
+}
+function downloadChecklist(){
+ const b=new Blob([$('card').value],{type:'text/plain;charset=utf-8'}),u=URL.createObjectURL(b),a=document.createElement('a');
+ a.href=u;a.download='基隆9月4日豪雨_災損申請準備清單.txt';a.click();URL.revokeObjectURL(u);
+ if(window.PGLabImpact)PGLabImpact.core('checklist-download');
+}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+document.querySelectorAll('.loss,.evidence,.vehicle').forEach(x=>x.addEventListener('change',()=>build(false)));
+['cleanup','receipt'].forEach(id=>$(id).addEventListener('change',()=>build(false)));
+build(false);
+</script>
+<script src="../impact.js" data-project="keelung-flood-claim" data-action-text="我已完成受災證據／文件包" data-real-text="我已正式申請／向官方確認" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/20"></script>
+</body></html>
