@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="wateroff-10h">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="WaterOff 10H TW：計畫停水前的飲用水、抽水馬達、儲水衛生與復水水質防呆。">
+<title>WaterOff 10H TW｜停水前 5 分鐘準備卡</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#65717e;--line:#dbe3ea;--ok:#176b45;--warn:#936000;--bad:#a32323}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1080px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}
+h1{font-size:clamp(36px,7vw,62px);line-height:1.03;margin:.12em 0 .25em}h2{margin:.1em 0 .65em}.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:930px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:9px}
+.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:22px;margin-top:4px}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:11px 13px;border-radius:9px;line-height:1.7;margin:10px 0}.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}
+label{display:block;font-weight:760;margin-bottom:5px}select,input,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}textarea{min-height:190px;resize:vertical}
+button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}
+.ck{width:auto;transform:scale(1.13);margin-right:7px}.checkgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:8px}.small{font-size:13px;color:var(--muted);line-height:1.6}.big{font-size:clamp(22px,4vw,30px);font-weight:900}
+@media print{button,.actions{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · Taiwan · 2026/09/09</div>
+<h1>WaterOff 10H TW<br>先查是不是你家，再存剛好的水。</h1>
+<p class="lead">9/10 公開停水資訊顯示，全台多個縣市有部分區域計畫停水，最長約 10 小時。這頁不重做一份會過期的地址清單：先回官方停水查詢，再完成<strong>飲用／料理水、抽水馬達、儲水衛生、替代生活用水與復水水質</strong>五件事。</p>
+<section class="card">
+<h2>1｜先查「你家到底有沒有停」</h2>
+<div class="note warn">不要只看新聞縣市名稱就囤水；同一縣市通常只有部分街廓／里受影響，施工也可能延期。請用官方查詢確認地址與最新時間。</div>
+<div class="actions"><a class="btn" target="_blank" rel="noopener" href="https://wateroff.water.gov.tw/">台灣自來水：停水公告查詢</a><a class="btn ghost" target="_blank" rel="noopener" href="https://www.water.gov.taipei/">臺北自來水事業處</a><a class="btn ghost" href="tel:1910">台水客服 1910</a></div>
+</section>
+<section class="card">
+<h2>2｜先算「能喝、能簡單料理」的乾淨水</h2>
+<p class="small">政府居家防災指引建議，每人每日準備至少 3 公升飲用水。短時停水沒有一個全國統一的「每小時公式」，所以本工具同時顯示按時間比例的最低量，以及較保守的「至少一整天備援」。</p>
+<div class="grid"><div><label>家中人數</label><input id="people" type="number" min="1" max="30" value="2"></div><div><label>公告停水時數</label><input id="hours" type="number" min="1" max="72" value="10"></div><div><label>你常用的瓶／桶容量（公升）</label><input id="container" type="number" min="0.1" max="50" step="0.1" value="1.5"></div></div>
+<div id="waterOut"></div><div class="note">特殊飲水需求、嬰幼兒奶粉沖調、疾病照護、寵物等請另外加量。本工具不替個別健康需求設定上限或配額。</div>
+</section>
+<section class="card"><h2>3｜飲用水和「沖廁／清潔水」要分開</h2><div class="checkgrid"><label><input class="ck prep" type="checkbox"> 飲用／料理用水使用乾淨容器或原封瓶裝水</label><label><input class="ck prep" type="checkbox"> 儲水容器有加蓋，避免二次污染</label><label><input class="ck prep" type="checkbox"> 沖廁／澆水等非飲用用途，優先用可再利用的非飲用水</label><label><input class="ck prep" type="checkbox"> 不把來源不明的水拿來飲用或料理</label></div><div id="prepOut"></div></section>
+<section class="card"><h2>4｜有水塔／抽水馬達的家，停水時別讓馬達空轉</h2><div class="note warn"><b>停水期間建議關閉抽水馬達電源。</b>官方過往停水與飲用水安全指引均提醒，避免馬達空轉損壞，也降低管線負壓造成污染風險。</div><div class="grid"><div><label>你家有抽水馬達嗎？</label><select id="pump"><option value="unknown">不確定</option><option value="yes">有</option><option value="no">沒有／大樓統一管理</option></select></div><div><label>大樓有管理室／管委會嗎？</label><select id="building"><option value="no">沒有／透天</option><option value="yes">有</option></select></div></div><div id="pumpOut"></div></section>
+<section class="card"><h2>5｜復水後，不是水龍頭一有水就直接喝</h2><div class="checkgrid"><label><input class="ck restore" type="checkbox"> 復水初期先觀察水是否混濁、異色或有異味</label><label><input class="ck restore" type="checkbox"> 若水質異常，先不要飲用並聯絡自來水單位</label><label><input class="ck restore" type="checkbox"> 依自來水單位指示適當放流到水質恢復正常</label><label><input class="ck restore" type="checkbox"> 抽水馬達不在供水尚未穩定時反覆空轉</label></div><div id="restoreOut"></div></section>
+<section class="card"><h2>6｜一鍵產生停水準備卡</h2><textarea id="card"></textarea><div class="actions"><button onclick="build(true)">更新準備卡</button><button class="ghost" onclick="copyText('card')">複製給家人／室友</button><button class="ghost" onclick="downloadCard()">下載 TXT</button></div></section>
+<section class="card"><h2>7｜如果家中有人搬不動水</h2><div class="note">高齡、行動不便、獨居或無電梯家庭的問題可能不是「不知道要存水」，而是<strong>沒辦法把水搬回家</strong>。如果這是你的實際卡點，請在公開回饋只寫「需要搬水協助／鄰里協助」即可，不要公開門牌與電話。這會決定下一版是否值得轉成鄰里協助工具。</div></section>
+<section class="card"><h2>8｜真實使用驗證</h2><p>這一輪追：<strong>獨立使用者 → 完成停水準備卡 → 留下非敏感回饋 → 確認真的完成至少一項停水前／復水後行動</strong>。</p><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/21">WaterOff 10H TW 回饋區</a></div></section>
+<section class="card"><h2>9｜可直接轉貼</h2><textarea id="promo">【明天有停水？先不要看到縣市名就狂囤水】
+9/10 全台多個縣市部分區域有計畫停水，最長約10小時；真正要先做的是：
+1. 回官方停水查詢確認「你家地址」是否受影響
+2. 每人至少留一整天 3 公升的飲用＋簡單料理水作備援
+3. 飲用水和沖廁／清潔用水分開
+4. 儲水容器加蓋
+5. 停水期間關閉抽水馬達，避免空轉
+6. 復水初期先看有沒有混濁、異色、異味
+
+WaterOff 10H TW 不收地址或用戶號碼，只幫你把停水前5分鐘要做的事變成一張卡。</textarea><div class="actions"><button onclick="copyText('promo')">複製轉貼文</button></div></section>
+<section class="card"><h2>資料來源與邊界</h2><p class="small">近期停水需求訊號依 2026/9/9 公開報導整理；停水地址與施工時間最終以台灣自來水公司／臺北自來水事業處官方公告為準。飲用水備援量依臺灣全民安全指引「每人每日至少3公升」；停水／復水水質與抽水馬達提醒依環境部及地方政府歷年官方停水安全指引。這不是自來水公司的官方計算器。</p></section>
+</main>
+<script>
+const $=id=>document.getElementById(id);const checks=cls=>[...document.querySelectorAll('.'+cls)];
+function calc(){const p=Math.max(1,+$('people').value||1),h=Math.max(1,+$('hours').value||1),c=Math.max(.1,+$('container').value||1.5);const proportional=3*p*h/24;const reserve=3*p*Math.max(1,Math.ceil(h/24));const bottles=Math.ceil(reserve/c);$('waterOut').innerHTML=`<div class="note ok"><div class="big">較保守備援：${reserve.toFixed(1)} L</div>政府防災基準為每人每日至少 3 L。若只按 ${h} 小時比例約 ${proportional.toFixed(1)} L；但計畫停水可能延後復水，所以本工具建議至少準備一整天份。以 ${c} L 容器約需 ${bottles} 個。這只算飲用＋簡單料理，不含洗澡、洗衣或大量沖廁。</div>`;return {p,h,c,proportional,reserve,bottles}}
+function status(){const a=checks('prep'),pn=a.filter(x=>x.checked).length;$('prepOut').innerHTML=`<div class="note ${pn===a.length?'ok':'warn'}">飲用／生活水分流完成 ${pn}/${a.length}。</div>`;const r=checks('restore'),rn=r.filter(x=>x.checked).length;$('restoreOut').innerHTML=`<div class="note ${rn===r.length?'ok':'warn'}">復水防呆完成 ${rn}/${r.length}。</div>`;const pump=$('pump').value,b=$('building').value;let txt='';if(pump==='yes')txt='<b>把「停水開始前關閉抽水馬達」放進家裡的明確任務。</b>';else if(pump==='unknown')txt='<b>先確認家中／大樓供水是否有抽水馬達。</b>大樓可直接問管理室，避免每戶各自猜。';else txt='你目前不需要自行操作家用抽水馬達；若是大樓統一設備，以管委會／管理室指示為準。';if(b==='yes')txt+=' 可把停水與復水時點貼到住戶群，避免只有少數人知道。';$('pumpOut').innerHTML=`<div class="note">${txt}</div>`}
+function build(countCore){const w=calc();status();const pDone=checks('prep').filter(x=>x.checked).length;const rDone=checks('restore').filter(x=>x.checked).length;$('card').value=`【WaterOff 10H TW｜我的停水準備卡】
+家中人數：${w.p}
+公告停水時數：${w.h}
+飲用＋料理較保守備援：${w.reserve.toFixed(1)} L
+以 ${w.c} L 容器：約 ${w.bottles} 個
+飲用／生活水分流：${pDone}/4
+復水防呆：${rDone}/4
+抽水馬達：${$('pump').selectedOptions[0].textContent}
+
+停水前：
+1. 先用官方停水查詢確認地址與最新施工時間。
+2. 飲用／料理水用乾淨、加蓋容器；生活雜用水另外分開。
+3. 有抽水馬達者，停水期間依官方安全提醒關閉電源，避免空轉。
+4. 把停水時間告知同住者；若有人搬不動水，提早找家人／鄰里協助。
+
+復水後：
+1. 先觀察是否混濁、異色、異味。
+2. 水質異常先不要飲用，聯絡自來水事業單位。
+3. 依官方指示適當放流，供水與水質穩定後再恢復一般使用。
+
+台水停水查詢：https://wateroff.water.gov.tw/
+台水客服：1910
+北水：https://www.water.gov.taipei/
+
+這張卡不收地址、用戶號碼或家中照片；實際停水範圍以官方公告為準。`;if(countCore&&window.PGLabImpact)PGLabImpact.core('prep-card-complete')}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+function downloadCard(){const b=new Blob([$('card').value],{type:'text/plain;charset=utf-8'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download='WaterOff10H_停水準備卡.txt';a.click();URL.revokeObjectURL(u);if(window.PGLabImpact)PGLabImpact.core('card-download')}
+['people','hours','container'].forEach(id=>$(id).addEventListener('input',()=>build(false)));['pump','building'].forEach(id=>$(id).addEventListener('change',()=>build(false)));document.querySelectorAll('.prep,.restore').forEach(x=>x.addEventListener('change',()=>build(false)));build(false);
+</script>
+<script src="../impact.js" data-project="wateroff-10h" data-action-text="我已完成停水準備卡" data-real-text="我已真的完成至少一項停水前／復水後行動" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/21"></script>
+</body></html>
