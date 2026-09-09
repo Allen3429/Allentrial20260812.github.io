@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="pws-ready">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="PWS Ready TW：解讀 2026/9/9 16:00 災防告警測試。沒收到測試，不等於國家級警報失效。">
+<title>PWS Ready TW｜災防告警設定檢查</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--ok:#176b45;--warn:#936000;--bad:#a32323}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1080px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}
+h1{font-size:clamp(35px,7vw,60px);line-height:1.04;margin:.12em 0 .25em}.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:940px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:11px 13px;border-radius:9px;line-height:1.7;margin:10px 0}
+.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}
+label{display:block;font-weight:760;margin-bottom:5px}select,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}
+textarea{min-height:205px;resize:vertical}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}
+button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}
+.small{font-size:13px;color:var(--muted);line-height:1.6}.big{font-size:clamp(22px,4vw,30px);font-weight:900}
+.checkgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:8px}.ck{width:auto;transform:scale(1.12);margin-right:7px}
+@media print{button,.actions{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · Taiwan · 2026/09/09 19:24</div>
+<h1>PWS Ready TW<br>今天 16:00 沒響，不等於國家級警報壞了。</h1>
+<p class="lead">今天三大電信在全台含離島發送災防告警測試，但走的是獨立的「每月測試用訊息」頻道；這個頻道在多數手機<strong>預設關閉</strong>。所以「沒收到測試」本身，不能直接推出「未來地震／防空國家級警報收不到」。這頁幫你把兩件事分開：<strong>測試頻道有沒有開</strong>，以及<strong>真正災防告警設定有沒有需要檢查</strong>。</p>
+<section class="card"><h2>1｜你今天 16:00 有沒有收到測試？</h2><div class="grid"><div><label>今天 16:00 左右</label><select id="got"><option value="no">沒有收到</option><option value="yes">有收到警報／震動</option><option value="unknown">不確定</option></select></div><div><label>「每月測試用訊息」目前設定</label><select id="testch"><option value="unknown">不知道</option><option value="off">我確認是關閉</option><option value="on">我確認是開啟</option></select></div><div><label>手機目前是</label><select id="network"><option value="45">4G／5G 手機</option><option value="unknown">不確定是否支援災防細胞廣播</option><option value="old">較舊裝置／非一般 4G、5G 手機</option></select></div></div><div id="interpret"></div></section>
+<section class="card"><h2>2｜先把最容易誤會的 4 種訊息分開</h2><div class="note"><b>國家級警報</b>：例如地震速報、防空警報；國家災防中心說明為不可關閉接收。<br><b>緊急警報</b>：例如疏散避難、毒災；可由使用者設定。<br><b>警訊通知</b>：例如大雷雨、水庫放水；可由使用者設定。<br><b>每月測試用訊息</b>：今天 16:00 用的就是這一類，且多數手機預設關閉。</div><div class="note warn"><b>關鍵結論：</b>「每月測試用訊息」是獨立測試頻道。今天沒響，最常見的解釋就是測試頻道沒開；不要把它直接當成國家級警報失效的證據。</div></section>
+<section class="card"><h2>3｜現在做一次手機設定稽核</h2><div class="checkgrid"><label><input class="ck audit" type="checkbox"> 我已在手機「設定」中搜尋「政府警示／緊急警報／無線緊急警報」等關鍵字</label><label><input class="ck audit" type="checkbox"> 我已找到「每月測試用訊息」，知道它目前開或關</label><label><input class="ck audit" type="checkbox"> 我已確認「緊急警報／警訊通知」沒有被自己無意關閉（若裝置提供此開關）</label><label><input class="ck audit" type="checkbox"> 我知道國家級警報與今天的測試頻道不是同一個開關</label><label><input class="ck audit" type="checkbox"> 若手機找不到相關設定，我會查 NCC／電信商／手機品牌官方說明，而不是亂裝第三方警報 App</label></div><div id="auditOut"></div></section>
+<section class="card"><h2>4｜如果你「測試頻道已開，今天仍沒收到」</h2><div class="note warn">這時才值得進一步排查：手機是否支援災防細胞廣播、當下是否正常連上行動網路、裝置／電信商設定是否異常。中華電信本次官方公告也明確提醒，接收災防告警的 4G／5G 手機本身需要具備廣播訊息接收功能。</div><div class="actions"><a class="btn" target="_blank" rel="noopener" href="https://www.cht.com.tw/zh-tw/home/cht/messages/2026/0908-1400">中華電信：9/9 測試與設定說明</a><a class="btn ghost" target="_blank" rel="noopener" href="https://www.ncdr.nat.gov.tw/NCDR-Topic/2023/Dec/index.html">國家災防中心：PWS 四類訊息說明</a><a class="btn ghost" target="_blank" rel="noopener" href="https://www.ncc.gov.tw/">NCC</a></div></section>
+<section class="card"><h2>5｜一鍵產生你的「手機告警檢查卡」</h2><textarea id="card"></textarea><div class="actions"><button onclick="build(true)">更新檢查卡</button><button class="ghost" onclick="copyText('card')">複製給家人</button></div></section>
+<section class="card"><h2>6｜這個工具刻意不做</h2><div class="note"><ul><li>不保證「今天測試有收到」就代表所有未來位置、電信環境下都一定收到。</li><li>不把「今天沒收到」判定成手機故障。</li><li>不收手機號碼、IMEI、SIM 卡資訊、精確位置或私人截圖。</li><li>不鼓勵把所有真實災防告警關掉，只為了避免測試聲響。</li></ul></div></section>
+<section class="card"><h2>7｜真實使用驗證</h2><p>這一輪追：<strong>獨立使用者 → 完成告警設定稽核 → 留下非敏感回饋 → 確認真的找到／檢查手機告警設定</strong>。</p><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/24">PWS Ready TW 回饋區</a></div></section>
+<section class="card"><h2>8｜可直接轉貼</h2><textarea id="promo">【今天16:00沒收到災防測試？先別急著說國家級警報壞了】
+今天三大電信用的是「每月測試用訊息」頻道，而這個頻道在多數手機預設就是關閉。
+
+所以：
+・沒收到今天測試 ≠ 未來地震／防空國家級警報一定收不到
+・先到手機設定找「政府警示／緊急警報／每月測試用訊息」
+・如果你確認測試頻道已開、4G/5G手機也支援，今天仍完全沒收到，再找電信商／NCC排查
+
+PWS Ready TW 不收手機號碼或IMEI，只幫你分清「測試頻道」和「真正災防告警」。</textarea><div class="actions"><button onclick="copyText('promo')">複製轉貼文</button></div></section>
+<section class="card"><h2>資料來源與時效</h2><p class="small">今天測試資訊依中華電信 2026/9/8 公告與 2026/9/9 公開報導；四類災防告警依國家災害防救科技中心說明。各品牌手機選單名稱可能不同，最終以 NCC、電信商與手機品牌官方說明為準。</p></section>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+function interpret(){const g=$('got').value,t=$('testch').value,n=$('network').value;let cls='ok',title='',msg='';if(g==='no'&&t==='off'){title='這個結果很正常';msg='你已確認「每月測試用訊息」關閉；今天 16:00 沒收到正符合官方說明。這不能拿來判斷國家級警報是否失效。';}else if(g==='no'&&t==='unknown'){cls='warn';title='先別判定手機有問題';msg='第一步不是重開機或換App，而是先找到「每月測試用訊息」目前到底開還是關。';}else if(g==='no'&&t==='on'&&n==='45'){cls='warn';title='值得進一步排查';msg='你確認測試頻道已開，而且是一般4G/5G手機；今天仍沒收到時，才值得查裝置支援、行動網路與電信商設定。';}else if(g==='yes'){title='今天的測試頻道曾成功到達這支手機';msg='這表示當時「每月測試用訊息」接收路徑有運作；但仍不要把一次測試當成所有地點、所有未來災害都保證收到。';}else{cls='warn';title='目前資訊不足';msg='先確認手機支援與「每月測試用訊息」設定，再解讀今天的測試結果。';}$('interpret').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;}
+function audit(){const a=[...document.querySelectorAll('.audit')],n=a.filter(x=>x.checked).length;$('auditOut').innerHTML=`<div class="note ${n===a.length?'ok':'warn'}">手機告警稽核 ${n}/${a.length}。${n===a.length?'你已把「今天有沒有響」轉成一次真正的設定檢查。':'至少先找到手機裡的政府／緊急警示設定與測試頻道。'}</div>`;}
+function build(countCore){interpret();audit();const a=[...document.querySelectorAll('.audit')],done=a.filter(x=>x.checked).length;$('card').value=`【PWS Ready TW｜手機災防告警檢查卡】
+2026/9/9 16:00 測試：${$('got').selectedOptions[0].textContent}
+每月測試用訊息：${$('testch').selectedOptions[0].textContent}
+裝置：${$('network').selectedOptions[0].textContent}
+設定稽核：${done}/${a.length}
+
+我現在要記住：
+1. 今天用的是「每月測試用訊息」頻道，多數手機預設關閉。
+2. 沒收到今天測試，不等於國家級警報壞掉。
+3. 國家級警報、緊急警報、警訊通知、每月測試，是不同類型。
+4. 如果測試頻道確定已開、裝置支援，仍沒收到，再找電信商／NCC排查。
+5. 不為了關掉測試聲響而順手關掉其他真正災防通知。
+
+官方參考：
+中華電信 9/9 測試說明：
+https://www.cht.com.tw/zh-tw/home/cht/messages/2026/0908-1400
+國家災防中心 PWS 說明：
+https://www.ncdr.nat.gov.tw/NCDR-Topic/2023/Dec/index.html`;if(countCore&&window.PGLabImpact)PGLabImpact.core('alert-audit-complete');}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+['got','testch','network'].forEach(id=>$(id).addEventListener('change',()=>build(false)));document.querySelectorAll('.audit').forEach(x=>x.addEventListener('change',()=>build(false)));build(false);
+</script>
+<script src="../impact.js" data-project="pws-ready" data-action-text="我已完成手機災防告警設定稽核" data-real-text="我已真的找到／檢查手機告警設定" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/24"></script>
+</body></html>
