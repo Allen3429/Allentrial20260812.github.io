@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="workcut-70">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="WorkCut 70：115/8/1–10/31 九大行業減班休息薪資差額補貼快篩與試算。">
+<title>WorkCut 70｜減班休息薪資差額補貼快篩</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#65717e;--line:#dce4eb;--ok:#176b45;--warn:#936000;--bad:#a32323}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1100px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}
+h1{font-size:clamp(35px,7vw,60px);line-height:1.04;margin:.12em 0 .25em}h2{margin:.2em 0 .6em}.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:950px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:11px 13px;border-radius:9px;line-height:1.7;margin:10px 0}
+.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}
+label{display:block;font-weight:760;margin-bottom:5px}select,input,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}textarea{min-height:210px;resize:vertical}
+button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}
+.checkgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:8px}.ck{width:auto;transform:scale(1.12);margin-right:7px}.small{font-size:13px;color:var(--muted);line-height:1.6}.big{font-size:clamp(22px,4vw,30px);font-weight:900}.money{font-size:34px;font-weight:900}
+@media print{button,.actions{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · Taiwan · 規則校對 2026/09/09</div>
+<h1>WorkCut 70<br>公司減班，薪水少了，不代表只能自己吞。</h1>
+<p class="lead">勞動部已把九大行業「僱用安定措施」延長到 <strong>2026/10/31</strong>。符合條件的減班休息勞工，政府補貼減班前後薪資差額的 <strong>70%</strong>，每月最高約 <strong>NT$11,500</strong>，這一波最長可領 3 個月。這頁不收公司名稱、薪資單、身分證或銀行資料，只幫你判斷「值得申請、要先補哪一步」。</p>
+<section class="card"><h2>1｜你是不是這次九大行業之一？</h2><select id="industry"><option value="yes">食品及飼品／紡織／橡膠／塑膠／金屬製品／電力設備及配備／機械設備／汽車及零件／其他運輸工具及零件製造業之一</option><option value="unknown">公司名稱像製造業，但不知道正式行業分類</option><option value="no">明確不屬九大行業</option></select><div id="industryOut"></div><div class="note">行業別不是看公司品牌印象，而是看就業保險、工廠登記、稅籍等正式行業分類。不確定時先問公司或查官方，不要自己先放棄。</div></section>
+<section class="card"><h2>2｜資格快篩</h2><div class="grid"><div><label>減班休息是否經你與雇主協商同意？</label><select id="agree"><option value="yes">有協議</option><option value="forced">公司直接宣布／我被要求簽但沒真正同意</option><option value="unknown">不確定</option></select></div><div><label>協議的減班休息起迄期間</label><select id="days"><option value="30">達 30 日以上</option><option value="lt30">未滿 30 日</option><option value="unknown">不知道協議期間</option></select></div><div><label>公司有沒有向地方勞工主管機關列冊通報？</label><select id="reported"><option value="yes">已確認有</option><option value="no">公司說沒有／查不到</option><option value="unknown">不知道</option></select></div><div><label>你是一般全時，或固定工時的部分工時勞工？</label><select id="worker"><option value="yes">是</option><option value="no">不是／沒有固定工作日或時數</option><option value="unknown">不確定</option></select></div><div><label>目前是否為公司代表人、負責人、合夥人、董事或監察人？</label><select id="owner"><option value="no">不是</option><option value="yes">是</option></select></div><div><label>減班前在現職雇主的就保年資</label><select id="insured"><option value="3m">至少 3 個月</option><option value="1m">措施啟動前已受僱，且領補貼前至少受僱 1 個月</option><option value="short">以上都不符合</option><option value="unknown">不確定</option></select></div></div><div id="eligibilityOut"></div></section>
+<section class="card"><h2>3｜公司「沒通報」不等於你一定失去補貼</h2><div class="note ok"><b>這是本工具最想避免的漏領點。</b>勞動部 FAQ 明確說明：如果公司實際有減班休息卻沒有通報，勞工可向當地勞工行政主管機關反映；經查證確有勞雇協議且符合最低工資等規範，可直接列入通報名單，不影響申請薪資補貼。勞工也可持「勞雇雙方協商減少工時協議書」自行向地方勞工主管機關通報。</div><div class="actions"><a class="btn ghost" href="tel:0800777888">台灣就業通 0800-777888</a><a class="btn ghost" target="_blank" rel="noopener" href="https://special.taiwanjobs.gov.tw/internet/2023/hirestable/page-05.html">官方 FAQ</a></div></section>
+<section class="card"><h2>4｜先估一個月可補多少</h2><p class="small">官方算法：減班前 1–3 個月平均月投保薪資 − 減班後當月實際協議薪資，再乘 70%；金額無條件進位到百元，且每月有上限。本頁用 NT$11,500 作這一期公開宣導的最高額度。</p><div class="grid"><div><label>減班前平均月投保薪資（元）</label><input id="before" type="number" min="0" step="100" value="45800"></div><div><label>減班後當月實際應領薪資（元）</label><input id="after" type="number" min="0" step="100" value="30000"></div><div><label>預計符合幾個完整 30 日期間？</label><input id="months" type="number" min="1" max="3" value="3"></div></div><div id="moneyOut"></div><div class="note warn">「減班後實際協議薪資」是當月應領總額，可能包含薪資、津貼、獎金、加班費、紅利等，不是只看底薪。全時月薪勞工減班休息後的協議薪資原則上也不得低於當期最低工資。</div></section>
+<section class="card"><h2>5｜90 天申請期限，比 10/31 更容易被忽略</h2><div class="note"><b>不是一律 10/31 前送件。</b>勞工在「每滿 30 日」的次日起，有 90 日可以向工作所在地轄區分署提出申請。官方例子：8/1–8/30 為第一個 30 日，8/31 起可申請，期限到 11/28。也可以等三個月結束後一次申請，但不能拖過第一個 30 日週期的 90 日期限。</div><div class="note warn">若 2026/10/3 之後才首次開始這一輪減班休息，到 10/31 前通常來不及達到 30 日，因此不符合這次公告的首次申請條件。</div></section>
+<section class="card"><h2>6｜送件文件</h2><div class="checkgrid"><label><input class="ck docs" type="checkbox"> 申請書（含同意查詢保險資料委託）</label><label><input class="ck docs" type="checkbox"> 身分證或居留證明影本</label><label><input class="ck docs" type="checkbox"> 當次申請期間薪資清冊或證明</label><label><input class="ck docs" type="checkbox"> 本人名義金融機構存摺影本</label><label><input class="ck docs" type="checkbox"> 如由雇主代辦，已備委託書</label></div><div id="docsOut"></div></section>
+<section class="card"><h2>7｜一鍵產生「我要問公司／勞工局什麼」</h2><textarea id="card"></textarea><div class="actions"><button onclick="build(true)">更新申請卡</button><button class="ghost" onclick="copyText('card')">複製到備忘錄</button><a class="btn" target="_blank" rel="noopener" href="https://gov.tw/3ih">台灣就業通線上申請</a><a class="btn ghost" target="_blank" rel="noopener" href="https://www.mol.gov.tw/1607/28690/2282/2326/2288/98943/post">勞動部：契約變更須協商合意</a></div></section>
+<section class="card"><h2>8｜這個工具不做什麼</h2><div class="note"><ul><li>不要求上傳薪資單、勞保資料、公司名稱、身分證或銀行帳號。</li><li>不把「公司說不能申請」當成最終答案；規則疑義回台灣就業通或地方勞工主管機關。</li><li>不替你偽造減班協議、薪資證明或通報紀錄。</li><li>不把減班休息當成雇主可單方面強迫的制度；工作時間、工資等勞動契約內容原則上需協商合意。</li></ul></div></section>
+<section class="card"><h2>9｜真實使用驗證</h2><p>這一輪追：<strong>獨立使用者 → 完成資格／金額快篩 → 留下非敏感回饋 → 確認真的向公司／地方勞工主管機關查證或進官方系統送件</strong>。</p><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/27">WorkCut 70 回饋區</a></div></section>
+<section class="card"><h2>10｜可直接轉給同事</h2><textarea id="promo">【公司減班、薪水少了？先別只看公司有沒有幫你申請】
+勞動部 2026/8/26 已把九大行業僱用安定措施延長到 10/31：
+・符合條件者補薪資差額 70%
+・每月最高約 11,500 元
+・這一波最長 3 個月
+・勞工可以自己申請，不一定要等公司代辦
+・公司實際減班卻沒通報，也可以向地方勞工主管機關反映，查證後仍可能列入通報
+・每滿 30 日的次日起有 90 日申請期，不是只看 10/31
+
+WorkCut 70 不收公司名稱或薪資單，只幫你先算、先找漏掉哪一步。</textarea><div class="actions"><button onclick="copyText('promo')">複製轉貼文</button></div></section>
+<section class="card"><h2>資料來源與時效</h2><p class="small">依勞動部勞動力發展署僱用安定措施專區 2026/8/26 公告與目前 FAQ、勞動部 2026/9/4 更新之勞動契約說明整理。正式資格、行業認定與核發金額以勞動部／工作所在地分署審核為準。</p></section>
+</main>
+<script>
+const $=id=>document.getElementById(id);function ceil100(n){return Math.ceil(n/100)*100}
+function industry(){const v=$('industry').value;let cls=v==='yes'?'ok':v==='no'?'bad':'warn';let t=v==='yes'?'行業別初步符合。':v==='no'?'這次九大行業薪資差額補貼不適用；仍可查看減班休息勞工再充電等其他措施。':'先確認正式行業分類，不要只看公司名稱猜。';$('industryOut').innerHTML=`<div class="note ${cls}">${t}</div>`;return v==='yes'}
+function eligibility(){const hardBad=$('owner').value==='yes'||$('worker').value==='no'||$('insured').value==='short'||$('days').value==='lt30';const uncertain=[$('agree').value,$('days').value,$('reported').value,$('worker').value,$('insured').value].includes('unknown')||$('industry').value==='unknown';let cls='ok',title='🟢 初步值得申請／進官方系統確認',msg='把文件備好，確認公司列冊通報後即可依每30日週期申請。';if(hardBad){cls='bad';title='⛔ 目前有明顯資格缺口';msg='先看是哪個條件不符合；若是部分工時、投保或身分判斷不確定，直接問官方，不要只靠本頁。'}else if($('reported').value==='no'){cls='warn';title='🟡 公司沒通報：先反映，不要放棄';msg='可向地方勞工行政主管機關反映；經查證符合規範者，可列入通報名單，不影響申請。'}else if($('agree').value==='forced'){cls='warn';title='🟡 先處理「是否真正協商合意」';msg='工作時間與工資屬勞動契約內容，原則上不得由雇主單方面強迫變更；可向地方勞工主管機關反映。'}else if(uncertain){cls='warn';title='🟡 有關鍵資訊還沒確認';msg='優先確認行業別、通報、30日協議期間與投保年資。'}$('eligibilityOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;return title}
+function money(){const before=Math.max(0,+$('before').value||0),after=Math.max(0,+$('after').value||0),m=Math.min(3,Math.max(1,+$('months').value||1));const diff=Math.max(0,before-after);const monthly=Math.min(11500,ceil100(diff*.7));const total=monthly*m;$('moneyOut').innerHTML=`<div class="note ${monthly?'ok':'warn'}"><div class="money">約 NT$${monthly.toLocaleString()} / 月</div>薪資差額 ${diff.toLocaleString()} × 70%，無條件進位到百元，再套每月約 11,500 元上限。若符合 ${m} 個完整期間，概估合計 NT$${total.toLocaleString()}。正式核定以官方計算為準。</div>`;return{monthly,total}}
+function docs(){const a=[...document.querySelectorAll('.docs')],n=a.filter(x=>x.checked).length;$('docsOut').innerHTML=`<div class="note ${n>=4?'ok':'warn'}">文件準備 ${n}/${a.length}。敏感文件只交勞動部官方系統／受理分署。</div>`}
+function build(countCore){industry();const verdict=eligibility(),cash=money();docs();$('card').value=`【WorkCut 70｜減班休息薪資差額補貼申請卡】\n初步判斷：${verdict}\n一個月概估補貼：NT$${cash.monthly.toLocaleString()}\n最多 ${$('months').value} 個期間概估：NT$${cash.total.toLocaleString()}\n\n我現在要確認：\n1. 公司正式行業分類是否屬九大行業。\n2. 減班休息是否有勞雇協議，協議期間是否達30日以上。\n3. 公司是否完成地方勞工主管機關列冊通報。\n4. 若公司沒通報，我會向地方勞工主管機關反映，不因公司一句「不能申請」就放棄。\n5. 每滿30日的次日起，記住90日申請期限。\n6. 準備申請書、身分／居留證明、該期薪資證明、本人存摺；雇主代辦才另附委託書。\n\n官方申請：https://gov.tw/3ih\n官方FAQ：https://special.taiwanjobs.gov.tw/internet/2023/hirestable/page-05.html\n客服：0800-777888\n\n本卡不等於正式核定。`;if(countCore&&window.PGLabImpact)PGLabImpact.core('eligibility-calculator-complete')}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+['industry','agree','days','reported','worker','owner','insured'].forEach(id=>$(id).addEventListener('change',()=>build(false)));['before','after','months'].forEach(id=>$(id).addEventListener('input',()=>build(false)));document.querySelectorAll('.docs').forEach(x=>x.addEventListener('change',()=>build(false)));build(false);
+</script>
+<script src="../impact.js" data-project="workcut-70" data-action-text="我已完成減班休息資格／金額快篩" data-real-text="我已真的向公司／勞工主管機關查證或送件" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/27"></script>
+</body></html>
