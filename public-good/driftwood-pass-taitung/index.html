@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="driftwood-pass-taitung">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Driftwood Pass Taitung：2026/9/11 起臺東海岸漂流木合法撿拾、裁切、搬運與登記 60 秒判斷卡。">
+<title>Driftwood Pass Taitung｜9/11 漂流木合法撿拾判斷卡</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--ok:#176b45;--warn:#936000;--bad:#a32323}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1080px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}
+h1{font-size:clamp(35px,7vw,61px);line-height:1.04;margin:.12em 0 .25em}.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:960px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:11px 13px;border-radius:9px;line-height:1.7;margin:10px 0}
+.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}
+label{display:block;font-weight:760;margin-bottom:5px}select,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}textarea{min-height:215px;resize:vertical}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}
+.checkgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:8px}.ck{width:auto;transform:scale(1.12);margin-right:7px}.small{font-size:13px;color:var(--muted);line-height:1.6}.big{font-size:clamp(22px,4vw,30px);font-weight:900}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · Taitung · 規則校對 2026/09/10</div>
+<h1>Driftwood Pass Taitung<br>9/11 起能撿，不代表「看到木頭就能拿」。</h1>
+<p class="lead">林業保育署臺東分署公告自 <strong>2026/9/11</strong> 起，開放轄管海岸地區保安林與國土保安用地的漂流木自由撿拾；但只限<strong>公告指定區域、已認定不具標售價值、沒有國有／公有／私有註記或烙印</strong>的木材。這頁把「能不能撿、能不能鋸、要不要登記」壓成 60 秒判斷。</p>
+
+<section class="card">
+<h2>1｜出發前：先確認公告今天仍有效</h2>
+<div class="note warn"><b>9/11 開放不是永久有效。</b>官方公告寫明：有效到下一次中央氣象署發布陸上颱風警報，或臺東縣列入豪雨特報為止；即使公告期間內，現場有安全疑慮也可能暫停撿拾。</div>
+<div class="actions">
+<a class="btn" target="_blank" rel="noopener" href="https://taitung.forest.gov.tw/news/0079184">臺東分署 9/9 最新公告</a>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://www.forest.gov.tw/0003250">林業保育署：漂流木撿拾公告</a>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://www.cwa.gov.tw/">中央氣象署</a>
+</div>
+</section>
+
+<section class="card">
+<h2>2｜你眼前這支木頭，可以拿嗎？</h2>
+<div class="grid">
+<div><label>位置</label><select id="zone"><option value="yes">我已確認在本次官方公告指定區域</option><option value="unknown">只知道在臺東海邊，不確定是不是指定區域</option><option value="no">不在指定區域／是在河川、野溪或其他地方</option></select></div>
+<div><label>木材標記</label><select id="mark"><option value="none">看不到國有／公有／私有註記或烙印</option><option value="marked">有註記、烙印或明顯編號</option><option value="unknown">看不懂／不確定</option></select></div>
+<div><label>官方是否已認定這批為不具標售價值、可自由撿拾？</label><select id="value"><option value="yes">是，屬公告可自由撿拾對象</option><option value="unknown">不確定</option><option value="no">不是／現場已標示不可撿</option></select></div>
+</div>
+<div id="woodOut"></div>
+</section>
+
+<section class="card">
+<h2>3｜現在可以用手鋸／鏈鋸裁切，但不要把「裁切」理解成任何機具都能開進去</h2>
+<div class="note ok">2025/7/29 修正規定後，本次臺東公告明確允許現場使用<strong>手鋸或鏈鋸等手持工具</strong>裁切漂流木以利搬運。</div>
+<div class="note warn">這不代表可以任意使用大型機具、破壞地貌、進入未開放區域或處理有註記的木材。本工具只處理這次公告的海岸區域；河川／野溪另有規則。</div>
+</section>
+
+<section class="card">
+<h2>4｜真正會決定「要不要登記」的是用途與搬運方式</h2>
+<div class="grid">
+<div><label>用途</label><select id="use"><option value="self">薪材、收藏、自用，沒有販售計畫</option><option value="sell">要加工轉售／商業使用</option><option value="unknown">還沒決定</option></select></div>
+<div><label>搬運</label><select id="move"><option value="small">少量，可自行搬運</option><option value="vehicle">量大，需要車輛搬運</option><option value="unknown">還不確定</option></select></div>
+</div>
+<div id="registerOut"></div>
+<div class="note">臺東分署這次公告：薪材或收藏用途可直接攜回、無需登記；若要加工轉售，或撿拾量大需使用車輛搬運，應攜帶身分證到臨時林產物檢查站登記。貴重木逐支登記，非貴重木依整批重量登記，以取得合法產權證明。</div>
+</section>
+
+<section class="card">
+<h2>5｜需要登記？先記住這四個工作站與時間</h2>
+<div class="note ok"><b>知本、成功、大武、關山工作站</b>設有臨時檢查站；服務時間為上班日（週一至週五，國定假日除外）<strong>09:00–16:00</strong>。</div>
+<div class="actions"><a class="btn ghost" href="tel:089324121">臺東分署 089-324-121</a><a class="btn ghost" href="tel:0800000930">保林專線 0800-000-930</a></div>
+</section>
+
+<section class="card">
+<h2>6｜出發前 6 項防呆</h2>
+<div class="checkgrid">
+<label><input class="ck prep" type="checkbox"> 我今天重新查過開放公告，沒有只靠舊截圖</label>
+<label><input class="ck prep" type="checkbox"> 我確認目的地是本次公告指定區域</label>
+<label><input class="ck prep" type="checkbox"> 我知道「有國／公／私有註記或烙印」的木材不能拿</label>
+<label><input class="ck prep" type="checkbox"> 若要裁切，只準備手鋸／鏈鋸等手持工具，並以現場規範為準</label>
+<label><input class="ck prep" type="checkbox"> 如果要轉售或量大需車輛搬運，我已安排登記</label>
+<label><input class="ck prep" type="checkbox"> 出發前已確認臺東沒有使公告失效／暫停的颱風或豪雨警訊</label>
+</div>
+<div id="prepOut"></div>
+</section>
+
+<section class="card">
+<h2>7｜一鍵產生我的「可以撿／先別撿／要登記」卡</h2>
+<textarea id="card"></textarea>
+<div class="actions"><button onclick="build(true)">更新判斷卡</button><button class="ghost" onclick="copyText('card')">複製到備忘錄</button></div>
+</section>
+
+<section class="card">
+<h2>8｜這個工具刻意不做</h2>
+<div class="note">
+<ul>
+<li>不靠照片替你判斷某支木頭是否為貴重木或是否合法來源。</li>
+<li>不把「臺東海邊」等同「全部海岸都開放」；指定區域仍回官方公告確認。</li>
+<li>不替現場管理機關放行車輛或工具。</li>
+<li>不收身分證、車牌、精確行程或可識別他人的照片。</li>
+</ul>
+</div>
+</section>
+
+<section class="card">
+<h2>9｜真實使用驗證</h2>
+<p>這一輪追：<strong>獨立使用者 → 完成合法性判斷卡 → 留下非敏感回饋 → 確認真的查公告／改變工具或搬運方式／合法撿拾／完成登記</strong>。</p>
+<div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/31">Driftwood Pass 真實回饋區</a></div>
+</section>
+
+<section class="card">
+<h2>10｜可直接轉貼到臺東社群／木工社團</h2>
+<textarea id="promo">【9/11 起臺東海岸開放撿漂流木｜但不是看到木頭就能拿】
+林業保育署臺東分署9/9公告：
+
+・只限公告指定區域
+・只撿已認定不具標售價值、且沒有國有／公有／私有註記或烙印的漂流木
+・現在可用手鋸／鏈鋸等手持工具現場裁切
+・薪材／收藏自用可直接帶回
+・要加工轉售，或量大需要車輛搬運 → 先到臨時林產物檢查站登記
+・知本／成功／大武／關山工作站，上班日09:00–16:00
+・下一次陸上颱風警報，或臺東列入豪雨特報時，公告可能失效／暫停
+
+Driftwood Pass Taitung 用60秒幫你先判斷「可以撿／先別撿／要登記」。</textarea>
+<div class="actions"><button class="ghost" onclick="copyText('promo')">複製轉貼文</button></div>
+</section>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const checks=cls=>[...document.querySelectorAll('.'+cls)];
+
+function wood(){
+ const z=$('zone').value,m=$('mark').value,v=$('value').value;
+ let cls='ok',title='🟢 初步可進入「撿拾」判斷',msg='接著確認用途與搬運方式，看看是否需要登記。';
+ if(z==='no'||m==='marked'||v==='no'){cls='bad';title='⛔ 先不要撿';msg='你目前有一個明確不符合本次自由撿拾條件的項目。不要裁切或搬走，改向現場管理機關確認。';}
+ else if(z==='unknown'||m==='unknown'||v==='unknown'){cls='warn';title='🟡 先確認，不要用猜的';msg='指定區域、木材註記與是否屬可自由撿拾對象，任何一項不確定都值得先查公告／問管理單位。';}
+ $('woodOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;
+ return title;
+}
+
+function reg(){
+ const u=$('use').value,m=$('move').value;
+ let cls='ok',title='',msg='';
+ if(u==='sell'||m==='vehicle'){cls='warn';title='🟡 需要安排登記';msg='加工轉售，或量大需要車輛搬運，依本次臺東公告應攜帶身分證至臨時林產物檢查站登記。';}
+ else if(u==='self'&&m==='small'){title='🟢 自用／收藏少量：本次公告不要求登記';msg='仍需符合指定區域、無註記／烙印、可自由撿拾等前提，並配合現場檢查。';}
+ else {cls='warn';title='🟡 還沒決定用途／搬運方式';msg='如果最後轉為商用或量大用車搬運，就不要直接離開，先處理登記。';}
+ $('registerOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;
+ return title;
+}
+
+function prep(){
+ const a=checks('prep'),n=a.filter(x=>x.checked).length;
+ $('prepOut').innerHTML=`<div class="note ${n===a.length?'ok':'warn'}">出發前防呆 ${n}/${a.length}。${n===a.length?'你已完成這一輪最關鍵的合法性與安全檢查。':'不要讓「公告說可以撿」蓋過區域、標記、登記與氣象條件。'}</div>`;
+ return n;
+}
+
+function build(countCore){
+ const w=wood(),r=reg(),p=prep();
+ $('card').value=`【Driftwood Pass Taitung｜9/11 漂流木合法撿拾卡】
+位置：${$('zone').selectedOptions[0].textContent}
+木材標記：${$('mark').selectedOptions[0].textContent}
+公告價值判定：${$('value').selectedOptions[0].textContent}
+用途：${$('use').selectedOptions[0].textContent}
+搬運：${$('move').selectedOptions[0].textContent}
+
+木材判斷：${w}
+登記判斷：${r}
+出發前防呆：${p}/6
+
+固定原則：
+1. 只在當天仍有效的官方公告指定區域撿拾。
+2. 有國有／公有／私有註記或烙印的木材不拿。
+3. 只處理官方已認定不具標售價值、可自由撿拾的漂流木。
+4. 本次公告允許手鋸／鏈鋸等手持工具裁切，但仍服從現場安全與管理規範。
+5. 薪材／收藏自用可直接攜回；加工轉售或量大需車輛搬運則辦登記。
+6. 登記站：知本、成功、大武、關山工作站；上班日09:00–16:00。
+7. 下一次陸上颱風警報，或臺東列入豪雨特報時，重新確認公告是否失效／暫停。
+
+官方最新公告：
+https://taitung.forest.gov.tw/news/0079184
+全國漂流木公告：
+https://www.forest.gov.tw/0003250`;
+
+ if(countCore&&window.PGLabImpact)PGLabImpact.core('legal-check-complete');
+}
+
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+['zone','mark','value','use','move'].forEach(id=>$(id).addEventListener('change',()=>build(false)));
+document.querySelectorAll('.prep').forEach(x=>x.addEventListener('change',()=>build(false)));
+build(false);
+</script>
+<script src="../impact.js" data-project="driftwood-pass-taitung" data-action-text="我已完成漂流木合法性判斷卡" data-real-text="我已真的查最新公告／改變工具或搬運方式／合法撿拾／完成登記" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/31"></script>
+</body>
+</html>
