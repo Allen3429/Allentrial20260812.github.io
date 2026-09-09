@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="callforward-stop">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="CallForward Stop TW：新型來電轉接＋惡意App金融帳戶接管詐騙的60秒急停卡。">
+<title>CallForward Stop TW｜手機來電轉接金融接管急停卡</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#687481;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#a32323}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1100px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}
+h1{font-size:clamp(34px,7vw,60px);line-height:1.04;margin:.12em 0 .25em}.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:960px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:11px 13px;border-radius:9px;line-height:1.7;margin:10px 0}
+.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}
+label{display:block;font-weight:760;margin-bottom:5px}select,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}textarea{min-height:230px;resize:vertical}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}
+.big{font-size:clamp(23px,4vw,31px);font-weight:950}.code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:clamp(21px,4vw,30px);font-weight:900;background:#111;color:#fff;padding:8px 11px;border-radius:10px;display:inline-block}
+.checkgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:8px}.ck{width:auto;transform:scale(1.12);margin-right:7px}.small{font-size:13px;color:var(--muted);line-height:1.65}
+.langbar{display:flex;gap:7px;flex-wrap:wrap}.langbar button{background:#edf1f5;color:#17212b}.langbar button.active{background:#17212b;color:#fff}
+.emergency{border:2px solid var(--bad);background:#fff8f8}.step{padding:10px 0;border-bottom:1px solid var(--line)}.step:last-child{border-bottom:0}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · Taiwan · 2026/09/10</div>
+<h1>CallForward Stop TW<br>詐騙不一定先要你匯錢，可能先「接管你的電話」。</h1>
+<p class="lead">勞動部勞動力發展署 9/9 發出多國語言警告：近期詐騙會冒充政府、電信公司、醫院或快遞，以「協助調查」為由要求加 LINE／視訊、提供金融資訊、下載不明 App 或買新手機，再誘導設定<strong>來電轉接</strong>，讓銀行查證電話被詐團接走。這頁只做「急停與復原第一步」，不收手機號碼、銀行、帳號或裝置資料。</p>
+
+<section class="card emergency">
+<h2>1｜如果你現在還在跟對方通話</h2>
+<div class="big">先掛斷。不要再照對方指示操作手機。</div>
+<div class="note bad">政府、檢警、銀行不會要求你透過陌生 LINE／視訊「辦案」，也不會叫你下載不明 App、購買新手機、提供金融密碼或設定來電轉接。</div>
+<div class="actions">
+<a class="btn" href="tel:165">撥 165 反詐騙</a>
+<a class="btn ghost" href="tel:110">撥 110</a>
+<a class="btn ghost" href="tel:1955">移工／需通譯：1955</a>
+</div>
+</section>
+
+<section class="card">
+<h2>2｜你目前做到哪一步？</h2>
+<div class="grid">
+<div><label>對方有沒有要求你設定來電轉接／輸入以 **21* 開頭的指令？</label><select id="forward"><option value="none">沒有</option><option value="asked">有要求，但我還沒輸入</option><option value="entered">我已經輸入過</option><option value="unknown">不確定</option></select></div>
+<div><label>有沒有下載對方指定的不明 App／買新手機照他的指示設定？</label><select id="app"><option value="no">沒有</option><option value="yes">有</option><option value="unknown">不確定</option></select></div>
+<div><label>有沒有提供銀行／信用卡資訊、OTP、網銀資料或看到異常交易？</label><select id="finance"><option value="no">沒有</option><option value="yes">有／已看到異常</option><option value="unknown">不確定</option></select></div>
+</div>
+<div id="routeOut"></div>
+</section>
+
+<section class="card">
+<h2>3｜如果你已輸入過來電轉接指令</h2>
+<div class="note warn">新北警方公開提供這兩個手機撥號盤檢查／取消方式。不同電信或裝置若顯示失敗，請直接聯絡你的電信商確認。</div>
+<div class="step"><b>檢查目前是否有轉接：</b><br><span class="code">*#21#</span></div>
+<div class="step"><b>取消全部來電轉接：</b><br><span class="code">##21#</span></div>
+<div class="actions"><button onclick="copyCode('*#21#')">複製檢查碼</button><button class="ghost" onclick="copyCode('##21#')">複製取消碼</button></div>
+<div class="note bad"><b>不要把這些碼貼回給陌生人，也不要再輸入對方給你的任何電話號碼。</b>取消後仍要繼續做銀行／165 的獨立查證，因為詐團可能同時拿到 App、卡片或帳密資訊。</div>
+</section>
+
+<section class="card">
+<h2>4｜如果已下載不明 App 或提供金融資料</h2>
+<div class="step"><b>第一步：</b>停止用這支可能被控制的手機做網銀、證券、信用卡綁定或驗證。</div>
+<div class="step"><b>第二步：</b>若可以，改用另一支可信任的手機，從<strong>銀行卡片背面／銀行官方網站</strong>找到客服，主動告知「疑似遭詐騙接管／來電轉接」，要求檢查異常交易與帳戶安全。</div>
+<div class="step"><b>第三步：</b>撥 165／110；移工可撥 1955 使用 24 小時多國語言服務。</div>
+<div class="step"><b>第四步：</b>依銀行、警方、電信商或手機原廠指示處理裝置；不要只把 App 刪掉就認為已恢復安全。</div>
+</section>
+
+<section class="card">
+<h2>5｜為什麼這招危險？</h2>
+<div class="note">新北警方 2026/6 公布一宗案例：被害人被假冒醫院與司法機關的詐團誘導下載 App、綁定信用卡並設定來電轉接，銀行異常交易照會電話被轉給詐團接聽，短短 2 天遭盜刷超過 <b>350 萬元</b>。這類詐騙的核心不是「騙你按一次轉帳」，而是逐步奪走手機與金融驗證控制權。</div>
+</section>
+
+<section class="card">
+<h2>6｜多國語言急停卡</h2>
+<div class="langbar"><button class="active" data-lang="zh" onclick="showLang('zh',this)">中文</button><button data-lang="en" onclick="showLang('en',this)">English</button><button data-lang="id" onclick="showLang('id',this)">Indonesia</button><button data-lang="vi" onclick="showLang('vi',this)">Tiếng Việt</button><button data-lang="th" onclick="showLang('th',this)">ไทย</button></div>
+<div id="langCard" class="note ok"></div>
+<div class="actions"><button class="ghost" onclick="copyLang()">複製目前語言急停卡</button></div>
+</section>
+
+<section class="card">
+<h2>7｜完成這 5 件事才算真的「脫離詐騙流程」</h2>
+<div class="checkgrid">
+<label><input class="ck action" type="checkbox"> 已掛斷可疑通話，不再與對方視訊／LINE操作</label>
+<label><input class="ck action" type="checkbox"> 若曾設定轉接，已檢查並取消／向電信商確認</label>
+<label><input class="ck action" type="checkbox"> 若已提供金融資訊，已用官方管道聯絡銀行</label>
+<label><input class="ck action" type="checkbox"> 已撥 165／110；需要通譯則撥 1955</label>
+<label><input class="ck action" type="checkbox"> 不再用可能被控制的裝置進行金融驗證，直到完成官方安全處理</label>
+</div>
+<div id="progressOut"></div>
+</section>
+
+<section class="card">
+<h2>8｜一鍵產生你的「現在要做什麼」急停卡</h2>
+<textarea id="card"></textarea>
+<div class="actions"><button onclick="build(true)">更新急停卡</button><button class="ghost" onclick="copyText('card')">複製給家人／同事</button><a class="btn ghost" target="_blank" rel="noopener" href="https://165.npa.gov.tw/">165 全民防騙網</a></div>
+</section>
+
+<section class="card">
+<h2>9｜真實使用驗證</h2>
+<p>這輪追：<strong>獨立使用者 → 完成急停分流 → 留下非敏感回饋 → 確認真的完成至少一項現實行動</strong>，例如掛斷、檢查／取消轉接、聯絡銀行、撥 165／1955。</p>
+<div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/33">CallForward Stop TW 回饋區</a></div>
+<p class="small">公開回饋不要貼手機號碼、銀行帳號、信用卡、OTP、LINE ID、身分證、地址、裝置序號、通聯紀錄或任何金融資料。</p>
+</section>
+
+<section class="card">
+<h2>10｜可直接轉貼</h2>
+<textarea id="promo">【新型詐騙不是先叫你匯款，而是先接管你的手機】
+勞動部 9/9 發出多國語言警告：詐團可能冒充政府、電信、醫院或快遞，叫你：
+・加 LINE／視訊「協助調查」
+・下載不明 App 或買新手機
+・提供金融資料
+・設定來電轉接
+接著攔截銀行查證電話，完成盜刷／盜領。
+
+如果有人叫你輸入以 **21* 開頭的轉接指令：先停。
+新北警方公開的自救方式：
+・*#21#：查詢轉接狀態
+・##21#：取消轉接
+若失敗就直接找電信商。
+
+已下載 App／給過金融資料：改用可信任的另一支手機，從卡片背面或銀行官網找官方客服；撥165。移工需要多國語言協助可撥1955。
+
+CallForward Stop TW 不收任何手機或金融資料，只幫你把「現在先做哪一步」做成急停卡。</textarea>
+<div class="actions"><button class="ghost" onclick="copyText('promo')">複製轉貼文</button></div>
+</section>
+
+<section class="card"><h2>資料來源與時效</h2><p class="small">依勞動部勞動力發展署 2026/9/9「新型詐騙升級！小心金融帳戶遭接管」多國語言宣導，以及新北市政府警察局 2026/6/23 公布的來電轉接金融接管案例整理。警方提供 *#21# 查詢與 ##21# 取消轉接；裝置／電信差異時以電信商官方客服為準。</p></section>
+</main>
+<script>
+const $=id=>document.getElementById(id);const checks=cls=>[...document.querySelectorAll('.'+cls)];let currentLang='zh';
+const langText={
+zh:`立刻停止：\n1. 掛斷電話，不再加入對方LINE／視訊。\n2. 不下載不明App、不提供密碼、OTP或金融資料。\n3. 不依陌生人指示設定來電轉接。\n4. 已經操作過：先檢查／取消轉接，再用官方管道聯絡銀行與165。\n5. 需要通譯可撥1955。`,
+en:`STOP NOW:\n1. Hang up. Do not continue on LINE or video calls.\n2. Do not install unknown apps or share passwords, OTPs, or banking details.\n3. Do not enable call forwarding because a stranger tells you to.\n4. If you already did it, check/cancel call forwarding and contact your bank through an official number, then call 165.\n5. Migrant workers can call 1955 for multilingual help.`,
+id:`BERHENTI SEKARANG:\n1. Tutup telepon. Jangan lanjutkan lewat LINE atau video call.\n2. Jangan instal aplikasi tidak dikenal atau berikan kata sandi, OTP, atau data bank.\n3. Jangan aktifkan pengalihan panggilan atas instruksi orang asing.\n4. Jika sudah dilakukan, periksa/batalkan pengalihan panggilan dan hubungi bank melalui nomor resmi, lalu hubungi 165.\n5. Pekerja migran dapat menghubungi 1955 untuk bantuan berbagai bahasa.`,
+vi:`DỪNG LẠI NGAY:\n1. Cúp máy, không tiếp tục qua LINE hoặc gọi video.\n2. Không cài ứng dụng lạ, không cung cấp mật khẩu, OTP hoặc thông tin ngân hàng.\n3. Không bật chuyển tiếp cuộc gọi theo hướng dẫn của người lạ.\n4. Nếu đã làm, hãy kiểm tra/hủy chuyển tiếp cuộc gọi, liên hệ ngân hàng bằng số chính thức rồi gọi 165.\n5. Lao động di trú có thể gọi 1955 để được hỗ trợ đa ngôn ngữ.`,
+th:`หยุดทันที:\n1. วางสาย และอย่าคุยต่อผ่าน LINE หรือวิดีโอคอล\n2. อย่าติดตั้งแอปที่ไม่รู้จัก และอย่าให้รหัสผ่าน OTP หรือข้อมูลธนาคาร\n3. อย่าตั้งค่าโอนสายตามคำสั่งของคนแปลกหน้า\n4. หากทำไปแล้ว ให้ตรวจสอบ/ยกเลิกการโอนสาย ติดต่อธนาคารผ่านหมายเลขทางการ แล้วโทร 165\n5. แรงงานข้ามชาติสามารถโทร 1955 เพื่อขอความช่วยเหลือหลายภาษา`};
+function route(){const f=$('forward').value,a=$('app').value,b=$('finance').value;let cls='ok',title='目前沒有勾到「已被接管」步驟',msg='仍請停止可疑通話，並透過165或官方管道獨立查證對方身分。';if(f==='entered'||a==='yes'||b==='yes'){cls='bad';title='⚠ 已進入高風險接管流程：現在就做復原';msg='先掛斷；若輸入過轉接碼，檢查並取消；若下載App或提供金融資料，停止使用這支手機做金融驗證，改用可信任裝置聯絡銀行＋165。';}else if(f==='asked'||a==='unknown'||b==='unknown'||f==='unknown'){cls='warn';title='🟡 還沒確定是否被接管：先停，不要繼續';msg='不要再照陌生人指示操作。獨立撥165／官方銀行／電信商查證；若曾輸入轉接相關指令，直接檢查轉接狀態。';}$('routeOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;return title;}
+function progress(){const a=checks('action'),n=a.filter(x=>x.checked).length;$('progressOut').innerHTML=`<div class="note ${n===a.length?'ok':'warn'}">現實急停行動 ${n}/${a.length}。${n===a.length?'已完成這張卡的核心處置。':'不要只看完；把還沒勾的項目做完。'}</div>`;return n;}
+function showLang(lang,btn){currentLang=lang;document.querySelectorAll('.langbar button').forEach(b=>b.classList.remove('active'));btn?.classList.add('active');$('langCard').innerText=langText[lang];}
+async function copyLang(){try{await navigator.clipboard.writeText(langText[currentLang]);alert('已複製')}catch(e){alert(langText[currentLang])}}
+async function copyCode(code){try{await navigator.clipboard.writeText(code);alert('已複製 '+code)}catch(e){alert(code)}}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+function build(countCore){const r=route(),p=progress();$('card').value=`【CallForward Stop TW｜金融帳戶接管急停卡】\n目前判斷：${r}\n現實行動：${p}/5\n\n現在做：\n1. 掛斷可疑電話，不再加LINE／視訊或照指示操作。\n2. 如果輸入過 **21*...# 之類的來電轉接：\n   ・*#21# 查詢轉接狀態\n   ・##21# 取消全部來電轉接\n   若顯示失敗，直接向電信商確認。\n3. 若下載不明App、提供銀行／信用卡／OTP，停止用這支手機做金融驗證；改用可信任裝置，從卡片背面或銀行官網找官方客服。\n4. 撥165／110；移工或需通譯可撥1955。\n5. 不要因為「取消轉接成功」就認為一定安全，仍要完成銀行與裝置安全確認。\n\n官方：\n165：https://165.npa.gov.tw/\n1955：24小時多國語言移工服務\n\n本卡不收手機號碼、帳號、銀行或任何金融資料。`;if(countCore&&window.PGLabImpact)PGLabImpact.core('stop-route-complete');}
+['forward','app','finance'].forEach(id=>$(id).addEventListener('change',()=>build(false)));document.querySelectorAll('.action').forEach(x=>x.addEventListener('change',()=>build(false)));showLang('zh',document.querySelector('[data-lang=zh]'));build(false);
+</script>
+<script src="../impact.js" data-project="callforward-stop" data-action-text="我已完成金融接管急停分流" data-real-text="我已真的掛斷／檢查或取消轉接／聯絡銀行／撥165或1955" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/33"></script>
+</body>
+</html>
