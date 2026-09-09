@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="vapedrop-431">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="VapeDrop 431：2026/9/8 起全台 431 處電子煙匿名回收點的法律狀態、包裝與投遞行動卡。">
+<title>VapeDrop 431｜電子煙匿名回收行動卡</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--ok:#176b45;--warn:#936000;--bad:#a32323}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1080px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}
+h1{font-size:clamp(36px,7vw,62px);line-height:1.03;margin:.12em 0 .25em}.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:950px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:11px 13px;border-radius:9px;line-height:1.7;margin:10px 0}
+.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}
+label{display:block;font-weight:760;margin-bottom:5px}select,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}
+textarea{min-height:210px;resize:vertical}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}
+button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}
+.checkgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:8px}.ck{width:auto;transform:scale(1.12);margin-right:7px}.small{font-size:13px;color:var(--muted);line-height:1.6}.big{font-size:clamp(22px,4vw,30px);font-weight:900}
+@media print{button,.actions{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · Taiwan · 法規／據點校對 2026/09/09 23:30</div>
+<h1>VapeDrop 431<br>手上已經有電子煙？先別丟垃圾，也不用怕回收要留名字。</h1>
+<p class="lead">國民健康署自 <strong>2026/9/8</strong> 起在全台 22 縣市設置 <strong>431 處電子煙專用回收點</strong>，可免具名、免留任何個人資料自主投遞。這頁只處理「停止持有、妥善回收」：不鼓勵購買或使用，也不收裝置序號、學校、地址或健康資料。</p>
+
+<section class="card">
+<h2>1｜先把現在的法律狀態講清楚</h2>
+<div class="note ok"><b>截至 2026/9/9：「持有」3萬–10萬元罰鍰仍是修法草案，尚未生效。</b>行政院 6/25 通過草案並送立法院審議；未來若完成立法並施行，草案規劃施行後先有 1 個月緩衝期。</div>
+<div class="note warn"><b>但「使用電子煙」現在就已經禁止。</b>現行規定使用類菸品可處新臺幣 2,000–10,000 元罰鍰。不要因為持有罰則尚未生效，就誤認為現在可以使用。</div>
+<div class="note">431 處回收點會從 9/8 持續到未來新法施行後 1 個月緩衝期屆滿；真正施行日期尚未確定，因此本頁不做假倒數。</div>
+</section>
+
+<section class="card">
+<h2>2｜你現在是哪種情況？</h2>
+<div class="grid">
+<div><label>你手上的東西</label>
+<select id="item">
+<option value="ecig">明確是電子煙主機／煙彈／煙油</option>
+<option value="unknown">不確定是電子煙、加熱菸或其他裝置</option>
+<option value="suspect">來源不明，且疑似涉及毒品／刑案／校安事件</option>
+<option value="none">我手上沒有，只是先查</option>
+</select></div>
+<div><label>裝置狀態</label>
+<select id="condition">
+<option value="normal">外觀正常、沒有漏液／膨脹／異常發熱</option>
+<option value="leak">有漏液、破損、膨脹、異常發熱或其他危險跡象</option>
+<option value="na">不適用／沒有裝置</option>
+</select></div>
+<div><label>你的縣市</label>
+<select id="county">
+<option>基隆市</option><option>臺北市</option><option>新北市</option><option>宜蘭縣</option>
+<option>桃園市</option><option>新竹市</option><option>新竹縣</option><option>苗栗縣</option>
+<option>臺中市</option><option>彰化縣</option><option>南投縣</option><option>雲林縣</option>
+<option>嘉義市</option><option>嘉義縣</option><option>臺南市</option><option>高雄市</option>
+<option>屏東縣</option><option>花蓮縣</option><option>臺東縣</option><option>澎湖縣</option>
+<option>金門縣</option><option>連江縣</option>
+</select></div>
+</div>
+<div id="routeOut"></div>
+</section>
+
+<section class="card">
+<h2>3｜投遞前，官方只要求你把「漏液／碰撞」風險先處理好</h2>
+<div class="checkgrid">
+<label><input class="ck prep" type="checkbox"> 我不再使用、充電、拆解或轉交給其他人使用</label>
+<label><input class="ck prep" type="checkbox"> 主機與煙油／煙彈已妥善包裝，避免外漏或碰撞</label>
+<label><input class="ck prep" type="checkbox"> 我不會把電子煙直接丟一般垃圾、公共垃圾桶或垃圾車</label>
+<label><input class="ck prep" type="checkbox"> 我會在回收點的機關上班／服務時間前往</label>
+<label><input class="ck prep" type="checkbox"> 我知道正式回收點不要求姓名或任何個人資料</label>
+</div>
+<div id="prepOut"></div>
+<div class="note bad"><b>若電池膨脹、裝置異常發熱、嚴重破損或正在漏液：</b>不要擠壓、刺破、拆解或繼續充電；先聯絡所在地衛生局／衛生所確認怎麼安全帶去回收。這種情況不要為了「趕快丟掉」而塞進一般垃圾。</div>
+</section>
+
+<section class="card">
+<h2>4｜找 431 處官方回收點</h2>
+<p>國健署的官方頁面已把 22 縣市分區列好。按下去後，直接點你選的 <b id="countyText">基隆市</b>。</p>
+<div class="actions">
+<a class="btn" target="_blank" rel="noopener" href="https://www.hpa.gov.tw/Pages/List.aspx?nodeid=5089">開啟國健署 431 處官方回收點</a>
+<button class="ghost" onclick="copyCounty()">複製我的縣市名稱</button>
+</div>
+<p class="small">投遞時間依各回收機關上班／服務時間。名單會滾動更新，因此這個工具不複製一份容易過期的 431 點地址資料庫。</p>
+</section>
+
+<section class="card">
+<h2>5｜三種情況不要直接丟進匿名回收桶</h2>
+<div class="note warn"><b>① 你根本不確定是不是電子煙：</b>回收桶是電子煙專用；加熱菸與其他電子產品規則不同，先問國健署／地方衛生局。</div>
+<div class="note warn"><b>② 疑似含毒品、或是校園／刑案證物：</b>先依警方、校安或主管機關程序處理，不要自行銷毀或投入匿名桶，以免破壞證物。</div>
+<div class="note warn"><b>③ 裝置明顯危險：</b>漏液、膨脹、異常發熱或嚴重破損時，先電話詢問安全搬運方式。</div>
+</section>
+
+<section class="card">
+<h2>6｜如果真正卡的是「我想停，但還會再買」</h2>
+<div class="note">把裝置丟掉只解決「手上這一支」。如果你有尼古丁依賴或反覆想重新使用，國民健康署提供免費戒菸諮詢專線與近 3,000 家戒菸服務機構。</div>
+<div class="actions">
+<a class="btn ghost" href="tel:0800636363">免費戒菸專線 0800-636363</a>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://ttc.hpa.gov.tw/">全國戒菸服務機構</a>
+</div>
+</section>
+
+<section class="card">
+<h2>7｜一鍵產生我的「今天就處理掉」行動卡</h2>
+<textarea id="card"></textarea>
+<div class="actions"><button onclick="build(true)">更新行動卡</button><button class="ghost" onclick="copyText('card')">複製到備忘錄</button></div>
+</section>
+
+<section class="card">
+<h2>8｜真實使用驗證</h2>
+<p>這輪追：<strong>獨立使用者 → 完成法律狀態／回收路徑快篩 → 留下非敏感回饋 → 確認真的查到據點／妥善包裝／完成投遞</strong>。</p>
+<div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/28">VapeDrop 431 真實回饋區</a></div>
+<p class="small">不要在公開回饋貼姓名、學校／班級、住址、購買來源、私人對話、裝置序號、健康資料或疑似刑案證物照片。</p>
+</section>
+
+<section class="card">
+<h2>9｜可直接轉貼</h2>
+<textarea id="promo">【電子煙不要丟垃圾｜9/8起全台431處免具名回收】
+先釐清一件事：截至9/9，「持有電子煙罰3萬–10萬」仍是修法草案，還沒生效；但使用電子煙現在就已違法。
+
+如果手上已經有：
+1. 不再使用、充電或轉給別人
+2. 主機／煙油妥善包裝，避免漏液與碰撞
+3. 不丟一般垃圾、公共垃圾桶或垃圾車
+4. 到國健署431處指定點，免具名、免留任何個資自主投遞
+5. 若疑似含毒品／刑案證物，不要自行丟匿名桶，先走警方或校安程序
+
+VapeDrop 431 只幫你把法律狀態、包裝與官方回收路徑整理成一張卡，不收任何個資。</textarea>
+<div class="actions"><button onclick="copyText('promo')">複製轉貼文</button></div>
+</section>
+
+<section class="card">
+<h2>資料來源與邊界</h2>
+<p class="small">依國民健康署 2026/9/5、9/8 公告，以及現行菸害防制法官方說明整理。回收點共 431 處、全程不記名、機關服務時間投遞，並要求機身與煙油妥善包裝以避免外漏／碰撞。修法施行日期尚未確定；法規狀態變更時應以國民健康署與正式法律公告為準。</p>
+</section>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+function route(){
+ const item=$('item').value, cond=$('condition').value;
+ let cls='ok', title='', msg='';
+ if(item==='none'){title='先知道入口就好';msg='你現在不用做回收；若之後手上真的有電子煙，再依官方名單處理。';}
+ else if(item==='unknown'){cls='warn';title='先確認產品類型';msg='431 處是電子煙專用回收點。不要把加熱菸或一般電子產品直接當成同一類。';}
+ else if(item==='suspect'){cls='bad';title='先不要投入匿名回收桶';msg='若疑似涉及毒品、刑案或校園證物，先依警方／校安／主管機關程序處理，避免破壞證物。';}
+ else if(cond==='leak'){cls='warn';title='先確認安全搬運方式，再去回收';msg='裝置有漏液、膨脹、異常發熱或嚴重破損時，不拆、不刺、不充電；先聯絡所在地衛生局／衛生所。';}
+ else {title='🟢 可以走 431 處匿名回收路徑';msg='妥善包裝主機與煙油避免外漏／碰撞，於回收點服務時間免具名自主投遞。';}
+ $('routeOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;
+ return title;
+}
+function prep(){
+ const a=[...document.querySelectorAll('.prep')], n=a.filter(x=>x.checked).length;
+ $('prepOut').innerHTML=`<div class="note ${n===a.length?'ok':'warn'}">投遞前準備 ${n}/${a.length}。${n===a.length?'已具備前往官方回收點的基本條件。':'至少補齊「停止使用、妥善包裝、不丟垃圾、知道免具名」四件事。'}</div>`;
+ return n;
+}
+function copyCounty(){navigator.clipboard?.writeText($('county').value);alert('已複製：'+$('county').value)}
+function build(countCore){
+ $('countyText').textContent=$('county').value;
+ const title=route(), n=prep();
+ $('card').value=`【VapeDrop 431｜電子煙匿名回收行動卡】
+縣市：${$('county').value}
+物品：${$('item').selectedOptions[0].textContent}
+裝置狀態：${$('condition').selectedOptions[0].textContent}
+初步路徑：${title}
+投遞前準備：${n}/5
+
+截至 2026/9/9：
+・「持有電子煙 3萬–10萬元」仍是修法草案，尚未生效。
+・使用電子煙目前已禁止。
+・9/8 起全台 431 處電子煙回收點，免具名、免留任何個資。
+・官方要求機身與煙油妥善包裝，避免外漏與碰撞。
+
+我現在做：
+1. 不再使用、充電、拆解或轉給別人。
+2. 裝置外觀正常時，妥善包裝後在機關服務時間前往回收。
+3. 官方據點：https://www.hpa.gov.tw/Pages/List.aspx?nodeid=5089
+4. 若不確定產品類型、裝置危險或疑似毒品／刑案證物，先向衛生局／警方／校安程序確認，不自行丟匿名桶。
+5. 若有戒除需求：0800-636363。
+
+這張卡不需要姓名、地址、學校、裝置序號或健康資料。`;
+ if(countCore&&window.PGLabImpact)PGLabImpact.core('return-route-complete');
+}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+['item','condition','county'].forEach(id=>$(id).addEventListener('change',()=>build(false)));
+document.querySelectorAll('.prep').forEach(x=>x.addEventListener('change',()=>build(false)));
+build(false);
+</script>
+<script src="../impact.js" data-project="vapedrop-431" data-action-text="我已完成法律狀態／回收路徑快篩" data-real-text="我已真的查到據點／妥善包裝／完成投遞" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/28"></script>
+</body></html>
