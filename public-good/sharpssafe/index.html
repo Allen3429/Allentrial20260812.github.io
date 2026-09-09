@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="sharpssafe">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="SharpsSafe TW：居家廢棄針頭安全收納與交回 60 秒行動卡。">
+<title>SharpsSafe TW｜居家廢棄針頭安全交回</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--ok:#176b45;--warn:#936000;--bad:#a32323}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}.wrap{max-width:1080px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}h1{font-size:clamp(35px,7vw,60px);line-height:1.04;margin:.12em 0 .25em}.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:950px}.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:11px 13px;border-radius:9px;line-height:1.7;margin:10px 0}.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}label{display:block;font-weight:760;margin-bottom:5px}select,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}textarea{min-height:210px;resize:vertical}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}.small{font-size:13px;color:var(--muted);line-height:1.6}.big{font-size:clamp(22px,4vw,30px);font-weight:900}.checkgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:8px}.ck{width:auto;transform:scale(1.12);margin-right:7px}.labelbox{border:3px solid #111;padding:18px;border-radius:12px;text-align:center;font-weight:900;font-size:22px;max-width:520px;margin:12px auto;background:white}@media print{body *{visibility:hidden}.labelbox,.labelbox *{visibility:visible}.labelbox{position:absolute;left:0;top:0;width:100%;max-width:none;border:4px solid #000}.no-print{display:none!important}}
+</style></head><body><main class="wrap">
+<div class="kicker">Public Good Lab · Taiwan · 規則校對 2026/09/09</div>
+<h1>SharpsSafe TW<br>用過的針頭，不是一般垃圾，也不是資源回收。</h1>
+<p class="lead">環境部 9/8 特別提醒：居家注射產生的廢棄針頭具有穿刺與感染風險，應先放進<strong>不易穿刺、可密封的硬殼容器</strong>並清楚標示，再送回原購買／領用機構、醫院、藥局或地方指定回收點。不要丟路邊垃圾桶，也不要混入一般垃圾或資源回收。</p>
+<section class="card"><h2>1｜你現在是哪個情況？</h2><div class="grid"><div><label>針具目前狀態</label><select id="state"><option value="loose">用過的針頭／採血針目前還是散放</option><option value="container">已經放進硬殼耐穿刺容器</option><option value="trash">疑似已混進一般垃圾／資源回收袋</option><option value="unused">未使用、仍完整包裝的針具</option></select></div><div><label>你有可密封的硬殼容器嗎？</label><select id="box"><option value="yes">有（例如醫療銳器盒或厚硬塑膠瓶）</option><option value="no">目前沒有</option></select></div><div><label>你知道哪裡願意收嗎？</label><select id="place"><option value="origin">原購買／領用醫療院所或藥局已確認可收</option><option value="other">附近醫院／藥局已確認可收</option><option value="unknown">不知道哪裡收</option></select></div></div><div id="result"></div></section>
+<section class="card"><h2>2｜最短安全路徑</h2><div class="checkgrid"><label><input class="ck prep" type="checkbox"> 針頭／針具已放進不易穿刺的硬殼容器</label><label><input class="ck prep" type="checkbox"> 容器可以確實關閉／密封</label><label><input class="ck prep" type="checkbox"> 容器外已清楚標示「內有廢針頭／勿開啟」</label><label><input class="ck prep" type="checkbox"> 沒有把它混進一般垃圾或資源回收</label><label><input class="ck prep" type="checkbox"> 已先問原購買／領用機構，或確認醫院／藥局／指定回收點願意收</label></div><div id="prepOut"></div></section>
+<section class="card"><h2>3｜不知道哪裡收？直接照這句問</h2><textarea id="ask">「您好，我有居家使用後的廢棄針頭，已裝進可密封、耐穿刺的硬殼容器並標示。請問你們有提供居家廢棄針具回收嗎？如果沒有，能否告訴我附近可接收的醫院、藥局或指定回收點？」</textarea><div class="actions"><button class="ghost" onclick="copyText('ask')">複製詢問句</button></div><p class="small">環境部目前建議優先詢問原購買／領用機構；各縣市接受據點不同，所以不要假設「任何一家藥局都一定收」。</p></section>
+<section class="card"><h2>4｜如果已經混進垃圾袋</h2><div class="note bad"><b>不要徒手在不透明垃圾袋裡翻找針頭。</b>先停止讓他人接觸該袋，並向當地清潔隊／環保局或原醫療機構詢問安全處理方式。這個工具不會叫你冒著針扎風險把它撈回來。</div></section>
+<section class="card"><h2>5｜可直接印在容器上的標籤</h2><div class="labelbox" id="label">⚠ 內有廢棄針頭／針具<br>請勿開啟・請勿投入一般垃圾或資源回收<br><span style="font-size:15px">請交回醫院、藥局、原領用機構或地方指定回收點</span></div><div class="actions no-print"><button onclick="window.print()">列印標籤</button></div></section>
+<section class="card"><h2>6｜一鍵產生你的交回行動卡</h2><textarea id="card"></textarea><div class="actions"><button onclick="build(true)">更新行動卡</button><button class="ghost" onclick="copyText('card')">複製到備忘錄</button><button class="ghost" onclick="downloadCard()">下載 TXT</button></div></section>
+<section class="card"><h2>7｜為什麼這不是「垃圾分類小事」</h2><div class="note warn">環境部指出，使用過的針頭可能造成清潔與回收人員針扎及感染風險；2026/9/8 的最新提醒也說，任意棄置居家護理針頭可能依《廢棄物清理法》處罰，最高可到新臺幣 10 萬元。</div><div class="note">這頁只處理<strong>廢棄針頭／針具怎麼安全交回</strong>，不提供注射、藥品、劑量或疾病建議。若是藥品本身、空筆身、藥瓶或其他醫療廢棄物，請另外依醫療院所／藥局與地方規定處理。</div></section>
+<section class="card"><h2>8｜真實使用驗證</h2><p>這輪追：<strong>獨立使用者 → 完成安全處理卡 → 留下非敏感回饋 → 確認真的裝入耐穿刺容器／詢問或交回</strong>。</p><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/26">SharpsSafe TW 回饋區</a></div><p class="small">公開回饋不要貼藥名、診斷、處方、姓名、地址、就診紀錄、針具照片或其他健康資料。</p></section>
+<section class="card"><h2>9｜可直接轉貼</h2><textarea id="promo">【家裡用過的注射針頭，不要丟垃圾或資源回收】
+環境部 9/8 再提醒：居家用過的針頭有穿刺與感染風險。
+
+最短做法：
+1. 放進不易穿刺、可密封的硬殼容器
+2. 外面清楚標「內有廢針頭／勿開啟」
+3. 不混一般垃圾、不混資源回收、不丟路邊垃圾桶
+4. 優先問原購買／領用機構是否回收；沒有的話，再問附近醫院、藥局或地方指定點
+
+SharpsSafe TW 不收藥名或健康資料，只幫你把「收好 → 問哪裡收 → 交回」變成一張行動卡。</textarea><div class="actions"><button onclick="copyText('promo')">複製轉貼文</button></div></section>
+<section class="card"><h2>資料來源與時效</h2><p class="small">依環境部 2026/9/8 對居家廢棄針頭的最新提醒，以及政府醫療機構既有「使用後針頭放入有蓋堅硬不易穿透容器、回診交由醫護人員回收」指引整理。各縣市接收點不同，實際交回前請先向機構確認。</p></section>
+</main><script>
+const $=id=>document.getElementById(id);function assess(){const s=$('state').value,b=$('box').value,p=$('place').value;let cls='warn',title='',msg='';if(s==='trash'){cls='bad';title='先停止徒手翻找';msg='針具疑似已混入垃圾時，不要把手伸進袋中摸找。隔離該袋並向當地清潔隊／環保局或原醫療機構詢問。';}else if(s==='loose'&&b==='yes'){title='先把針具放進硬殼耐穿刺容器';msg='完成密封與標示後，再處理交回地點。';}else if(s==='loose'&&b==='no'){title='先取得一個不易穿刺、可密封的硬殼容器';msg='不要先把散放針頭丟進垃圾袋。可優先使用醫療銳器盒；沒有時，選擇厚硬、不易穿刺且能確實關閉的容器。';}else if(s==='container'&&p==='unknown'){title='現在只差找到接收點';msg='先問原購買／領用機構；若不收，再問附近醫院、藥局或地方指定點，先電話確認再帶去。';}else if(s==='container'){cls='ok';title='已接近完成';msg='保持容器密封與清楚標示，按已確認的接收方式交回。';}else{title='未使用針具不要和「已使用銳器」混為一談';msg='仍完整未使用的產品，先詢問原購買／領用機構退回或處理方式，不要自行拆開變成暴露針頭。';}$('result').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;return title}function prep(){const a=[...document.querySelectorAll('.prep')],n=a.filter(x=>x.checked).length;$('prepOut').innerHTML=`<div class="note ${n===a.length?'ok':'warn'}">安全交回流程 ${n}/${a.length}。${n===a.length?'已具備交回前的基本條件。':'優先補「硬殼容器＋密封標示＋確認接收點」。'}</div>`;return n}function build(countCore){const result=assess(),n=prep();$('card').value=`【SharpsSafe TW｜居家廢棄針頭交回卡】
+目前狀態：${$('state').selectedOptions[0].textContent}
+硬殼容器：${$('box').selectedOptions[0].textContent}
+接收點：${$('place').selectedOptions[0].textContent}
+安全交回流程：${n}/5
+
+現在的下一步：${result}
+
+固定原則：
+1. 使用後針頭／針具放進不易穿刺、可密封的硬殼容器。
+2. 容器清楚標示「內有廢針頭／勿開啟」。
+3. 不混一般垃圾、不混資源回收、不丟路邊垃圾桶。
+4. 優先詢問原購買／領用機構；也可詢問醫院、藥局或地方指定回收點，先確認是否接收。
+5. 若針頭已混入垃圾袋，不徒手翻找，改問清潔隊／環保局或原醫療機構如何安全處理。
+
+這張卡不需要記錄藥名、疾病、處方或任何健康資料。`;if(countCore&&window.PGLabImpact)PGLabImpact.core('safe-return-card-complete')}async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}function downloadCard(){const b=new Blob([$('card').value],{type:'text/plain;charset=utf-8'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download='SharpsSafe_廢針頭交回卡.txt';a.click();URL.revokeObjectURL(u);if(window.PGLabImpact)PGLabImpact.core('card-download')}['state','box','place'].forEach(id=>$(id).addEventListener('change',()=>build(false)));document.querySelectorAll('.prep').forEach(x=>x.addEventListener('change',()=>build(false)));build(false);
+</script><script src="../impact.js" data-project="sharpssafe" data-action-text="我已完成廢針頭安全處理卡" data-real-text="我已真的裝入耐穿刺容器／詢問或交回" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/26"></script></body></html>
