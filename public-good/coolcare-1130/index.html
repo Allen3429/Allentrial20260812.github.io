@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="coolcare-1130">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="CoolCare 1130：老人、長照與身障照顧場域的高溫冷卻補助資格快篩、500萬上限試算與申請證據包。">
+<title>CoolCare 1130｜氣候弱勢場域冷卻補助快篩</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#687481;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#a32323}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1120px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}
+h1{font-size:clamp(34px,7vw,60px);line-height:1.04;margin:.12em 0 .25em}.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:980px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:11px 13px;border-radius:9px;line-height:1.7;margin:10px 0}
+.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}
+label{display:block;font-weight:760;margin-bottom:5px}select,input,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}textarea{min-height:240px;resize:vertical}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}
+.big{font-size:clamp(23px,4vw,31px);font-weight:950}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:9px}.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:25px;margin-top:4px}
+.checkgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:8px}.ck{width:auto;transform:scale(1.12);margin-right:7px}.small{font-size:13px;color:var(--muted);line-height:1.65}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · Taiwan · 規則校對 2026/09/10</div>
+<h1>CoolCare 1130<br>長照場域太熱，不一定只能自己編冷氣預算。</h1>
+<p class="lead">環境部 9/9 新增「氣候弱勢與高溫熱風險公共場域冷卻示範」補助：老人福利機構、部分長照機構、身障福利機構與符合條件的照顧場所，可申請空調改善、能源管理、外牆／屋頂／窗戶隔熱等措施。第三類每案最高補助 <strong>500 萬元</strong>，補助比率最高可達 <strong>100%</strong>，申請到 <strong>2026/11/30</strong>。</p>
+<section class="card"><h2>1｜先快篩：你的場域是不是第三類對象？</h2><div class="grid">
+<div><label>場域類型</label><select id="facility"><option value="elder">老人福利機構</option><option value="ltc">住宿式長照／社區式日間照顧機構</option><option value="disability">身障福利機構（日間照顧或住宿式）</option><option value="other">其他經社福／長照主管機關核准，服務高溫脆弱族群的照顧場所</option><option value="home">居家式服務單位</option><option value="office">單純行政辦公／短時間活動據點／無固定照顧空間</option><option value="unknown">不確定</option></select></div>
+<div><label>是否依法設立、許可、核准或登記？</label><select id="licensed"><option value="yes">是，可提出主管機關文件</option><option value="no">不是</option><option value="unknown">不確定</option></select></div>
+<div><label>服務使用者是否會長時間停留、日間照顧或住宿？</label><select id="stay"><option value="yes">是</option><option value="no">不是</option><option value="unknown">不確定</option></select></div>
+<div><label>同一改善項目是否已拿其他政府補助？</label><select id="otherfund"><option value="no">沒有</option><option value="yes">有</option><option value="unknown">不確定</option></select></div></div><div id="eligOut"></div></section>
+<section class="card"><h2>2｜不是「只換冷氣」：至少要選 2 項改善措施</h2><p class="small">第三類申請計畫至少選兩項；可同屬減緩，或同屬調適，也可以混搭。</p><div class="checkgrid">
+<label><input class="ck measure" type="checkbox" value="空調主機性能提升／汰換"> 空調主機性能提升／汰換</label><label><input class="ck measure" type="checkbox" value="建置／升級能源管理系統"> 建置／升級建築能源管理系統</label><label><input class="ck measure" type="checkbox" value="空調節能策略"> 導入空調系統節能策略</label><label><input class="ck measure" type="checkbox" value="外牆隔熱"> 建築外牆隔熱改善</label><label><input class="ck measure" type="checkbox" value="屋頂隔熱／綠化"> 屋頂隔熱改善／屋頂綠化</label><label><input class="ck measure" type="checkbox" value="遮陽／玻璃貼膜"> 外遮陽或建築門窗玻璃貼膜</label></div><div id="measureOut"></div></section>
+<section class="card"><h2>3｜先估「最多可以申請多少」</h2><div class="grid"><div><label>預估總改善經費（元）</label><input id="budget" type="number" min="0" step="10000" value="3000000"></div><div><label>是否預期需要政府採購法程序？</label><select id="procure"><option value="unknown">尚未判斷</option><option value="yes">可能需要</option><option value="no">應不需要</option></select></div></div><div id="moneyOut"></div><div class="note warn">「最高 100%」不是保證全額核定；這是競爭型審查。若補助金額占採購金額半數以上且達政府採購公告金額，還要依政府採購法相關規定辦理。</div></section>
+<section class="card"><h2>4｜官方會優先看什麼？把現勘前證據先備好</h2><div class="checkgrid"><label><input class="ck evidence" type="checkbox"> 冷卻設備老舊／故障率高，或確有隔熱改善需求的照片與簡單說明</label><label><input class="ck evidence" type="checkbox"> 至少近 12 個月電費／用電資料</label><label><input class="ck evidence" type="checkbox"> 夏季常見過熱空間、時段、樓層／房間清單</label><label><input class="ck evidence" type="checkbox"> 能執行工程發包、驗收與後續維護的人員／窗口</label><label><input class="ck evidence" type="checkbox"> 可供現勘的平面圖、設備基本資料或簡易配置圖</label><label><input class="ck evidence" type="checkbox"> 主管機關核准設立／許可／登記等服務性質證明</label></div><div id="evidenceOut"></div><div class="note ok">第三類不是要求機構先自己完成完整節能模型。氣候署會委託輔導團現勘、實測與評估，協助提出冷卻設備及被動式冷卻改善建議；所以第一步最重要的是把「場域真的熱、設備真的舊、資料真的拿得出來」整理清楚。</div></section>
+<section class="card"><h2>5｜一鍵產生「現勘前 1 頁申請摘要」</h2><textarea id="proposal"></textarea><div class="actions"><button onclick="build(true)">更新申請摘要</button><button class="ghost" onclick="copyText('proposal')">複製給主管／工程顧問</button><a class="btn" target="_blank" rel="noopener" href="https://www.cca.gov.tw/information-service/subsidy/35420.html">環境部正式補助公告</a></div></section>
+<section class="card"><h2>6｜這輪最容易漏掉的 4 個規則</h2><div class="note"><b>① 居家式服務不在第三類優先場域。</b><br><b>② 不能只送 1 項改善：</b>第三類至少 2 項。<br><b>③ 同一改善項目不能重複拿其他補助。</b><br><b>④ 每個補助對象原則上只申請 1 案：</b>不要把同一場域拆成很多小案來湊。</div></section>
+<section class="card"><h2>7｜期限與官方窗口</h2><div class="stats"><div class="stat">第三類截止<b>11/30</b></div><div class="stat">每案最高<b>500萬</b></div><div class="stat">最高比率<b>100%</b></div><div class="stat">全案預算<b>1億元</b></div></div><div class="actions"><a class="btn ghost" href="tel:0223222050">氣候署 02-2322-2050</a><a class="btn ghost" href="tel:0227844188">輔導單位 02-2784-4188</a><a class="btn ghost" target="_blank" rel="noopener" href="https://taiwancoolmap.moenv.gov.tw/coolmap/zh-TW/Cool_GIS">Cool Map 抗高溫涼適地圖</a></div></section>
+<section class="card"><h2>8｜真實使用驗證</h2><p>這輪追：<strong>獨立使用者 → 完成資格／措施快篩 → 留下非敏感回饋 → 確認機構真的做了下一步</strong>，例如找出用電資料、約現勘、打官方窗口、向主管提案或開始整理申請。</p><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/34">CoolCare 1130 回饋區</a></div><p class="small">公開回饋不要貼住民姓名、健康狀況、機構未公開地址、電費帳號、內部契約或個資。</p></section>
+<section class="card"><h2>9｜可直接轉給長照／社福機構主管</h2><textarea id="promo">【長照場域太熱？9/9新制：冷卻改善最高補助500萬元，第三類最高可到100%】
+環境部新增加「氣候弱勢與高溫熱風險公共場域冷卻示範」：
+・老人福利機構
+・住宿式長照／社區式日照
+・身障福利日照／住宿
+・其他符合條件的高溫脆弱族群照顧場所
+
+可做：冷氣主機改善、能源管理、外牆隔熱、屋頂隔熱／綠化、遮陽／玻璃貼膜等。
+重點：至少要選2項改善；每案最高500萬元，第三類最高補助比率可達100%；申請到11/30。
+
+CoolCare 1130 不收住民資料，只幫機構先做資格快篩、整理現勘證據，產生一頁申請摘要。</textarea><div class="actions"><button class="ghost" onclick="copyText('promo')">複製轉貼文</button></div></section>
+</main>
+<script>
+const $=id=>document.getElementById(id);const checks=cls=>[...document.querySelectorAll('.'+cls)];const fmt=n=>'NT$'+Math.round(n).toLocaleString();
+function eligibility(){const f=$('facility').value,l=$('licensed').value,s=$('stay').value,o=$('otherfund').value;let cls='ok',title='🟢 初步值得申請第三類',msg='接著至少選2項改善，並準備現勘證據。';if(['home','office'].includes(f)||l==='no'||s==='no'||o==='yes'){cls='bad';title='⛔ 目前有明顯資格缺口';msg='居家式／單純行政或短時據點不屬優先場域；未依法設立、沒有長時間照顧事實，或同項目已獲其他補助，都需要先處理。';}else if(f==='unknown'||l==='unknown'||s==='unknown'||o==='unknown'){cls='warn';title='🟡 有關鍵條件還沒確認';msg='先確認場域法定身分、服務型態與是否重複補助，再決定是否投入申請文件。';}$('eligOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;return title;}
+function measures(){const a=checks('measure').filter(x=>x.checked);$('measureOut').innerHTML=`<div class="note ${a.length>=2?'ok':'warn'}">目前選 ${a.length} 項。${a.length>=2?'已達「至少2項改善措施」門檻。':'第三類至少要選2項，先不要只寫「換冷氣」。'}</div>`;return a.map(x=>x.value);}
+function money(){const b=Math.max(0,+$('budget').value||0);const max=Math.min(5000000,b);$('moneyOut').innerHTML=`<div class="note ok"><div class="stats"><div class="stat">預估總經費<b>${fmt(b)}</b></div><div class="stat">理論申請上限<b>${fmt(max)}</b></div><div class="stat">單案法定上限<b>500萬</b></div></div><p>第三類最高補助比率可達100%，所以在不超過500萬元下，理論上可申請到總改善經費；正式金額仍由競爭審查與現勘評估決定。</p></div>`;return {b,max};}
+function evidence(){const a=checks('evidence'),n=a.filter(x=>x.checked).length;$('evidenceOut').innerHTML=`<div class="note ${n>=4?'ok':'warn'}">現勘證據包 ${n}/${a.length}。${n>=4?'已具備一個可向主管／輔導團討論的起點。':'先補歷史用電、過熱位置、設備狀況與合法設立證明，會比先寫漂亮文案更有用。'}</div>`;return n;}
+function build(countCore){const e=eligibility(),m=measures(),cash=money(),ev=evidence();$('proposal').value=`【CoolCare 1130｜高溫冷卻示範 1 頁申請摘要】\n\n一、場域\n類型：${$('facility').selectedOptions[0].textContent}\n依法設立／核准：${$('licensed').selectedOptions[0].textContent}\n長時間停留／日照／住宿：${$('stay').selectedOptions[0].textContent}\n其他補助重複：${$('otherfund').selectedOptions[0].textContent}\n初步資格：${e}\n\n二、預計改善\n${m.length?m.map((x,i)=>`${i+1}. ${x}`).join('\n'):'尚未選滿2項'}\n\n三、預算\n總改善經費概估：${fmt(cash.b)}\n依「最高100%、單案上限500萬元」推算之理論申請上限：${fmt(cash.max)}\n※正式核定依現勘、競爭審查與經費評估。\n\n四、現勘前證據\n已完成 ${ev}/6 項：\n□ 老舊設備／隔熱需求照片與說明\n□ 近12個月用電資料\n□ 夏季過熱空間與時段清單\n□ 工程發包／維護窗口\n□ 平面圖或設備配置資料\n□ 主管機關核准設立／許可／登記文件\n\n五、下一步\n1. 補齊尚缺的現勘證據。\n2. 以「至少2項改善措施」為原則整理需求，不只寫換冷氣。\n3. 向氣候署／輔導單位確認場域資格與現勘流程。\n4. 在2026/11/30前完成第三類申請。\n\n官方公告：\nhttps://www.cca.gov.tw/information-service/subsidy/35420.html\n氣候署：02-2322-2050 分機66318\n輔導單位：02-2784-4188 分機5251／5262`;if(countCore&&window.PGLabImpact)PGLabImpact.core('grant-precheck-complete');}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+['facility','licensed','stay','otherfund','procure'].forEach(id=>$(id).addEventListener('change',()=>build(false)));$('budget').addEventListener('input',()=>build(false));document.querySelectorAll('.measure,.evidence').forEach(x=>x.addEventListener('change',()=>build(false)));build(false);
+</script>
+<script src="../impact.js" data-project="coolcare-1130" data-action-text="我已完成氣候弱勢場域補助快篩" data-real-text="我已真的整理用電／約現勘／打官方窗口／開始申請" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/34"></script>
+</body>
+</html>
