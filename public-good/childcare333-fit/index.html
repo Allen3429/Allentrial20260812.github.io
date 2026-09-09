@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="childcare333-fit">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Childcare333 Fit：115年度企業托育補助第2期申請快篩、育兒補貼估算與文件清單。截止 2026/9/30。">
+<title>Childcare333 Fit｜企業托育補助申請快篩</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--ok:#176b45;--warn:#936000}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1100px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}
+h1{font-size:clamp(36px,7vw,62px);line-height:1.03;margin:.12em 0 .25em}.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:940px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:9px}
+.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:22px;margin-top:4px}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:11px 13px;border-radius:9px;line-height:1.7;margin:10px 0}.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}
+label{display:block;font-weight:760;margin-bottom:5px}select,input,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}textarea{min-height:190px;resize:vertical}
+button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}
+.small{font-size:13px;color:var(--muted);line-height:1.6}.big{font-size:clamp(22px,4vw,30px);font-weight:900}.ck{width:auto;transform:scale(1.12);margin-right:7px}
+.checkgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:8px}
+@media print{button,.actions{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · Taiwan · 政策校對 2026/09/09</div>
+<h1>Childcare333 Fit<br>企業托育補助，別卡在「到底能申請哪一種」。</h1>
+<p class="lead">勞動部 115 年度第 2 期企業托育補助已延長到 <strong>2026/9/30</strong>。不限企業規模；育兒補貼、哺集乳室、托兒設施、職場居家式托育都可能有補助。這頁不收公司名稱、統編、員工名冊或薪資，只先幫你把路徑、估算與文件整理好。</p>
+
+<section class="card">
+<h2>1｜先看你可能走哪一條</h2>
+<div class="grid">
+<div><label>企業目前想做的事</label>
+<select id="route">
+<option value="allowance">直接發員工育兒補貼</option>
+<option value="milk">設置員工哺（集）乳室</option>
+<option value="newfacility">新設幼兒園／托嬰中心／職場互助教保中心</option>
+<option value="existing">已經有托兒設施，要改善／營運</option>
+<option value="homecare">在職場提供居家式托育（職場保母）</option>
+<option value="unsure">不確定，想先比較</option>
+</select></div>
+<div><label>企業受僱人數級距</label>
+<select id="size">
+<option value="small">未滿 100 人</option>
+<option value="medium">100–499 人</option>
+<option value="large">500 人以上</option>
+</select></div>
+</div>
+<div id="routeOut"></div>
+</section>
+
+<section class="card">
+<h2>2｜如果你想發「育兒補貼」，先估政府補助</h2>
+<p class="small">適用受僱者未滿 12 歲（就讀國中前）子女；新制已取消「一定要送托托兒服務機構」限制，親屬照顧或保母等也不再因此被排除。下面只做概算，正式核定以官方審查為準。</p>
+<div class="grid">
+<div><label>預計補貼的員工子女人數</label><input id="kids" type="number" min="0" max="10000" value="10"></div>
+<div><label>企業每位子女每月實際補貼金額（元）</label><input id="monthly" type="number" min="0" max="100000" value="1000"></div>
+<div><label>一年預計發幾個月</label><input id="months" type="number" min="1" max="12" value="12"></div>
+</div>
+<div id="calcOut"></div>
+</section>
+
+<section class="card">
+<h2>3｜四大路徑的補助上限</h2>
+<div class="stats">
+<div class="stat"><span>哺集乳室</span><b>最高 2 萬</b></div>
+<div class="stat"><span>育兒補貼</span><b>每年最高 100 萬</b><span class="small">每位子女每年最高補助 1 萬</span></div>
+<div class="stat"><span>新設托兒設施</span><b>最高 500 萬</b></div>
+<div class="stat"><span>已設托兒設施</span><b>每年最高 100 萬</b></div>
+<div class="stat"><span>職場居家式托育</span><b>每年最高 100 萬</b></div>
+</div>
+<div class="note">已設托兒設施可同時申請設備、人事、營運、收托費減免等多項，但同一事業單位該類年度總上限仍是 100 萬。新設托兒設施若同時真的有發員工育兒補貼，官方 Q&A 也說兩類可分別申請。</div>
+</section>
+
+<section class="card">
+<h2>4｜你的文件清單</h2>
+<div id="docsOut"></div>
+<p class="small">清單只顯示文件「種類」。不要把子女名冊、薪資清冊、契約或公司資料貼到本工具或公開回饋區。</p>
+</section>
+
+<section class="card">
+<h2>5｜申請前防呆</h2>
+<div class="checkgrid">
+<label><input class="ck ready" type="checkbox"> 已確認申請主體是雇主／事業單位，不是自營作業者或接案個人</label>
+<label><input class="ck ready" type="checkbox"> 已確認要申請的項目今年沒有構成不得重複補助的情況，或已向官方確認</label>
+<label><input class="ck ready" type="checkbox"> 已完成公司內部核准與預算／補貼規範</label>
+<label><input class="ck ready" type="checkbox"> 已準備實施計畫與對應文件</label>
+<label><input class="ck ready" type="checkbox"> 已知道 115 年第 2 期延長至 2026/9/30 截止</label>
+</div>
+<div id="readyOut"></div>
+</section>
+
+<section class="card">
+<h2>6｜一鍵產生內部交辦卡</h2>
+<textarea id="plan"></textarea>
+<div class="actions">
+<button onclick="build(true)">更新交辦卡</button>
+<button class="ghost" onclick="copyText('plan')">複製給 HR／行政／主管</button>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://childcare.mol.gov.tw/">進入勞動部官方申請網站</a>
+</div>
+</section>
+
+<section class="card">
+<h2>7｜官方新制裡最容易漏掉的幾點</h2>
+<div class="note ok">
+<ul>
+<li><b>企業大小不限：</b>所有規模的企業都可提出申請；只是育兒補貼的補助比率依規模不同。</li>
+<li><b>育兒補貼不再限定送托機構：</b>員工子女親屬照顧、保母等不再因托育型態被排除。</li>
+<li><b>育兒補貼比率：</b>未滿100人 70%；100–499人 60%；500人以上 50%。每位子女每年最高補助 1 萬元，同一事業單位每年最高 100 萬元。</li>
+<li><b>新設托兒設施：</b>最高 500 萬；既有托兒設施每年最高 100 萬。</li>
+<li><b>職場居家式托育：</b>每年最高 100 萬；托育人員人事費每人每年最高 6 萬、每一雇主最多 2 人。</li>
+</ul>
+</div>
+</section>
+
+<section class="card">
+<h2>8｜真實使用驗證</h2>
+<p>這一輪追的是：<strong>獨立使用者 → 完成補助路徑快篩 → 留下非敏感回饋 → 確認真的進入官方申請系統／完成送件</strong>。</p>
+<div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/18">回報最後卡在哪</a></div>
+</section>
+
+<section class="card">
+<h2>9｜可直接轉給 HR／中小企業主</h2>
+<textarea id="promo">【企業托育補助延長到 9/30｜不是只有大公司能申請】
+勞動部 2026 年企業托育補助新制，不限企業規模。
+
+現在可申請的主要路徑包括：
+・員工育兒補貼：每位子女每年最高補助 1 萬元，企業年度最高 100 萬
+・哺集乳室：最高 2 萬
+・新設托兒設施：最高 500 萬
+・既有托兒設施：每年最高 100 萬
+・職場居家式托育：每年最高 100 萬
+
+育兒補貼新制也已取消「孩子一定要送托托兒服務機構」限制。
+
+Childcare333 Fit 不收公司或員工個資，只幫你先算補助級距、列文件，再直接回勞動部官方系統。</textarea>
+<div class="actions"><button onclick="copyText('promo')">複製轉貼文</button></div>
+</section>
+
+<section class="card">
+<h2>資料來源與時效</h2>
+<p class="small">依勞動部企業托兒與哺（集）乳室資訊網「強化企業托育新制」及勞動部 2026/6/12、7/8 公告整理。第 2 期受理目前延長至 2026/9/30；正式資格、補助金額與核定結果以地方勞工行政主管機關及勞動部審查為準。</p>
+</section>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+function rate(){return $('size').value==='small'?.70:$('size').value==='medium'?.60:.50}
+function route(){
+ const r=$('route').value;
+ const m={
+ allowance:['育兒補貼','員工子女未滿12歲（就讀國中前）；政府依企業實支與規模比率補助，每位子女每年最高1萬元、企業年度最高100萬元。'],
+ milk:['哺（集）乳室','員工專用哺集乳室最高補助2萬元，補助設備項目以官方規定為準。'],
+ newfacility:['新設托兒設施','自行或聯合設置幼兒園、托嬰中心或職場互助教保中心等，最高500萬元。'],
+ existing:['既有托兒設施','設備、人事、營運、收托費減免等可申請；每年同一事業單位最高100萬元。'],
+ homecare:['職場居家式托育','職場保母模式每年最高100萬元，可含設備及符合規定的托育人員人事費。'],
+ unsure:['先比較四條路徑','最容易快速啟動通常是育兒補貼；若已有空間、人員或托兒設施，再比較設施／職場居家式托育。']
+ };
+ const [t,d]=m[r];
+ $('routeOut').innerHTML=`<div class="note ok"><div class="big">${t}</div>${d}</div>`;
+}
+function calc(){
+ const kids=Math.max(0,+$('kids').value||0), monthly=Math.max(0,+$('monthly').value||0), months=Math.min(12,Math.max(1,+$('months').value||12));
+ const employerPerKid=monthly*months, govPerKid=Math.min(10000,employerPerKid*rate()), total=Math.min(1000000,govPerKid*kids);
+ const totalEmployer=employerPerKid*kids;
+ $('calcOut').innerHTML=`<div class="note ok"><div class="big">概估可申請補助：約 NT$${Math.round(total).toLocaleString()}</div>
+企業預計全年實支：NT$${Math.round(totalEmployer).toLocaleString()}；本級距補助比率 ${Math.round(rate()*100)}%。每位子女概估政府補助 NT$${Math.round(govPerKid).toLocaleString()}（受每人每年1萬元上限限制），整體再受企業每年100萬元上限限制。正式核定仍以官方審查為準。</div>`;
+}
+function docs(){
+ const r=$('route').value;
+ let arr=[];
+ if(r==='allowance') arr=['申請書','實施計畫','受僱者子女名冊','雇主育兒補貼規範及相關證明文件'];
+ else if(r==='newfacility'||r==='existing') arr=['申請書','實施計畫','受僱者子女托兒名冊','托兒服務機構設立許可證書影本','若申請人事費：教保／托育人員名冊及薪資清冊','若申請收托費減免：收托減免費用證明'];
+ else if(r==='homecare') arr=['申請書','實施計畫','受僱者子女托兒名冊','職場居家式托育人員登記證明','雇主辦理職場居家式托育登記證明','若申請人事費：委託或聘僱契約'];
+ else if(r==='milk') arr=['申請書／官方要求之申請資料','欲購置或設置項目的經費資料','依官方系統提示補齊附件'];
+ else arr=['先決定申請路徑後，這裡會顯示對應文件'];
+ $('docsOut').innerHTML='<div class="note"><ol>'+arr.map(x=>'<li>'+x+'</li>').join('')+'</ol></div>';
+}
+function ready(){
+ const a=[...document.querySelectorAll('.ready')],n=a.filter(x=>x.checked).length;
+ $('readyOut').innerHTML=`<div class="note ${n===a.length?'ok':'warn'}">完成 ${n}/${a.length}。${n===a.length?'已經可以把資料交給負責人，進官方系統確認送件。':'距離送件還有明確缺口；優先處理內部核准與文件，不要只停在「研究補助」。'}</div>`;
+}
+function build(countCore){
+ route();calc();docs();ready();
+ $('plan').value=`【Childcare333 Fit｜企業托育補助交辦卡】
+申請方向：${$('route').selectedOptions[0].textContent}
+企業人數級距：${$('size').selectedOptions[0].textContent}
+115年第2期截止：2026/9/30
+
+下一步：
+1. 到勞動部「企業托兒與哺（集）乳室資訊網」確認正式資格與當期申請。
+2. 完成公司內部核准／預算與實施計畫。
+3. 依本工具列出的文件種類準備附件；不要把員工名冊或薪資放到第三方網站。
+4. 在 9/30 前以官方系統向公司所在地地方勞工行政主管機關提出申請。
+5. 如涉及重複補助、特殊托兒機構或資格疑義，先向官方確認再送件。
+
+官方入口：https://childcare.mol.gov.tw/
+本卡只是申請前整理，不等於補助核定。`;
+ if(countCore&&window.PGLabImpact)PGLabImpact.core('subsidy-path-complete');
+}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+['route','size','kids','monthly','months'].forEach(id=>$(id).addEventListener('input',()=>build(false)));
+document.querySelectorAll('.ready').forEach(x=>x.addEventListener('change',()=>build(false)));
+build(false);
+</script>
+<script src="../impact.js" data-project="childcare333-fit" data-action-text="我已完成企業托育補助路徑快篩" data-real-text="我已進入官方系統／完成申請" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/18"></script>
+</body></html>
