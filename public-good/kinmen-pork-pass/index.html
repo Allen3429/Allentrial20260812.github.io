@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="kinmen-pork-pass">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Kinmen Pork Pass：2026/9/8–9/14 金門豬肉與加工品輸往臺灣本島及其他離島的 60 秒判斷卡。">
+<title>Kinmen Pork Pass｜金門豬肉製品輸台判斷</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--ok:#176b45;--warn:#936000;--bad:#a32323}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1080px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}
+h1{font-size:clamp(35px,7vw,60px);line-height:1.04;margin:.12em 0 .25em}.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:940px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:11px 13px;border-radius:9px;line-height:1.7;margin:10px 0}
+.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}
+label{display:block;font-weight:760;margin-bottom:5px}select,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}
+textarea{min-height:210px;resize:vertical}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}
+button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}
+.small{font-size:13px;color:var(--muted);line-height:1.6}.big{font-size:clamp(22px,4vw,30px);font-weight:900}
+.checkgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:8px}.ck{width:auto;transform:scale(1.12);margin-right:7px}
+@media print{button,.actions{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · Kinmen · 規則校對 2026/09/09</div>
+<h1>Kinmen Pork Pass<br>這包金門豬肉製品，現在能不能帶回臺灣？</h1>
+<p class="lead">2026/9/8–9/14，因金門海漂豬檢出非洲豬瘟陽性，農業部暫停金門地區豬肉及其加工產品輸往臺灣本島及其他離島。<strong>但不是所有加工食品都一刀切：</strong>金門縣府同時說明，2026/1/9 農業部函示中、經防檢署口蹄疫風險評估通過的特定偶蹄類加工產品，仍可依規定輸運。</p>
+<section class="card"><h2>1｜先確認你現在要把東西帶去哪</h2><div class="grid"><div><label>出發地</label><select id="from"><option value="kinmen">金門</option><option value="other">不是金門</option></select></div><div><label>目的地</label><select id="to"><option value="taiwan">臺灣本島</option><option value="island">其他離島</option><option value="stay">留在金門使用</option></select></div><div><label>日期</label><select id="date"><option value="ban">2026/9/8–9/14</option><option value="after">9/15 之後</option><option value="before">9/7 以前</option></select></div></div><div id="scopeOut"></div></section>
+<section class="card"><h2>2｜你手上是哪一類？</h2><div class="grid"><div><label>產品</label><select id="type"><option value="fresh">生鮮／冷藏／冷凍豬肉、內臟或明顯以豬肉為主的非核准產品</option><option value="processed">包裝加工品：肉乾／肉鬆／肉鬆貢糖／含肉燒餅／調理包等</option><option value="homemade">散裝、自製、來源不明或標示不完整的含豬產品</option><option value="nopork">確定不含豬肉</option><option value="unknown">看不出成分／不確定</option></select></div><div><label>店家／包裝能否明確證明「這個產品」屬農業部 2026/1/9 函示、經防檢署風險評估通過的可輸運產品？</label><select id="approved"><option value="unknown">不知道／只聽店員口頭說「可以」</option><option value="yes">可以明確確認產品＋生產業者在核准範圍</option><option value="no">不能／不是</option></select></div></div><div id="productOut"></div></section>
+<section class="card"><h2>3｜最重要的例外：看「核准產品＋核准業者」，不是只看食品名稱</h2><div class="note warn">縣府列出的可依規定輸運類別包含牛／豬肉乾（鬆）、含肉鬆貢糖、含豬／牛肉餡燒餅、部分調理包／廣東粥，以及其他經風險評估通過的偶蹄類加工產品。<strong>但「它是肉乾」或「它是真空包」本身都不等於自動豁免；要對到核准產品與生產業者。</strong></div><div class="note">例如縣府公開資料列出的牛／豬肉乾（鬆）核准生產業者共有 16 家，包括聖祖、喬安牧場、良金實業、老農莊、高坑、金佳旺、一來順貢糖、允懋、心安心、圓頭農牧、甘棠、冠金、犇騰、燕南農牧、晶華及偉晨等。其他品類也各有自己的核准業者範圍，所以不要只拿這 16 家名單去套所有產品。</div></section>
+<section class="card"><h2>4｜買之前直接問店家這一句</h2><textarea id="ask">「請問這個『具體產品』是否屬於農業部 115 年 1 月 9 日函示、經防檢署口蹄疫風險評估通過，而且在 9/8–9/14 管制期間仍可輸往臺灣本島／其他離島的產品？可以讓我確認生產業者與產品品項嗎？」</textarea><div class="actions"><button class="ghost" onclick="copyText('ask')">複製詢問句</button></div><p class="small">重點不是問「你們家的東西可不可以」，而是問到「這個產品＋這個生產業者」是否在核准範圍。</p></section>
+<section class="card"><h2>5｜出發前 5 項防呆</h2><div class="checkgrid"><label><input class="ck ready" type="checkbox"> 我不是只憑「真空包／熟食」就認為可以帶</label><label><input class="ck ready" type="checkbox"> 我已看清成分與生產業者，不只看品牌櫃位名稱</label><label><input class="ck ready" type="checkbox"> 若屬例外，我能說明／出示產品與業者核准依據</label><label><input class="ck ready" type="checkbox"> 我會配合機場／港口檢查，不以這個第三方網頁取代現場認定</label><label><input class="ck ready" type="checkbox"> 9/15 之後仍會重查最新公告，不假設一定自動解禁</label></div><div id="readyOut"></div></section>
+<section class="card"><h2>6｜一鍵產生「帶／不要帶／先確認」卡</h2><textarea id="card"></textarea><div class="actions"><button onclick="build(true)">更新判斷卡</button><button class="ghost" onclick="copyText('card')">複製給同行者</button><a class="btn ghost" target="_blank" rel="noopener" href="https://www.kmdn.gov.tw/1117/1271/1272/590022/">金門 9/9 最新防疫說明</a><a class="btn ghost" target="_blank" rel="noopener" href="https://m.moa.gov.tw/Provisions/Detail/1200">農業部：動物產品進出金馬檢查規則</a></div></section>
+<section class="card"><h2>7｜這個工具不做什麼</h2><div class="note"><ul><li>不宣稱任何包裝食品「百分之百可過檢查」；現場仍以主管機關查驗為準。</li><li>不把「某品牌在 16 家肉乾業者中」錯誤擴張成該品牌所有商品都可輸運。</li><li>不收航班、姓名、身分證、購買紀錄或行程。</li><li>不處理中國大陸或其他境外地區入境臺灣的肉品規則；那是另一套邊境檢疫。</li></ul></div></section>
+<section class="card"><h2>8｜真實使用驗證</h2><p>這一輪追：<strong>獨立使用者 → 完成產品判斷 → 留下非敏感回饋 → 確認真的改變攜帶／詢問行為</strong>。</p><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/25">Kinmen Pork Pass 回饋區</a></div></section>
+<section class="card"><h2>9｜可直接轉貼到金門旅遊／伴手禮群</h2><textarea id="promo">【9/8–9/14 金門豬肉製品輸台管制｜但有「核准加工品」例外】
+這週不是簡單一句「所有肉乾都不能帶」，也不是「真空包就能帶」。
+
+目前規則：
+・金門豬肉及加工產品原則上暫停輸往臺灣本島及其他離島
+・但 2026/1/9 農業部函示、經防檢署風險評估通過的特定加工產品，仍可依規定輸運
+・重點要對到「具體產品＋生產業者」，不能只看食品名稱或真空包裝
+・9/15 之後也要重查最新公告，因解除前提是至少連續一週無疫情
+
+Kinmen Pork Pass 用 60 秒幫你分成「不要帶／先確認核准／不在本工具範圍」，不收航班或個資。</textarea><div class="actions"><button onclick="copyText('promo')">複製轉貼文</button></div></section>
+</main>
+<script>
+const $=id=>document.getElementById(id);function scope(){const f=$('from').value,t=$('to').value,d=$('date').value;let cls='ok',msg='';if(f!=='kinmen'){msg='這次 9/8–9/14 的「金門豬肉輸台」臨時管制不適用這個出發地；若是境外入境肉品，請查邊境檢疫規則。';}else if(t==='stay'){msg='如果產品不離開金門，本工具所處理的「輸往臺灣本島／其他離島」判斷不適用。';}else if(d==='ban'){cls='warn';msg='<b>你正在本次管制期間與移動範圍內。</b>接著看產品是不是豬肉／含豬加工品，以及是否屬核准例外。';}else if(d==='after'){cls='warn';msg='<b>不要只看日期就假設已解禁。</b>目前公告寫明至少連續一週無疫情才解除；9/15 後請先查最新公告。';}else{msg='你選的日期不在本頁目前處理的 9/8–9/14 管制期。';}$('scopeOut').innerHTML=`<div class="note ${cls}">${msg}</div>`;}
+function product(){const f=$('from').value,t=$('to').value,d=$('date').value,ty=$('type').value,a=$('approved').value;let cls='warn',title='',msg='';const inScope=f==='kinmen'&&(t==='taiwan'||t==='island')&&d==='ban';if(!inScope){title='先以最新官方規則為準';msg='這個產品判斷器只針對 2026/9/8–9/14 從金門輸往臺灣本島或其他離島。';}else if(ty==='nopork'){cls='ok';title='不屬這次「豬肉及其加工產品」核心判斷';msg='但若仍含其他動物性成分，金馬動物產品本來就有檢查規則；不確定時仍應配合檢查。';}else if(ty==='fresh'||ty==='homemade'){cls='bad';title='⛔ 這輪不要直接帶／寄';msg='管制期內豬肉及其加工產品原則上暫停輸運；散裝、自製、標示不完整也沒有足夠資訊證明屬核准例外。';}else if(ty==='processed'&&a==='yes'){cls='ok';title='🟢 可走「核准加工品例外＋配合查驗」路徑';msg='縣府說明經2026/1/9函示、通過風險評估的特定加工產品仍可依規定輸運。請保留完整原包裝與生產業者資訊，現場仍配合查驗。';}else if(ty==='processed'){title='🟡 先不要放進行李';msg='加工品確實可能有核准例外，但食品類型本身不夠。先向店家確認「具體產品＋生產業者」是否在核准範圍；無法確認就不要自行假設可帶。';}else{title='🟡 成分不明，先查再買／帶';msg='先看成分與生產業者。這週最不值得冒的風險，就是用「應該沒關係」替代查證。';}$('productOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;return title;}
+function ready(){const a=[...document.querySelectorAll('.ready')],n=a.filter(x=>x.checked).length;$('readyOut').innerHTML=`<div class="note ${n===a.length?'ok':'warn'}">出發前確認 ${n}/${a.length}。${n===a.length?'已把「食品名稱」和「真正核准資格」分開。':'至少完成成分、生產業者、核准依據三件事。'}</div>`;}
+function build(countCore){scope();const verdict=product();ready();$('card').value=`【Kinmen Pork Pass｜2026/9/8–9/14 產品判斷卡】\n出發地：${$('from').selectedOptions[0].textContent}\n目的地：${$('to').selectedOptions[0].textContent}\n日期：${$('date').selectedOptions[0].textContent}\n產品：${$('type').selectedOptions[0].textContent}\n核准依據：${$('approved').selectedOptions[0].textContent}\n\n初步結果：${verdict}\n\n我現在要做：\n1. 管制期內，金門豬肉及加工產品原則上暫停輸往臺灣本島與其他離島。\n2. 例外是經 2026/1/9 農業部函示、通過防檢署風險評估的特定加工產品。\n3. 「肉乾／肉鬆／真空包」不是自動通行證；一定要對到具體產品＋生產業者。\n4. 無法確認時先不要帶／寄，直接向店家或檢查人員確認。\n5. 9/15 之後重新查最新公告，不預設一定已解除。\n\n官方說明：\nhttps://www.kmdn.gov.tw/1117/1271/1272/590022/\n法規：\nhttps://m.moa.gov.tw/Provisions/Detail/1200`;if(countCore&&window.PGLabImpact)PGLabImpact.core('product-check-complete');}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}['from','to','date','type','approved'].forEach(id=>$(id).addEventListener('change',()=>build(false)));document.querySelectorAll('.ready').forEach(x=>x.addEventListener('change',()=>build(false)));build(false);
+</script>
+<script src="../impact.js" data-project="kinmen-pork-pass" data-action-text="我已完成金門豬肉製品輸台判斷" data-real-text="我已真的改變攜帶／向店家或檢疫確認" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/25"></script>
+</body></html>
