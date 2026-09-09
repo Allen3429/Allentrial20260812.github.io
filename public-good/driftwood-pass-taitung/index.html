@@ -22,7 +22,7 @@ label{display:block;font-weight:760;margin-bottom:5px}select,textarea{width:100%
 <body><main class="wrap">
 <div class="kicker">Public Good Lab · Taitung · 規則校對 2026/09/10</div>
 <h1>Driftwood Pass Taitung<br>9/11 起能撿，不代表「看到木頭就能拿」。</h1>
-<p class="lead">林業保育署臺東分署公告自 <strong>2026/9/11</strong> 起，開放轄管海岸地區保安林與國土保安用地的漂流木自由撿拾；但只限<strong>公告指定區域、已認定不具標售價值、沒有國有／公有／私有註記或烙印</strong>的木材。這頁把「能不能撿、能不能鋸、要不要登記」壓成 60 秒判斷。</p>
+<p class="lead">林業保育署臺東分署公告自 <strong>2026/9/11</strong> 起，開放轄管海岸地區保安林與國土保安用地的漂流木自由撿拾；但只限<strong>公告指定區域、已認定不具標售價值、沒有國有／公有／私有註記或烙印</strong>的木材；依現行《處理天然災害漂流木應注意事項》，各次自由撿拾公告原則上也會指定「當地居民」等可撿拾身分，請以本次正式公告為準。這頁把「能不能撿、能不能鋸、要不要登記」壓成 60 秒判斷。</p>
 
 <section class="card">
 <h2>1｜出發前：先確認公告今天仍有效</h2>
@@ -38,6 +38,7 @@ label{display:block;font-weight:760;margin-bottom:5px}select,textarea{width:100%
 <h2>2｜你眼前這支木頭，可以拿嗎？</h2>
 <div class="grid">
 <div><label>位置</label><select id="zone"><option value="yes">我已確認在本次官方公告指定區域</option><option value="unknown">只知道在臺東海邊，不確定是不是指定區域</option><option value="no">不在指定區域／是在河川、野溪或其他地方</option></select></div>
+<div><label>撿拾身分</label><select id="resident"><option value="yes">我已確認符合本次正式公告的「當地居民／可撿拾對象」條件</option><option value="unknown">新聞只寫「民眾」，我還沒查正式公告的身分條件</option><option value="no">我已確認不符合本次公告的可撿拾身分</option></select></div>
 <div><label>木材標記</label><select id="mark"><option value="none">看不到國有／公有／私有註記或烙印</option><option value="marked">有註記、烙印或明顯編號</option><option value="unknown">看不懂／不確定</option></select></div>
 <div><label>官方是否已認定這批為不具標售價值、可自由撿拾？</label><select id="value"><option value="yes">是，屬公告可自由撿拾對象</option><option value="unknown">不確定</option><option value="no">不是／現場已標示不可撿</option></select></div>
 </div>
@@ -125,10 +126,10 @@ const $=id=>document.getElementById(id);
 const checks=cls=>[...document.querySelectorAll('.'+cls)];
 
 function wood(){
- const z=$('zone').value,m=$('mark').value,v=$('value').value;
+ const z=$('zone').value,res=$('resident').value,m=$('mark').value,v=$('value').value;
  let cls='ok',title='🟢 初步可進入「撿拾」判斷',msg='接著確認用途與搬運方式，看看是否需要登記。';
- if(z==='no'||m==='marked'||v==='no'){cls='bad';title='⛔ 先不要撿';msg='你目前有一個明確不符合本次自由撿拾條件的項目。不要裁切或搬走，改向現場管理機關確認。';}
- else if(z==='unknown'||m==='unknown'||v==='unknown'){cls='warn';title='🟡 先確認，不要用猜的';msg='指定區域、木材註記與是否屬可自由撿拾對象，任何一項不確定都值得先查公告／問管理單位。';}
+ if(z==='no'||res==='no'||m==='marked'||v==='no'){cls='bad';title='⛔ 先不要撿';msg='你目前有一個明確不符合本次自由撿拾條件的項目。不要裁切或搬走，改向現場管理機關確認。';}
+ else if(z==='unknown'||res==='unknown'||m==='unknown'||v==='unknown'){cls='warn';title='🟡 先確認，不要用猜的';msg='指定區域、木材註記與是否屬可自由撿拾對象，任何一項不確定都值得先查公告／問管理單位。';}
  $('woodOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;
  return title;
 }
@@ -153,6 +154,7 @@ function build(countCore){
  const w=wood(),r=reg(),p=prep();
  $('card').value=`【Driftwood Pass Taitung｜9/11 漂流木合法撿拾卡】
 位置：${$('zone').selectedOptions[0].textContent}
+撿拾身分：${$('resident').selectedOptions[0].textContent}
 木材標記：${$('mark').selectedOptions[0].textContent}
 公告價值判定：${$('value').selectedOptions[0].textContent}
 用途：${$('use').selectedOptions[0].textContent}
@@ -163,7 +165,7 @@ function build(countCore){
 出發前防呆：${p}/6
 
 固定原則：
-1. 只在當天仍有效的官方公告指定區域撿拾。
+1. 只在當天仍有效的官方公告指定區域撿拾，並確認自己符合正式公告的當地居民／可撿拾對象條件。
 2. 有國有／公有／私有註記或烙印的木材不拿。
 3. 只處理官方已認定不具標售價值、可自由撿拾的漂流木。
 4. 本次公告允許手鋸／鏈鋸等手持工具裁切，但仍服從現場安全與管理規範。
@@ -180,7 +182,7 @@ https://www.forest.gov.tw/0003250`;
 }
 
 async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
-['zone','mark','value','use','move'].forEach(id=>$(id).addEventListener('change',()=>build(false)));
+['zone','resident','mark','value','use','move'].forEach(id=>$(id).addEventListener('change',()=>build(false)));
 document.querySelectorAll('.prep').forEach(x=>x.addEventListener('change',()=>build(false)));
 build(false);
 </script>
