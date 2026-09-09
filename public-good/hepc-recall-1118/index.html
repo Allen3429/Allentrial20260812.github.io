@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="hepc-recall-1118">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="HepC Recall 1118：安泰淞鶴診所注射回溯，免費抽血、夜間假日門診與6個月追蹤的60秒行動卡。">
+<title>HepC Recall 1118｜安泰淞鶴診所注射回溯行動卡</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--ok:#176b45;--warn:#936000;--bad:#a32323}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}.wrap{max-width:1080px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}h1{font-size:clamp(34px,7vw,60px);line-height:1.04;margin:.12em 0 .25em}.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:960px}.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:11px 13px;border-radius:9px;line-height:1.7;margin:10px 0}.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}label{display:block;font-weight:760;margin-bottom:5px}select,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}textarea{min-height:220px;resize:vertical}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}.checkgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:8px}.ck{width:auto;transform:scale(1.12);margin-right:7px}.small{font-size:13px;color:var(--muted);line-height:1.65}.big{font-size:clamp(22px,4vw,30px);font-weight:900}.timeline{display:grid;gap:8px}.slot{border:1px solid var(--line);border-radius:12px;padding:11px}.slot.today{border-width:2px}@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · New Taipei · 官方規則校對 2026/09/10</div>
+<h1>HepC Recall 1118<br>曾在安泰淞鶴診所打針？先確認你是不是回溯對象。</h1>
+<p class="lead">新北市衛生局 9/8 公布，回溯召回 <strong>2025/7/1–2026/8/27</strong> 曾在板橋區「安泰淞鶴診所」接受<strong>針劑治療</strong>的 1,118 人免費抽血。截至 9/7，1,096 人已聯繫、353 人完成檢驗，本案相關病例累計 13 例。這頁不收姓名、健保卡、就醫日期、檢驗結果或任何健康資料，只把「是不是對象 → 今天去哪 → 要不要再追蹤」變成一張行動卡。</p>
+<section class="card"><h2>1｜60 秒判斷：你在不在這次回溯範圍？</h2><div class="grid"><div><label>你是否曾在安泰淞鶴診所就醫？</label><select id="clinic"><option value="yes">是</option><option value="no">沒有</option><option value="unknown">不確定／替家人查</option></select></div><div><label>就醫時間是否落在 2025/7/1–2026/8/27？</label><select id="period"><option value="yes">是</option><option value="no">不是</option><option value="unknown">記不清楚</option></select></div><div><label>期間內是否接受過針劑治療／注射／點滴？</label><select id="inject"><option value="yes">有</option><option value="no">沒有</option><option value="unknown">不確定是否算「針劑治療」</option></select></div></div><div id="scopeOut"></div></section>
+<section class="card"><h2>2｜如果符合：不用等症狀，直接去免費抽血</h2><div class="note ok"><b>官方召回是看「日期＋曾接受針劑治療」，不是看你現在有沒有不舒服。</b>急性 C 型肝炎只有部分感染者會出現明顯症狀，所以沒有症狀也不要用來自行排除。</div><div class="note">新北市全市 <b>29 區衛生所</b>提供本專案檢驗；請攜帶<strong>健保卡</strong>。如果白天無法前往，衛生局另外在板橋、土城加開夜間與假日抽血時段。</div><div class="actions"><a class="btn" target="_blank" rel="noopener" href="https://info.health.ntpc.gov.tw/">新北 29 區衛生所服務網</a><a class="btn ghost" href="tel:0222586923">防疫專線 02-2258-6923</a><a class="btn ghost" href="tel:0911183353">防疫專線 0911-183-353</a></div></section>
+<section class="card"><h2>3｜白天沒空：這幾個加開時段先記起來</h2><p class="small">依新北市衛生局 2026/9/8 公告。晚間場的精確時段請在出發前向衛生所／防疫專線確認。</p><div class="timeline" id="slots"></div><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://tucheng.health.ntpc.gov.tw/">土城區衛生所</a><a class="btn ghost" target="_blank" rel="noopener" href="https://banqiao.health.ntpc.gov.tw/">板橋區衛生所</a></div></section>
+<section class="card"><h2>4｜2026 年 4–8 月曾接受注射？還有「6 個月後再追蹤一次」</h2><div class="grid"><div><label>至少一次針劑治療是否在 2026/4/1–2026/8/27？</label><select id="recent"><option value="yes">是</option><option value="no">不是／全部更早</option><option value="unknown">不確定</option></select></div><div><label>目前是否已完成衛生局安排的第一次抽血？</label><select id="tested"><option value="no">還沒有</option><option value="yes">已完成</option><option value="unknown">不確定是否算本專案檢驗</option></select></div></div><div id="followOut"></div><div class="note">疾管署說明：2026 年 4–8 月接受注射者，<strong>6 個月後還要再追蹤一次抽血</strong>，用來確認與排除相關感染。不要自己推算完就不管；由衛生單位協助安排最穩妥。</div></section>
+<section class="card"><h2>5｜為什麼抽血項目不只 C 肝？</h2><div class="note">這次官方回溯檢驗包含：HIV、B 型肝炎表面抗原／抗體、C 型肝炎抗體與 RNA、肝功能 AST／ALT，以及梅毒檢驗。這是因為事件涉及「安全注射」的感染管制缺失，衛生單位需要完整排除血液傳播相關感染；<b>不是因為你已被判定感染其中任何一項。</b></div></section>
+<section class="card"><h2>6｜有這些不舒服，除了回溯抽血，也要儘速就醫</h2><div class="checkgrid"><label><input class="ck symptom" type="checkbox"> 發燒或明顯疲倦</label><label><input class="ck symptom" type="checkbox"> 食慾明顯下降</label><label><input class="ck symptom" type="checkbox"> 噁心／嘔吐或腹部不適</label><label><input class="ck symptom" type="checkbox"> 黃疸（眼白／皮膚變黃）</label><label><input class="ck symptom" type="checkbox"> 茶色尿或其他明顯異常</label></div><div id="symptomOut"></div><p class="small">這些症狀不具專一性，本頁不做診斷。就醫時請主動說明「我可能屬安泰淞鶴診所注射回溯對象」。</p></section>
+<section class="card"><h2>7｜一鍵產生「今天要做什麼」行動卡</h2><textarea id="card"></textarea><div class="actions"><button onclick="build(true)">更新行動卡</button><button class="ghost" onclick="copyText('card')">複製給家人／備忘錄</button></div></section>
+<section class="card"><h2>8｜這個工具刻意不做</h2><div class="note"><ul><li>不讓你輸入姓名、健保卡、病歷、檢驗結果、用藥或就醫細節。</li><li>不依「沒有症狀」判定安全。</li><li>不替你解讀檢驗結果或判斷是否感染；結果與治療由衛生單位／醫師處理。</li><li>不要求你公開自己曾去哪家診所；回饋只談流程摩擦。</li></ul></div></section>
+<section class="card"><h2>9｜真實使用驗證</h2><p>這輪追：<strong>獨立使用者 → 完成回溯判斷卡 → 留下非敏感回饋 → 確認真的查衛生所／打防疫專線／去抽血／安排追蹤</strong>。</p><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/32">HepC Recall 1118 回饋區</a></div></section>
+<section class="card"><h2>10｜可直接轉貼給可能受影響的家人／社區群</h2><textarea id="promo">【安泰淞鶴診所 C 肝回溯｜符合的人不用等症狀，請去免費抽血】
+新北市衛生局 9/8 更新：
+・回溯對象：2025/7/1–2026/8/27 曾在板橋安泰淞鶴診所接受針劑治療者
+・共召回 1,118 人；截至 9/7 僅 353 人完成檢驗
+・新北 29 區衛生所皆可做本專案抽血，帶健保卡
+・土城：9/10、9/18 晚間，9/12 假日加開
+・板橋：9/11、9/17 晚間，9/19 假日加開
+・如果 2026/4–8 月還有接受注射，官方說 6 個月後要再追蹤一次
+
+沒有症狀不能自行排除。
+HepC Recall 1118 不收任何健康個資，只幫你確認「是不是回溯對象、今天去哪、是否還要追蹤」。</textarea><div class="actions"><button class="ghost" onclick="copyText('promo')">複製轉貼文</button></div></section>
+<section class="card"><h2>資料來源與時效</h2><p class="small">依新北市衛生局 2026/9/8「擴大回溯再增2例C肝感染，新北增開夜間及假日門診抽血檢驗」、疾病管制署 2026/9/2 群聚調查公告，以及新北各區衛生所公告整理。若後續召回範圍、加開時間或追蹤安排更新，以新北市衛生局與疾管署最新公告為準。</p></section>
+</main>
+<script>
+const $=id=>document.getElementById(id);const checks=cls=>[...document.querySelectorAll('.'+cls)];
+const specialSlots=[{d:'2026-09-10',place:'土城區衛生所',kind:'晚間加開'},{d:'2026-09-11',place:'板橋區衛生所',kind:'晚間加開'},{d:'2026-09-12',place:'土城區衛生所',kind:'假日加開'},{d:'2026-09-17',place:'板橋區衛生所',kind:'晚間加開'},{d:'2026-09-18',place:'土城區衛生所',kind:'晚間加開'},{d:'2026-09-19',place:'板橋區衛生所',kind:'假日加開'}];
+function renderSlots(){const today=new Date();today.setHours(0,0,0,0);$('slots').innerHTML=specialSlots.map(s=>{const d=new Date(s.d+'T00:00:00');const diff=Math.round((d-today)/86400000);const tag=diff===0?'今天':diff===1?'明天':diff>1?`${diff}天後`:'已過';return `<div class="slot ${diff===0?'today':''}"><b>${s.d}｜${s.place}｜${s.kind}</b><br><span class="small">${tag}${s.kind.includes('晚間')?'；晚間精確時段出發前請先確認。':''}</span></div>`}).join('')}
+function scope(){const c=$('clinic').value,p=$('period').value,i=$('inject').value;let cls='ok',title='',msg='';if(c==='no'||p==='no'||i==='no'){title='目前沒有同時符合這次回溯的三個核心條件';msg='如果其中任何一項其實不確定，尤其「是不是針劑治療」，請直接打新北防疫專線確認，不要靠記憶猜。'}else if(c==='yes'&&p==='yes'&&i==='yes'){cls='bad';title='符合回溯條件：請儘速完成免費抽血';msg='不要等症狀。帶健保卡到新北市任一區衛生所；白天不便可利用板橋／土城加開時段。'}else{cls='warn';title='有關鍵資訊不確定：先打防疫專線核對';msg='你不需要把就醫細節交給這個網站；直接由新北市衛生局確認是否在名冊／範圍最安全。'}$('scopeOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;return title}
+function follow(){const r=$('recent').value,t=$('tested').value;let cls='ok',title='',msg='';if(t==='no'){cls='bad';title='第一步還沒完成：先去做本專案免費抽血';msg='如果同時是2026年4–8月接受注射者，第一次做完後還要依衛生單位安排做6個月追蹤。'}else if(r==='yes'&&t==='yes'){cls='warn';title='第一次完成不等於整個追蹤結束';msg='2026年4–8月接受注射者，官方要求6個月後再追蹤一次；請確認衛生單位已告知後續安排。'}else if(r==='unknown'||t==='unknown'){cls='warn';title='追蹤狀態不確定：直接向衛生單位確認';msg='不用把檢驗結果輸入本頁；只要確認「是否已做本專案檢驗、是否需要6個月追蹤」。'}else{title='目前沒有勾到「2026年4–8月需6個月再追蹤」條件';msg='仍依衛生單位通知完成本次回溯檢驗與後續安排。'}$('followOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;return title}
+function symptoms(){const n=checks('symptom').filter(x=>x.checked).length;$('symptomOut').innerHTML=n?`<div class="note warn"><b>你勾到 ${n} 類不適。</b>這些症狀不能在網頁上判斷原因；請儘速由醫療人員評估，並主動告知可能的診所注射暴露史。</div>`:`<div class="note ok">沒有勾到這些症狀也不能用來排除感染；符合回溯條件仍應完成抽血。</div>`;return n}
+function build(countCore){const s=scope(),f=follow(),n=symptoms();$('card').value=`【HepC Recall 1118｜安泰淞鶴診所注射回溯行動卡】
+回溯條件判斷：${s}
+追蹤判斷：${f}
+目前勾到不適：${n} 類
+
+官方回溯範圍：
+・2025/7/1–2026/8/27
+・曾在板橋安泰淞鶴診所接受針劑治療
+
+符合時現在做：
+1. 不等症狀，帶健保卡到新北市29區任一衛生所完成免費抽血。
+2. 防疫專線：02-2258-6923／0911-183-353。
+3. 白天沒空可查板橋／土城加開夜間與假日抽血。
+4. 若2026年4–8月曾接受注射，第一次抽血後確認6個月追蹤安排。
+5. 有明顯不適就醫時，主動說明「可能屬安泰淞鶴診所注射回溯對象」。
+
+29區衛生所：https://info.health.ntpc.gov.tw/
+新北市最新公告：https://www.health.ntpc.gov.tw/news/
+
+這張卡不保存姓名、健保卡、就醫日期、檢驗結果或其他健康資料。`;if(countCore&&window.PGLabImpact)PGLabImpact.core('recall-check-complete')}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+['clinic','period','inject','recent','tested'].forEach(id=>$(id).addEventListener('change',()=>build(false)));document.querySelectorAll('.symptom').forEach(x=>x.addEventListener('change',()=>build(false)));renderSlots();build(false);
+</script>
+<script src="../impact.js" data-project="hepc-recall-1118" data-action-text="我已完成C肝回溯判斷卡" data-real-text="我已真的查衛生所／打專線／去抽血／安排追蹤" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/32"></script>
+</body></html>
