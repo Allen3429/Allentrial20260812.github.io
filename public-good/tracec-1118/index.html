@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="tracec-1118">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="TraceC 1118：新北板橋安泰淞鶴診所C肝群聚回溯檢驗快篩。確認是否屬1118名回溯對象、免費檢驗路徑、夜間假日門診與2026年4–8月注射者6個月後追蹤提醒。">
+<title>TraceC 1118｜板橋診所C肝回溯檢驗行動卡</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#a32323;--info:#285c8d}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1120px;margin:auto;padding:24px 14px 72px}
+.kicker{font-size:14px;font-weight:850;color:var(--muted)}
+h1{font-size:clamp(36px,7vw,62px);line-height:1.03;margin:.12em 0 .25em}
+.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:1000px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:11px 13px;border-radius:9px;line-height:1.7;margin:10px 0}
+.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}.info{border-left-color:var(--info)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:9px}
+.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:24px;margin-top:4px}
+label{display:block;font-weight:760;margin-bottom:5px}
+select,input,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}
+textarea{min-height:255px;resize:vertical}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}
+button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}
+.ghost{background:#edf1f5;color:#17212b}.danger{background:#8f2222}
+.big{font-size:clamp(23px,4vw,32px);font-weight:950}
+.small{font-size:13px;color:var(--muted);line-height:1.65}
+.checkgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(275px,1fr));gap:8px}
+.ck{width:auto;transform:scale(1.12);margin-right:7px}
+.slot{border:1px solid var(--line);border-radius:14px;padding:12px}.slot b{display:block;font-size:18px}
+.hidden{display:none}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · New Taipei · 依疾管署 2026/09/02＋新北衛生局 2026/09/08 最新公開資訊整理</div>
+<h1>TraceC 1118<br>被通知只是第一步；真正的缺口是「還沒去抽血」。</h1>
+<p class="lead">板橋「安泰淞鶴診所」C肝群聚事件已擴大回溯 <strong>1,118 人</strong>。截至 9/7，已聯繫 1,096 人，但只有 <strong>353 人完成檢驗</strong>；9/8 又新增 2 名相關確診者，累計 13 例，其中 1 人無症狀、是採檢才發現。這個頁面只幫回溯對象完成「是不是該檢驗 → 去哪裡 → 要不要再追蹤」；不收姓名、病歷、檢驗結果或身分資料。</p>
+
+<section class="card">
+<h2>1｜先判斷你是不是這次「回溯檢驗」對象</h2>
+<div class="grid">
+<div><label>是否曾去過板橋「安泰淞鶴診所」？</label>
+<select id="clinic"><option value="yes">是</option><option value="no">不是</option><option value="unknown">不確定／只記得在板橋打過針</option></select></div>
+<div><label>是否在 2025/07/01–2026/08/27 期間接受過針劑注射？</label>
+<select id="injection"><option value="yes">是</option><option value="no">沒有</option><option value="unknown">日期或是否屬針劑不確定</option></select></div>
+<div><label>是否已完成新北衛生所安排的這次回溯抽血？</label>
+<select id="tested"><option value="no">還沒</option><option value="yes">已完成</option><option value="unknown">不確定自己做的是不是這次回溯檢驗</option></select></div>
+</div>
+<div id="routeOut"></div>
+</section>
+
+<section class="card">
+<h2>2｜這次免費檢驗不是只驗 C 肝</h2>
+<div class="note info">疾管署 9/2 公布的回溯檢驗項目包括：<strong>HIV、B型肝炎（表面抗原及抗體）、C型肝炎（抗體及RNA）、肝功能 AST／ALT、梅毒 RPR／TPHA</strong>。所以若你是回溯對象，不要只因為自己在外面驗過單一 C 肝抗體就假設等同完成這次官方回溯。</div>
+<div class="actions">
+<a class="btn" target="_blank" rel="noopener" href="https://info.health.ntpc.gov.tw/">新北29區衛生所服務網</a>
+<a class="btn ghost" href="tel:0222586923">新北防疫專線 02-2258-6923</a>
+<a class="btn ghost" href="tel:0911183353">防疫聯絡 0911-183-353</a>
+</div>
+</section>
+
+<section class="card">
+<h2>3｜平日白天去不了？官方已加開夜間／假日抽血</h2>
+<div class="grid" id="slots"></div>
+<p class="small">新北市衛生局 9/8 公布：除全市 29 區衛生所外，土城、板橋衛生所另加開上述日期。公告只寫「晚間／假日」，沒有在同一則新聞內列出每場精確時段；出發前請先電話確認。</p>
+<div class="actions">
+<a class="btn ghost" href="tel:0222586606">板橋衛生所 02-2258-6606</a>
+<a class="btn ghost" href="tel:0222603181">土城衛生所 02-2260-3181</a>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://www.health.ntpc.gov.tw/news/%E6%93%B4%E5%A4%A7%E5%9B%9E%E6%BA%AF%E5%86%8D%E5%A2%9E2%E4%BE%8BC%E8%82%9D%E6%84%9F%E6%9F%93%EF%BC%8C%E6%96%B0%E5%8C%97%E5%A2%9E%E9%96%8B%E5%A4%9C%E9%96%93%E5%8F%8A%E5%81%87%E6%97%A5%E9%96%80%E8%A8%BA%E6%8A%BD%E8%A1%80%E6%AA%A2%E9%A9%97">9/8 新北官方公告</a>
+</div>
+</section>
+
+<section class="card">
+<h2>4｜2026年4–8月有接受注射？一次陰性還不是流程終點</h2>
+<div class="grid">
+<div><label>2026年4–8月之間是否曾在該診所接受針劑注射？</label>
+<select id="recent"><option value="no">沒有／不適用</option><option value="yes">有</option><option value="unknown">不確定</option></select></div>
+<div><label>若有：最後一次注射日期（只存在你自己的瀏覽器，可留空）</label><input type="date" id="lastdate" min="2026-04-01" max="2026-08-27"></div>
+</div>
+<div id="followOut"></div>
+<div class="actions">
+<button class="ghost" onclick="downloadICS()">下載「約6個月後確認追蹤」提醒</button>
+</div>
+<p class="small">疾管署要求 2026 年 4–8 月接受注射者，6 個月後再追蹤一次抽血。日曆提醒只是一個「記得確認」工具；實際追蹤日期請依衛生所／醫療人員安排，不自行用本頁取代醫囑。</p>
+</section>
+
+<section class="card">
+<h2>5｜有沒有症狀，不應拿來決定「要不要檢驗」</h2>
+<div class="note warn"><b>因為已有無症狀個案是抽血才發現。</b>回溯對象即使沒有任何不舒服，也應按衛生局安排完成檢驗。官方提醒急性C肝可能出現發燒、疲倦、厭食、腹部不適、噁心、嘔吐或黃疸；若有症狀或身體明顯不適，請直接就醫並告知曾有相關注射暴露，不要只等篩檢活動。</div>
+</section>
+
+<section class="card">
+<h2>6｜把「還沒去」拆成今天能完成的 4 步</h2>
+<div class="checkgrid">
+<label><input class="ck prep" type="checkbox"> 已確認自己是否屬 2025/7/1–2026/8/27 注射回溯對象</label>
+<label><input class="ck prep" type="checkbox"> 已找到可去的新北衛生所／夜間或假日場次</label>
+<label><input class="ck prep" type="checkbox"> 已打電話確認實際服務時段／需要攜帶什麼</label>
+<label><input class="ck prep" type="checkbox"> 若2026年4–8月曾注射，已記下「6個月後需再追蹤」</label>
+</div>
+<div id="prepOut"></div>
+</section>
+
+<section class="card">
+<h2>7｜一鍵產生「打給衛生所時照著念」的 30 秒詢問稿</h2>
+<textarea id="script"></textarea>
+<div class="actions">
+<button onclick="build(true)">更新行動卡</button>
+<button class="ghost" onclick="copyText('script')">複製</button>
+</div>
+</section>
+
+<section class="card">
+<h2>8｜這個工具刻意不做</h2>
+<div class="note">
+<ul>
+<li>不收姓名、電話、身分證、病歷、注射內容、檢驗結果或陽性／陰性狀態。</li>
+<li>不替醫師判斷是否感染，也不把「沒有症狀」當成安全證明。</li>
+<li>不建議自行只驗一個項目來替代新北衛生局安排的回溯檢驗。</li>
+<li>不把「6個月後」硬算成醫療指示；產生的日曆只是提醒你向衛生所確認追蹤。</li>
+</ul>
+</div>
+</section>
+
+<section class="card">
+<h2>9｜真實使用驗證</h2>
+<p>這輪追的不是「看過C肝新聞」，而是：<strong>完成資格分流 → 找到衛生所 → 打電話／去抽血 → 需要者留下第二次追蹤提醒</strong>。Public Good Lab 只做匿名使用計數，不記任何健康答案。</p>
+<div class="actions">
+<a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/51">TraceC 1118 回饋區</a>
+</div>
+</section>
+
+<section class="card">
+<h2>10｜可直接轉貼給「曾在該診所打過針」的親友</h2>
+<textarea id="promo">【板橋安泰淞鶴診所C肝群聚｜被通知了還沒抽血？新北已加開夜間／假日】
+最新進度（截至9/7）：
+・回溯對象1,118人
+・已聯繫1,096人
+・只有353人完成檢驗，仍有700多人未採檢
+・9/8再增2例，累計13例；其中1例沒有症狀，是採檢才發現
+
+如果你在2025/7/1–2026/8/27曾到板橋安泰淞鶴診所接受針劑注射：
+→ 可到新北29區衛生所做免費回溯抽血。
+→ 土城衛生所加開：9/12（六）、9/18晚間
+→ 板橋衛生所加開：9/11晚間、9/17晚間、9/19（六）
+（出發前請電話確認精確時段）
+
+另外：2026年4–8月曾接受注射者，疾管署要求6個月後再追蹤一次抽血。
+
+官方新北公告：
+https://www.health.ntpc.gov.tw/news/%E6%93%B4%E5%A4%A7%E5%9B%9E%E6%BA%AF%E5%86%8D%E5%A2%9E2%E4%BE%8BC%E8%82%9D%E6%84%9F%E6%9F%93%EF%BC%8C%E6%96%B0%E5%8C%97%E5%A2%9E%E9%96%8B%E5%A4%9C%E9%96%93%E5%8F%8A%E5%81%87%E6%97%A5%E9%96%80%E8%A8%BA%E6%8A%BD%E8%A1%80%E6%AA%A2%E9%A9%97
+新北防疫專線：02-2258-6923／0911-183-353
+
+TraceC 1118 不收病歷或檢驗結果，只幫你把「該不該去、去哪、要不要追蹤」一次整理好。</textarea>
+<div class="actions"><button class="ghost" onclick="copyText('promo')">複製轉貼文</button></div>
+</section>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+const checks=cls=>[...document.querySelectorAll('.'+cls)];
+
+const slots=[
+ {date:'2026-09-10',place:'土城衛生所',kind:'晚間',phone:'02-2260-3181'},
+ {date:'2026-09-11',place:'板橋衛生所',kind:'晚間',phone:'02-2258-6606'},
+ {date:'2026-09-12',place:'土城衛生所',kind:'假日',phone:'02-2260-3181'},
+ {date:'2026-09-17',place:'板橋衛生所',kind:'晚間',phone:'02-2258-6606'},
+ {date:'2026-09-18',place:'土城衛生所',kind:'晚間',phone:'02-2260-3181'},
+ {date:'2026-09-19',place:'板橋衛生所',kind:'假日',phone:'02-2258-6606'}
+];
+
+function renderSlots(){
+  const box=$('slots'); box.innerHTML='';
+  const future=slots.filter(s=>new Date(s.date+'T23:59:59')>=new Date());
+  if(!future.length){box.innerHTML='<div class="note warn">公告列出的加開日期已過；請改查29區衛生所服務網或撥防疫專線確認最新安排。</div>';return}
+  future.forEach(s=>{
+    const el=document.createElement('div'); el.className='slot';
+    el.innerHTML=`<b>${s.date.replaceAll('-','/')}｜${s.place}</b>${s.kind}<br><a href="tel:${s.phone.replaceAll('-','')}">${s.phone}</a>`;
+    box.appendChild(el);
+  });
+}
+
+function route(){
+ const c=$('clinic').value,i=$('injection').value,t=$('tested').value;
+ let cls='ok',title='',msg='';
+ if(c==='yes'&&i==='yes'&&t==='no'){
+   cls='bad';title='🔴 你符合官方回溯條件，而且還沒完成檢驗';
+   msg='不要等症狀。直接選一個新北衛生所／加開場次並打電話確認。';
+ }else if(c==='yes'&&i==='yes'&&t==='yes'){
+   title='🟢 已完成第一次回溯抽血';
+   msg='接著檢查你是否屬2026年4–8月注射者；若是，官方要求6個月後再追蹤一次。';
+ }else if(c==='yes'&&i==='yes'&&t==='unknown'){
+   cls='warn';title='🟡 先確認你做過的檢驗是不是「這次回溯檢驗」';
+   msg='這次官方項目不只C肝；可直接打防疫專線或衛生所確認。';
+ }else if(c==='no'||i==='no'){
+   title='🟢 目前沒有命中這次官方回溯的兩個核心條件';
+   msg='若你的就醫／注射日期記憶不確定，不要靠本頁猜，直接問防疫專線。';
+ }else{
+   cls='warn';title='🟡 就醫或注射紀錄不確定';
+   msg='如果你可能在該期間於安泰淞鶴診所接受過針劑，直接致電新北防疫專線確認是否在回溯名單，不必自行翻完整病歷。';
+ }
+ $('routeOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;
+ return {title,msg};
+}
+
+function follow(){
+ const r=$('recent').value,d=$('lastdate').value;
+ let cls='ok',text='目前未勾到2026年4–8月追蹤條件。';
+ if(r==='yes'){
+   cls='warn';
+   if(d){
+     const x=new Date(d+'T12:00:00'); x.setMonth(x.getMonth()+6);
+     const ds=x.toLocaleDateString('zh-TW');
+     text=`疾管署要求這群人6個月後再追蹤一次。若以你輸入的最後一次注射日期粗抓，約在 <b>${ds}</b> 附近應再次向衛生所確認追蹤；這不是醫療預約日期。`;
+   }else text='疾管署要求2026年4–8月接受注射者，6個月後再追蹤一次抽血。建議現在就把提醒留進行事曆，再向衛生所確認實際時間。';
+ }else if(r==='unknown'){cls='warn';text='若日期記不得，直接問衛生所／防疫專線；不要因第一次陰性就自行判定不需追蹤。'}
+ $('followOut').innerHTML=`<div class="note ${cls}">${text}</div>`;
+ return {recent:r,date:d};
+}
+
+function prep(){
+ const a=checks('prep'),n=a.filter(x=>x.checked).length;
+ $('prepOut').innerHTML=`<div class="note ${n>=3?'ok':'warn'}">行動進度 ${n}/${a.length}。${n>=3?'已把「知道新聞」推到實際採檢／追蹤。':'先完成最小一步：找一個衛生所並打電話確認。'}</div>`;
+ return n;
+}
+
+function build(countCore){
+ const r=route(),f=follow(),p=prep();
+ $('script').value=`【TraceC 1118｜打給衛生所的30秒詢問稿】
+「您好，我想確認板橋安泰淞鶴診所C肝群聚的回溯檢驗。我可能在2025年7月1日至2026年8月27日期間曾在該診所接受針劑注射。想請問：
+1. 我是否屬這次回溯檢驗對象？
+2. 最近可去哪個衛生所免費抽血？需要預約或攜帶哪些資料？
+3. 我做的檢驗會包含疾管署公布的HIV、B肝、C肝抗體/RNA、AST/ALT與梅毒項目嗎？
+4. ${f.recent==='yes'?'我在2026年4–8月也有接受注射，請問6個月後追蹤應安排在什麼時候？':'如果我的注射日期可能落在2026年4–8月，是否需要6個月後再追蹤？'}
+謝謝。」 
+
+新北防疫專線：02-2258-6923／0911-183-353
+29區衛生所：https://info.health.ntpc.gov.tw/
+
+目前自助判讀：${r.title}
+準備進度：${p}/4
+
+本卡不保存姓名、病歷、檢驗結果，也不取代衛生局／醫療人員判定。`;
+ if(countCore&&window.PGLabImpact)PGLabImpact.core('recall-action-card');
+}
+
+function downloadICS(){
+ const d=$('lastdate').value;
+ if(!d){alert('請先填最後一次注射日期；若記不得，請直接向衛生所確認追蹤時程。');return}
+ const x=new Date(d+'T12:00:00'); x.setMonth(x.getMonth()+6);
+ const y=x.getFullYear(),m=String(x.getMonth()+1).padStart(2,'0'),day=String(x.getDate()).padStart(2,'0');
+ const next=new Date(x); next.setDate(next.getDate()+1);
+ const y2=next.getFullYear(),m2=String(next.getMonth()+1).padStart(2,'0'),d2=String(next.getDate()).padStart(2,'0');
+ const ics=`BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//TraceC1118//TW
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:${y}${m}${day}
+DTEND;VALUE=DATE:${y2}${m2}${d2}
+SUMMARY:確認安泰淞鶴診所回溯第二次抽血時程
+DESCRIPTION:疾管署要求2026年4–8月接受注射者於6個月後再追蹤一次抽血。此日期僅為自助提醒，請先聯絡新北衛生所或防疫專線02-2258-6923確認實際追蹤日期。
+END:VEVENT
+END:VCALENDAR`;
+ const blob=new Blob([ics],{type:'text/calendar;charset=utf-8'});
+ const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='tracec-1118-followup-reminder.ics';a.click();URL.revokeObjectURL(a.href);
+ if(window.PGLabImpact)PGLabImpact.core('followup-reminder');
+}
+
+async function copyText(id){
+ try{await navigator.clipboard.writeText($(id).value);alert('已複製')}
+ catch(e){$(id).select();document.execCommand('copy')}
+}
+
+['clinic','injection','tested','recent','lastdate'].forEach(id=>$(id).addEventListener('change',()=>build(false)));
+document.querySelectorAll('.prep').forEach(x=>x.addEventListener('change',()=>build(false)));
+renderSlots();build(false);
+</script>
+<script src="../impact.js" data-project="tracec-1118" data-action-text="我已完成C肝回溯檢驗行動卡" data-real-text="我已真的打電話／到衛生所抽血／留下第二次追蹤提醒" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/51"></script>
+</body>
+</html>
