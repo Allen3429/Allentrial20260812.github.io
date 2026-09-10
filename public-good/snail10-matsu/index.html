@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="snail10-matsu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Snail10 Matsu：連江縣非洲大蝸牛每公斤10元回收獎勵的安全捕捉、同島回收與驗收快篩。">
+<title>Snail10 Matsu｜非洲大蝸牛安全回收卡</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#65717e;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#a32323}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1080px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}
+h1{font-size:clamp(36px,7vw,62px);line-height:1.03;margin:.12em 0 .25em}.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:980px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:11px 13px;border-radius:9px;line-height:1.7;margin:10px 0}.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:9px}
+.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:24px;margin-top:4px}
+label{display:block;font-weight:760;margin-bottom:5px}select,input,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}textarea{min-height:245px;resize:vertical}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}
+.big{font-size:clamp(24px,4vw,33px);font-weight:950}.money{font-size:clamp(30px,5vw,44px);font-weight:950}.small{font-size:13px;color:var(--muted);line-height:1.65}
+.checkgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(275px,1fr));gap:8px}.ck{width:auto;transform:scale(1.12);margin-right:7px}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · Matsu · 依連江縣 2026/09/04 要點與 09/10 首批回收資訊整理</div>
+<h1>Snail10 Matsu<br>抓對、裝對、送同島；不要為了 10 元多冒一個風險。</h1>
+<p class="lead">連江縣自 2026/9/7 起實施非洲大蝸牛回收獎勵：自然人每次交付至少 <strong>1 公斤</strong>，驗收合格後每公斤 <strong>10 元</strong>。9/9 首批僅 3 位民眾就交回 <strong>93 公斤</strong>。這頁先處理最容易出錯的幾件事：徒手抓、混入泥砂、活體跨島搬、不到 1 公斤白跑，以及不知道自己島上的回收點。</p>
+
+<section class="card">
+<h2>1｜先看「這批能不能送」</h2>
+<div class="grid">
+<div><label>你在哪一鄉？</label>
+<select id="island"><option value="nangan">南竿</option><option value="beigan">北竿</option><option value="juguang">莒光</option><option value="dongyin">東引</option></select></div>
+<div><label>預估重量（公斤）</label><input id="kg" type="number" min="0" step="0.1" value="1.0"></div>
+<div><label>個體狀況</label><select id="condition"><option value="ok">可辨識，未嚴重腐敗／惡臭</option><option value="bad">嚴重腐敗、惡臭或已難辨識</option></select></div>
+<div><label>是否混入泥土、砂石或其他生物？</label><select id="mix"><option value="no">沒有</option><option value="yes">有</option></select></div>
+</div><div id="result"></div></section>
+
+<section class="card"><h2>2｜同島回收，不要把活體「為了領錢」跨島搬</h2><div id="destination"></div><div class="note warn"><b>縣府規則：</b>活體非洲大蝸牛應避免跨島運送，並在防止逃逸、繁殖與病原傳播的前提下處理。也就是說，南竿抓到就送南竿、北竿抓到送北竿；不要為了湊重量把活體帶去另一島。</div></section>
+
+<section class="card"><h2>3｜安全捕捉：縣府提醒的 4 件事</h2><div class="checkgrid">
+<label><input class="ck safe" type="checkbox"> 戴手套</label><label><input class="ck safe" type="checkbox"> 用夾具，不徒手直接抓</label><label><input class="ck safe" type="checkbox"> 捕捉過程不碰眼睛、口、鼻</label><label><input class="ck safe" type="checkbox"> 結束後用肥皂＋清水徹底洗手</label>
+</div><div id="safeOut"></div><div class="note">疾管署指出，廣東住血線蟲的人類主要感染途徑是<strong>吃到受感染且未煮熟的蝸牛／蛞蝓等，或食入被其黏液污染的食物、水</strong>。縣府仍要求捕捉時戴手套與使用夾具。不要生食，也不要把捕捉過程帶進備餐區。</div></section>
+
+<section class="card"><h2>4｜獎勵試算</h2><div id="reward"></div><div class="note ok"><b>驗收規則：</b>每次交付達 1 公斤以上才計，重量計至 0.1 公斤；每公斤 10 元。嚴重腐敗、無法辨識，或夾帶泥土砂石／其他生物且通知後仍未排除者，不予計費。實際金額以產發處驗收重量為準。</div></section>
+
+<section class="card"><h2>5｜出發前驗收防呆</h2><div class="checkgrid">
+<label><input class="ck prep" type="checkbox"> 已把泥土、砂石與其他生物排除</label><label><input class="ck prep" type="checkbox"> 容器能防止活體逃逸</label><label><input class="ck prep" type="checkbox"> 不把活體跨島搬運</label><label><input class="ck prep" type="checkbox"> 重量至少約 1 公斤，否則先問收受點是否仍可交付但不計獎勵</label><label><input class="ck prep" type="checkbox"> 不為了湊重而長時間放到嚴重腐敗／惡臭</label>
+</div><div id="prepOut"></div></section>
+
+<section class="card"><h2>6｜一鍵產生回收行動卡</h2><textarea id="card"></textarea><div class="actions"><button onclick="build(true)">更新行動卡</button><button class="ghost" onclick="copyText('card')">複製到手機</button><a class="btn ghost" target="_blank" rel="noopener" href="https://law.matsu.gov.tw/">連江縣法規系統</a><a class="btn ghost" target="_blank" rel="noopener" href="https://www.matsu-news.gov.tw/news/article/244265">9/10 首批回收資訊</a></div></section>
+
+<section class="card"><h2>7｜這個工具刻意不做</h2><div class="note"><ul><li>不鼓勵為了每公斤 10 元而去危險地形、夜間高風險區域捕捉。</li><li>不靠照片替你辨識物種；不確定是不是非洲大蝸牛，就先問收受單位。</li><li>不教自製藥劑、毒餌或自行銷毀方式；縣府已有統一回收處理機制。</li><li>不收姓名、電話、門牌、精確捕捉位置或照片。</li></ul></div></section>
+
+<section class="card"><h2>8｜真實使用驗證</h2><p>第一輪真正追的是：<strong>看完後有沒有改成戴手套／夾具、排除泥砂、送同島回收點，最後真的完成回收。</strong></p><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/52">Snail10 Matsu 回饋區</a></div></section>
+
+<section class="card"><h2>9｜可直接轉貼給馬祖社區／農友</h2><textarea id="promo">【馬祖非洲大蝸牛回收｜每公斤10元，但先注意4件事】
+連江縣9/7起實施回收獎勵，9/9首批3位民眾已交回93公斤。
+
+回收規則：
+・自然人每次至少1公斤才計獎勵
+・每公斤10元，重量計至0.1公斤
+・嚴重腐敗／惡臭到難辨識，不計
+・泥土、砂石、其他生物要排除
+・活體避免跨島運送
+
+收受：
+・南竿：動物之家
+・北竿：北竿鄉公所
+・莒光：莒光鄉公所
+・東引：東引鄉公所
+
+捕捉：
+・戴手套
+・用夾具
+・不要摸眼口鼻
+・結束用肥皂清水洗手
+・不要生食蝸牛
+
+Snail10 Matsu：先在手機上檢查重量、驗收與同島回收路徑。</textarea><div class="actions"><button class="ghost" onclick="copyText('promo')">複製轉貼文</button></div></section>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);const checks=cls=>[...document.querySelectorAll('.'+cls)];
+const places={nangan:['南竿','南竿動物之家'],beigan:['北竿','北竿鄉公所'],juguang:['莒光','莒光鄉公所'],dongyin:['東引','東引鄉公所']};
+function assess(){const kg=Math.max(0,Number($('kg').value)||0);const bad=$('condition').value==='bad',mix=$('mix').value==='yes';let cls='ok',title='🟢 可進入驗收路徑',msg='仍以產發處／收受點現場驗收為準。';if(bad||mix){cls='bad';title='🔴 先不要直接拿去計獎勵';msg=bad?'個體嚴重腐敗／惡臭或難辨識，可能不予計費。':'先排除泥土、砂石與其他生物，再送驗收。';}else if(kg<1){cls='warn';title='🟡 目前未達 1 公斤計獎門檻';msg='官方規則是每次交付 1 公斤以上才計獎勵。不要為了湊重而讓活體跨島、逃逸或長時間腐敗。';}$('result').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;return{kg,bad,mix,title};}
+function destination(){const p=places[$('island').value];$('destination').innerHTML=`<div class="note ok"><div class="big">${p[0]} → ${p[1]}</div>依 9/10 公開資訊，請在同島收受點辦理；實際收受時間出發前再向當地單位確認。</div>`;return p;}
+function reward(){const a=assess(),eligible=!a.bad&&!a.mix&&a.kg>=1,val=eligible?a.kg*10:0;$('reward').innerHTML=`<div class="note ${eligible?'ok':'warn'}"><div class="money">約 NT$${val.toFixed(0)}</div>${eligible?`${a.kg.toFixed(1)} kg × 10 元／kg 的自助估算。`:'目前輸入條件不適合直接估算可領獎勵。'}<br><span class="small">最後仍以現場驗收合格重量為準。</span></div>`;return val;}
+function safe(){const a=checks('safe'),n=a.filter(x=>x.checked).length;$('safeOut').innerHTML=`<div class="note ${n===4?'ok':'warn'}">安全防護 ${n}/4。${n===4?'核心防護完成。':'不要把「有獎勵」變成徒手接觸的理由。'}</div>`;return n;}
+function prep(){const a=checks('prep'),n=a.filter(x=>x.checked).length;$('prepOut').innerHTML=`<div class="note ${n>=4?'ok':'warn'}">驗收防呆 ${n}/${a.length}。${n>=4?'已接近可送件狀態。':'先處理「混雜、逃逸、跨島、重量」四件事。'}</div>`;return n;}
+function build(countCore){const a=assess(),p=destination(),r=reward(),s=safe(),pr=prep();$('card').value=`【Snail10 Matsu｜非洲大蝸牛安全回收行動卡】\n所在鄉：${p[0]}\n回收點：${p[1]}\n預估重量：${a.kg.toFixed(1)} kg\n自助獎勵估算：約 NT$${r.toFixed(0)}\n目前判讀：${a.title}\n安全防護：${s}/4\n驗收防呆：${pr}/5\n\n出發前：\n1. 戴手套、用夾具，不徒手直接抓。\n2. 捕捉途中不要碰眼睛、口或鼻；結束用肥皂＋清水洗手。\n3. 排除泥土、砂石與其他生物。\n4. 使用能防止活體逃逸的容器。\n5. 活體不要跨島搬運，送同島回收點。\n6. 每次至少1公斤才計獎勵；嚴重腐敗／無法辨識可能不計。\n7. 實際金額以產發處驗收為準。\n\n提醒：疾管署指出廣東住血線蟲可經食入感染的蝸牛／蛞蝓或受其黏液污染的食物、水而感染；不要生食。\n\n公開回饋：https://github.com/Allen3429/Allentrial20260812.github.io/issues/52`;if(countCore&&window.PGLabImpact)PGLabImpact.core('safe-return-card');}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+['island','condition','mix'].forEach(id=>$(id).addEventListener('change',()=>build(false)));$('kg').addEventListener('input',()=>build(false));document.querySelectorAll('.safe,.prep').forEach(x=>x.addEventListener('change',()=>build(false)));build(false);
+</script>
+<script src="../impact.js" data-project="snail10-matsu" data-action-text="我已完成非洲大蝸牛安全回收行動卡" data-real-text="我已真的戴手套／夾具捕捉、送同島回收點或完成回收" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/52"></script>
+</body></html>
