@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="driftgo-911">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="DriftGo 911：臺東 2026/9/11 起漂流木合法撿拾快篩。確認公告是否仍有效、開放區域、註記／烙印、自用或商用，以及是否需到檢查站登記。">
+<title>DriftGo 911｜臺東漂流木合法撿拾快篩</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#a32323;--info:#285c8d}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1120px;margin:auto;padding:24px 14px 72px}
+.kicker{font-size:14px;font-weight:850;color:var(--muted)}
+h1{font-size:clamp(36px,7vw,62px);line-height:1.03;margin:.12em 0 .25em}
+.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:980px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:11px 13px;border-radius:9px;line-height:1.7;margin:10px 0}
+.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}.info{border-left-color:var(--info)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(225px,1fr));gap:10px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:9px}
+.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:23px;margin-top:4px}
+label{display:block;font-weight:760;margin-bottom:5px}
+select,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}
+textarea{min-height:245px;resize:vertical}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}
+button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}
+.ghost{background:#edf1f5;color:#17212b}
+.big{font-size:clamp(23px,4vw,32px);font-weight:950}
+.checkgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(275px,1fr));gap:8px}
+.ck{width:auto;transform:scale(1.12);margin-right:7px}
+.small{font-size:13px;color:var(--muted);line-height:1.65}
+.station{border:1px solid var(--line);border-radius:14px;padding:12px}
+.station b{display:block;font-size:18px}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · Taitung · 依林業保育署 2026/09/10 更正後頁面校對</div>
+<h1>DriftGo 911<br>漂流木可以撿，但不是「看到木頭就搬走」。</h1>
+<p class="lead">臺東分署自 <strong>2026/9/11</strong> 起，開放轄管海岸保安林及國土保安用地的<strong>公告指定區域</strong>自由撿拾漂流木。最新規則放寬到可用手鋸或鏈鋸等手持工具裁切；但能不能直接帶走，取決於<strong>公告是否仍有效、你是否在指定區域、木頭有沒有國／公／私有註記或烙印、用途是自用還是轉售、是否要用車搬運</strong>。</p>
+
+<section class="card">
+<h2>1｜先做「今天能不能去」硬門檻</h2>
+<div class="grid">
+<div><label>今天是否已重新打開官方最新公告，確認沒有因颱風／豪雨或現場安全而中止？</label>
+<select id="notice">
+<option value="no">還沒確認</option>
+<option value="yes">已確認最新公告仍有效</option>
+</select></div>
+<div><label>你是否設籍臺東縣？</label>
+<select id="resident">
+<option value="yes">是</option>
+<option value="no">不是</option>
+<option value="unknown">不確定／想再確認最新更正公告</option>
+</select></div>
+<div><label>你所在位置是否明確在本次公告指定撿拾區域？</label>
+<select id="area">
+<option value="yes">是，已用官方附件／公告確認</option>
+<option value="no">不是</option>
+<option value="unknown">不確定</option>
+</select></div>
+</div>
+<div id="gateOut"></div>
+<div class="actions">
+<a class="btn" target="_blank" rel="noopener" href="https://www.forest.gov.tw/law/driftwood-news/0079185">9/10 更正後官方公告＋區域圖</a>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://www.forest.gov.tw/Apply/driftwood-news">全國最新漂流木公告</a>
+</div>
+</section>
+
+<section class="card">
+<h2>2｜再看木頭本身：有註記／烙印，就不是「自由帶走」</h2>
+<div class="grid">
+<div><label>木頭上是否有國有、公有、私有註記或烙印？</label>
+<select id="mark">
+<option value="none">沒有看到註記／烙印</option>
+<option value="yes">有</option>
+<option value="unknown">看不懂／不確定</option>
+</select></div>
+<div><label>用途</label>
+<select id="purpose">
+<option value="self">薪材、收藏或其他自用非營利</option>
+<option value="sell">加工轉售／商業販售</option>
+</select></div>
+<div><label>搬運方式</label>
+<select id="transport">
+<option value="carry">少量自行攜回，不因大量撿拾使用車輛搬運</option>
+<option value="vehicle">撿拾量大，需要用車搬運</option>
+</select></div>
+</div>
+<div id="routeOut"></div>
+</section>
+
+<section class="card">
+<h2>3｜官方規則壓成 5 句</h2>
+<div class="stats">
+<div class="stat">開放起日<b>9/11</b></div>
+<div class="stat">可裁切工具<b>手鋸／鏈鋸</b></div>
+<div class="stat">自用小量<b>可免登記</b></div>
+<div class="stat">商用／車運<b>先登記</b></div>
+</div>
+<div class="note ok">① 只能在<strong>公告指定區域</strong>，撿拾屬地機關認定不具標售價值、且沒有國／公／私有註記或烙印的漂流木。</div>
+<div class="note info">② 只作薪材或收藏等自用，符合上述條件時可直接攜回、無需辦理登記。</div>
+<div class="note warn">③ 要加工轉售，或因撿拾量大需用車搬運，需攜帶身分證到臨時林產物檢查站辦理登記；貴重木逐支登記，非貴重木依整批重量登記。</div>
+<div class="note warn">④ 商業販售還要依官方流程取得合法來源證明；臺東分署今年演練特別提醒，販售前需登錄臺灣林產品生產追溯系統取得合法條碼。</div>
+<div class="note bad">⑤ 若中央氣象署發布下一次陸上颱風警報、臺東列入警戒，或豪雨特報／現場安全疑慮使主管機關暫停撿拾，就不要進場。</div>
+</section>
+
+<section class="card">
+<h2>4｜要登記？四個臨時檢查站，平日 09:00–16:00</h2>
+<div class="grid">
+<div class="station"><b>知本工作站</b>089-512214<br><span class="small">臺東市青海路4段501號</span></div>
+<div class="station"><b>成功工作站</b>089-851027<br><span class="small">成功鎮中山東路80號</span></div>
+<div class="station"><b>大武工作站</b>089-791016<br><span class="small">大武鄉山林路42號</span></div>
+<div class="station"><b>關山工作站</b>089-811020<br><span class="small">關山鎮中正路9號</span></div>
+</div>
+<p class="small">官方 9/9 公告：臨時檢查站登記服務為上班日（週一至週五、國定假日除外）09:00–16:00。出發前仍建議先電話確認。</p>
+</section>
+
+<section class="card">
+<h2>5｜最容易踩雷的不是木種辨識，而是「我以為不用登記」</h2>
+<div class="checkgrid">
+<label><input class="ck prep" type="checkbox"> 我已看 9/10 更正後公告與撿拾區域／檢查站圖</label>
+<label><input class="ck prep" type="checkbox"> 我已確認今天沒有因颱風／豪雨／安全因素而中止</label>
+<label><input class="ck prep" type="checkbox"> 我只碰沒有國／公／私有註記或烙印的漂流木</label>
+<label><input class="ck prep" type="checkbox"> 若要轉售，我知道必須走登記／合法來源流程</label>
+<label><input class="ck prep" type="checkbox"> 若要用車搬運大量漂流木，我會先到檢查站辦理登記</label>
+<label><input class="ck prep" type="checkbox"> 我不確定木頭或位置時，會先問工作站，不用「大家都在撿」當法律依據</label>
+</div>
+<div id="prepOut"></div>
+</section>
+
+<section class="card">
+<h2>6｜一鍵產生「可以直接撿／先登記／不要撿」行動卡</h2>
+<textarea id="card"></textarea>
+<div class="actions">
+<button onclick="build(true)">更新行動卡</button>
+<button class="ghost" onclick="copyText('card')">複製到手機</button>
+<a class="btn ghost" href="tel:089324121">臺東分署 089-324121</a>
+</div>
+</section>
+
+<section class="card">
+<h2>7｜匿名量測真正的資訊摩擦</h2>
+<div class="actions">
+<button onclick="friction('area',this)">最難：不知道哪裡能撿</button>
+<button class="ghost" onclick="friction('resident',this)">最難：不知道設籍資格</button>
+<button class="ghost" onclick="friction('mark',this)">最難：看不懂註記／烙印</button>
+<button class="ghost" onclick="friction('self-vs-sale',this)">最難：自用／販售規則</button>
+<button class="ghost" onclick="friction('vehicle',this)">最難：車輛搬運要不要登記</button>
+<button class="ghost" onclick="friction('weather',this)">最難：不知道公告有沒有因天候失效</button>
+</div>
+<p class="small">只記匿名類別，不收姓名、身分證、住址、撿拾位置、木材照片、數量或車牌。</p>
+</section>
+
+<section class="card">
+<h2>8｜這個工具刻意不做</h2>
+<div class="note">
+<ul>
+<li>不靠照片替你鑑定「是不是貴重木」；不確定就交給檢查站。</li>
+<li>不提供繞過登記、規避查驗或把公有／有烙印木材帶走的方法。</li>
+<li>不把「臺東海岸」全部視為開放，只認官方公告指定區域。</li>
+<li>不把昨天看過的公告當永久有效；颱風／豪雨或主管機關安全處置可能讓開放中止。</li>
+</ul>
+</div>
+</section>
+
+<section class="card">
+<h2>9｜真實使用驗證</h2>
+<p>這輪真正追：<strong>完成快篩 → 打開最新官方公告 → 因規則而改變行為</strong>，例如不撿有烙印木、改到指定區域、商用／車運先登記，或遇警報就不去。</p>
+<div class="actions">
+<a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/49">DriftGo 911 回饋區</a>
+</div>
+</section>
+
+<section class="card">
+<h2>10｜可直接轉貼給臺東撿漂流木／木作社群</h2>
+<textarea id="promo">【9/11起臺東漂流木開放撿拾，但不是看到就搬】
+林業保育署臺東分署最新公告：
+
+・只在「公告指定區域」
+・只撿不具標售價值、且沒有國／公／私有註記或烙印的漂流木
+・可用手鋸、鏈鋸等手持工具裁切搬運
+・薪材／收藏等自用：符合條件可直接攜回，免登記
+・加工轉售：要到臨時林產物檢查站登記，後續要有合法來源／追溯條碼
+・撿拾量大、要用車搬運：也要帶身分證去檢查站登記
+・檢查站：知本、成功、大武、關山工作站，平日09:00–16:00
+・颱風警報、豪雨特報或現場安全因素可能讓開放失效／暫停，所以每次出發前重新看官方公告
+
+另外，臺東分署今年的實務演練已特別把「非設籍臺東縣者」列為不符撿拾資格的情境；最新9/10更正公告仍應作為最後依據。
+
+官方最新公告：
+https://www.forest.gov.tw/law/driftwood-news/0079185
+
+DriftGo 911 只做合法撿拾快篩，不收身分證、位置或木材照片。</textarea>
+<div class="actions"><button class="ghost" onclick="copyText('promo')">複製轉貼文</button></div>
+</section>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+const checks=cls=>[...document.querySelectorAll('.'+cls)];
+
+function gate(){
+ const n=$('notice').value,r=$('resident').value,a=$('area').value;
+ let cls='ok',title='🟢 基本入口條件已通過',msg='接著確認木頭註記、用途與搬運方式。';
+ if(n!=='yes'){
+   cls='warn';title='🟡 先不要出發：先重新看今天的官方公告';
+   msg='開放可能因陸上颱風警報、豪雨特報或現場安全因素失效／暫停。';
+ } else if(a==='no'){
+   cls='bad';title='⛔ 這個位置不在你已確認的公告指定區域';
+   msg='不要撿；改看官方撿拾區域／檢查站附件。';
+ } else if(a==='unknown'){
+   cls='warn';title='🟡 位置不確定：先查官方區域圖';
+   msg='「臺東海岸」不等於全部開放。';
+ } else if(r==='no'){
+   cls='bad';title='⛔ 先不要撿';
+   msg='臺東分署今年實務演練把非設籍臺東縣民眾列為不符撿拾資格；以9/10更正後公告為最後依據，必要時先打工作站確認。';
+ } else if(r==='unknown'){
+   cls='warn';title='🟡 設籍資格不確定';
+   msg='先讀更正公告或電話確認，不要到現場才猜。';
+ }
+ $('gateOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;
+ return {cls,title};
+}
+
+function route(){
+ const g=gate(),m=$('mark').value,p=$('purpose').value,t=$('transport').value;
+ let cls='ok',title='🟢 符合「自用小量」直接攜回路徑',msg='前提仍是最新公告有效、指定區域、木材無註記／烙印且屬可撿拾對象。';
+ if(g.cls==='bad'){cls='bad';title='⛔ 目前不要撿';msg='先把入口資格／區域問題解決。';}
+ else if(g.cls==='warn'){cls='warn';title='🟡 先確認公告／資格再撿';msg='木頭本身規則即使符合，入口條件沒確認仍不要搬走。';}
+ else if(m==='yes'){cls='bad';title='⛔ 有註記／烙印：不要當自由撿拾木帶走';msg='通報臺東分署或縣府，依主管機關指示處理。';}
+ else if(m==='unknown'){cls='warn';title='🟡 看不懂註記／烙印：先不要搬';msg='拍給自己留存即可，不要上傳本頁；直接詢問工作站或檢查站。';}
+ else if(p==='sell'||t==='vehicle'){
+   cls='info';title='🔵 可以進一步處理，但要先走登記路徑';
+   msg='攜帶身分證至知本、成功、大武或關山臨時林產物檢查站；商業販售還要取得合法來源／追溯資料。';
+ }
+ $('routeOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;
+ return {cls,title,msg};
+}
+
+function prep(){
+ const a=checks('prep'),n=a.filter(x=>x.checked).length;
+ $('prepOut').innerHTML=`<div class="note ${n>=5?'ok':'warn'}">出發前防呆 ${n}/${a.length}。${n>=5?'已接近可用；仍以當日最新公告與現場指示為準。':'至少先完成「公告仍有效、指定區域、無烙印、用途／車運」四件事。'}</div>`;
+ return n;
+}
+
+async function friction(name,btn){
+ if(window.PGLabImpact) await PGLabImpact.count('friction-'+name);
+ btn.disabled=true;btn.textContent='已記錄';
+}
+
+function build(countCore){
+ const r=route(),p=prep();
+ $('card').value=`【DriftGo 911｜臺東漂流木合法撿拾行動卡】
+開始日：2026/09/11
+目前判讀：${r.title}
+出發前防呆：${p}/6
+
+我的設定：
+・最新公告：${$('notice').selectedOptions[0].textContent}
+・設籍：${$('resident').selectedOptions[0].textContent}
+・指定區域：${$('area').selectedOptions[0].textContent}
+・註記／烙印：${$('mark').selectedOptions[0].textContent}
+・用途：${$('purpose').selectedOptions[0].textContent}
+・搬運：${$('transport').selectedOptions[0].textContent}
+
+行動：
+1. 每次出發前重新打開官方公告，確認沒有因颱風／豪雨／安全因素中止。
+2. 只在官方指定區域撿拾。
+3. 有國／公／私有註記或烙印：不要當自由撿拾木帶走。
+4. 自用小量符合條件可免登記。
+5. 要加工轉售，或大量用車搬運：攜身分證到臨時林產物檢查站登記。
+6. 商業販售再依官方要求完成合法來源／林產品追溯。
+7. 不確定木頭或規則，先問臺東分署 089-324121。
+
+最新公告：
+https://www.forest.gov.tw/law/driftwood-news/0079185
+
+檢查站（平日09:00–16:00）：
+知本 089-512214
+成功 089-851027
+大武 089-791016
+關山 089-811020
+
+這是自助分流，不取代最新更正公告與現場主管機關判定。`;
+ if(countCore&&window.PGLabImpact) PGLabImpact.core('legal-route-card');
+}
+
+async function copyText(id){
+ try{await navigator.clipboard.writeText($(id).value);alert('已複製')}
+ catch(e){$(id).select();document.execCommand('copy')}
+}
+
+['notice','resident','area','mark','purpose','transport'].forEach(id=>$(id).addEventListener('change',()=>build(false)));
+document.querySelectorAll('.prep').forEach(x=>x.addEventListener('change',()=>build(false)));
+build(false);
+</script>
+<script src="../impact.js" data-project="driftgo-911" data-action-text="我已完成漂流木合法撿拾快篩" data-real-text="我已真的查最新公告／改到合法區域／放棄不該撿的木／完成登記" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/49"></script>
+</body>
+</html>
