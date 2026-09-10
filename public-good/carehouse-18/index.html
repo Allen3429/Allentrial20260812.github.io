@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="carehome-18">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="CareHome 18：2026/9/14起住宿式服務機構補助新制路由，分清每年最高18萬元、既有身障住宿補助另加5000元、過渡規則與地方申請窗口。">
+<title>CareHome 18｜住宿式機構補助新制快篩</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#a32323;--info:#285c8d}
+*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1120px;margin:auto;padding:24px 14px 72px} .kicker{font-size:14px;font-weight:850;color:var(--muted)}
+h1{font-size:clamp(36px,7vw,62px);line-height:1.03;margin:.12em 0 .25em} .lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:1000px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:12px 14px;border-radius:9px;line-height:1.7;margin:10px 0}
+.ok{border-left-color:var(--ok)} .warn{border-left-color:var(--warn)} .bad{border-left-color:var(--bad)} .info{border-left-color:var(--info)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(225px,1fr));gap:10px} .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:9px}
+.stat{border:1px solid var(--line);border-radius:14px;padding:12px} .stat b{display:block;font-size:23px;margin-top:4px}
+label{display:block;font-weight:760;margin-bottom:5px} select,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}
+textarea{min-height:245px;resize:vertical} .actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}
+button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}
+.ghost{background:#edf1f5;color:#17212b} .big{font-size:clamp(24px,4vw,34px);font-weight:950} .money{font-size:clamp(31px,6vw,48px);font-weight:1000}
+.small{font-size:13px;color:var(--muted);line-height:1.65} .checkgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(275px,1fr));gap:8px}
+.ck{width:auto;transform:scale(1.12);margin-right:7px}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · Taiwan · 依衛福部 2026/09/10 新制整理</div>
+<h1>CareHome 18<br>9/14起申請：先分清你是「最高18萬」還是「既有身障補助另加5,000」。</h1>
+<p class="lead">住宿式服務機構補助剛在 2026/9/10 更新。對長照需要等級4級以上、或持中度以上身心障礙證明的住宿式機構住民，每月最高補助提高到 <strong>15,000元</strong>、全年最高 <strong>180,000元</strong>；另有一條是「已在領身心障礙者住宿式照顧費用補助」者的中央加碼，每月再申請 <strong>5,000元</strong>。兩條不要混在一起。</p>
+
+<section class="card">
+<h2>1｜現在能做什麼？</h2>
+<div id="openOut"></div>
+<div class="actions">
+<button class="ghost" onclick="downloadReminder()">下載9/14「開始處理申請」提醒</button>
+<a class="btn" target="_blank" rel="noopener" href="https://1966.gov.tw/LTC/cp-6457-69925-207.html" onclick="track('official')">衛福部官方專區</a>
+<a class="btn ghost" href="tel:1966">直接撥1966</a>
+</div>
+</section>
+
+<section class="card">
+<h2>2｜第一個分岔：家人目前是不是已在領「身心障礙者住宿式照顧費用補助」？</h2>
+<div class="grid">
+<div><label>115年度或以前，是否已核定這項既有身障住宿補助？</label>
+<select id="existing">
+<option value="no">沒有／不是走這項補助</option>
+<option value="yes">是，已核定</option>
+<option value="unknown">不確定補助名稱</option>
+</select></div>
+<div><label>是否持有「中度以上」身心障礙證明？</label>
+<select id="disability">
+<option value="yes">是</option>
+<option value="no">不是</option>
+<option value="unknown">不確定</option>
+</select></div>
+</div>
+<div id="trackOut"></div>
+</section>
+
+<section class="card">
+<h2>3｜若不是既有身障住宿補助軌：看一般住宿式機構補助輪廓</h2>
+<div class="grid">
+<div><label>是否經評估長照需要等級4級以上？</label>
+<select id="ltc">
+<option value="yes">是（4–8級）</option>
+<option value="no">未達4級／未評估</option>
+<option value="unknown">不知道</option>
+</select></div>
+<div><label>入住的是否為方案涵蓋的住宿式機構？</label>
+<select id="facility">
+<option value="yes">是／機構確認可申請本方案</option>
+<option value="no">不是</option>
+<option value="unknown">不知道機構類型是否納入</option>
+</select></div>
+<div><label>是否在2023/1/1以前就已實際入住、而且持續入住至今？</label>
+<select id="legacy">
+<option value="no">不是</option>
+<option value="yes">是</option>
+<option value="unknown">不確定</option>
+</select></div>
+</div>
+<div id="mainOut"></div>
+<div class="note info"><b>方案涵蓋的住宿式服務機構</b>包含一般護理之家、精神護理之家、老人福利機構（不含安養床）、身心障礙福利機構、榮民之家特定自費失能／失智養護床、符合規定的兒少安置教養機構、提供住宿式服務的長照機構等。若只知道機構俗稱，不要自己猜，直接問機構或地方窗口。</div>
+</section>
+
+<section class="card">
+<h2>4｜今年最容易看錯：1–8月過渡保障 vs 9月起按月認列</h2>
+<div class="grid">
+<div><label>114年度（2025）是否曾核定領取12萬元住宿式機構補助？</label>
+<select id="prior12">
+<option value="yes">是</option>
+<option value="no">沒有</option>
+<option value="unknown">不確定</option>
+</select></div>
+<div><label>2026年1–8月累積實際入住是否達180日？</label>
+<select id="days180">
+<option value="yes">是</option>
+<option value="no">未達</option>
+<option value="unknown">不確定</option>
+</select></div>
+</div>
+<div id="transitionOut"></div>
+<div class="note ok"><b>9月起的新核心：</b>改成「按月認列」。當月實際入住達該月日曆天數的二分之一以上，就認列1個月；地方政府改為上、下半年分2次檢核撥付。</div>
+</section>
+
+<section class="card">
+<h2>5｜金額差異先看量級</h2>
+<div class="stats">
+<div class="stat">舊年度最高<b>120,000</b></div>
+<div class="stat">115年度最高<b>180,000</b></div>
+<div class="stat">年上限增加<b>+60,000</b></div>
+<div class="stat">既有身障軌加碼<b>+5,000/月</b></div>
+</div>
+<div class="note warn">「18萬元」是符合主方案條件者的<strong>全年最高額度</strong>，不是每個家庭一律18萬元。既有身障住宿照顧費用補助者的「每月5,000元」則是另一條中央加碼軌，原有地方補助制度維持，不應在本工具自行把兩條金額相加。</div>
+</section>
+
+<section class="card">
+<h2>6｜9/14前準備4件事</h2>
+<div class="checkgrid">
+<label><input class="ck prep" type="checkbox"> 已問機構：「我們是走住宿式服務機構使用者補助，還是既有身障住宿補助加碼？」</label>
+<label><input class="ck prep" type="checkbox"> 已確認長照等級／身障證明是哪一個資格來源</label>
+<label><input class="ck prep" type="checkbox"> 已打開衛福部官方專區，找到申請書與各縣市服務窗口</label>
+<label><input class="ck prep" type="checkbox"> 若2025曾核定12萬元，已準備確認2026年1–8月入住日數是否達180日</label>
+</div>
+<div id="prepOut"></div>
+</section>
+
+<section class="card">
+<h2>7｜一鍵產生「打給機構／地方窗口照著問」的30秒卡</h2>
+<textarea id="card"></textarea>
+<div class="actions">
+<button onclick="build(true)">更新詢問卡</button>
+<button class="ghost" onclick="copyText('card')">複製</button>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://1966.gov.tw/LTC/cp-6457-69925-207.html">官方申請書＋縣市窗口</a>
+</div>
+</section>
+
+<section class="card">
+<h2>8｜這個工具刻意不做</h2>
+<div class="note">
+<ul>
+<li>不收姓名、身分證、健保卡、病歷、長照評估表、身障證明、機構名稱、住址、住宿費或銀行帳戶。</li>
+<li>不替地方政府認定機構類型、入住日數、長照等級或最後核給金額。</li>
+<li>不把主方案最高18萬元和既有身障軌每月5,000元直接相加。</li>
+<li>不依非官方舊文章猜申請期限；9/10官方專區已更新，後續以衛福部與各縣市通知為準。</li>
+</ul>
+</div>
+</section>
+
+<section class="card">
+<h2>9｜真實使用驗證</h2>
+<p>這輪真正追：<strong>原本只看到「18萬新聞」→ 分清正確補助軌 → 問機構／地方窗口／1966 → 下載申請書 → 真的送件。</strong>公開回饋不要貼照護或身分資料。</p>
+<div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/61">CareHome 18 回饋區 #61</a></div>
+</section>
+
+<section class="card">
+<h2>10｜可直接轉給住宿機構住民家屬</h2>
+<textarea id="promo">【9/14起｜住宿式機構補助新制，別只記得「最高18萬」】
+衛福部9/10剛更新：
+
+主方案：
+・長照需要等級4級以上，或持中度以上身心障礙證明的住宿式機構住民
+・每月最高15,000元
+・全年最高18萬元，比舊制最高12萬元多6萬元
+・9月起改成按月認列：當月實際入住達日曆天數一半以上，認列1個月
+
+另一條很容易漏：
+若115年度或以前已核定「身心障礙者住宿式照顧費用補助」，且持中度以上身障證明，原制度不用換掉，可另外申請中央每月5,000元住宿費加碼。
+
+115年另有過渡保障：
+去年曾核定12萬元者，2026年1–8月累積入住達180日，該期間一律核給12萬元；9月起再按新制認列。
+
+9/14起受理。
+先問住宿機構或1966，不要在群組貼病歷、身障證明或住址。
+
+官方專區（含申請書、各縣市窗口）：
+https://1966.gov.tw/LTC/cp-6457-69925-207.html
+
+1966長照專線：1966
+
+CareHome 18：
+https://allen3429.github.io/Allentrial20260812.github.io/public-good/carehouse-18/</textarea>
+<div class="actions"><button class="ghost" onclick="copyText('promo')">複製轉貼文</button></div>
+</section>
+</main>
+
+<script>
+const $=id=>document.getElementById(id), checks=sel=>[...document.querySelectorAll(sel)];
+const OPEN=new Date('2026-09-14T00:00:00+08:00');
+
+function openState(){
+ const now=new Date(), ms=OPEN-now;
+ if(ms>0){
+   const days=Math.ceil(ms/86400000);
+   $('openOut').innerHTML=`<div class="note warn"><div class="big">9/14開始受理｜約還有 ${days} 天</div>現在最值得做的是分清補助軌、問機構、找縣市窗口；9/14再依地方政府／機構流程送件。</div>`;
+   return '尚未開始受理';
+ }
+ $('openOut').innerHTML='<div class="note ok"><div class="big">🟢 已進入9/14起受理期間</div>直接使用衛福部官方專區的申請書與各縣市服務窗口；也可問住宿機構是否協助代送。</div>';
+ return '已開始受理';
+}
+
+function routeTrack(){
+ const e=$('existing').value,d=$('disability').value;
+ let cls='info',title='',msg='';
+ if(e==='yes'&&d==='yes'){
+   cls='ok';title='🟢 優先走「既有身障住宿補助＋中央每月5,000元加碼」';
+   msg='衛福部明確說原有補助制度維持，不必換軌；另可申請每月5,000元住宿費用補助。不要自行把它改成一般18萬元主方案。';
+ }else if(e==='yes'&&d!=='yes'){
+   cls='warn';title='🟡 既有補助有，但「中度以上身障證明」需先確認';
+   msg='先問地方窗口或機構，避免把不同補助名稱混在一起。';
+ }else if(e==='unknown'){
+   cls='warn';title='🟡 先看舊核定通知的補助全名';
+   msg='直接問機構：「我們家現在領的是不是身心障礙者住宿式照顧費用補助？」不用把文件上傳到這裡。';
+ }else{
+   title='🔵 目前先看一般「住宿式服務機構使用者補助」';
+   msg='下一步確認長照4級以上／中度以上身障證明，以及入住機構是否屬方案範圍。';
+ }
+ $('trackOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;
+ return title;
+}
+
+function mainRoute(){
+ const l=$('ltc').value,d=$('disability').value,f=$('facility').value,g=$('legacy').value;
+ let cls='ok',title='',msg='';
+ if(f==='no'){
+   cls='bad';title='🔴 機構類型目前不吻合';
+   msg='主方案要求入住方案指定類型的合法住宿式機構；先問機構或縣市服務窗口。';
+ }else if(f==='unknown'){
+   cls='warn';title='🟡 第一個要查的是「機構類型」';
+   msg='不要只靠「養護中心／護理之家」俗稱判斷，請機構直接回答是否屬本方案。';
+ }else if(l==='yes'||d==='yes'){
+   title='🟢 符合主方案核心身分輪廓';
+   msg='長照4級以上，或持中度以上身障證明者，主方案每月最高15,000元、全年最高180,000元；正式仍由地方政府審查。';
+ }else if(g==='yes'){
+   cls='info';title='🔵 可能是112/1/1前已入住的既有住民保障';
+   msg='若未評估或未達長照4級，但在112/1/1前已實際入住並持續入住，官方仍保留每月5,000元的方案規定。請地方窗口核對。';
+ }else{
+   cls='warn';title='🟡 目前沒有對上主方案最明確的資格輪廓';
+   msg='若長照等級／身障證明尚未確認，先打1966或問地方窗口，不要只靠本頁自我淘汰。';
+ }
+ $('mainOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;
+ return title;
+}
+
+function transition(){
+ const p=$('prior12').value,d=$('days180').value;
+ let cls='info',title='',msg='';
+ if(p==='yes'&&d==='yes'){
+   cls='ok';title='🟢 命中115年1–8月過渡保障輪廓';
+   msg='官方規定：114年度曾核定12萬元者，115年1–8月累積入住達180日，該期間一律核給12萬元；9月起再依新制按月認列。';
+ }else if(p==='yes'&&d==='no'){
+   cls='warn';title='🟡 去年曾核定12萬，但1–8月未達180日';
+   msg='不要自行用「12萬」套算；請讓地方窗口依115年過渡與新制規則核算。';
+ }else if(p==='unknown'||d==='unknown'){
+   cls='warn';title='🟡 先確認去年核定與今年1–8月入住日數';
+   msg='這是今年最容易造成估錯金額的地方；問機構取得入住紀錄即可，不必上傳本頁。';
+ }else{
+   title='🔵 不走這個特定過渡保障情境';
+   msg='9月起仍依新制按月認列；1–8月的實際核算請交由地方政府依官方規則辦理。';
+ }
+ $('transitionOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;
+ return title;
+}
+
+function prep(){
+ const a=checks('.prep'),n=a.filter(x=>x.checked).length;
+ $('prepOut').innerHTML=`<div class="note ${n>=3?'ok':'warn'}">申請準備 ${n}/${a.length}。${n>=3?'已足夠在9/14起直接找官方窗口處理。':'最小下一步：先問機構「我們走哪一軌」，再打開官方縣市窗口。'}</div>`;
+ return n;
+}
+
+function track(label){if(window.PGLabImpact)PGLabImpact.core(label)}
+
+function build(countCore){
+ const o=openState(),t=routeTrack(),m=mainRoute(),x=transition(),p=prep();
+ $('card').value=`【CareHome 18｜住宿式機構補助新制詢問卡】
+受理狀態：${o}
+我目前的補助軌判讀：${t}
+一般主方案判讀：${m}
+115年過渡判讀：${x}
+準備進度：${p}/4
+
+打給機構／地方窗口可以直接問：
+「您好，我想確認115年住宿式服務機構補助新制。我想先確認：
+1. 我們家目前走的是一般『住宿式服務機構使用者補助』，還是已核定的『身心障礙者住宿式照顧費用補助』？
+2. 如果是既有身障住宿補助且持中度以上證明，是否可依新制另申請中央每月5,000元住宿費加碼？
+3. 若走一般方案，長照4級以上／中度以上身障證明的資格與我們入住的機構類型是否符合？
+4. 若去年已核定12萬元，2026年1–8月累積入住日數與過渡保障會怎麼算？
+5. 9月起按月認列，要準備哪些申請資料、由家屬送還是機構可以代送？」 
+
+衛福部官方專區：
+https://1966.gov.tw/LTC/cp-6457-69925-207.html
+長照專線：1966
+
+本卡不保存任何身分、照護、病歷、機構或財務資料。`;
+ if(countCore&&window.PGLabImpact)PGLabImpact.core('route-card');
+}
+
+function downloadReminder(){
+ const ics=`BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//CareHome18//TW
+BEGIN:VEVENT
+DTSTART;TZID=Asia/Taipei:20260914T090000
+DTEND;TZID=Asia/Taipei:20260914T093000
+SUMMARY:開始確認115年住宿式機構補助新制申請
+DESCRIPTION:衛福部公告9/14起受理。先問機構或縣市窗口確認補助軌與應備資料。官方專區 https://1966.gov.tw/LTC/cp-6457-69925-207.html ，長照專線1966。
+END:VEVENT
+END:VCALENDAR`;
+ const blob=new Blob([ics],{type:'text/calendar;charset=utf-8'});
+ const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='carehome18-0914-reminder.ics';a.click();URL.revokeObjectURL(a.href);
+ track('0914-reminder');
+}
+
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+['existing','disability','ltc','facility','legacy','prior12','days180'].forEach(id=>$(id).addEventListener('change',()=>build(false)));
+document.querySelectorAll('.prep').forEach(x=>x.addEventListener('change',()=>build(false)));
+build(false);
+</script>
+<script src="../impact.js" data-project="carehome-18" data-action-text="我已完成住宿式機構補助新制路徑快篩" data-real-text="我已真的問機構／打1966或地方窗口／下載申請書／送件" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/61"></script>
+</body></html>
