@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="nocarry-kinmen">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="NoCarry Kinmen：金門水頭旅運中心遇到陌生人託帶貨物、借行李額度或糾纏時的拒絕、求助與海關查詢行動卡。">
+<title>NoCarry Kinmen｜小三通不要替陌生人帶貨</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#a32323}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1080px;margin:auto;padding:24px 14px 72px}
+.kicker{font-size:14px;font-weight:850;color:var(--muted)}
+h1{font-size:clamp(36px,7vw,62px);line-height:1.03;margin:.12em 0 .25em}
+.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:980px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:11px 13px;border-radius:9px;line-height:1.7;margin:10px 0}
+.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:9px}
+.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:24px;margin-top:4px}
+label{display:block;font-weight:760;margin-bottom:5px}
+select,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}
+textarea{min-height:230px;resize:vertical}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}
+button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}
+.ghost{background:#edf1f5;color:#17212b}.danger{background:#8f2222}
+.big{font-size:clamp(23px,4vw,32px);font-weight:950}
+.refusal{font-size:clamp(25px,5vw,42px);font-weight:950;line-height:1.35;padding:20px;border:2px solid var(--ink);border-radius:16px;background:#fff}
+.small{font-size:13px;color:var(--muted);line-height:1.65}
+.checkgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(275px,1fr));gap:8px}
+.ck{width:auto;transform:scale(1.12);margin-right:7px}
+.friction button{margin:5px 6px 5px 0}.done{opacity:.62}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · Kinmen · 公開資料校對 2026/09/10</div>
+<h1>NoCarry Kinmen<br>別人的包裹，不要變成你的通關責任。</h1>
+<p class="lead">2026/9/9 航港局表示，金門水頭旅運中心屢次出現招攬旅客「代帶／借行李額度」、反覆糾纏、跟追或妨礙通行的情況，已預告修法加強管理。這個頁面只做一件事：讓旅客在現場能<strong>直接拒絕、移到有工作人員的地方、知道找誰</strong>。</p>
+
+<section class="card">
+<h2>1｜現在就被問「幫我帶一下」？先用這句</h2>
+<div class="refusal" id="refusal">不好意思，我不替任何人攜帶、託運或借行李額度。請不要再跟著我。</div>
+<div class="actions">
+<button onclick="copyRefusal()">複製拒絕句</button>
+<button class="ghost" onclick="speakRefusal()">大聲朗讀</button>
+</div>
+<p class="small">不需要解釋、不需要和對方辯論物品內容。拒絕後直接往港警、海關、港務或其他工作人員所在區域移動。</p>
+</section>
+
+<section class="card">
+<h2>2｜你現在遇到哪種程度？</h2>
+<div class="grid">
+<div><label>現場狀況</label>
+<select id="level">
+<option value="ask">有人詢問我能不能幫帶／借行李額度</option>
+<option value="repeat">我拒絕後，對方仍反覆要求或糾纏</option>
+<option value="follow">對方跟著我、擋路、威嚇或讓我覺得不安全</option>
+<option value="already">我已經拿了對方的物品，還沒通關／登船</option>
+</select></div>
+</div>
+<div id="routeOut"></div>
+</section>
+
+<section class="card">
+<h2>3｜四個求助入口：不用先研究法條</h2>
+<div class="stats">
+<div class="stat">金門港中隊<b>082-372052</b></div>
+<div class="stat">水頭港區<b>082-329538</b></div>
+<div class="stat">海關免付費<b>0800-005-055</b></div>
+<div class="stat">緊急／威脅<b>110</b></div>
+</div>
+<div class="actions">
+<a class="btn" href="tel:082372052">打給金門港中隊</a>
+<a class="btn ghost" href="tel:082329538">打給水頭港區</a>
+<a class="btn ghost" href="tel:0800005055">問海關</a>
+<a class="btn danger" href="tel:110">需要警察：110</a>
+</div>
+</section>
+
+<section class="card">
+<h2>4｜法律狀態防呆：目前「5千–2萬5千」仍是修法草案</h2>
+<div class="note warn"><b>不要把草案講成已經開罰。</b>交通部目前預告增訂《商港法》第36條之2、第70條之1，擬禁止在客運碼頭／場站招攬或媒介託帶貨物，以及強迫、糾纏、跟追等滋擾行為，違者擬處5,000–25,000元罰鍰並可由港警強制離港；仍須完成後續行政院、立法院程序才會生效。</div>
+<div class="note bad"><b>但「不要替別人帶貨」不是要等新法才有意義。</b>海關既有旅客通關宣導已明確提醒：旅客不要替他人攜帶貨品；若攜帶的是禁止、管制或應稅物品，旅客仍須為自己攜帶的物品負責。對內容、數量或申報有任何疑問，先問海關。</div>
+</section>
+
+<section class="card">
+<h2>5｜如果你已經拿了對方的東西，但還沒通關</h2>
+<div class="note bad"><b>不要硬著頭皮繼續帶，也不要偷偷把東西丟在角落。</b>停止往通關／登船方向移動，直接到港警、海關或港務工作人員旁，清楚說明「這不是我的物品，是他人請我代帶，我現在不願繼續攜帶」，交由現場人員指示處理。</div>
+<div class="note">如果對方還在旁邊施壓、跟隨或威嚇，不必自行處理衝突；留在有工作人員／監視器的公開區域並求助港警或110。</div>
+</section>
+
+<section class="card">
+<h2>6｜出發前 30 秒防呆</h2>
+<div class="checkgrid">
+<label><input class="ck prep" type="checkbox"> 我只攜帶自己知道內容與來源的行李</label>
+<label><input class="ck prep" type="checkbox"> 陌生人請我「借額度／幫托運／過關後再還」時，我會直接拒絕</label>
+<label><input class="ck prep" type="checkbox"> 不確定物品能不能帶時，我會在通關前問海關</label>
+<label><input class="ck prep" type="checkbox"> 被反覆糾纏時，我會往工作人員／港警所在位置移動</label>
+<label><input class="ck prep" type="checkbox"> 已記下金門港中隊 082-372052 與水頭港區 082-329538</label>
+</div>
+<div id="prepOut"></div>
+</section>
+
+<section class="card">
+<h2>7｜匿名量出「真正卡在哪」</h2>
+<div class="friction">
+<button onclick="friction('did-not-know',this)">原本不知道不要替人帶貨</button>
+<button class="ghost" onclick="friction('hard-to-refuse',this)">怕尷尬／不好意思拒絕</button>
+<button class="ghost" onclick="friction('kept-asking',this)">拒絕後仍被糾纏</button>
+<button class="ghost" onclick="friction('followed',this)">曾被跟隨／擋路</button>
+<button class="ghost" onclick="friction('help-hard-find',this)">不知道港警／工作人員在哪</button>
+<button class="ghost" onclick="friction('rules-unclear',this)">不知道什麼要申報</button>
+</div>
+<p class="small">只做匿名計數；不收對方姓名、照片、你的船班、護照／台胞證、精確時間位置或貨物內容。</p>
+</section>
+
+<section class="card">
+<h2>8｜一鍵產生現場行動卡</h2>
+<textarea id="card"></textarea>
+<div class="actions">
+<button onclick="build(true)">更新行動卡</button>
+<button class="ghost" onclick="copyText('card')">複製到備忘錄</button>
+</div>
+</section>
+
+<section class="card">
+<h2>9｜官方查核入口</h2>
+<div class="actions">
+<a class="btn ghost" target="_blank" rel="noopener" href="https://harbor.kinmen.gov.tw/">金門縣港務處</a>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://www.khhpd.npa.gov.tw/ch/app/artwebsite/view?module=artwebsite&id=1134&serno=5e3021fb-46f7-4d67-b230-317733ea2e58">港務警察聯絡電話</a>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://web.customs.gov.tw/">財政部關務署</a>
+</div>
+</section>
+
+<section class="card">
+<h2>10｜真實使用驗證</h2>
+<p>這輪真正追的是：<strong>完成拒絕卡 → 真正在現場拒絕代帶／移到安全位置／詢問海關／向港警或港務人員反映</strong>。不是只有網頁瀏覽。</p>
+<div class="actions">
+<a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/48">NoCarry Kinmen 回饋區</a>
+</div>
+</section>
+
+<section class="card">
+<h2>11｜可直接轉貼給要走小三通的人</h2>
+<textarea id="promo">【走金門小三通先記一件事：不要替陌生人帶貨／借行李額度】
+航港局 9/9 表示，水頭旅運中心屢次出現跑單幫人士招攬旅客代帶貨物、糾纏或妨礙通行，已預告修法加強管理。
+
+海關原本就提醒：
+・不要替他人攜帶貨品
+・若你攜帶的是禁止、管制或應稅物品，仍由攜帶旅客自己負責
+・不確定就通關前先問海關
+
+現場拒絕句：
+「不好意思，我不替任何人攜帶、託運或借行李額度。請不要再跟著我。」
+
+被反覆糾纏／跟隨：
+・往港警、海關、港務工作人員旁移動
+・金門港中隊：082-372052
+・水頭港區：082-329538
+・海關免付費：0800-005-055
+・有威脅或緊急狀況：110
+
+注意：新聞中的5,000–25,000元港區滋擾罰鍰目前仍是修法草案，尚未生效。</textarea>
+<div class="actions"><button class="ghost" onclick="copyText('promo')">複製轉貼文</button></div>
+</section>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+const checks=cls=>[...document.querySelectorAll('.'+cls)];
+
+function route(){
+ const l=$('level').value;
+ let cls='ok',title='',msg='';
+ if(l==='ask'){
+   title='直接拒絕，不接手物品';
+   msg='說完拒絕句後繼續自己的通關動線；不要因為對方說「只是借額度」「內容很普通」就接手。';
+ }else if(l==='repeat'){
+   cls='warn';title='停止交談，移到工作人員附近';
+   msg='往港警、海關、港務櫃台或其他明顯有工作人員的位置移動；可直接打金門港中隊082-372052或水頭港區082-329538。';
+ }else if(l==='follow'){
+   cls='bad';title='優先確保人身安全';
+   msg='留在公開、有工作人員或監視器的區域；不要自行對峙。可聯絡港警；若有威脅、阻擋或你覺得不安全，撥110。';
+ }else{
+   cls='bad';title='先不要帶著這件物品繼續通關';
+   msg='停止往通關／登船方向移動，直接找港警、海關或港務人員說明「這不是我的物品，是他人請我代帶，我不願繼續攜帶」，依現場指示處理。';
+ }
+ $('routeOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;
+ return {title,msg};
+}
+
+function prep(){
+ const a=checks('prep'),n=a.filter(x=>x.checked).length;
+ $('prepOut').innerHTML=`<div class="note ${n===a.length?'ok':'warn'}">出發前防呆 ${n}/${a.length}。${n===a.length?'核心防護已完成。':'至少先記住：不是自己的貨，不要接手；不確定先問海關。'}</div>`;
+ return n;
+}
+
+async function friction(name,btn){
+ if(window.PGLabImpact) await PGLabImpact.count('friction-'+name);
+ btn.classList.add('done');btn.disabled=true;btn.textContent='已記錄';
+}
+
+function build(countCore){
+ const r=route(),p=prep();
+ $('card').value=`【NoCarry Kinmen｜水頭旅運中心現場行動卡】
+目前狀況：${r.title}
+出發前防呆：${p}/5
+
+直接說：
+「不好意思，我不替任何人攜帶、託運或借行李額度。請不要再跟著我。」
+
+現在做：
+1. 不接手別人的袋子、箱子、包裹或「借額度」托運。
+2. 被反覆糾纏：停止交談，往港警／海關／港務工作人員附近移動。
+3. 已經拿了別人的物品但還沒通關：不要硬帶過去；直接找港警／海關／港務人員說明並依指示處理。
+4. 金門港中隊：082-372052
+5. 水頭港區：082-329538
+6. 海關免付費：0800-005-055
+7. 遭威嚇、阻擋、跟隨而感到不安全：110
+
+法律狀態：
+交通部擬新增5,000–25,000元港區滋擾罰鍰目前仍是草案，尚未生效。
+但海關既有宣導已提醒不要替他人攜帶貨品；若攜帶禁止、管制或應稅物品，攜帶旅客仍須負責。`;
+ if(countCore&&window.PGLabImpact)PGLabImpact.core('refusal-help-card');
+}
+
+function copyRefusal(){navigator.clipboard?.writeText($('refusal').textContent); if(window.PGLabImpact)PGLabImpact.core('refusal-copy')}
+function speakRefusal(){
+ if('speechSynthesis' in window){
+   speechSynthesis.cancel();
+   const u=new SpeechSynthesisUtterance($('refusal').textContent);u.lang='zh-TW';u.rate=.92;speechSynthesis.speak(u);
+   if(window.PGLabImpact)PGLabImpact.core('refusal-speak');
+ }
+}
+async function copyText(id){
+ try{await navigator.clipboard.writeText($(id).value);alert('已複製')}
+ catch(e){$(id).select();document.execCommand('copy')}
+}
+$('level').addEventListener('change',()=>build(false));
+document.querySelectorAll('.prep').forEach(x=>x.addEventListener('change',()=>build(false)));
+build(false);
+</script>
+<script src="../impact.js" data-project="nocarry-kinmen" data-action-text="我已完成小三通拒絕＋求助行動卡" data-real-text="我已真的拒絕代帶／移到安全位置／問海關／向港警或港務人員反映" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/48"></script>
+</body>
+</html>
