@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="stackaid-1019">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="StackAid 1019：115學年度第1學期失業勞工在學子女生活扶助金，新制資格快篩、金額試算、文件防呆與官方申請入口。">
+<title>StackAid 1019｜失業勞工在學子女生活扶助金快篩</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#a32323}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1120px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}
+h1{font-size:clamp(35px,7vw,60px);line-height:1.04;margin:.12em 0 .25em}.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:990px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:11px 13px;border-radius:9px;line-height:1.7;margin:10px 0}
+.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}
+label{display:block;font-weight:760;margin-bottom:5px}select,input,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}
+textarea{min-height:240px;resize:vertical}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}
+button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}
+.big{font-size:clamp(23px,4vw,31px);font-weight:950}.money{font-size:clamp(30px,5vw,46px);font-weight:950}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:9px}.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:24px;margin-top:4px}
+.checkgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:8px}.ck{width:auto;transform:scale(1.12);margin-right:7px}.small{font-size:13px;color:var(--muted);line-height:1.65}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · Taiwan · 勞動部 2026/09/08 最新規則校對</div>
+<h1>StackAid 1019<br>以前「所得太高不能領、其他學費補助只能擇一」的記憶，115學年度起可能已經過時。</h1>
+<p class="lead">115學年度第1學期「失業勞工在學子女生活扶助金」自 <strong>2026/9/8–10/19</strong> 受理。新制最容易被舊資訊蓋掉的兩件事是：<strong>沒有所得限制</strong>，而且可以和教育部各類學雜費減免／補助同時請領。這個工具不收姓名、身分證、健保卡或戶籍資料，只先幫你判斷是否值得進官方系統。</p>
+<section class="card"><h2>1｜先把新舊制最容易搞錯的地方講清楚</h2><div class="stats"><div class="stat">申請截止<b>10/19</b></div><div class="stat">所得限制<b>沒有</b></div><div class="stat">私立大專每名<b>26,000</b></div><div class="stat">符合加碼條件<b>+20%</b></div></div><div class="note ok"><b>115學年度第1學期起：</b>這筆已改成「生活扶助金」，不是學雜費補助，所以教育部私大定額減免、高中職免學費、弱勢助學等，不再因同屬學費補助而要求擇一。</div><div class="note warn"><b>舊資訊陷阱：</b>過去版本曾有家戶所得門檻，也曾要求與部分學雜費補助擇一。若你去年因這兩件事直接放棄，這學期值得重新檢查。</div></section>
+<section class="card"><h2>2｜申請人資格快篩</h2><div class="grid"><div><label>離職是否屬「非自願離職」？</label><select id="invol"><option value="yes">是</option><option value="no">不是／自行辭職</option><option value="unknown">不確定</option></select></div><div><label>2026/10/19前是否已請領老年給付？</label><select id="oldage"><option value="no">沒有</option><option value="yes">有</option><option value="unknown">不確定</option></select></div><div><label>四條失業／求職路徑，至少符合一條嗎？</label><select id="path"><option value="p1">A｜2026/7/20–10/19已核付失業給付／職訓生活津貼</option><option value="p2">B｜2025/10/20–2026/10/19曾核付，且2026/7/20–10/19就業≤30日</option><option value="p3">C｜2025/10/20–2026/10/19曾核付，且這整段就業≤3個月</option><option value="p4">D｜2026/9/8–10/19到公立就服機構求職登記</option><option value="none">目前都不符合</option><option value="unknown">不確定</option></select></div><div><label>若走 D 路徑：是否知道還要在 2026/11/18 前被核付失業給付／職訓生活津貼？</label><select id="p4confirm"><option value="yes">知道／可追蹤</option><option value="no">不知道</option><option value="na">不是D路徑</option></select></div></div><div id="eligOut"></div><div class="actions"><a class="btn ghost" href="tel:1955">勞動諮詢 1955</a><a class="btn ghost" href="tel:0225007259">生活扶助金 02-2500-7259</a></div></section>
+<section class="card"><h2>3｜子女資格：不是「所有學生」都在範圍</h2><div class="grid"><div><label>子女是否就讀國內高中職／大專校院，且有正式學籍？</label><select id="student"><option value="yes">是</option><option value="no">不是</option><option value="unknown">不確定</option></select></div><div><label>是否屬排除類型？</label><select id="excluded"><option value="no">不是</option><option value="yes">是：研究生／公費生／在職班／學分班／假日班／空中大學／學士後／延畢等</option><option value="unknown">不確定</option></select></div><div><label>申請人本人是否就是在學者？</label><select id="selfstudent"><option value="no">不是</option><option value="yes">是</option></select></div></div><div id="studentOut"></div></section>
+<section class="card"><h2>4｜金額試算：把家中符合資格的子女數填進去</h2><div class="grid"><div><label>公立高中職／五專前3年（人）</label><input id="pubhs" type="number" min="0" step="1" value="0"></div><div><label>私立高中職／五專前3年（人）</label><input id="prihs" type="number" min="0" step="1" value="0"></div><div><label>公立大專／五專後2年（人）</label><input id="pubuni" type="number" min="0" step="1" value="0"></div><div><label>私立大專／五專後2年（人）</label><input id="priuni" type="number" min="0" step="1" value="1"></div></div><div class="grid"><div><label>是否符合「獨力負擔家計」官方條件？</label><select id="single"><option value="no">否／不確定</option><option value="yes">是</option></select></div></div><div id="moneyOut"></div><div class="note">如果符合「獨力負擔家計」，或<strong>有2人以上子女就讀大專校院且均符合核給規定</strong>，上述補助加給20%；兩個條件同時符合也只加20%，不會加40%。</div></section>
+<section class="card"><h2>5｜正式申請最容易漏的文件</h2><div class="checkgrid"><label><input class="ck doc" type="checkbox"> 申請書（紙本申請要簽名）</label><label><input class="ck doc" type="checkbox"> 申請人金融機構存摺封面影本</label><label><input class="ck doc" type="checkbox"> 申請人、配偶、子女戶口名簿；不同戶籍者另附</label><label><input class="ck doc" type="checkbox"> 子女本學期「已完成註冊」證明：在學證明／繳費收據／就貸通知／信用卡繳費證明／學生證註冊章，五擇一</label><label><input class="ck doc" type="checkbox"> 配偶／子女為外國人或港澳陸人士時的居留證影本（如適用）</label><label><input class="ck doc" type="checkbox"> 要申請獨力負擔家計加碼時，已備對應證明（如適用）</label></div><div id="docOut"></div><div class="note ok"><b>線上比你想像的簡單：</b>除了自然人憑證，也可用「身分證號＋健保卡號」提出申請；若使用自然人憑證，還可透過 MyData 取得戶籍資料。敏感資料只交給勞動部官方系統，不要輸入這個工具。</div></section>
+<section class="card"><h2>6｜一鍵產生「我到底能不能申請＋大概多少」行動卡</h2><textarea id="card"></textarea><div class="actions"><button onclick="build(true)">更新行動卡</button><button class="ghost" onclick="copyText('card')">複製給家人</button><a class="btn" target="_blank" rel="noopener" href="https://uwes.mol.gov.tw/login">勞動部正式線上申請</a><a class="btn ghost" target="_blank" rel="noopener" href="https://www.mol.gov.tw/1607/28162/28540/28582/66175/post">勞動部最新說明</a></div></section>
+<section class="card"><h2>7｜如果你因「舊規則」去年沒申請，這次特別檢查</h2><div class="checkgrid"><label><input class="ck friction" type="checkbox"> 我曾以為家庭所得超過門檻就不能申請</label><label><input class="ck friction" type="checkbox"> 我曾以為已拿高中免學費／私大減免就不能再申請</label><label><input class="ck friction" type="checkbox"> 我不知道打零工／短期就業後仍可能符合</label><label><input class="ck friction" type="checkbox"> 我不知道申請期間內先去做求職登記也有一條路徑</label><label><input class="ck friction" type="checkbox"> 我不知道線上可只用身分證號＋健保卡號申請</label></div><div id="frictionOut"></div></section>
+<section class="card"><h2>8｜這個工具刻意不做</h2><div class="note"><ul><li>不收姓名、身分證、健保卡號、戶籍、存摺、失業給付證明或學籍文件。</li><li>不替勞動部正式認定「非自願離職」或「獨力負擔家計」。</li><li>不把所有學生都算進去；研究生、在職班、延畢等官方排除類型會另行提示。</li><li>不叫你在這裡上傳申請文件；正式送件只回到勞動部官方系統。</li></ul></div></section>
+<section class="card"><h2>9｜真實使用驗證</h2><p>這輪真正追：<strong>看到「新制可併領、無所得限制」→ 完成資格／金額快篩 → 進官方系統 → 備件／送件 → 最後是否核定</strong>。只回報流程摩擦，不貼家庭個資。</p><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/47">StackAid 1019 回饋區</a></div></section>
+<section class="card"><h2>10｜可直接轉貼</h2><textarea id="promo">【今年規則改了｜失業勞工有在學子女，10/19前重新檢查】
+115學年度第1學期「失業勞工在學子女生活扶助金」9/8起申請。
+
+最重要的兩個新制：
+1. 沒有所得限制。
+2. 可與教育部高中職免學費、私立大學定額減免等各類學雜費就學減免／補助同時請領，不用再擇一。
+
+金額：
+・公立高中職 4,000元／名
+・私立高中職 6,000元／名
+・公立大專 15,000元／名
+・私立大專 26,000元／名
+符合獨力負擔家計，或有2名以上符合資格的大專子女，可再加20%。
+
+如果你去年因「所得超過門檻」或「已領學費減免」直接放棄，今年別沿用舊規則。
+
+截止：2026/10/19
+官方線上申請：https://uwes.mol.gov.tw/login
+生活扶助金專線：02-2500-7259
+1955：勞動諮詢</textarea><div class="actions"><button class="ghost" onclick="copyText('promo')">複製轉貼文</button></div></section>
+</main>
+<script>
+const $=id=>document.getElementById(id),checks=cls=>[...document.querySelectorAll('.'+cls)];
+const money=n=>'NT$'+Math.round(n).toLocaleString();
+function applicant(){const a=$('invol').value,o=$('oldage').value,p=$('path').value,p4=$('p4confirm').value;let cls='ok',title='🟢 申請人路徑初步可走',msg='接著確認子女學籍與文件。';if(a==='no'||o==='yes'||p==='none'){cls='bad';title='⛔ 目前有明顯資格缺口';msg='不要硬套本工具；若「非自願離職」認定不確定，可先問1955或公立就服機構。';}else if(a==='unknown'||o==='unknown'||p==='unknown'){cls='warn';title='🟡 關鍵資格還不確定';msg='先確認非自願離職與失業給付／求職登記紀錄，再投入備件。';}else if(p==='p4'&&p4!=='yes'){cls='warn';title='🟡 D路徑不是「登記完就一定核給」';msg='要在10/19前完成求職登記並提出申請，且須在11/18以前經核付失業給付／職訓生活津貼。';}$('eligOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;return title;}
+function child(){const s=$('student').value,e=$('excluded').value,self=$('selfstudent').value;let cls='ok',title='🟢 子女學籍初步在補助範圍';if(s==='no'||e==='yes'||self==='yes'){cls='bad';title='⛔ 目前有學生身分排除條件';}else if(s==='unknown'||e==='unknown'){cls='warn';title='🟡 先向學校確認正式學籍／是否屬排除類型';}$('studentOut').innerHTML=`<div class="note ${cls}">${title}</div>`;return title;}
+function calc(){const vals=['pubhs','prihs','pubuni','priuni'].map(id=>Math.max(0,Math.floor(+$(id).value||0)));const rates=[4000,6000,15000,26000];const college=vals[2]+vals[3];const bonus=$('single').value==='yes'||college>=2;const base=vals.reduce((s,v,i)=>s+v*rates[i],0);const total=Math.round(base*(bonus?1.2:1));$('moneyOut').innerHTML=`<div class="note ok"><div class="money">${money(total)}</div><b>本學期粗估</b>＝基本額 ${money(base)} ${bonus?'× 1.2 加碼':'（目前未套20%加碼）'}。<br><span class="small">這是假設你填入的每位子女都符合官方核給規定；正式以勞動部審核為準。</span></div>`;return {vals,college,bonus,base,total};}
+function docs(){const a=checks('doc'),n=a.filter(x=>x.checked).length;$('docOut').innerHTML=`<div class="note ${n>=4?'ok':'warn'}">備件進度 ${n}/${a.length}。${n>=4?'已接近可以進官方系統逐項核對。':'先補「戶籍＋帳戶＋本學期註冊證明」三大類。'}</div>`;return n;}
+function friction(){const a=checks('friction'),n=a.filter(x=>x.checked).length;$('frictionOut').innerHTML=`<div class="note ${n?'warn':'ok'}">${n?`你勾了 ${n} 個「舊規則／資訊摩擦」。這就是這個工具要驗證的漏領來源。`:'目前沒有勾到上述舊制誤解。'}</div>`;return n;}
+function build(countCore){const a=applicant(),c=child(),m=calc(),d=docs(),f=friction();$('card').value=`【StackAid 1019｜失業勞工在學子女生活扶助金行動卡】
+截止：2026/10/19
+申請人快篩：${a}
+子女快篩：${c}
+本學期粗估：${money(m.total)}
+20%加碼：${m.bonus?'已依輸入條件套用':'目前未套用'}
+備件進度：${d}/6
+舊規則／資訊摩擦：${f}項
+
+115學年度最重要的新制：
+・沒有所得限制。
+・可與教育部各類學雜費減免／補助同時請領，不必擇一。
+
+下一步：
+1. 先進勞動部官方系統：https://uwes.mol.gov.tw/login
+2. 準備戶籍、本人帳戶、本學期註冊證明等文件。
+3. 若走「申請期間內求職登記」路徑：10/19前要完成求職登記與申請，11/18前還要經核付失業給付／職訓生活津貼。
+4. 研究生、在職班、學分班、假日班、空大、學士後、延畢等不在補助範圍。
+5. 有疑問：02-2500-7259 或 1955。
+
+本卡不保存身分證、健保卡、戶籍、帳戶或學籍資料，也不等於正式核定。`;if(countCore&&window.PGLabImpact)PGLabImpact.core('eligibility-amount-card');}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+['invol','oldage','path','p4confirm','student','excluded','selfstudent','single'].forEach(id=>$(id).addEventListener('change',()=>build(false)));['pubhs','prihs','pubuni','priuni'].forEach(id=>$(id).addEventListener('input',()=>build(false)));document.querySelectorAll('.doc,.friction').forEach(x=>x.addEventListener('change',()=>build(false)));build(false);
+</script>
+<script src="../impact.js" data-project="stackaid-1019" data-action-text="我已完成失業勞工子女生活扶助資格／金額卡" data-real-text="我已真的進官方系統／備件／送件／完成補件" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/47"></script>
+</body></html>
