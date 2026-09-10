@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="openwork-2y">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="OpenWork 2Y：2026起在臺畢業僑外生延期居留期間免工作許可，提供資格快篩、HR雙語查核卡與舊資訊防呆。">
+<title>OpenWork 2Y｜畢業僑外生免工作許可 HR 查核卡</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#65717e;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#a32323}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}.wrap{max-width:1120px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}h1{font-size:clamp(34px,7vw,62px);line-height:1.04;margin:.12em 0 .25em}.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:980px}.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:11px 13px;border-radius:9px;line-height:1.7;margin:10px 0}.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}label{display:block;font-weight:760;margin-bottom:5px}select,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}textarea{min-height:270px;resize:vertical}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}.big{font-size:clamp(23px,4vw,31px);font-weight:950}.small{font-size:13px;color:var(--muted);line-height:1.65}.compare{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:10px}.source{border:1px solid var(--line);border-radius:14px;padding:14px}.source.old{border-color:#e1b3b3;background:#fffafa}.source.new{border-color:#b5d7c6;background:#fbfffc}.badge{display:inline-block;padding:4px 8px;border-radius:999px;font-weight:850;font-size:12px;background:#edf1f5}.badge.old{background:#f9dddd;color:#7d2020}.badge.new{background:#dff3e8;color:#145b3b}.checkgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:8px}.ck{width:auto;transform:scale(1.12);margin-right:7px}.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}.hero-rule{font-size:clamp(20px,4vw,28px);font-weight:900;line-height:1.5}@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · Taiwan · 法規校對 2026/09/10</div>
+<h1>OpenWork 2Y<br>HR 還在問「你的工作許可呢？」先把 2026 新規則放到桌上。</h1>
+<p class="lead">2026/1/1 起，在臺取得副學士以上學位的外國人，若以<strong>應屆畢業生</strong>身分依法取得移民署<strong>畢業後延期居留</strong>，在該延期居留期間工作，依《外國專業人才延攬及僱用法》第12條<strong>得免申請工作許可</strong>。問題是：教育部 NISA 同一網站現在仍搜尋得到 2019–2021 年「覓職期不能工作」的舊答案，容易讓畢業生與 HR 讀到過時資訊。</p>
+
+<section class="card">
+<h2>1｜60 秒快篩：你能不能把「免工作許可」當成目前的工作依據？</h2>
+<div class="grid">
+<div><label>是否在臺灣取得副學士以上學位？</label><select id="degree"><option value="yes">是</option><option value="no">不是／學位在國外取得</option><option value="unknown">不確定</option></select></div>
+<div><label>是否屬應屆畢業生？</label><select id="graduate"><option value="yes">是</option><option value="no">不是</option><option value="unknown">不確定</option></select></div>
+<div><label>是否已取得移民署核准的畢業後延期居留，且目前仍有效？</label><select id="arc"><option value="yes">是</option><option value="pending">正在申請／尚未核准</option><option value="no">沒有／已失效</option><option value="unknown">不確定</option></select></div>
+<div><label>你的工作是否依法另需執業證照／專業資格？</label><select id="license"><option value="no">不需要／一般工作</option><option value="yes">需要，例如依法須具證照的專業</option><option value="unknown">不確定</option></select></div>
+</div>
+<div id="eligOut"></div>
+</section>
+
+<section class="card">
+<h2>2｜最關鍵的法源，不是部落格：現行法第 12 條</h2>
+<div class="note ok"><div class="hero-rule">「外國人取得我國副學士以上學位者，以應屆畢業生之身分依法取得內政部移民署許可延期居留期間，在我國從事工作，得免申請工作許可。」</div></div>
+<p class="small">這是現行《外國專業人才延攬及僱用法》第12條。新制自 2026/1/1 起生效。</p>
+<div class="actions">
+<a class="btn" target="_blank" rel="noopener" href="https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=A0030295">全國法規資料庫</a>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://www.nisa.moe.gov.tw/faq.new/view/sn/1062/menu_sn/13">教育部 NISA 2026 新答覆</a>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://www.ndc.gov.tw/nc_16183_39953">國發會新制說明</a>
+</div>
+</section>
+
+<section class="card">
+<h2>3｜為什麼大家會搞混？同一官方平台的新舊答案現在還同時存在</h2>
+<div class="compare">
+<div class="source old"><span class="badge old">舊資料：2021</span><h3>舊 NISA FAQ</h3><p>頁面仍可查到「畢業後覓職期間未經聘僱許可不得工作」的答覆；資料來源是 109 學年度、發布日期 2021/1/15。這反映的是 2026 新法生效前的規則。</p><a target="_blank" rel="noopener" href="https://www.nisa.moe.gov.tw/work.tw.faq">查看舊 FAQ 列表</a></div>
+<div class="source new"><span class="badge new">現行答覆：2026</span><h3>新 NISA FAQ</h3><p>2026/3/9 由勞動部回覆：取得我國副學士以上學位、以應屆畢業生身分獲移民署延期居留者，在臺工作得免申請工作許可；延期居留先 1 年，必要時可再延 1 次，總計最長 2 年。</p><a target="_blank" rel="noopener" href="https://www.nisa.moe.gov.tw/faq.new/view/sn/1062/menu_sn/13">查看 2026 新答覆</a></div>
+</div>
+<div class="note warn"><b>看到衝突時，不要投票決定哪個是真的。</b>先看發布日期，再回到現行法律與 2026 年主管機關答覆。舊 FAQ 沒有因搜尋結果存在就變成現行法。</div>
+</section>
+
+<section class="card">
+<h2>4｜新制到底開放到什麼程度？</h2>
+<div class="note ok"><b>工作許可：</b>符合第12條條件的延期居留期間，不需由雇主另外申請工作許可。</div>
+<div class="note ok"><b>工作型態：</b>國發會說明，過渡期間可做正職、兼職；不再受「只能專門性／技術性工作」、特定雇主資格或外國專業工作最低薪資門檻限制，但仍須遵守勞基法等一般勞動法規。</div>
+<div class="note warn"><b>專業證照仍然要有。</b>免「工作許可」不等於免醫師、護理、建築、法律或其他依法要求的執業證照／資格。</div>
+<div class="note warn"><b>這是居留身分綁定的過渡期。</b>第一段延期通常為 1 年，必要時再延 1 次，總計最長 2 年。畢業後若沒有完成合法延期居留，就不能只拿第12條文字自行宣稱可以工作。</div>
+</section>
+
+<section class="card">
+<h2>5｜給 HR 的「只查 4 件事」版本</h2>
+<div class="checkgrid">
+<label><input class="ck hr" type="checkbox"> 候選人在臺取得副學士以上學位</label>
+<label><input class="ck hr" type="checkbox"> 屬應屆畢業生</label>
+<label><input class="ck hr" type="checkbox"> 持移民署核准、目前有效的畢業後延期居留</label>
+<label><input class="ck hr" type="checkbox"> 若職業另需法定證照／資格，已另行查核</label>
+</div>
+<div id="hrOut"></div>
+<p class="small">本工具不要求候選人把 ARC、護照或學位證書上傳到第三方網站。HR 應依公司合法查核流程查看必要證件，但不要把個資貼到公開回饋區。</p>
+</section>
+
+<section class="card">
+<h2>6｜一鍵產生中英雙語「雇主查核卡」</h2>
+<textarea id="card"></textarea>
+<div class="actions"><button onclick="build(true)">更新查核卡</button><button class="ghost" onclick="copyText('card')">複製給 HR</button><button class="ghost" onclick="window.print()">列印／另存 PDF</button></div>
+</section>
+
+<section class="card">
+<h2>7｜畢業後別只顧工作：居留本身也要先接好</h2>
+<div class="note bad"><b>學校會通報畢業。</b>移民署提醒，若未及時處理畢業後的居留原因，原居留證可能被廢止，並可能面臨逾期罰鍰或限期出境。</div>
+<div class="actions"><a class="btn ghost" href="tel:1990">移民署 1990 多語生活諮詢</a><a class="btn ghost" href="tel:+886277337660">Talent Taiwan +886-2-7733-7660</a><a class="btn ghost" target="_blank" rel="noopener" href="https://talent.nat.gov.tw/zh/visa/arc-extension">Talent Taiwan 居留延期</a></div>
+</section>
+
+<section class="card">
+<h2>8｜這個工具刻意不做</h2>
+<div class="note"><ul><li>不保存姓名、國籍、ARC、護照、公司、薪資或履歷。</li><li>不替移民署判斷你的延期居留是否有效；這必須看官方核准狀態。</li><li>不把「免工作許可」誤寫成「什麼法規都不用管」；一般勞動法與專業資格仍適用。</li><li>不替目前仍在學的學生套用本規則；在學期間另有學生工作許可制度。</li><li>港澳、陸生或其他特殊身分若不確定是否適用，直接問 1990／Talent Taiwan，不由本頁自行類推。</li></ul></div>
+</section>
+
+<section class="card">
+<h2>9｜真實使用驗證</h2>
+<p>第一輪真正追：<strong>讀到舊規則或被 HR 卡住的人，拿這張官方法源查核卡後，有沒有真的完成官方查證、讓 HR 重新審核，或順利開始受僱。</strong></p>
+<div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/41">OpenWork 2Y 回饋區</a></div>
+<p class="small">公開回饋只談流程摩擦；不要貼姓名、ARC、護照、國籍、公司內部資料或薪資。</p>
+</section>
+
+<section class="card">
+<h2>10｜可直接轉貼到國際生／HR 群組</h2>
+<textarea id="promo">【2026新規｜在臺畢業僑外生的2年過渡期，不一定要另外辦工作許可】
+
+如果你在臺取得副學士以上學位，並以應屆畢業生身分取得移民署核准的畢業後延期居留：
+依現行《外國專業人才延攬及僱用法》第12條，在這段延期居留期間工作，得免申請工作許可。
+
+最容易混淆的是：教育部 NISA 網站現在仍找得到 2019–2021 年「覓職期不能工作」的舊 FAQ；但同一網站 2026/3/9 的新答覆已明確引用新法，說明符合條件者免工作許可。
+
+HR真正要查：
+1. 在臺副學士以上學位
+2. 應屆畢業生
+3. 移民署核准且有效的畢業後延期居留
+4. 若該職業另需證照，照專業法規查
+
+不確定就回現行法規、移民署1990或Talent Taiwan查證，不要拿2021舊FAQ直接拒絕候選人。
+
+OpenWork 2Y：
+https://allen3429.github.io/Allentrial20260812.github.io/public-good/openwork-2y/</textarea>
+<div class="actions"><button class="ghost" onclick="copyText('promo')">複製轉貼文</button></div>
+</section>
+</main>
+<script>
+const $=id=>document.getElementById(id);const checks=cls=>[...document.querySelectorAll('.'+cls)];
+function eligibility(){const d=$('degree').value,g=$('graduate').value,a=$('arc').value,l=$('license').value;let cls='ok',title='🟢 初步符合第12條的核心條件',msg='把目前有效的延期居留與學歷／應屆畢業身分交由HR依法查核即可；此過渡期間的工作本身得免另外申請工作許可。';if(d==='no'||g==='no'||a==='no'){cls='bad';title='⛔ 不要直接套用第12條免許可';msg='這條免許可規則要求「我國副學士以上學位＋應屆畢業生＋移民署核准的畢業後延期居留」。缺一項就應改查其他合法工作路徑。';}else if(a==='pending'){cls='warn';title='🟡 延期居留還沒核准：先把居留接好';msg='第12條文字綁定「依法取得移民署許可延期居留期間」。尚未核准前，不要只靠已畢業就自行認定可開始工作。';}else if([d,g,a].includes('unknown')){cls='warn';title='🟡 有核心條件還沒確認';msg='先向學校國際處、移民署1990或Talent Taiwan確認，不要讓HR和候選人各自猜。';}if(l==='yes'||l==='unknown')msg+=' 另外：免工作許可不會免除該職業依法要求的執業證照／資格。';$('eligOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;return title;}
+function hr(){const a=checks('hr'),n=a.filter(x=>x.checked).length;$('hrOut').innerHTML=`<div class="note ${n===4?'ok':'warn'}">HR 查核 ${n}/4。${n===4?'已把工作許可之外真正需要確認的四件事分開。':'有未確認項目時先向官方查證，不要用舊FAQ直接拒絕。'}</div>`;return n;}
+function build(countCore){const e=eligibility(),n=hr();$('card').value=`【OpenWork 2Y｜2026 畢業僑外生雇主查核卡 / Employer Verification Card】\n\n目前快篩 / Pre-check: ${e}\nHR查核 / HR checks: ${n}/4\n\n【現行法源 Current legal basis】\n《外國專業人才延攬及僱用法》第12條：\n外國人取得我國副學士以上學位者，以應屆畢業生之身分依法取得內政部移民署許可延期居留期間，在我國從事工作，得免申請工作許可。\n\nAct for the Recruitment and Employment of Foreign Professionals, Article 12: a foreign national who has obtained an associate degree or higher in Taiwan and, as a current-year graduate, has lawfully obtained NIA-approved post-graduation extension of residence may work during that approved extension period without applying for a work permit.\n\n【HR請查 4 件事】\n1. 在臺取得副學士以上學位 / Taiwan associate degree or higher\n2. 應屆畢業生 / current-year graduate\n3. 移民署核准、目前有效的畢業後延期居留 / valid NIA-approved post-graduation extension of residence\n4. 若職業另需法定證照或資格，另行查核 / any profession-specific licence or qualification still required\n\n【不要被舊頁誤導】\n教育部NISA仍可搜尋到2019–2021年舊FAQ，當時規則寫覓職期不能工作；但2026/3/9同一平台的新答覆已依新法明確說明符合第12條者免工作許可。請以現行法律與2026主管機關答覆為準。\n\n官方來源：\n全國法規資料庫：https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=A0030295\nNISA 2026新答覆：https://www.nisa.moe.gov.tw/faq.new/view/sn/1062/menu_sn/13\n國發會新制：https://www.ndc.gov.tw/nc_16183_39953\n移民署1990；Talent Taiwan +886-2-7733-7660\n\nThis card stores no personal data and is not an official status determination.`;if(countCore&&window.PGLabImpact)PGLabImpact.core('employer-verification-card');}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+['degree','graduate','arc','license'].forEach(id=>$(id).addEventListener('change',()=>build(false)));document.querySelectorAll('.hr').forEach(x=>x.addEventListener('change',()=>build(false)));build(false);
+</script>
+<script src="../impact.js" data-project="openwork-2y" data-action-text="我已完成免工作許可資格／HR查核卡" data-real-text="我已真的向官方查證／讓HR重新審核／開始受僱" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/41"></script>
+</body></html>
