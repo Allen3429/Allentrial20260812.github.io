@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="km12000-lastday">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="KM12000 LastDay：金門55–64歲戰地政務秋節慰助金9/11最後一天資格／補存摺防漏卡。">
+<title>KM12000 LastDay｜金門秋節慰助金最後一天防漏</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#a32323;--info:#285c8d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1100px;margin:auto;padding:22px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}
+h1{font-size:clamp(36px,7vw,62px);line-height:1.03;margin:.12em 0 .25em}.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:1000px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:12px 14px;border-radius:9px;line-height:1.7;margin:10px 0}.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}.info{border-left-color:var(--info)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(225px,1fr));gap:10px}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:9px}.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:24px;margin-top:4px}
+label{display:block;font-weight:760;margin-bottom:5px}select,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}textarea{min-height:240px;resize:vertical}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}
+.big{font-size:clamp(24px,4vw,34px);font-weight:950}.deadline{font-size:clamp(32px,6vw,52px);font-weight:1000}.small{font-size:13px;color:var(--muted);line-height:1.65}
+.checkgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(275px,1fr));gap:8px}.ck{width:auto;transform:scale(1.12);margin-right:7px}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · Kinmen · 2026/09/11 最後申請日</div>
+<h1>KM12000 LastDay<br>今天不是研究規則的日子，是把 12,000 元申請／補件真的送出去。</h1>
+<p class="lead">金門縣「歷經戰地政務時期55–64歲秋節慰助金」今天 <strong>2026/9/11</strong> 截止。符合資格者每人 <strong>NT$12,000</strong>，中秋前匯入本人土地銀行或郵局帳戶。官方系統只寫「開放至9/11」，未公開明確截止時分，所以不要等到晚上才處理。</p>
+<section class="card"><h2>1｜你是「第一次申請」還是「以前合格、只差存摺」？</h2><div class="grid"><div><label>你的狀況</label><select id="kind"><option value="new">115年秋節第一次申請</option><option value="bank">112年秋節～115年端節已申請且合格，但從未領過現金，需要補存摺</option><option value="done">已申請且已領過現金／不確定是否需再申請</option></select></div></div><div id="kindOut"></div></section>
+<section class="card" id="eligCard"><h2>2｜第一次申請：4個核心條件</h2><div class="grid"><div><label>出生日期是否落在官方本節次年齡區間（約1961/9/26–1971/9/25）？</label><select id="age"><option value="yes">是</option><option value="no">不是</option><option value="unknown">邊界日期／不確定</option></select></div><div><label>目前戶籍是否設於金門縣？</label><select id="nowreg"><option value="yes">是</option><option value="no">不是</option></select></div><div><label>1992/11/7戰地政務終止前，曾設籍金門累計滿10年？</label><select id="ten"><option value="yes">是</option><option value="no">沒有</option><option value="unknown">不知道累計年資</option></select></div><div><label>且曾在那段設籍期間年滿16歲？</label><select id="sixteen"><option value="yes">是</option><option value="no">沒有</option><option value="unknown">不確定</option></select></div></div><div id="eligOut"></div></section>
+<section class="card"><h2>3｜帳戶不是隨便一個銀行帳戶</h2><div class="grid"><div><label>準備上傳哪種本人帳戶？</label><select id="account"><option value="land">土地銀行本人帳戶</option><option value="post">郵局本人帳戶</option><option value="other">其他銀行帳戶</option><option value="bad">土銀／郵局，但屬薪資專戶、優惠存款專戶、久未使用凍結戶、退休年金專戶或終止帳戶</option><option value="none">還沒有可用帳戶／不確定</option></select></div></div><div id="accountOut"></div><div class="note warn"><b>舊申請者最容易漏：</b>112年秋節至115年端節間已申請、從未領過現金的合格申請人，本次要補傳本人土銀或郵局存摺。金門日報9/9報導，當時尚有<strong>348人</strong>未補齊帳戶資料。</div></section>
+<section class="card"><h2>4｜今天最短路徑：新申請只要先備這兩類</h2><div class="checkgrid"><label><input class="ck prep" type="checkbox"> 本人身分證正反面可清楚上傳</label><label><input class="ck prep" type="checkbox"> 本人土地銀行或郵局存摺資料可清楚上傳</label><label><input class="ck prep" type="checkbox"> 已確認帳戶不是不可受款的專戶／凍結／終止帳戶</label><label><input class="ck prep" type="checkbox"> 已進入官方系統，而不是只把連結收藏起來</label></div><div id="prepOut"></div><div class="actions"><a class="btn" target="_blank" rel="noopener" href="https://www.km5564.com/" onclick="goOfficial()">現在進官方申請</a><a class="btn ghost" href="tel:0277565157">系統客服 02-7756-5157 #801</a><a class="btn ghost" href="tel:0800318823">金門縣民服務 0800-318823</a></div></section>
+<section class="card"><h2>5｜如果帳戶或上傳卡住，不要今天自己硬猜</h2><div class="note info">金門縣政府明確提醒：系統操作或上傳文件有困難，可就近向<strong>戶籍所在地鄉鎮公所民政課</strong>尋求協助；若要變更帳戶，或帳戶凍結、警示等無法受款，也應直接洽戶籍所在地公所專案處理。</div><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://www.kinmen.gov.tw/">金門縣政府</a><a class="btn ghost" target="_blank" rel="noopener" href="https://www.km5564.com/subsidy/notice">官方系統注意事項</a></div></section>
+<section class="card"><h2>6｜一鍵產生「今天完成」行動卡</h2><textarea id="card"></textarea><div class="actions"><button onclick="build(true)">更新行動卡</button><button class="ghost" onclick="copyText('card')">複製給本人／家人</button></div></section>
+<section class="card"><h2>7｜這個工具刻意不做</h2><div class="note"><ul><li>不收身分證影本、存摺、帳號、戶籍年資或生日；所有敏感資料只交官方系統。</li><li>不把「9/11截止」自行解讀成特定晚上23:59；官方目前沒有公開明確時分，應儘早完成。</li><li>不替縣府正式認定設籍10年、年滿16歲等資格；邊界個案直接問公所。</li><li>不把其他銀行帳戶誤寫成可受款帳戶；官方指定本人土地銀行或郵局帳戶。</li></ul></div></section>
+<section class="card"><h2>8｜真實使用驗證</h2><p>這輪真正追的是：<strong>看到最後一天提醒 → 進官方系統 → 完成新申請／補存摺 → 或因帳戶問題聯絡公所</strong>。不是pageview。</p><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/55">KM12000 LastDay 回饋區</a></div></section>
+<section class="card"><h2>9｜可直接轉傳給55–64歲金門親友</h2><textarea id="promo">【今天9/11最後一天｜金門55–64歲秋節慰助金12,000元】
+符合資格但還沒處理的，今天不要只收藏消息，直接進系統。
+
+第一次申請大致要確認：
+・本節次年齡區間（約1961/9/26–1971/9/25）
+・目前設籍金門
+・1992/11/7以前曾設籍金門累計滿10年
+・並曾於設籍期間年滿16歲
+
+準備：
+・本人身分證
+・本人土地銀行或郵局存摺
+
+特別提醒：
+112年秋節～115年端節已申請且合格、但從未領過現金者，本次要補傳土銀／郵局存摺。9/9報導當時還有348人尚未補件。
+
+官方系統：
+https://www.km5564.com/
+
+系統客服：02-7756-5157 分機801
+金門縣民服務：0800-318823
+
+官方頁只寫開放至9/11，未標明精確截止時分，不要等到晚上才送。</textarea><div class="actions"><button class="ghost" onclick="copyText('promo')">複製最後一天提醒</button></div></section>
+</main>
+<script>
+const $=id=>document.getElementById(id), checks=cls=>[...document.querySelectorAll('.'+cls)];
+function kind(){const k=$('kind').value;let cls='ok',title='',msg='';if(k==='new'){title='🟢 走「115年秋節新申請」';msg='先做下面4個核心資格快篩，再準備身分證＋本人土銀／郵局存摺。';}else if(k==='bank'){cls='bad';title='🔴 你今天的重點不是重填資格，是「補存摺」';msg='若你是112秋節～115端節已申請且合格、但未曾領現金者，官方系統要求補傳本人土地銀行或郵局存摺。';}else {cls='warn';title='🟡 先不要重複亂送';msg='若你已領過現金，或不知道本節次是否還要申請，先進官方系統查狀態或詢問公所／客服。';}$('kindOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;$('eligCard').style.display=k==='new'?'block':'none';return title;}
+function eligibility(){if($('kind').value!=='new') return '不適用：非新申請';const vals=['age','nowreg','ten','sixteen'].map(id=>$(id).value);let cls='ok',title='🟢 核心條件初步都符合',msg='正式仍由金門縣政府審查；今天直接進官方系統。';if(vals.includes('no')){cls='bad';title='🔴 至少一個核心條件目前不符合';msg='若你認為是日期／設籍年資判讀問題，今天直接問戶籍所在地公所，不要靠本工具硬判。';}else if(vals.includes('unknown')){cls='warn';title='🟡 有邊界條件不確定';msg='不要因此直接放棄；今天就打公所或縣民服務確認。';}$('eligOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;return title;}
+function account(){const a=$('account').value;let cls='ok',title='🟢 帳戶類型看起來符合受款要求',msg='確認是申請人本人帳戶，並清楚上傳存摺資料。';if(a==='other'){cls='bad';title='🔴 其他銀行不符合這次官方指定';msg='官方要求申請人本人土地銀行或郵局帳戶。今天直接詢問公所如何處理。';}if(a==='bad'){cls='bad';title='🔴 這類帳戶可能無法受款';msg='官方列出薪資專戶、優惠存款專戶、久未使用凍結戶、退休年金專戶、終止帳戶等不可使用；今天直接洽公所。';}if(a==='none'){cls='warn';title='🟡 帳戶還沒準備好';msg='別等到晚上；現在就問戶籍所在地公所可怎麼完成本節次處理。';}$('accountOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;return title;}
+function prep(){const a=checks('prep'),n=a.filter(x=>x.checked).length;$('prepOut').innerHTML=`<div class="note ${n>=3?'ok':'warn'}">送件進度 ${n}/4。${n>=3?'不要停在這頁，現在進官方系統完成。':'今天的最小下一步：先把身分證與可用存摺放在手邊，直接進官方系統。'}</div>`;return n;}
+function goOfficial(){if(window.PGLabImpact)PGLabImpact.core('official-system-open')}
+function build(countCore){const k=kind(),e=eligibility(),a=account(),p=prep();$('card').value=`【KM12000 LastDay｜9/11最後一天行動卡】
+本節次慰助金：NT$12,000
+今天：2026/09/11 截止
+我的路徑：${k}
+資格快篩：${e}
+帳戶：${a}
+送件準備：${p}/4
+
+現在做：
+1. 官方系統：https://www.km5564.com/
+2. 新申請：準備本人身分證＋本人土地銀行或郵局存摺。
+3. 112秋節～115端節已合格但從未領現金：重點是補傳本人土銀／郵局存摺。
+4. 若帳戶是凍結／警示／特殊專戶，或要改帳戶：直接洽戶籍所在地鄉鎮公所。
+5. 系統客服：02-7756-5157 分機801。
+6. 金門縣民服務：0800-318823。
+7. 官方只寫「開放至9/11」，未標明精確截止時分，所以不要等到晚上。
+
+敏感資料只上傳官方系統，不要貼到公開回饋區。`;if(countCore&&window.PGLabImpact)PGLabImpact.core('lastday-action-card');}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+['kind','age','nowreg','ten','sixteen','account'].forEach(id=>$(id).addEventListener('change',()=>build(false)));document.querySelectorAll('.prep').forEach(x=>x.addEventListener('change',()=>build(false)));build(false);
+</script>
+<script src="../impact.js" data-project="km12000-lastday" data-action-text="我已完成9/11秋節慰助金最後一天行動卡" data-real-text="我已真的進官方系統／完成新申請／補存摺／聯絡公所" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/55"></script>
+</body></html>
