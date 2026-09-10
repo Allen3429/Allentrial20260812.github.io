@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="wateready-taipei">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="WaterReady Taipei：把臺北自來水事業處近期施工停水長清單變成不收完整地址的地區／道路快篩，並導向官方「您的水管家」主動通知。">
+<title>WaterReady Taipei｜近期施工停水快篩</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#65717e;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#a32323;--info:#285c8d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1120px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}
+h1{font-size:clamp(36px,7vw,62px);line-height:1.03;margin:.12em 0 .25em}.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:1000px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:12px 14px;border-radius:9px;line-height:1.7;margin:10px 0}.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}.info{border-left-color:var(--info)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(225px,1fr));gap:10px}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:9px}.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:24px;margin-top:4px}
+label{display:block;font-weight:760;margin-bottom:5px}select,input,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}textarea{min-height:230px;resize:vertical}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}
+.big{font-size:clamp(24px,4vw,34px);font-weight:950}.small{font-size:13px;color:var(--muted);line-height:1.65}
+.list{display:grid;gap:10px}.event{border:1px solid var(--line);border-radius:14px;padding:13px}.event h3{margin:.1em 0 .35em}.event p{line-height:1.65;margin:.35em 0}.tag{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:3px 8px;font-size:12px;font-weight:800;margin-right:5px}.pressure{background:#fff5d7}.outage{background:#feecec}
+.checkgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(275px,1fr));gap:8px}.ck{width:auto;transform:scale(1.12);margin-right:7px}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · Taipei · 資料版次：北水處 2026/09/03、09/07、09/09 已公開施工訊息</div>
+<h1>WaterReady Taipei<br>停水公告很完整，但你不該在十幾行門牌裡找自己。</h1>
+<p class="lead">這個 MVP 把近期仍有效的臺北市施工停水／降壓地址整理成<strong>行政區＋道路關鍵字</strong>快篩。你不需要輸入完整門牌；比對全部在瀏覽器本機完成。若顯示「可能命中」，再回官方公告核對精確門牌範圍。</p>
+
+<section class="card">
+<h2>1｜不輸入完整地址：先用「行政區＋路名／巷名」找可能命中</h2>
+<div class="grid">
+<div><label>行政區</label>
+<select id="district">
+<option value="">全部</option><option>中山區</option><option>信義區</option><option>內湖區</option><option>北投區</option><option>萬華區</option><option>文山區</option><option>松山區</option><option>士林區</option>
+</select></div>
+<div><label>道路關鍵字（例：南京東路、珠海路、松仁路）</label><input id="road" autocomplete="off" placeholder="不用輸入門牌"></div>
+<div><label>只看</label>
+<select id="when"><option value="active">今天起仍可能影響</option><option value="today">今天</option><option value="all">本頁全部資料</option></select></div>
+</div>
+<div class="actions"><button onclick="searchEvents(true)">開始快篩</button><button class="ghost" onclick="clearSearch()">清除</button></div>
+<div id="searchOut"></div>
+</section>
+
+<section class="card">
+<h2>2｜可能命中的施工</h2>
+<div id="events" class="list"></div>
+<div class="note warn"><b>快篩不是官方門牌判定。</b>尤其公告含「單號／雙號／某巷某弄／某區間」時，請看卡片內完整官方文字。新臨時事故或後續公告也可能不在這份靜態清單。</div>
+</section>
+
+<section class="card">
+<h2>3｜命中後的 4 件事</h2>
+<div class="checkgrid">
+<label><input class="ck prep" type="checkbox"> 已回官方公告核對精確門牌與日期</label>
+<label><input class="ck prep" type="checkbox"> 已依北水處提醒儲水備用</label>
+<label><input class="ck prep" type="checkbox"> 停水期間會關閉抽水馬達及總表前止水栓</label>
+<label><input class="ck prep" type="checkbox"> 已通知同住者／店員／住戶，避免到施工開始才發現</label>
+</div>
+<div id="prepOut"></div>
+<div class="actions"><a class="btn" href="tel:0287335678">北水處 24h：02-8733-5678</a></div>
+</section>
+
+<section class="card">
+<h2>4｜這個小工具最好的終局，是你以後不需要它</h2>
+<div class="note ok"><b>北水處 9/1 已強化「您的水管家」：</b>可用台北通登入，服務包含水量異常與<strong>施工停水主動通知</strong>。這比每次自己掃新聞長清單更可靠。</div>
+<div class="actions">
+<a class="btn" target="_blank" rel="noopener" href="https://mbr.water.gov.taipei/" onclick="trackOfficial('butler')">加入／登入「您的水管家」</a>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://eng.water.gov.taipei/News_Content.aspx?n=5AE31D16E6C8ED48&s=AF33362CBD8CAF40&sms=78D644F2755ACCAA" onclick="trackOfficial('butler-news')">看北水處 9/1 說明</a>
+</div>
+</section>
+
+<section class="card">
+<h2>5｜一鍵產生停水提醒卡</h2>
+<textarea id="card"></textarea>
+<div class="actions"><button onclick="buildCard(true)">更新提醒卡</button><button class="ghost" onclick="copyText('card')">複製給家人／店員／住戶</button></div>
+</section>
+
+<section class="card">
+<h2>6｜這個工具刻意不做</h2>
+<div class="note">
+<ul>
+<li>不收完整地址、水號、帳單、台北通帳號或任何可識別用戶資料。</li>
+<li>不聲稱比官方即時；本頁只整理已公開的近期施工訊息，臨時事故仍以北水處最新資訊為準。</li>
+<li>不把「水壓降低」誤寫成「完全停水」。</li>
+<li>不自創儲水量標準；只重述北水處要求「儲水備用、關抽水馬達及總表前止水栓、慎防火災」。</li>
+</ul>
+</div>
+</section>
+
+<section class="card">
+<h2>7｜真實使用驗證</h2>
+<p>這輪真正追的是：<strong>從長清單中發現可能命中 → 回官方核對 → 備水／通知同住者或店員 → 加入官方施工停水主動通知。</strong>公開回饋請不要貼完整地址。</p>
+<div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/56">WaterReady Taipei 回饋區</a></div>
+</section>
+
+<section class="card">
+<h2>8｜可直接轉貼</h2>
+<textarea id="promo">【臺北近期施工停水｜不要在長門牌清單裡漏掉自己】
+9/11～9/18 仍有多批管網改善施工，包含中山、信義、內湖、北投、萬華、文山等區域；部分是「停水」，北投珠海路 9/11 則是「水壓降低」。
+
+北水處提醒：施工期間先儲水備用，並關閉抽水馬達及總表前止水栓。
+
+如果你不想每次自己掃長清單：
+北水處「您的水管家」現在可透過台北通登入，並提供施工停水主動通知。
+
+WaterReady Taipei：
+https://allen3429.github.io/Allentrial20260812.github.io/public-good/wateready-taipei/
+
+只用行政區＋道路關鍵字快篩，不需要輸入完整地址；可能命中後再回官方公告核對門牌。</textarea>
+<div class="actions"><button class="ghost" onclick="copyText('promo')">複製轉貼文</button></div>
+</section>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+const events=[
+{id:'nanjing',district:'中山區',keys:['南京東路1段','中山北路2段'],start:'2026-09-11',end:'2026-09-13',from:'10:00',to:'16:00',type:'停水',detail:'南京東路1段13巷及7弄；中山北路2段11巷及27巷',source:'9/9公告',url:'https://www.cna.com.tw/postwrite/chi/443727'},
+{id:'yongji',district:'信義區',keys:['永吉路443巷','松山路','松山路119巷'],start:'2026-09-12',end:'2026-09-12',from:'10:00',to:'16:00',type:'停水',detail:'永吉路443巷50號至64號；松山路107號至131號、119巷3號至29號及14之1號',source:'9/9公告',url:'https://www.cna.com.tw/postwrite/chi/443727'},
+{id:'chenggong2',district:'內湖區',keys:['成功路4段61巷'],start:'2026-09-14',end:'2026-09-18',from:'10:00',to:'16:00',type:'停水',detail:'成功路4段61巷1號至23號、8弄及22弄',source:'9/9公告',url:'https://www.cna.com.tw/postwrite/chi/443727'},
+{id:'songren',district:'信義區',keys:['松仁路'],start:'2026-09-10',end:'2026-09-12',from:'11:00',to:'17:00',type:'停水',detail:'松仁路240號至266號',source:'9/9公告',url:'https://www.cna.com.tw/postwrite/chi/443727'},
+{id:'jianguo-odd',district:'中山區',keys:['建國北路3段113巷','民族東路'],start:'2026-09-14',end:'2026-09-18',from:'11:00',to:'15:00',type:'停水',detail:'建國北路3段113巷單號（民族東路至建國北路3段間一帶）',source:'9/9公告',url:'https://www.cna.com.tw/postwrite/chi/443727'},
+{id:'jianguo-even',district:'中山區',keys:['建國北路3段113巷','民族東路410巷2弄'],start:'2026-09-14',end:'2026-09-18',from:'11:00',to:'15:00',type:'停水',detail:'建國北路3段113巷雙號（民族東路410巷2弄至建國北路3段間一帶）',source:'9/9公告',url:'https://www.cna.com.tw/postwrite/chi/443727'},
+{id:'zhuhai',district:'北投區',keys:['珠海路'],start:'2026-09-11',end:'2026-09-11',from:'10:00',to:'16:00',type:'水壓降低',detail:'珠海路周邊',source:'9/9公告',url:'https://www.cna.com.tw/postwrite/chi/443727'},
+{id:'lequn',district:'中山區',keys:['樂群二路'],start:'2026-09-12',end:'2026-09-12',from:'10:00',to:'18:00',type:'停水',detail:'樂群二路143號至147號單號、267號至305號單號及265巷2號至42號雙號',source:'9/9公告',url:'https://www.cna.com.tw/postwrite/chi/443727'},
+{id:'zhonghua',district:'萬華區',keys:['中華路2段'],start:'2026-09-12',end:'2026-09-12',from:'12:00',to:'18:00',type:'停水',detail:'中華路2段138、140、302、362號雙號；300巷1號至11號單號及5弄全部；334巷2弄24號；364巷4號至20號雙號、2弄全部、22弄及24弄全部',source:'9/9公告',url:'https://www.cna.com.tw/postwrite/chi/443727'},
+{id:'xinglong',district:'文山區',keys:['興隆路2段96巷','辛亥路5段'],start:'2026-09-15',end:'2026-09-15',from:'09:00',to:'16:00',type:'停水',detail:'興隆路2段96巷20號至100號之8華園山莊社區全部及220巷65弄9號至31之13號；辛亥路5段120、120之1、122、126號、116巷、118巷及124巷（含單雙號及巷弄全部）',source:'9/7公告',url:'https://www.cna.com.tw/postwrite/chi/443537'},
+{id:'chenggong1',district:'內湖區',keys:['成功路4段61巷'],start:'2026-09-07',end:'2026-09-11',from:'10:00',to:'16:00',type:'停水',detail:'成功路4段61巷1號至23號、8弄及22弄',source:'9/3公告',url:'https://www.cna.com.tw/postwrite/chi/443293'},
+{id:'dunhua',district:'松山區',keys:['敦化北路199巷'],start:'2026-09-07',end:'2026-09-11',from:'10:00',to:'16:00',type:'停水',detail:'敦化北路199巷6號、8號及16弄1號至21號、6號至18號及30號至36號',source:'9/3公告',url:'https://www.cna.com.tw/postwrite/chi/443293'},
+{id:'yanping',district:'士林區',keys:['延平北路8段2巷200弄'],start:'2026-09-07',end:'2026-09-11',from:'10:00',to:'14:00',type:'停水',detail:'延平北路8段2巷200弄2號至21號、臨28號1樓、43號及臨51號至臨59號',source:'9/3公告',url:'https://www.cna.com.tw/postwrite/chi/443293'},
+{id:'xiyuan',district:'萬華區',keys:['西園路1段','廣州街'],start:'2026-09-07',end:'2026-09-11',from:'10:30',to:'16:30',type:'停水',detail:'西園路1段105號至117號、127號至139號單號、145號總表、153號及125巷5號至13號；廣州街211號',source:'9/3公告',url:'https://www.cna.com.tw/postwrite/chi/443293'},
+{id:'zhuangjing',district:'信義區',keys:['莊敬路423巷','松仁路202巷'],start:'2026-09-07',end:'2026-09-13',from:'11:00',to:'15:00',type:'停水',detail:'莊敬路423巷2弄、4弄及6弄；松仁路202巷2弄',source:'9/3公告',url:'https://www.cna.com.tw/postwrite/chi/443293'}
+];
+
+function localDate(){
+ const parts=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Taipei',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+ const o={};parts.forEach(p=>o[p.type]=p.value);return `${o.year}-${o.month}-${o.day}`;
+}
+function dayLabel(e){return e.start===e.end?e.start.replaceAll('-','/'):`${e.start.replaceAll('-','/')}–${e.end.replaceAll('-','/')}`;}
+function matchesWhen(e,mode){const t=localDate();if(mode==='all')return true;if(mode==='today')return e.start<=t&&e.end>=t;return e.end>=t;}
+let lastMatches=[];
+function searchEvents(countCore=false){
+ const d=$('district').value,q=$('road').value.trim().replace(/\s/g,''),mode=$('when').value;
+ const list=events.filter(e=>{if(d&&e.district!==d)return false;if(!matchesWhen(e,mode))return false;if(!q)return true;const hay=(e.detail+' '+e.keys.join(' ')).replace(/\s/g,'');return hay.includes(q)||e.keys.some(k=>q.includes(k.replace(/\s/g,'')));});
+ lastMatches=list;render(list);if(countCore&&window.PGLabImpact)PGLabImpact.core('district-road-scan');
+ const scope=(d||'全部行政區')+(q?`＋「${q}」`:'');
+ $('searchOut').innerHTML=`<div class="note ${list.length?'warn':'ok'}"><div class="big">${list.length?`找到 ${list.length} 筆可能相關`:'目前沒有在本頁清單中找到吻合項目'}</div>${list.length?'請逐筆核對官方完整門牌；「可能相關」不等於你的門牌一定停水。':`搜尋範圍：${scope}。這不代表沒有臨時事故或更新公告，仍可使用「您的水管家」主動通知。`}</div>`;
+ buildCard(false);
+}
+function render(list){
+ const box=$('events');box.innerHTML='';if(!list.length){box.innerHTML='<div class="note">沒有符合目前篩選的卡片。</div>';return}
+ list.forEach(e=>{const el=document.createElement('article');el.className='event';el.innerHTML=`<span class="tag ${e.type==='停水'?'outage':'pressure'}">${e.type}</span><span class="tag">${e.district}</span><h3>${dayLabel(e)}｜${e.from}–${e.to}</h3><p>${e.detail}</p><p class="small">來源：北水處${e.source}（透過中央社訊息平台發布）。</p><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="${e.url}" onclick="trackOfficial('notice')">核對原公告</a><button class="ghost" onclick="downloadICS('${e.id}')">加到行事曆</button></div>`;box.appendChild(el);});
+}
+function checks(sel){return [...document.querySelectorAll(sel)]}
+function prep(){const a=checks('.prep'),n=a.filter(x=>x.checked).length;$('prepOut').innerHTML=`<div class="note ${n>=3?'ok':'warn'}">停水準備 ${n}/${a.length}。${n>=3?'已從「看到公告」走到實際準備。':'至少先完成「核對門牌＋儲水＋通知同住者／店員」。'}</div>`;return n;}
+function trackOfficial(label){if(window.PGLabImpact)PGLabImpact.core('official-'+label)}
+function buildCard(countCore){
+ const p=prep();const items=(lastMatches.length?lastMatches:events.filter(e=>matchesWhen(e,'today'))).slice(0,5);const lines=items.length?items.map(e=>`・${e.district}｜${dayLabel(e)} ${e.from}–${e.to}｜${e.type}｜${e.detail}`).join('\n'):'・本頁目前沒有你篩選到的施工卡；仍請留意官方新公告。';
+ $('card').value=`【WaterReady Taipei｜施工停水提醒卡】\n篩選：${$('district').value||'全部行政區'} ${$('road').value.trim()?'/ '+$('road').value.trim():''}\n準備進度：${p}/4\n\n可能相關：\n${lines}\n\n命中後：\n1. 回原公告核對精確門牌。\n2. 依北水處提醒儲水備用。\n3. 停水期間關閉抽水馬達及總表前止水栓，並慎防火災。\n4. 提前通知同住者、店員或住戶。\n5. 長期建議加入「您的水管家」施工停水主動通知：\nhttps://mbr.water.gov.taipei/\n\n北水處24小時客服：02-8733-5678\n\n這張卡只整理已公開施工訊息，不代表官方即時查詢；臨時事故與後續異動以北水處最新資訊為準。`;
+ if(countCore&&window.PGLabImpact)PGLabImpact.core('ready-card');
+}
+function downloadICS(id){
+ const e=events.find(x=>x.id===id);if(!e)return;const fmt=s=>s.replaceAll('-','');const end=new Date(e.end+'T12:00:00+08:00');end.setDate(end.getDate()+1);const endY=end.getFullYear()+String(end.getMonth()+1).padStart(2,'0')+String(end.getDate()).padStart(2,'0');
+ const ics=`BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//WaterReadyTaipei//TW\nBEGIN:VEVENT\nDTSTART;VALUE=DATE:${fmt(e.start)}\nDTEND;VALUE=DATE:${endY}\nSUMMARY:留意${e.district}${e.type}｜${e.keys[0]}\nDESCRIPTION:${e.detail}\\n每日/當日公告時段 ${e.from}-${e.to}\\n請回官方公告核對精確門牌並提前儲水。\\n北水處 02-8733-5678\nEND:VEVENT\nEND:VCALENDAR`;
+ const blob=new Blob([ics],{type:'text/calendar;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`wateready-${id}.ics`;a.click();URL.revokeObjectURL(a.href);if(window.PGLabImpact)PGLabImpact.core('calendar-reminder');
+}
+function clearSearch(){$('district').value='';$('road').value='';$('when').value='active';searchEvents(false)}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+['district','when'].forEach(id=>$(id).addEventListener('change',()=>searchEvents(false)));$('road').addEventListener('input',()=>searchEvents(false));document.querySelectorAll('.prep').forEach(x=>x.addEventListener('change',()=>buildCard(false)));searchEvents(false);
+</script>
+<script src="../impact.js" data-project="wateready-taipei" data-action-text="我已完成地區／道路施工停水快篩" data-real-text="我已真的核對門牌／備水／通知同住者或店員／加入水管家" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/56"></script>
+</body></html>
