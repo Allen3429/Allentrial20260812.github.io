@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="homeloan930">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="HomeLoan 930：115年度自購／修繕住宅貸款利息補貼 30 秒路由、官方資格檢視、青安搭配提醒與9/30截止防漏。">
+<title>HomeLoan 930｜住宅貸款利息補貼 9/30 防漏卡</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#a32323;--info:#285c8d}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1120px;margin:auto;padding:24px 14px 72px}
+.kicker{font-size:14px;font-weight:850;color:var(--muted)}
+h1{font-size:clamp(36px,7vw,62px);line-height:1.03;margin:.12em 0 .25em}
+.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:1000px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:12px 14px;border-radius:9px;line-height:1.7;margin:10px 0}
+.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}.info{border-left-color:var(--info)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(225px,1fr));gap:10px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:9px}
+.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:24px;margin-top:4px}
+label{display:block;font-weight:760;margin-bottom:5px}
+select,input,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}
+textarea{min-height:245px;resize:vertical}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}
+button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}
+.ghost{background:#edf1f5;color:#17212b}
+.big{font-size:clamp(24px,4vw,34px);font-weight:950}.deadline{font-size:clamp(31px,6vw,52px);font-weight:1000}
+.small{font-size:13px;color:var(--muted);line-height:1.65}
+.checkgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(275px,1fr));gap:8px}.ck{width:auto;transform:scale(1.12);margin-right:7px}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · Taiwan · 依國土管理署 2026/08/31–09/11 現行資訊整理</div>
+<h1>HomeLoan 930<br>不是先到先得；真正怕的是 9/30 以前根本沒進官方資格檢視。</h1>
+<p class="lead">115年度「自購住宅貸款利息補貼」與「修繕住宅貸款利息補貼」已受理，截止 <strong>2026/9/30 17:00</strong>。全國預計自購 4,000 戶、修繕 2,000 戶。補貼採<strong>評點排定優先順序</strong>，不是 9/1 一開門就搶完；但一定要在期限內完成申請。</p>
+
+<section class="card">
+<h2>1｜先看剩多少時間</h2>
+<div id="deadlineOut"></div>
+<div class="actions">
+<button class="ghost" onclick="downloadReminder()">下載 9/25 送件提醒</button>
+<a class="btn" target="_blank" rel="noopener" href="https://has.nlma.gov.tw/subsidyOnline/">直接進官方線上申請</a>
+</div>
+</section>
+
+<section class="card">
+<h2>2｜30 秒分流：你比較像「自購」還是「修繕」？</h2>
+<div class="grid">
+<div><label>你的主要需求</label>
+<select id="need">
+<option value="buy">最近買房／已有購屋貸款，想降低利息負擔</option>
+<option value="repair">只有一戶老住宅，想修繕改善居住品質</option>
+<option value="unknown">不確定自己該選哪一種</option>
+</select></div>
+<div><label>若是自購：住宅是否為近 2 年內購買？</label>
+<select id="buy2">
+<option value="yes">是</option><option value="no">不是</option><option value="na">不適用／不確定</option>
+</select></div>
+<div><label>若是修繕：家庭成員是否僅持有 1 戶住宅，且該住宅屋齡逾 10 年？</label>
+<select id="repair10">
+<option value="yes">是</option><option value="no">不是</option><option value="na">不適用／不確定</option>
+</select></div>
+<div><label>房屋所在地</label>
+<select id="place">
+<option value="taipei">臺北市</option><option value="newtaipei">新北市</option><option value="other">其他縣市</option>
+</select></div>
+</div>
+<div id="routeOut"></div>
+</section>
+
+<section class="card">
+<h2>3｜先別在這裡輸入所得：115年度標準已更新，而且分 10 區</h2>
+<div class="note info"><b>今年所得／財產門檻不是一張全國通用表。</b>國土署 2026 年已更新「住宅補貼對象一定所得及財產標準」，分成 10 種區域標準。這個 MVP 不複製一份可能被看錯年度的門檻；直接把你送到官方「您適合哪種住宅補貼呢？」資格檢視。</div>
+<div class="actions">
+<a class="btn" target="_blank" rel="noopener" href="https://pip.moi.gov.tw/Publicize/Info/B1081" onclick="officialCheck()">打開官方資格檢視</a>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://pip.moi.gov.tw/v3/b/SCRB0108.aspx">115年度住宅補貼專區</a>
+<a class="btn ghost" href="tel:0277298003">諮詢 02-7729-8003</a>
+</div>
+<p class="small">專線服務：週一至週五 08:00–18:00。正式資格與評點以主管機關審查為準。</p>
+</section>
+
+<section class="card">
+<h2>4｜你可能原本誤會了這兩件事</h2>
+<div class="note ok"><b>① 不是先到先得。</b>官方採「評點」排定補貼優先順序；婚育、弱勢家庭及特殊經濟需求者還可能有額外評點或優惠利率。錯過 9/1 開放第一天，不代表沒資格。</div>
+<div class="note ok"><b>② 青安可以搭配。</b>內政部住宅補貼專區目前明載，財政部公股銀行的「青年安心成家購屋優惠貸款」可與自購或修繕住宅貸款利息補貼搭配使用。不要因為已辦青安就直接自我淘汰。</div>
+</section>
+
+<section class="card">
+<h2>5｜政策可涵蓋的優惠貸款額度：先知道量級，不等於銀行一定核滿</h2>
+<div id="loanOut"></div>
+<div class="note warn"><b>這是政策優惠貸款「上限」，不是現金補助，也不是銀行核貸保證。</b>自購補貼是政府補貼部分房貸利息；實際核貸金額、資格與條件仍由主管機關與承貸金融機構依規定辦理。</div>
+</section>
+
+<section class="card">
+<h2>6｜送件前只做 5 件事，不在這裡上傳敏感資料</h2>
+<div class="checkgrid">
+<label><input class="ck prep" type="checkbox"> 已確認要走「自購」或「修繕」路徑</label>
+<label><input class="ck prep" type="checkbox"> 已完成官方「適合哪種住宅補貼」資格檢視</label>
+<label><input class="ck prep" type="checkbox"> 已依官方系統準備家庭、住宅與貸款相關必要資料</label>
+<label><input class="ck prep" type="checkbox"> 若有青安，已知道不用因此放棄本項補貼</label>
+<label><input class="ck prep" type="checkbox"> 已安排在 9/30 17:00 前完成線上或郵寄申請</label>
+</div>
+<div id="prepOut"></div>
+</section>
+
+<section class="card">
+<h2>7｜一鍵產生我的「9/30 前完成」行動卡</h2>
+<textarea id="card"></textarea>
+<div class="actions">
+<button onclick="build(true)">更新行動卡</button>
+<button class="ghost" onclick="copyText('card')">複製到備忘錄</button>
+<a class="btn" target="_blank" rel="noopener" href="https://has.nlma.gov.tw/subsidyOnline/" onclick="applicationClick()">進官方申請</a>
+</div>
+</section>
+
+<section class="card">
+<h2>8｜這個工具刻意不做</h2>
+<div class="note">
+<ul>
+<li>不收家庭所得、存款、股票、不動產明細、地址、房貸帳號、權狀或戶籍資料。</li>
+<li>不自行複製 10 區域的所得／財產門檻；年度門檻會更新，正式判斷直接回官方資格檢視。</li>
+<li>不把「最高優惠貸款額度」寫成一定會拿到的現金。</li>
+<li>不替主管機關預測你的評點排名或保證核定。</li>
+</ul>
+</div>
+</section>
+
+<section class="card">
+<h2>9｜真實使用驗證</h2>
+<p>這輪真正追：<strong>原本只是看到新聞 → 完成路徑卡 → 進官方資格檢視 → 進正式申請／致電／備件 → 真的送件</strong>。只回報流程摩擦，不要公開家庭財務資料。</p>
+<div class="actions">
+<a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/54">HomeLoan 930 回饋區</a>
+</div>
+</section>
+
+<section class="card">
+<h2>10｜可直接轉貼給最近買房或修老屋的人</h2>
+<textarea id="promo">【9/30前｜今年自購／修繕住宅貸款利息補貼還在申請】
+不是先到先得，所以錯過9/1第一天不等於沒機會；但要在9/30 17:00前完成申請。
+
+115年度：
+・自購住宅貸款利息補貼：全國預計4,000戶
+・修繕住宅貸款利息補貼：全國預計2,000戶
+・採評點排定優先順序
+・所得／財產標準今年已更新，分10種區域
+・青安可與自購／修繕住宅貸款利息補貼搭配
+
+不要在群組裡丟所得或財產明細；先用內政部官方資格檢視：
+https://pip.moi.gov.tw/Publicize/Info/B1081
+
+正式線上申請：
+https://has.nlma.gov.tw/subsidyOnline/
+
+住宅補貼專線：02-7729-8003（平日08:00–18:00）
+
+HomeLoan 930 只幫你分「自購／修繕」與防漏截止，不收家庭財務資料。</textarea>
+<div class="actions"><button class="ghost" onclick="copyText('promo')">複製轉貼文</button></div>
+</section>
+</main>
+
+<script>
+const $=id=>document.getElementById(id),checks=cls=>[...document.querySelectorAll('.'+cls)];
+const DEADLINE=new Date('2026-09-30T17:00:00+08:00');
+
+function deadline(){
+ const now=new Date(),ms=DEADLINE-now;
+ if(ms<=0){
+   $('deadlineOut').innerHTML='<div class="note bad"><div class="deadline">本年度受理已截止</div>請回官方專區查詢下一年度或其他住宅支持方案。</div>';
+   return '已截止';
+ }
+ const days=Math.floor(ms/86400000),hours=Math.floor((ms%86400000)/3600000);
+ $('deadlineOut').innerHTML=`<div class="note ${days<=5?'bad':'warn'}"><div class="deadline">剩 ${days} 天 ${hours} 小時</div>截止：2026/09/30 17:00。不是先到先得，但逾期就不是同一件事。</div>`;
+ return `剩${days}天${hours}小時`;
+}
+
+function route(){
+ const n=$('need').value,b=$('buy2').value,r=$('repair10').value;
+ let cls='info',title='',msg='';
+ if(n==='buy'){
+   if(b==='yes'){cls='ok';title='🟢 優先檢查「自購住宅貸款利息補貼」';msg='官方說明此方案主要協助2年內自購住宅並辦理貸款、且所得財產等符合規定的家庭。下一步直接進官方資格檢視，不要在本頁輸入所得。';}
+   else if(b==='no'){cls='warn';title='🟡 自購的「2年內」條件可能卡住';msg='不要直接猜；若購買日期、登記或貸款時間有特殊情況，撥02-7729-8003確認。';}
+   else{cls='warn';title='🟡 先確認購屋日期，再走官方資格檢視';msg='自購路徑的關鍵之一是2年內自購住宅。';}
+ }else if(n==='repair'){
+   if(r==='yes'){cls='ok';title='🟢 優先檢查「修繕住宅貸款利息補貼」';msg='官方說明此方案主要協助僅持有1戶老舊住宅的家庭；常見核心條件包含住宅屋齡逾10年，另須符合所得財產等規定。';}
+   else if(r==='no'){cls='warn';title='🟡 修繕路徑可能有住宅持有／屋齡條件缺口';msg='若你不符合「僅1戶＋老舊住宅」這個核心輪廓，先用官方資格檢視確認，不要先花時間備件。';}
+   else{cls='warn';title='🟡 先查房屋持有數與屋齡';msg='這兩項是修繕路徑最先該釐清的資訊。';}
+ }else{
+   cls='warn';title='🟡 不用自己猜：先用官方「適合哪種住宅補貼」';msg='這個工具不替政府做完整資格審查；先把自購／修繕方向釐清即可。';
+ }
+ $('routeOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;
+ return title;
+}
+
+function loan(){
+ const n=$('need').value,p=$('place').value;
+ let text='';
+ if(n==='repair'){
+   text='<b>修繕：</b>政策優惠貸款額度最高 80 萬元，最長 15 年。';
+ }else{
+   const max=p==='taipei'?250:(p==='newtaipei'?230:210);
+   text=`<b>自購：</b>${$('place').selectedOptions[0].textContent}政策優惠貸款額度最高 ${max} 萬元，最長 20 年。`;
+ }
+ $('loanOut').innerHTML=`<div class="note ok"><div class="big">${text}</div><span class="small">115年度新聞公告所載現行方案量級；正式利率、類別與核貸仍以官方與承貸金融機構為準。</span></div>`;
+ return text.replace(/<[^>]+>/g,'');
+}
+
+function prep(){
+ const a=checks('prep'),n=a.filter(x=>x.checked).length;
+ $('prepOut').innerHTML=`<div class="note ${n>=4?'ok':'warn'}">送件準備 ${n}/${a.length}。${n>=4?'已接近真正送件，不要只停在收藏新聞。':'最小下一步：先按「官方資格檢視」，不要先整理一堆可能用不到的資料。'}</div>`;
+ return n;
+}
+
+function officialCheck(){if(window.PGLabImpact)PGLabImpact.core('official-eligibility-check')}
+function applicationClick(){if(window.PGLabImpact)PGLabImpact.core('official-application-open')}
+
+function build(countCore){
+ const d=deadline(),r=route(),l=loan(),p=prep();
+ $('card').value=`【HomeLoan 930｜115年度住宅貸款利息補貼行動卡】
+截止：2026/09/30 17:00（${d}）
+目前路徑：${r}
+政策量級：${l}
+送件準備：${p}/5
+
+現在做：
+1. 先用內政部官方「您適合哪種住宅補貼呢？」：
+https://pip.moi.gov.tw/Publicize/Info/B1081
+2. 115年度所得／財產標準已更新且分10種區域，不沿用舊年度截圖。
+3. 已辦青安者不要直接放棄；官方目前明載可與自購／修繕住宅貸款利息補貼搭配。
+4. 符合資格後，直接進正式線上申請：
+https://has.nlma.gov.tw/subsidyOnline/
+5. 不確定條件就撥02-7729-8003（平日08:00–18:00）。
+6. 不是先到先得；但一定要在9/30 17:00前完成本年度申請。
+
+這張卡不保存所得、財產、地址、權狀或房貸帳號，也不代表主管機關已核定。`;
+ if(countCore&&window.PGLabImpact)PGLabImpact.core('route-card-complete');
+}
+
+function downloadReminder(){
+ const ics=`BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//HomeLoan930//TW
+BEGIN:VEVENT
+DTSTART;TZID=Asia/Taipei:20260925T090000
+DTEND;TZID=Asia/Taipei:20260925T093000
+SUMMARY:完成115年度自購／修繕住宅貸款利息補貼申請
+DESCRIPTION:9/30 17:00截止。先做官方資格檢視：https://pip.moi.gov.tw/Publicize/Info/B1081 再進線上申請：https://has.nlma.gov.tw/subsidyOnline/
+END:VEVENT
+END:VCALENDAR`;
+ const blob=new Blob([ics],{type:'text/calendar;charset=utf-8'});
+ const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='homeloan930-reminder.ics';a.click();URL.revokeObjectURL(a.href);
+ if(window.PGLabImpact)PGLabImpact.core('deadline-reminder');
+}
+
+async function copyText(id){
+ try{await navigator.clipboard.writeText($(id).value);alert('已複製')}
+ catch(e){$(id).select();document.execCommand('copy')}
+}
+['need','buy2','repair10','place'].forEach(id=>$(id).addEventListener('change',()=>build(false)));
+document.querySelectorAll('.prep').forEach(x=>x.addEventListener('change',()=>build(false)));
+build(false);
+</script>
+<script src="../impact.js" data-project="homeloan930" data-action-text="我已完成自購／修繕住宅補貼路徑卡" data-real-text="我已真的做官方資格檢視／致電／備件／進申請或送件" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/54"></script>
+</body></html>
