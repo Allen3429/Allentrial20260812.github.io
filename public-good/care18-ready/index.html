@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="care18-ready">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Care18 Ready：115年度住宿式服務機構住民補助新制資格快篩、月認列與申請前準備。依2026/9/10行政院最新公告整理。">
+<title>Care18 Ready｜住宿式機構18萬補助新制快篩</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#a32323}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1120px;margin:auto;padding:24px 14px 72px}
+.kicker{font-size:14px;font-weight:850;color:var(--muted)}
+h1{font-size:clamp(36px,7vw,62px);line-height:1.03;margin:.12em 0 .25em}
+.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:980px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:11px 13px;border-radius:9px;line-height:1.7;margin:10px 0}
+.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:9px}
+.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:25px;margin-top:4px}
+label{display:block;font-weight:760;margin-bottom:5px}
+select,input,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}
+textarea{min-height:245px;resize:vertical}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}
+button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}
+.ghost{background:#edf1f5;color:#17212b}
+.big{font-size:clamp(23px,4vw,31px);font-weight:950}
+.money{font-size:clamp(30px,5vw,44px);font-weight:950}
+.checkgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:8px}
+.ck{width:auto;transform:scale(1.12);margin-right:7px}
+.small{font-size:13px;color:var(--muted);line-height:1.65}
+.months{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.monthbox{border:1px solid var(--line);border-radius:12px;padding:10px;text-align:center}
+.monthbox input{width:auto}
+@media(max-width:650px){.months{grid-template-columns:repeat(2,1fr)}}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · Taiwan · 依行政院 2026/09/10 最新院會議案校對</div>
+<h1>Care18 Ready<br>住宿機構補助升到最高 18 萬，但現在最重要的是「先把資格與月份對齊」。</h1>
+<p class="lead">行政院 9/10 公布新制：符合條件的中、重度住宿式機構住民，每月補助提高到 <strong>15,000 元</strong>，全年最高 <strong>180,000 元</strong>，並追溯自 2026/1/1。認列方式改成按月：當月實際入住達該月日曆天數二分之一以上，認列 1 個月。官方同時明寫：<strong>115 年度實際申請及作業時程，將由衛福部另行通知地方政府</strong>。所以這頁先幫你做「資格＋月份＋準備」；不會假裝現在已有全國統一的新申請表。</p>
+
+<section class="card">
+<h2>1｜這輪最大的資訊摩擦：舊的「12萬／180天」頁面還很多，新制今天才正式公開</h2>
+<div class="stats">
+<div class="stat">新制每月<b>15,000元</b></div>
+<div class="stat">全年最高<b>180,000元</b></div>
+<div class="stat">月認列門檻<b>≥半個月</b></div>
+<div class="stat">撥付頻率<b>上下半年各1次</b></div>
+</div>
+<div class="note ok"><b>今天已確定：</b>長照需要等級 4 級以上，或持有中度以上身心障礙證明的住宿式機構住民，每月補助增加 5,000 元，達 15,000 元；新制追溯自 2026/1/1。</div>
+<div class="note warn"><b>今天還不該自行腦補：</b>各縣市實際受理日期、表單、窗口與補件流程。行政院 9/10 最新頁面仍寫「由衛福部另行通知地方政府」。請以所在地縣市最新公告為準。</div>
+</section>
+
+<section class="card">
+<h2>2｜資格路徑快篩</h2>
+<div class="grid">
+<div><label>是否正在依法設立的住宿式服務機構入住？</label>
+<select id="residential">
+<option value="yes">是</option>
+<option value="no">不是</option>
+<option value="unknown">不確定機構是否屬方案範圍</option>
+</select></div>
+<div><label>長照需要等級</label>
+<select id="ltc">
+<option value="4plus">第4–8級</option>
+<option value="under4">未達4級／未評估</option>
+<option value="unknown">不知道</option>
+</select></div>
+<div><label>身心障礙證明</label>
+<select id="disability">
+<option value="moderate">中度／重度／極重度</option>
+<option value="none">沒有中度以上證明</option>
+<option value="unknown">不知道</option>
+</select></div>
+<div><label>是否在 2023/1/1 前已入住且持續入住？</label>
+<select id="legacy">
+<option value="no">不是／不確定</option>
+<option value="yes">是</option>
+</select></div>
+</div>
+<div id="eligOut"></div>
+</section>
+
+<section class="card">
+<h2>3｜2026 特別過渡保障：你去年是不是已核定 12 萬？</h2>
+<div class="grid">
+<div><label>2025（114年度）是否已核定領取 12 萬元？</label>
+<select id="prev120">
+<option value="no">沒有／不知道</option>
+<option value="yes">有</option>
+</select></div>
+<div><label>2026/1–8 是否累積入住至少 180 日？</label>
+<select id="janAug180">
+<option value="no">沒有／不知道</option>
+<option value="yes">有</option>
+</select></div>
+</div>
+<div id="transitionOut"></div>
+<div class="note">行政院明列：曾於 2025 年核定領取 12 萬元者，如果 2026 年 1–8 月累積入住達 180 日，這段期間一律核給 12 萬元；9 月起再依新制按月認列。</div>
+</section>
+
+<section class="card">
+<h2>4｜9–12 月「按月認列」自助盤點</h2>
+<p class="small">以下只算行政院已明確公布的認列規則。勾選該月「實際入住達該月日曆天數二分之一以上」。不需要輸入住民姓名、機構名稱或精確入住日期。</p>
+<div class="months">
+<label class="monthbox"><input class="month" type="checkbox" value="9"> 9月達半月</label>
+<label class="monthbox"><input class="month" type="checkbox" value="10"> 10月達半月</label>
+<label class="monthbox"><input class="month" type="checkbox" value="11"> 11月達半月</label>
+<label class="monthbox"><input class="month" type="checkbox" value="12"> 12月達半月</label>
+</div>
+<div id="moneyOut"></div>
+<div class="note warn">這裡的 9–12 月金額是「依已公布月認列規則的粗估」，不是地方政府核定。若資格核定日、身障證明效期、喘息服務或其他個案條件影響可計期間，仍以官方審核為準。</div>
+</section>
+
+<section class="card">
+<h2>5｜另一條「身障住宿補助」也加碼，不要誤以為一定要換制度</h2>
+<div class="grid">
+<div><label>是否已在 2026 年或以前核定領取「身心障礙者住宿式照顧費用補助」？</label>
+<select id="disAid">
+<option value="no">沒有／不知道</option>
+<option value="yes">有，而且持中度以上身障證明</option>
+</select></div>
+</div>
+<div id="disAidOut"></div>
+<div class="note ok">行政院 9/10 說明：原有身障住宿補助制度維持不變；符合條件者<strong>另可申請每月 5,000 元住宿費用補助</strong>，不必為了新制先把原本地方補助停掉或「換軌」。</div>
+</section>
+
+<section class="card">
+<h2>6｜現在真正值得先準備的 6 件事</h2>
+<div class="checkgrid">
+<label><input class="ck prep" type="checkbox"> 已確認住民的長照需要等級，或中度以上身障證明效期</label>
+<label><input class="ck prep" type="checkbox"> 已確認機構屬住宿式服務機構方案範圍</label>
+<label><input class="ck prep" type="checkbox"> 已整理 2026 年各月實際入住紀錄／繳費證明</label>
+<label><input class="ck prep" type="checkbox"> 若去年領過12萬，已確認2026年1–8月累積入住是否達180日</label>
+<label><input class="ck prep" type="checkbox"> 已向入住機構詢問：地方政府新制公告後，機構是否可協助申請</label>
+<label><input class="ck prep" type="checkbox"> 已記下所在地縣市政府／1966，等正式受理公告後立即送件</label>
+</div>
+<div id="prepOut"></div>
+<div class="actions">
+<a class="btn" target="_blank" rel="noopener" href="https://www.ey.gov.tw/Page/448DE008087A1971/29f4e363-ffd5-48b2-84a4-f93e39744b30">行政院 9/10 最新正式說明</a>
+<a class="btn ghost" href="tel:1966">長照專線 1966</a>
+</div>
+</section>
+
+<section class="card">
+<h2>7｜一鍵產生「給家人／機構櫃台」的準備卡</h2>
+<textarea id="card"></textarea>
+<div class="actions">
+<button onclick="build(true)">更新準備卡</button>
+<button class="ghost" onclick="copyText('card')">複製</button>
+</div>
+</section>
+
+<section class="card">
+<h2>8｜這個工具刻意不做</h2>
+<div class="note">
+<ul>
+<li>不收姓名、身分證、身障證明影本、病歷、機構名稱、地址或銀行資料。</li>
+<li>不把「媒體報導的預定受理日」取代 9/10 行政院最新正式文字；各地實際時程等衛福部／地方政府公告。</li>
+<li>不把 18 萬說成所有入住者自動領到；仍須符合資格與認列條件。</li>
+<li>不自行判定機構是否合法或某月是否可認列；爭議個案交由地方政府審核。</li>
+</ul>
+</div>
+</section>
+
+<section class="card">
+<h2>9｜真實使用驗證</h2>
+<p>這輪追的不是「大家知不知道長照3.0」，而是：<strong>看完新制 → 查到自己的資格／月份 → 整理入住資料 → 詢問機構或1966 → 地方公告後真的提出申請</strong>。</p>
+<div class="actions">
+<a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/45">Care18 Ready 回饋區</a>
+</div>
+</section>
+
+<section class="card">
+<h2>10｜可直接轉貼給住宿機構家屬</h2>
+<textarea id="promo">【今天9/10正式公布｜住宿式機構住民補助最高18萬元】
+行政院今天公布長照3.0住宿式補助新制：
+
+・長照需要等級4–8級，或中度以上身障證明的住宿式機構住民
+・每月補助提高到15,000元
+・全年最高180,000元
+・追溯自2026/1/1
+・改成按月認列：當月實際入住達該月日曆天數1/2以上，就認列1個月
+・地方政府改為上、下半年分2次檢核撥付
+・去年已核定12萬者，若今年1–8月入住累計達180日，這段期間一律核給12萬，9月起再按月算
+・原本已領身障住宿式照顧費用補助且持中度以上身障證明者，原制度不必停，另可申請每月5,000元
+
+注意：行政院今天的正式頁面仍寫「115年度實際申請及作業時程由衛福部另行通知地方政府」。
+所以現在最值得做的是先確認等級／身障證明、整理入住紀錄、問入住機構，等所在地縣市正式公告後立即送件。
+
+官方：
+https://www.ey.gov.tw/Page/448DE008087A1971/29f4e363-ffd5-48b2-84a4-f93e39744b30
+長照專線：1966</textarea>
+<div class="actions"><button class="ghost" onclick="copyText('promo')">複製轉貼文</button></div>
+</section>
+
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const checks=cls=>[...document.querySelectorAll('.'+cls)];
+const fmt=n=>'NT$'+Math.round(n).toLocaleString();
+
+function eligibility(){
+ const r=$('residential').value,l=$('ltc').value,d=$('disability').value,g=$('legacy').value;
+ let cls='ok',title='🟢 初步符合新制核心資格',msg='接著盤點2026實際入住月份與官方受理公告。';
+ if(r==='no'){cls='bad';title='⛔ 目前不是住宿式機構住民';msg='這項補助針對住宿式機構住民；若是居家或社區式長照，請改查其他長照給付。';}
+ else if(r==='unknown'){cls='warn';title='🟡 先確認機構類型';msg='直接問機構櫃台或1966是否屬本方案住宿式服務機構。';}
+ else if(l==='4plus'||d==='moderate'){cls='ok';title='🟢 初步符合每月15,000元核心資格';msg='正式仍依地方政府資格與月份審核。';}
+ else if(g==='yes'){cls='warn';title='🟡 可能屬112年前既有住民的5,000元路徑';msg='行政院說明：112/1/1前已入住並持續入住、未評估或未達長照4級的既有住民，仍依原方案每月5,000元。';}
+ else {cls='bad';title='⛔ 目前未符合已公布的15,000元核心條件';msg='若長照等級尚未評估，可先撥1966了解評估；不要為了補助自行假設等級。';}
+ $('eligOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;
+ return {title,standard:(r==='yes'&&(l==='4plus'||d==='moderate')),legacy:(r==='yes'&&g==='yes'&&l!=='4plus'&&d!=='moderate')};
+}
+
+function transition(){
+ const p=$('prev120').value,a=$('janAug180').value;
+ let cls='warn',txt='未勾到行政院明列的2026過渡保障條件；1–8月如何核算請依地方政府後續審核。';
+ if(p==='yes'&&a==='yes'){cls='ok';txt='<b>符合官方明列的過渡保障：</b>2026年1–8月這段期間一律核給12萬元；9月起再按月認列。';}
+ $('transitionOut').innerHTML=`<div class="note ${cls}">${txt}</div>`;
+ return p==='yes'&&a==='yes';
+}
+
+function monthEstimate(){
+ const elig=eligibility();
+ const months=checks('month').filter(x=>x.checked).length;
+ const rate=elig.standard?15000:(elig.legacy?5000:0);
+ const est=months*rate;
+ $('moneyOut').innerHTML=`<div class="note ${rate?'ok':'warn'}"><div class="money">${fmt(est)}</div>
+ <b>9–12月自助粗估</b>＝${months} 個達半月月份 × ${fmt(rate)}。<br>
+ <span class="small">${rate?'這只反映目前已公布的月認列與你的資格選項；正式以地方政府審核為準。':'目前資格選項沒有對應可安全試算的月額。'}</span></div>`;
+ return {months,rate,est};
+}
+
+function disAid(){
+ const y=$('disAid').value==='yes';
+ $('disAidOut').innerHTML=`<div class="note ${y?'ok':'warn'}">${y?'<b>別先停掉原地方補助。</b>行政院明確表示原制度維持，另可申請每月5,000元加碼；等地方公告後確認申請流程。':'若家中原本就有身障住宿式照顧費用補助，建議再確認一次是否符合每月5,000元加碼路徑。'}</div>`;
+ return y;
+}
+
+function prep(){
+ const a=checks('prep'),n=a.filter(x=>x.checked).length;
+ $('prepOut').innerHTML=`<div class="note ${n>=5?'ok':'warn'}">申請前準備 ${n}/${a.length}。${n>=5?'已具備等地方正式受理後快速送件的條件。':'先補「資格證明狀態＋入住紀錄＋機構窗口」，比現在到處下載舊表格更有用。'}</div>`;
+ return n;
+}
+
+function build(countCore){
+ const e=eligibility(),t=transition(),m=monthEstimate(),d=disAid(),p=prep();
+ const base=t?120000:0;
+ const safeTotal=base+m.est;
+ $('card').value=`【Care18 Ready｜115年度住宿式機構補助新制準備卡】
+依據：行政院2026/09/10最新院會議案
+資格快篩：${e.title}
+2025曾核定12萬＋2026/1–8入住180日過渡保障：${t?'是':'否／未確認'}
+9–12月達半月月份：${m.months}個
+9–12月自助粗估：${fmt(m.est)}
+${t?`目前可依官方明文直接對應的2026粗估區段合計：${fmt(safeTotal)}（1–8月12萬＋勾選的9–12月月份）`:'1–8月個案核算不在本卡自行推定，等地方政府正式審核。'}
+原身障住宿補助加碼路徑：${d?'已勾選，等地方公告後確認每月5,000元申請':'未勾選／不確定'}
+申請前準備：${p}/6
+
+現在做：
+1. 確認長照需要等級，或中度以上身障證明效期。
+2. 問入住機構：是否屬本方案機構、是否會協助住民申請。
+3. 整理2026各月入住／繳費紀錄。
+4. 去年領過12萬者，特別算清今年1–8月是否累積180日。
+5. 不要先寄舊年度表格；行政院9/10正式說明仍是「實際申請及作業時程由衛福部另行通知地方政府」。
+6. 有疑問先撥1966，並追所在地縣市政府最新公告。
+
+官方：https://www.ey.gov.tw/Page/448DE008087A1971/29f4e363-ffd5-48b2-84a4-f93e39744b30
+1966長照專線：1966
+
+本卡不保存姓名、病歷、身障證明、地址或銀行資料，也不等於正式核定。`;
+ if(countCore&&window.PGLabImpact)PGLabImpact.core('care18-precheck-complete');
+}
+
+async function copyText(id){
+ try{await navigator.clipboard.writeText($(id).value);alert('已複製')}
+ catch(e){$(id).select();document.execCommand('copy')}
+}
+['residential','ltc','disability','legacy','prev120','janAug180','disAid'].forEach(id=>$(id).addEventListener('change',()=>build(false)));
+document.querySelectorAll('.month,.prep').forEach(x=>x.addEventListener('change',()=>build(false)));
+build(false);
+</script>
+<script src="../impact.js" data-project="care18-ready" data-action-text="我已完成18萬住宿補助資格／月份準備卡" data-real-text="我已真的確認資格／整理入住紀錄／問機構或1966／正式送件" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/45"></script>
+</body>
+</html>
