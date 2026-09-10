@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="riderpay-245">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="RiderPay 245：2026外送專法每單基本報酬稽核器。依實際服務時間、每小時245元與每單45元保底，逐單試算短少並產生申訴證據摘要。">
+<title>RiderPay 245｜外送員逐單報酬稽核器</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#a32323}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1150px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}
+h1{font-size:clamp(36px,7vw,62px);line-height:1.03;margin:.12em 0 .25em}.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:1000px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:11px 13px;border-radius:9px;line-height:1.7;margin:10px 0}.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:9px}.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:25px;margin-top:4px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:9px}
+label{display:block;font-weight:760;margin-bottom:5px}input,select,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}textarea{min-height:250px;resize:vertical}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}.danger{background:#8d2222}
+table{width:100%;border-collapse:collapse;margin-top:10px}th,td{text-align:left;padding:9px;border-bottom:1px solid var(--line);vertical-align:top}th{font-size:13px;color:var(--muted)}.num{text-align:right;font-variant-numeric:tabular-nums}.short{font-weight:900;color:var(--bad)}
+.small{font-size:13px;color:var(--muted);line-height:1.65}.big{font-size:clamp(24px,4vw,32px);font-weight:950}.money{font-size:clamp(30px,5vw,44px);font-weight:950}
+.rowcard{border:1px solid var(--line);border-radius:14px;padding:12px;margin:9px 0}.rowhead{display:flex;justify-content:space-between;gap:10px;align-items:center}.rowhead b{font-size:18px}.rowhead button{padding:7px 9px}
+.checkgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:8px}.ck{width:auto;transform:scale(1.12);margin-right:7px}
+@media(max-width:650px){table{font-size:13px}.desktop{display:none}}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · Taiwan · 法規校對 2026/09/10</div>
+<h1>RiderPay 245<br>不要只看平台總額；外送專法是「一單一單算」。</h1>
+<p class="lead">2026 年外送專法已上路。完成訂單的基本報酬，必須逐單依<strong>實際外送服務時間</strong>試算：每小時最低工資 196 元 × 1.25 ＝ <strong>245 元／小時</strong>，而且每筆完成訂單至少 <strong>45 元</strong>。9/9 勞動部又明確表示，平台不能因自己片面認定「異常超時」就短發法定基本報酬。</p>
+
+<section class="card">
+<h2>1｜先把規則壓成 4 句</h2>
+<div class="stats">
+<div class="stat">2026最低工資時薪<b>196元</b></div>
+<div class="stat">外送時間換算基準<b>245元/時</b></div>
+<div class="stat">完成一單最低<b>45元</b></div>
+<div class="stat">計價方式<b>逐單</b></div>
+</div>
+<div class="note ok"><b>實際外送服務時間</b>＝從你接受該筆訂單開始，到完成該筆訂單為止；包含前往店家、店家等餐、送往消費者、等待消費者取餐等時間。</div>
+<div class="note warn"><b>疊單也不能把重疊時間切半分攤後再算。</b>每筆訂單都要按各自「接單→完成」的實際期間，分別檢核基本報酬。</div>
+<div class="note"><b>獎金不能拿來補基本報酬不足。</b>下面「已給基本報酬」請填平台依法可算入該單基本報酬的金額，不要把尖峰、單量、雨天或其他獎勵混進來。</div>
+</section>
+
+<section class="card">
+<h2>2｜逐單輸入；資料只留在你的瀏覽器</h2>
+<p class="small">請不要輸入顧客姓名、地址、電話或店家內部資料。訂單代號可只寫你自己的「A1、A2」；本頁不會把逐單內容上傳到 Public Good Lab 計數器。</p>
+<div id="orders"></div>
+<div class="actions">
+<button onclick="addOrder()">＋ 新增訂單</button>
+<button class="ghost" onclick="addExample()">加入疊單範例</button>
+<button class="ghost" onclick="clearAll()">清空本機資料</button>
+</div>
+</section>
+
+<section class="card">
+<h2>3｜稽核結果</h2>
+<div id="summary"></div>
+<div style="overflow:auto">
+<table>
+<thead><tr><th>代號</th><th class="num">實際分鐘</th><th class="num">法定最低</th><th class="num">已給基本報酬</th><th class="num">試算短少</th></tr></thead>
+<tbody id="resultRows"></tbody>
+</table>
+</div>
+<div class="actions">
+<button onclick="buildPacket(true)">產生申訴證據摘要</button>
+<button class="ghost" onclick="downloadCSV()">匯出本機 CSV</button>
+</div>
+</section>
+
+<section class="card">
+<h2>4｜如果真的短少，先保存「簡便但能查證」的資料</h2>
+<div class="checkgrid">
+<label><input class="ck evidence" type="checkbox"> 平台訂單／報酬明細截圖或下載檔</label>
+<label><input class="ck evidence" type="checkbox"> 每筆接單時間、完成時間或可證明實際服務分鐘的紀錄</label>
+<label><input class="ck evidence" type="checkbox"> 發薪／入帳資訊，可看出最後實際收到多少</label>
+<label><input class="ck evidence" type="checkbox"> 若被標「異常超時」：保留該標示與平台說明</label>
+<label><input class="ck evidence" type="checkbox"> 若已向平台申訴：保留申訴日期、案件編號與回覆</label>
+<label><input class="ck evidence" type="checkbox"> 疊單：把每一單各自的接單與完成時間分開保留</label>
+</div>
+<div id="evidenceOut"></div>
+<div class="note">勞動部 9/9 表示，若平台在約定給付日後仍未依法補足，外送員可檢附<strong>報酬明細、入帳資訊等簡便資料</strong>，向主要訂單取餐地的地方勞工局／處提出檢舉；各地方政府線上民意信箱也可受理。</div>
+</section>
+
+<section class="card">
+<h2>5｜一鍵產生「不含顧客個資」的申訴摘要</h2>
+<textarea id="packet"></textarea>
+<div class="actions">
+<button onclick="buildPacket(true)">更新摘要</button>
+<button class="ghost" onclick="copyText('packet')">複製摘要</button>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://www.mol.gov.tw/1607/28162/28652/90651/90660/95345/post">勞動部：報酬保障官方說明</a>
+<a class="btn ghost" href="tel:1955">勞動諮詢 1955</a>
+</div>
+</section>
+
+<section class="card">
+<h2>6｜「異常超時」不是平台可以直接少付的萬用理由</h2>
+<div class="note bad">2026/9/9 勞動部表示：平台如認為外送員有惡意繞道、無正當理由拖延等情況，可以依事實查證並用合法管理機制處理；但<strong>不得只靠平台片面認定，任意扣減法定基本報酬</strong>。違反第5條可按人處 2萬–10萬元罰鍰，並公布違法資訊、限期改善；屆期未改善可按次處罰。</div>
+</section>
+
+<section class="card">
+<h2>7｜取消單另外處理</h2>
+<div class="note warn">若訂單因商家取消、消費者取消／失聯等<strong>不可歸責於外送員</strong>原因未完成，官方說明仍可依實際投入的外送服務時間請求報酬，但不適用「每筆至少45元」保底，而且平台會先通報／查驗。為避免把不同規則混在一起，這版計算器只稽核<strong>已完成訂單</strong>。</div>
+</section>
+
+<section class="card">
+<h2>8｜這個工具刻意不做</h2>
+<div class="note">
+<ul>
+<li>不收顧客姓名、地址、電話、精確路線、平台帳號或銀行資訊。</li>
+<li>不把「試算短少」直接寫成政府已認定欠薪；正式違規仍由地方主管機關調查。</li>
+<li>不替惡意繞道或故意拖延提供規避平台管理的方法。</li>
+<li>不把整段上線時間當成245元固定時薪；專法保障的是每筆訂單的外送服務期間與每單基本報酬。</li>
+</ul>
+</div>
+</section>
+
+<section class="card">
+<h2>9｜真實使用驗證</h2>
+<p>這輪真正追：<strong>逐單稽核 → 找到疑似短少 → 保存明細 → 向平台申訴或地方勞工局處反映 → 是否補足／受理</strong>。Public Good Lab 只記匿名使用次數；逐單金額與時間不送出。</p>
+<div class="actions">
+<a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/44">RiderPay 245 回饋區</a>
+</div>
+</section>
+
+<section class="card">
+<h2>10｜可直接轉貼給外送員</h2>
+<textarea id="promo">【外送員注意｜9/9勞動部：平台不能用「異常超時」片面短發法定報酬】
+2026外送專法目前的完成單基本報酬規則：
+・每一單分開算
+・實際服務時間＝接單到完成，包含去店家、等餐、送餐、等客人
+・2026最低工資196元×1.25＝245元/小時
+・每一筆完成訂單至少45元
+・獎金不能拿來補基本報酬不足
+・疊單也要每單分開算，不能把重疊時間切半後當成那一單的實際時間
+
+9/9勞動部表示，如果平台認為外送員惡意拖延，可以查證、依法管理，但不能自己片面認定後就少付法定基本報酬。
+
+RiderPay 245 可以在本機逐單試算，資料不上傳；如果疑似短少，再把報酬明細、時間與入帳紀錄整理給平台或地方勞工局處查核。</textarea>
+<div class="actions"><button class="ghost" onclick="copyText('promo')">複製轉貼文</button></div>
+</section>
+
+</main>
+<script>
+const RATE=196*1.25, FLOOR=45, STORAGE='riderpay245:v1';
+const $=id=>document.getElementById(id);
+let orders=[];
+
+function legalMinimum(mins){
+  const raw=(Math.max(0,Number(mins)||0)/60)*RATE;
+  const two=Math.round((raw+Number.EPSILON)*100)/100;
+  const tenth=Math.ceil((two*10)-1e-9)/10;
+  return Math.max(FLOOR,tenth);
+}
+function money(n){return 'NT$'+(Number(n)||0).toFixed(1);}
+function save(){localStorage.setItem(STORAGE,JSON.stringify(orders))}
+function load(){try{orders=JSON.parse(localStorage.getItem(STORAGE)||'[]')}catch(e){orders=[]}; if(!orders.length)orders=[{id:'A1',mins:20,paid:70,note:''}]}
+function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+
+function render(){
+ const box=$('orders'); box.innerHTML='';
+ orders.forEach((o,i)=>{
+   const el=document.createElement('div'); el.className='rowcard';
+   el.innerHTML=`<div class="rowhead"><b>訂單 ${i+1}</b><button class="ghost" onclick="removeOrder(${i})">刪除</button></div>
+   <div class="grid">
+    <div><label>自訂代號</label><input value="${esc(o.id)}" oninput="setVal(${i},'id',this.value)" placeholder="A1"></div>
+    <div><label>實際外送服務時間（分鐘）</label><input type="number" min="0" step="1" value="${esc(o.mins)}" oninput="setVal(${i},'mins',this.value)"></div>
+    <div><label>平台已給「基本報酬」（元）</label><input type="number" min="0" step="0.1" value="${esc(o.paid)}" oninput="setVal(${i},'paid',this.value)"></div>
+    <div><label>備註（可留空）</label><input value="${esc(o.note)}" oninput="setVal(${i},'note',this.value)" placeholder="例：被標異常；勿填客戶地址"></div>
+   </div>`;
+   box.appendChild(el);
+ });
+ calc(); save();
+}
+function setVal(i,k,v){orders[i][k]=v; calc(); save()}
+function addOrder(){orders.push({id:'A'+(orders.length+1),mins:15,paid:45,note:''});render()}
+function removeOrder(i){orders.splice(i,1);if(!orders.length)orders.push({id:'A1',mins:15,paid:45,note:''});render()}
+function addExample(){
+ orders=[
+  {id:'疊單A',mins:25,paid:55,note:'範例：兩單各自從接單到完成'},
+  {id:'疊單B',mins:32,paid:70,note:'範例：不可把重疊時間切半'}
+ ];render();
+}
+function clearAll(){orders=[{id:'A1',mins:15,paid:45,note:''}];render()}
+
+function calc(){
+ let totalLegal=0,totalPaid=0,totalShort=0,countShort=0;
+ const tbody=$('resultRows');tbody.innerHTML='';
+ orders.forEach(o=>{
+   const mins=Math.max(0,Number(o.mins)||0),paid=Math.max(0,Number(o.paid)||0);
+   const legal=legalMinimum(mins),short=Math.max(0,Math.round((legal-paid)*10)/10);
+   totalLegal+=legal;totalPaid+=paid;totalShort+=short;if(short>0.001)countShort++;
+   const tr=document.createElement('tr');
+   tr.innerHTML=`<td>${esc(o.id||'—')}</td><td class="num">${mins}</td><td class="num">${money(legal)}</td><td class="num">${money(paid)}</td><td class="num ${short>0?'short':''}">${money(short)}</td>`;
+   tbody.appendChild(tr);
+ });
+ totalLegal=Math.round(totalLegal*10)/10;totalPaid=Math.round(totalPaid*10)/10;totalShort=Math.round(totalShort*10)/10;
+ $('summary').innerHTML=`<div class="note ${countShort?'bad':'ok'}">
+  <div class="stats"><div class="stat">稽核訂單<b>${orders.length}筆</b></div><div class="stat">疑似短少<b>${countShort}筆</b></div><div class="stat">法定最低合計<b>${money(totalLegal)}</b></div><div class="stat">試算短少合計<b>${money(totalShort)}</b></div></div>
+  <p>${countShort?'有訂單低於本工具依2026官方公式算出的最低線。先核對「基本報酬」欄位是否排除獎金、時間是否為接單到完成，再保存證據。':'目前輸入的完成單沒有低於本工具的2026最低線；仍請核對平台報酬項目分類與實際時間。'}</p></div>`;
+ return {totalLegal,totalPaid,totalShort,countShort};
+}
+
+function evidence(){
+ const a=[...document.querySelectorAll('.evidence')],n=a.filter(x=>x.checked).length;
+ $('evidenceOut').innerHTML=`<div class="note ${n>=4?'ok':'warn'}">證據準備 ${n}/${a.length}。${n>=4?'已足以形成一份可查核的基本資料包。':'先補訂單明細、時間與入帳資訊；不要只剩口頭描述。'}</div>`;
+ return n;
+}
+
+function buildPacket(countCore){
+ const s=calc(),ev=evidence();
+ const lines=orders.map((o,i)=>{
+   const mins=Math.max(0,Number(o.mins)||0),paid=Math.max(0,Number(o.paid)||0),legal=legalMinimum(mins),short=Math.max(0,Math.round((legal-paid)*10)/10);
+   return `${i+1}. ${o.id||'未命名'}｜實際服務 ${mins} 分鐘｜最低線 ${money(legal)}｜已給基本報酬 ${money(paid)}｜試算短少 ${money(short)}${o.note?`｜備註：${o.note}`:''}`;
+ }).join('\n');
+
+ $('packet').value=`【RiderPay 245｜外送基本報酬查核摘要】
+查核日期：${new Date().toLocaleDateString('zh-TW')}
+適用基準：2026年最低工資時薪196元 × 1.25 ＝ 245元/小時；每筆完成訂單最低45元。
+計算方式：每筆訂單分別以「接受該筆訂單→完成該筆訂單」的實際外送服務時間計算；獎金不列入基本報酬檢核。
+
+逐筆：
+${lines}
+
+合計：
+・訂單 ${orders.length} 筆
+・疑似低於最低線 ${s.countShort} 筆
+・法定最低線合計 ${money(s.totalLegal)}
+・已輸入基本報酬合計 ${money(s.totalPaid)}
+・試算短少合計 ${money(s.totalShort)}
+・證據準備 ${ev}/6
+
+希望平台／主管機關協助查核：
+1. 各筆訂單依法應計之外送服務起訖時間是否完整。
+2. 疊單／合併派單是否仍以每筆訂單分別計算，而未將重疊時間切半或平均分攤後縮短單筆時間。
+3. 平台是否將獎金與基本報酬分開，並依法補足不足額。
+4. 如平台以「異常超時」為由未補足，請查核是否僅為平台片面認定。
+
+我可另提供：訂單／報酬明細、接單與完成時間、入帳資訊、平台異常標示與申訴回覆。
+※本摘要是依勞動部2026年現行公開公式的自助試算，不代表主管機關已認定違法。`;
+
+ if(countCore&&window.PGLabImpact) PGLabImpact.core('order-audit-packet');
+}
+
+function downloadCSV(){
+ const rows=[['order_alias','service_minutes','legal_minimum_2026','basic_pay_entered','estimated_shortfall','note']];
+ orders.forEach(o=>{
+   const mins=Math.max(0,Number(o.mins)||0),paid=Math.max(0,Number(o.paid)||0),legal=legalMinimum(mins),short=Math.max(0,Math.round((legal-paid)*10)/10);
+   rows.push([o.id,mins,legal.toFixed(1),paid.toFixed(1),short.toFixed(1),o.note]);
+ });
+ const csv=rows.map(r=>r.map(v=>`"${String(v??'').replace(/"/g,'""')}"`).join(',')).join('\n');
+ const blob=new Blob(["\uFEFF"+csv],{type:'text/csv;charset=utf-8'});
+ const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='riderpay245-local-audit.csv';a.click();URL.revokeObjectURL(a.href);
+ if(window.PGLabImpact)PGLabImpact.core('csv-export');
+}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+document.querySelectorAll('.evidence').forEach(x=>x.addEventListener('change',()=>buildPacket(false)));
+load();render();buildPacket(false);
+</script>
+<script src="../impact.js" data-project="riderpay-245" data-action-text="我已完成逐單外送報酬稽核" data-real-text="我已真的保存證據／向平台申訴／向地方勞工局處反映／取得補發" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/44"></script>
+</body>
+</html>
