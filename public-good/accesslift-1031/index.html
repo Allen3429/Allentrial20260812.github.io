@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="accesslift-1031">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="AccessLift 1031：臺中原有住宅無障礙設施補助，資格快篩、45%補助試算、社區共識與文件防呆。">
+<title>AccessLift 1031｜臺中老公寓無障礙補助快篩</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--ok:#176b45;--warn:#936000;--bad:#a32323}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1120px;margin:auto;padding:24px 14px 72px}
+.kicker{font-size:14px;font-weight:850;color:var(--muted)}
+h1{font-size:clamp(34px,7vw,60px);line-height:1.04;margin:.12em 0 .25em}
+.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:980px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:11px 13px;border-radius:9px;line-height:1.7;margin:10px 0}
+.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}
+label{display:block;font-weight:760;margin-bottom:5px}
+select,input,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}
+textarea{min-height:235px;resize:vertical}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}
+button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}
+.ghost{background:#edf1f5;color:#17212b}
+.big{font-size:clamp(23px,4vw,31px);font-weight:950}
+.money{font-size:clamp(29px,5vw,42px);font-weight:950}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:9px}
+.stat{border:1px solid var(--line);border-radius:14px;padding:12px}
+.stat b{display:block;font-size:25px;margin-top:4px}
+.checkgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:8px}
+.ck{width:auto;transform:scale(1.12);margin-right:7px}
+.small{font-size:13px;color:var(--muted);line-height:1.65}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · Taichung · 官方規則校對 2026/09/10</div>
+<h1>AccessLift 1031<br>老公寓的那幾階，不該一直卡著長輩和輪椅。</h1>
+<p class="lead">臺中市 115 年度「原有住宅改善無障礙設施補助」已<strong>第二次公告延長至 2026/10/31</strong>。符合條件的既有集合住宅可改善室外通路、坡道／扶手、出入口、室內通路走廊與昇降設備；每案補助不超過總工程經費 45%，一般無障礙改善最高 36 萬元，5 層以下公寓若連同新設昇降設備，最高可達 216 萬元。</p>
+<section class="card"><h2>1｜先判斷社區是不是值得繼續準備</h2><div class="grid"><div><label>建築完成／合法證明</label><select id="age"><option value="yes">2012/12/30 前已領使用證明，或更早合法建成</option><option value="no">2012/12/30 後才完成</option><option value="unknown">不確定</option></select></div><div><label>建物型態</label><select id="type"><option value="multi">集合住宅</option><option value="mixed">住商混合，住宅使用比例 ≥ 1/2</option><option value="single">單一所有權人建物</option><option value="other">其他</option><option value="unknown">不確定</option></select></div><div><label>社區是否有管委會／管理負責人／區分所有權人代表可出面申請？</label><select id="applicant"><option value="yes">有</option><option value="no">沒有</option><option value="unknown">還沒確認</option></select></div><div><label>社區內是否有優先補助對象？</label><select id="priority"><option value="yes">有設籍65歲以上、6歲以下或身障住戶，或曾被限期改善</option><option value="no">目前沒有</option><option value="unknown">不確定</option></select></div></div><div id="eligOut"></div></section>
+<section class="card"><h2>2｜你真正想改善哪一段？</h2><div class="checkgrid"><label><input class="ck item" type="checkbox" value="室外通路"> 室外通路</label><label><input class="ck item" type="checkbox" value="避難層坡道及扶手"> 避難層坡道及扶手</label><label><input class="ck item" type="checkbox" value="出入口"> 出入口</label><label><input class="ck item" type="checkbox" value="室內通路走廊"> 室內通路走廊</label><label><input class="ck item" type="checkbox" value="既有昇降設備改善"> 既有昇降設備改善</label><label><input class="ck item" type="checkbox" id="newLift" value="5層以下新設昇降設備"> 5層以下新設昇降設備</label></div><div id="itemOut"></div><div class="note">官方補助原則不是「隨便挑一小塊做」。若採套裝方案，該方案內要求的無障礙項目需完整符合設計基準；既有已合格的項目可以不再補助。</div></section>
+<section class="card"><h2>3｜先看錢：45% 上限之外，還有項目總額上限</h2><div class="grid"><div><label>整體工程預估總額（元）</label><input id="budget" type="number" min="0" step="10000" value="1000000"></div><div><label>是否為 5 層以下公寓＋新設昇降設備</label><select id="liftCase"><option value="no">不是</option><option value="yes">是</option><option value="unknown">不確定</option></select></div></div><div id="moneyOut"></div><div class="stats"><div class="stat">室外通路等四項合計<b>最高16萬</b></div><div class="stat">既有昇降設備改善<b>最高20萬</b></div><div class="stat">5層以下新設昇降設備<b>最高200萬</b></div><div class="stat">補助比例<b>最高45%</b></div></div></section>
+<section class="card"><h2>4｜很多社區不是卡在錢，而是卡在「還沒形成一份能送出去的案」</h2><div class="checkgrid"><label><input class="ck prep" type="checkbox"> 已找到使用執照／合法建築物證明</label><label><input class="ck prep" type="checkbox"> 已有土地或建物權利證明／修繕同意資料</label><label><input class="ck prep" type="checkbox"> 已排入管委會或區分所有權人會議討論</label><label><input class="ck prep" type="checkbox"> 已找到建築師或室內裝修專業設計技術人員</label><label><input class="ck prep" type="checkbox"> 已取得初步設計圖說與工程估價</label><label><input class="ck prep" type="checkbox"> 已拍現況照片，標出階梯、高差、坡道、出入口或電梯問題</label></div><div id="prepOut"></div></section>
+<section class="card"><h2>5｜5層以下沒有電梯？你甚至可以先請市府做「可行性評估」</h2><div class="note ok"><b>這是最值得先做的小動作。</b>臺中市住宅處公開表示：有意改善無障礙設施並新設無障礙昇降設備、但還沒擬好補助申請計畫的 5 層以下公寓大廈，可依需求申請或由住宅處視情況派員到現場做可行性評估、社區說明及申請輔導。</div><div class="actions"><a class="btn" href="tel:0422289111">住宅處 04-2228-9111 轉 69500</a><a class="btn ghost" target="_blank" rel="noopener" href="https://www.taichung.gov.tw/3365676/post">臺中市 9/9 最新公告</a><a class="btn ghost" target="_blank" rel="noopener" href="https://thd.taichung.gov.tw/981499/981563/1354769/2206444/3365024">官方申請文件</a></div></section>
+<section class="card"><h2>6｜一鍵產生「給主委／住戶的 1 頁提案」</h2><textarea id="brief"></textarea><div class="actions"><button onclick="build(true)">更新社區提案</button><button class="ghost" onclick="copyText('brief')">複製到 LINE 群／會議資料</button></div></section>
+<section class="card"><h2>7｜正式送件前 9 份核心資料，自我檢查</h2><div class="checkgrid"><label><input class="ck doc" type="checkbox"> 土地或建築物權利證明文件</label><label><input class="ck doc" type="checkbox"> 使用執照或原有合法建築物證明</label><label><input class="ck doc" type="checkbox"> 專業人員簽章的無障礙設施設計圖說</label><label><input class="ck doc" type="checkbox"> 工程估價明細表</label><label><input class="ck doc" type="checkbox"> 所有權人修繕同意書</label><label><input class="ck doc" type="checkbox"> 土地所有權人同意比率表（需要時）</label><label><input class="ck doc" type="checkbox"> 區分所有權人清冊／同意比率表</label><label><input class="ck doc" type="checkbox"> 區分所有權人同意書</label><label><input class="ck doc" type="checkbox"> 未重複補助＋完工後5年不任意變更切結</label></div><div id="docOut"></div></section>
+<section class="card"><h2>8｜這個工具刻意不做</h2><div class="note"><ul><li>不收住戶姓名、地址、門牌、身障證明、權狀或所有權人清冊。</li><li>不替建築師判斷能不能裝電梯，也不替市府核定。</li><li>不把「最高216萬元」說成每個社區都能拿216萬元；仍受45%比例、項目上限與審查結果限制。</li><li>不鼓勵先施工再補助。先取得補助核准、依法申請建築許可，再施工。</li></ul></div></section>
+<section class="card"><h2>9｜真實使用驗證</h2><p>第一輪真正追：<strong>完成快篩的人，有沒有把案子往現實世界推一步</strong>：打住宅處、申請可行性評估、排入管委會／區權會、找設計人員或正式送件。</p><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/40">AccessLift 1031 回饋區</a></div><p class="small">回饋只談流程摩擦，不貼住戶個資。</p></section>
+<section class="card"><h2>10｜可直接轉貼給老公寓社區</h2><textarea id="promo">【臺中老公寓注意｜無障礙改善補助延到10/31，最高216萬元】
+台中市9/9第二次公告延長「原有住宅改善無障礙設施補助」：
+
+・2012/12/30前既有合法集合住宅，或住宅使用比例達1/2以上的住商混合住宅，可先確認資格
+・可改善室外通路、坡道扶手、出入口、走廊、既有電梯
+・5層以下公寓新設昇降設備：單項最高200萬元
+・一般無障礙改善＋昇降設備合計最高216萬元
+・但補助仍以總工程經費45%為上限
+・社區內有65歲以上、6歲以下、身障住戶，或曾被限期改善者，屬優先補助
+・5層以下公寓還沒做計畫？可先問住宅處能否安排現場可行性評估
+・截止：2026/10/31
+
+AccessLift 1031 不收住戶個資，只幫社區先做資格、補助上限、文件與會議防呆。</textarea><div class="actions"><button class="ghost" onclick="copyText('promo')">複製轉貼文</button></div></section>
+</main>
+<script>
+const $=id=>document.getElementById(id); const checks=cls=>[...document.querySelectorAll('.'+cls)]; const fmt=n=>'NT$'+Math.round(n).toLocaleString();
+function eligibility(){const a=$('age').value,t=$('type').value,p=$('applicant').value,pri=$('priority').value;let cls='ok',title='🟢 初步值得繼續準備',msg='接著檢查改善項目、社區共識與設計文件。';if(a==='no'||['single','other'].includes(t)||p==='no'){cls='bad';title='⛔ 目前有明顯資格／申請主體缺口';msg='先打住宅處確認，不要直接投入設計與估價成本。';}else if(a==='unknown'||t==='unknown'||p==='unknown'){cls='warn';title='🟡 關鍵資格還沒確認';msg='先找使用執照／合法建築證明與社區申請主體，再決定是否投入。';}if(pri==='yes')msg+=' 你有勾到官方優先補助條件，建議不要拖到10月底才送。';$('eligOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;return title;}
+function itemCheck(){const a=checks('item').filter(x=>x.checked).map(x=>x.value);$('itemOut').innerHTML=`<div class="note ${a.length?'ok':'warn'}">${a.length?`目前選：${a.join('、')}`:'先把住戶每天真正卡住的動線選出來。'}</div>`;return a;}
+function money(){const b=Math.max(0,+$('budget').value||0),lift=$('liftCase').value;let cap=lift==='yes'?2160000:360000;const ratioCap=b*.45,est=Math.min(cap,ratioCap);$('moneyOut').innerHTML=`<div class="note ok"><div class="money">${fmt(est)}</div><b>目前粗估可申請上限</b>＝min（工程總額45%＝${fmt(ratioCap)}，本情境項目總額上限＝${fmt(cap)}）。<br><span class="small">正式補助依實際核准項目與審查結果；若不是5層以下新設昇降設備，請不要套用216萬元上限。</span></div>`;return{b,est,cap};}
+function prep(){const a=checks('prep'),n=a.filter(x=>x.checked).length;$('prepOut').innerHTML=`<div class="note ${n>=4?'ok':'warn'}">申請成熟度 ${n}/${a.length}。${n>=4?'已可和住宅處／設計人員具體討論。':'若5層以下想加電梯，先問住宅處可行性評估，未必需要一開始就把全案自己做完。'}</div>`;return n;}
+function docs(){const a=checks('doc'),n=a.filter(x=>x.checked).length;$('docOut').innerHTML=`<div class="note ${n===a.length?'ok':'warn'}">正式文件 ${n}/${a.length}。${n===a.length?'已接近可送書面審查。':'缺件會拖慢進度；先把「合法建築證明、同意文件、專業設計、估價」四類補齊。'}</div>`;return n;}
+function build(countCore){const e=eligibility(),items=itemCheck(),m=money(),p=prep(),d=docs();$('brief').value=`【AccessLift 1031｜老公寓無障礙改善 1 頁社區提案】\n截止：2026/10/31\n初步資格：${e}\n優先補助條件：${$('priority').selectedOptions[0].textContent}\n\n一、住戶目前最需要改善\n${items.length?items.map((x,i)=>`${i+1}. ${x}`).join('\n'):'尚未選改善項目'}\n\n二、預算概估\n工程總額：${fmt(m.b)}\n依45%比例與本情境項目上限粗估：最高約 ${fmt(m.est)}\n※正式核定依項目與審查，不等於保證金額。\n\n三、目前成熟度\n申請準備：${p}/6\n正式文件：${d}/9\n\n四、下一步\n1. 先確認使用執照／原有合法建築證明與申請主體。\n2. 把「住戶每天卡在哪」拍成不含住戶個資的現況照片與動線說明。\n3. 排入管委會／區分所有權人會議，先形成社區共識。\n4. 5層以下新設昇降設備、尚未有計畫者，先打住宅處詢問現場可行性評估。\n5. 需要設計圖說與工程估價時，再找依法登記的建築師或專業設計技術人員。\n6. 10/31前向臺中市住宅發展工程處正式送件。\n\n住宅處：04-2228-9111 轉69500\n最新公告：https://www.taichung.gov.tw/3365676/post\n\n本頁不保存地址、所有權人或身障等個資。`;if(countCore&&window.PGLabImpact)PGLabImpact.core('accessibility-precheck-complete');}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+['age','type','applicant','priority','liftCase'].forEach(id=>$(id).addEventListener('change',()=>build(false)));$('budget').addEventListener('input',()=>build(false));document.querySelectorAll('.item,.prep,.doc').forEach(x=>x.addEventListener('change',()=>build(false)));build(false);
+</script>
+<script src="../impact.js" data-project="accesslift-1031" data-action-text="我已完成臺中住宅無障礙補助快篩" data-real-text="我已真的打住宅處／申請可行性評估／排入社區會議／找設計人員／正式送件" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/40"></script>
+</body></html>
