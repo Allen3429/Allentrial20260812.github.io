@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="flufast-930">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="FluFast 930：2026/8/24–9/30流感公費抗病毒擴大期間，學生與高傳播族群的就醫資格快篩、合約院所地圖與重症警訊。">
+<title>FluFast 930｜學生公費流感抗病毒快篩</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#a32323;--info:#285c8d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1120px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}
+h1{font-size:clamp(36px,7vw,62px);line-height:1.03;margin:.12em 0 .25em}.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:1000px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:12px 14px;border-radius:9px;line-height:1.7;margin:10px 0}.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}.info{border-left-color:var(--info)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(225px,1fr));gap:10px}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:9px}
+.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:23px;margin-top:4px}
+label{display:block;font-weight:760;margin-bottom:5px}select,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}textarea{min-height:250px;resize:vertical}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}
+.big{font-size:clamp(24px,4vw,34px);font-weight:950}.small{font-size:13px;color:var(--muted);line-height:1.65}.deadline{font-size:clamp(28px,5vw,46px);font-weight:950}
+.checkgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(275px,1fr));gap:8px}.ck{width:auto;transform:scale(1.12);margin-right:7px}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · Taiwan · 依疾管署 2026/09/08 疫情＋08/18 公費藥劑擴大規則整理</div>
+<h1>FluFast 930<br>學生發燒咳嗽，不一定要先做流感快篩才有公費抗病毒藥。</h1>
+<p class="lead">國內流感已進入流行期。2026/8/24–9/30，疾管署暫時擴大公費流感抗病毒藥劑使用對象；其中包含<strong>幼兒園、國小、國中、高中、高職、五專1–3年級學生</strong>等高傳播族群。若有類流感症狀，是否用藥仍由醫師依臨床判斷，但符合條件者<strong>不需先做流感快篩</strong>即可開立公費藥劑。</p>
+
+<section class="card">
+<h2>1｜先看現在為什麼值得處理</h2>
+<div class="stats">
+<div class="stat">8/30–9/5類流感就診<b>115,136</b></div>
+<div class="stat">較前週<b>+11.0%</b></div>
+<div class="stat">9/1–9/7新增重症<b>105例</b></div>
+<div class="stat">同週新增死亡<b>19例</b></div>
+</div>
+<div class="note warn">疾管署 9/8 公布：流感急診就診百分比 11.2%，已超過 11.0% 流行閾值，正式進入流行期；目前社區以 A 型流感為主。</div>
+</section>
+
+<section class="card">
+<h2>2｜你是不是這次「暫時擴大」的學生族群？</h2>
+<div class="grid">
+<div><label>身分</label>
+<select id="group">
+<option value="kg">幼兒園學生</option>
+<option value="elem">國小學生</option>
+<option value="junior">國中學生</option>
+<option value="senior">高中／高職學生</option>
+<option value="juniorcollege">五專1–3年級</option>
+<option value="university">大專／大學／五專4–5年級</option>
+<option value="caregiver">與流感重症高風險族群同住或照顧者</option>
+<option value="other">其他身分</option>
+</select></div>
+<div><label>目前是否有類流感／呼吸道症狀？</label>
+<select id="symptom">
+<option value="yes">有，例如發燒、咳嗽、流鼻水、喉嚨痛、疲倦、頭痛或肌肉痠痛</option>
+<option value="no">目前沒有</option>
+<option value="unsure">不確定</option>
+</select></div>
+</div>
+<div id="routeOut"></div>
+</section>
+
+<section class="card">
+<h2>3｜最容易被誤解的兩件事</h2>
+<div class="note ok"><b>① 「沒有流感快篩陽性就不能用公費藥」不是這次規則。</b>疾管署給醫界的正式通函寫明：經醫師依主訴與臨床判斷，符合公費藥劑條件者，不需流感快篩，即可開立公費藥劑。</div>
+<div class="note warn"><b>② 「我是大學生，所以也算學生擴大對象」不一定。</b>這次暫時擴大的學生項目明列到「五專1–3年級」；一般大專／大學與五專4–5年級不是靠這一條取得資格，但仍可能因其他公費條件而符合，應讓醫師評估。</div>
+</section>
+
+<section class="card">
+<h2>4｜不要自己找藥：直接找公費流感抗病毒合約院所</h2>
+<div class="note info">疾管署表示，全國約有<strong>4,000家</strong>公費流感抗病毒藥劑合約醫療機構；最新配置點清單在 2026/8/31 仍有更新。最省時間的做法不是先跑去買快篩，而是先在官方地圖找可看診的合約院所，再電話確認看診時段。</div>
+<div class="actions">
+<a class="btn" target="_blank" rel="noopener" href="https://vaxmap.cdc.gov.tw/" onclick="trackCore('map-open')">打開疾管署流感藥劑地圖</a>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://www.cdc.gov.tw/Category/Page/cg2y0tq-E9NsqTOAQcEhAw" onclick="trackCore('clinic-list')">公費藥劑配置點一覽</a>
+<a class="btn ghost" href="tel:1922">不確定就問 1922</a>
+</div>
+</section>
+
+<section class="card">
+<h2>5｜有這些危險徵兆，不要只在家等</h2>
+<div class="note bad"><b>疾管署 9/8 列出的重症危險徵兆：</b>呼吸困難、呼吸急促、發紺（缺氧）、血痰或痰液變濃、胸痛、意識改變、低血壓，或高燒持續 72 小時。出現這些情況應儘速就醫，不要用本頁自行判斷嚴重度。</div>
+</section>
+
+<section class="card">
+<h2>6｜今天就醫前 4 步</h2>
+<div class="checkgrid">
+<label><input class="ck prep" type="checkbox"> 已確認自己是否屬暫時擴大族群之一</label>
+<label><input class="ck prep" type="checkbox"> 已用官方地圖找到附近公費藥劑合約院所</label>
+<label><input class="ck prep" type="checkbox"> 已電話確認院所今天是否看診／可受理</label>
+<label><input class="ck prep" type="checkbox"> 有症狀時會戴口罩就醫，並在家休息避免帶病上課</label>
+</div>
+<div id="prepOut"></div>
+</section>
+
+<section class="card">
+<h2>7｜一鍵產生「到診所時直接問」的 20 秒說明卡</h2>
+<textarea id="card"></textarea>
+<div class="actions"><button onclick="build(true)">更新說明卡</button><button class="ghost" onclick="copyText('card')">複製</button></div>
+</section>
+
+<section class="card">
+<h2>8｜這個工具刻意不做</h2>
+<div class="note"><ul>
+<li>不診斷是不是流感，也不保證一定會拿到抗病毒藥；是否符合與是否處方由醫師判斷。</li>
+<li>不收姓名、學校、症狀細節、病史、檢驗結果或就醫紀錄。</li>
+<li>不把「不需流感快篩」解讀成「不需看醫師」。公費藥仍由合約醫療機構醫師評估。</li>
+<li>不把暫時擴大學生條件錯套到所有大專生；其他公費資格須另外由醫師／官方規則確認。</li>
+</ul></div>
+</section>
+
+<section class="card">
+<h2>9｜真實使用驗證</h2>
+<p>這輪真正追：<strong>原本不知道公費條件 → 找到合約院所 → 因而及早就醫／沒有為了「等快篩」拖延 → 在家休息不帶病上課。</strong>公開回饋不要貼健康資料。</p>
+<div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/58">FluFast 930 回饋區</a></div>
+</section>
+
+<section class="card">
+<h2>10｜可直接轉給班群／家長群</h2>
+<textarea id="promo">【流感已進入流行期｜學生有症狀，9/30前先知道這件事】
+疾管署9/8公布：8/30–9/5類流感門急診11萬5,136人次，較前週增加11%，已進入流行期。
+
+8/24–9/30暫時擴大公費流感抗病毒藥劑對象，包含：
+・幼兒園
+・國小
+・國中
+・高中／高職
+・五專1–3年級學生
+以及其他高傳播族群。
+
+如果有類流感症狀：
+・由醫師依臨床判斷是否符合公費用藥
+・符合者「不需要先做流感快篩」就可開公費藥劑
+・全國約4,000家合約院所，可先用疾管署地圖找附近院所
+・有症狀戴口罩就醫，並在家休息，不要帶病上課
+
+官方流感藥劑地圖：
+https://vaxmap.cdc.gov.tw/
+
+FluFast 930：
+https://allen3429.github.io/Allentrial20260812.github.io/public-good/flufast-930/
+
+提醒：這不是自我診斷工具；是否用藥仍由醫師決定。</textarea>
+<div class="actions"><button class="ghost" onclick="copyText('promo')">複製轉貼文</button></div>
+</section>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+const checks=sel=>[...document.querySelectorAll(sel)];
+function eligibleGroup(g){return ['kg','elem','junior','senior','juniorcollege','caregiver'].includes(g)}
+function route(){
+ const g=$('group').value,s=$('symptom').value;
+ let cls='info',title='',msg='';
+ if(s==='no'){
+   title='🔵 目前沒有症狀：這次「公費抗病毒藥劑」快篩不需要啟動';
+   msg='這是治療用藥資格資訊，不是疫苗資格。若之後出現類流感症狀，再依最新公告與醫師評估。';
+ } else if(eligibleGroup(g) && s==='yes'){
+   cls='ok';title='🟢 你命中這次暫時擴大的高傳播族群輪廓';
+   msg='下一步不是自己買藥，而是去公費流感抗病毒合約院所讓醫師評估。符合條件者不需先有流感快篩陽性。';
+ } else if(g==='university' && s==='yes'){
+   cls='warn';title='🟡 一般大專／大學不是靠「學生」這條暫時擴大資格';
+   msg='但你仍可能因其他公費條件符合。不要自行判定一定自費；可到合約院所或撥1922確認。';
+ } else if(s==='unsure'){
+   cls='warn';title='🟡 症狀是否屬類流感不確定：交給醫師判斷';
+   msg='若有呼吸道症狀或明顯不適，可戴口罩就醫；本頁不替醫師做診斷。';
+ } else {
+   cls='warn';title='🟡 本頁無法用「學生擴大條件」直接判你符合';
+   msg='其他公費抗病毒用藥條件仍存在，正式資格由醫師依疾管署規則評估。';
+ }
+ $('routeOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;
+ return {title,msg};
+}
+function prep(){
+ const a=checks('.prep'),n=a.filter(x=>x.checked).length;
+ $('prepOut').innerHTML=`<div class="note ${n>=3?'ok':'warn'}">就醫準備 ${n}/${a.length}。${n>=3?'已把政策資訊轉成可執行就醫路徑。':'最小下一步：先打開官方流感藥劑地圖找合約院所。'}</div>`;
+ return n;
+}
+function trackCore(label){if(window.PGLabImpact)PGLabImpact.core(label)}
+function build(countCore){
+ const r=route(),p=prep();
+ $('card').value=`【FluFast 930｜公費流感抗病毒就醫說明卡】
+目前判讀：${r.title}
+就醫準備：${p}/4
+
+到診所可直接說：
+「您好，我目前有類流感／呼吸道症狀。我想確認自己是否符合疾管署2026/8/24–9/30擴大公費流感抗病毒藥劑的條件。請依臨床狀況評估我是否需要用藥。我的理解是，符合公費條件者不需要先有流感快篩陽性，仍由醫師決定是否開藥。」
+
+官方重點：
+1. 擴大期間：2026/08/24–09/30。
+2. 學生類別：幼兒園、國小、國中、高中、高職、五專1–3年級。
+3. 其他暫時擴大族群也包含與流感重症高風險族群同住或其照顧者等。
+4. 全國約4,000家公費流感抗病毒藥劑合約醫療機構。
+5. 有症狀應戴口罩就醫並在家休息。
+6. 出現呼吸困難、呼吸急促、發紺、血痰/痰變濃、胸痛、意識改變、低血壓或高燒持續72小時等危險徵兆，應儘速就醫。
+
+官方地圖：https://vaxmap.cdc.gov.tw/
+1922防疫專線：1922
+
+這張卡不診斷、不保存健康資料，也不保證會取得藥物。`;
+ if(countCore&&window.PGLabImpact)PGLabImpact.core('visit-card');
+}
+async function copyText(id){
+ try{await navigator.clipboard.writeText($(id).value);alert('已複製')}
+ catch(e){$(id).select();document.execCommand('copy')}
+}
+['group','symptom'].forEach(id=>$(id).addEventListener('change',()=>build(false)));
+document.querySelectorAll('.prep').forEach(x=>x.addEventListener('change',()=>build(false)));
+build(false);
+</script>
+<script src="../impact.js" data-project="flufast-930" data-action-text="我已完成公費流感抗病毒資格／就醫快篩" data-real-text="我已真的找到合約院所／就醫／沒有因等快篩而拖延／在家休息" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/58"></script>
+</body></html>
