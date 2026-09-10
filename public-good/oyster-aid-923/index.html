@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="oyster-aid-923">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Oyster Aid 923：115年8月下旬豪雨牡蠣現金救助，9/10–9/23資格、20%損失門檻、清理前存證與官方額度試算。">
+<title>Oyster Aid 923｜牡蠣豪雨救助存證＋金額快篩</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--ok:#176b45;--warn:#936000;--bad:#a32323}
+*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1120px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}
+h1{font-size:clamp(35px,7vw,62px);line-height:1.04;margin:.12em 0 .25em}.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:980px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:11px 13px;border-radius:9px;line-height:1.7;margin:10px 0}
+.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}
+label{display:block;font-weight:760;margin-bottom:5px}select,input,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}textarea{min-height:230px;resize:vertical}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}
+.big{font-size:clamp(23px,4vw,31px);font-weight:950}.money{font-size:clamp(28px,5vw,42px);font-weight:950}.small{font-size:13px;color:var(--muted);line-height:1.65}
+.checkgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:8px}.ck{width:auto;transform:scale(1.12);margin-right:7px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:9px}.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:25px;margin-top:4px}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · Tainan / Chiayi · 官方規則校對 2026/09/10</div>
+<h1>Oyster Aid 923<br>先拍、再清、再申請。</h1>
+<p class="lead">農業部 9/9 公告：<strong>臺南市牡蠣養殖全品項</strong>，以及<strong>嘉義縣布袋鎮、東石鄉牡蠣養殖全品項</strong>，自 <strong>2026/9/10–9/23</strong> 受理 8 月下旬豪雨農業天然災害現金救助。受災品項經查估損失率要達 <strong>20% 以上</strong>。真正容易來不及補救的不是表格，而是清理、移除、復養後，現場證據已經不完整。</p>
+
+<section class="card">
+<h2>1｜先確認：這張卡是不是你的公告範圍</h2>
+<div class="grid">
+<div><label>養殖地區</label><select id="region"><option value="tainan">臺南市</option><option value="budai">嘉義縣布袋鎮</option><option value="dongshi">嘉義縣東石鄉</option><option value="other">其他地區</option></select></div>
+<div><label>申請人是否為實際從事漁業生產的自然人？</label><select id="producer"><option value="yes">是</option><option value="no">不是</option><option value="unknown">不確定</option></select></div>
+<div><label>目前對損失率的掌握</label><select id="loss"><option value="over">我估計可能達20%以上</option><option value="near">接近20%，不確定</option><option value="under">看起來低於20%</option><option value="unknown">還沒盤點</option></select></div>
+</div><div id="eligOut"></div>
+<div class="note warn"><b>你的估計不是正式查估。</b>20% 是官方核給門檻，是否達標由查估認定。若接近門檻，不要因為自己粗估就先放棄；先把現況存證並向受理公所確認。</div>
+</section>
+
+<section class="card"><h2>2｜如果現場還沒清：現在先做「不可逆」的證據保存</h2><div class="checkgrid">
+<label><input class="ck evidence" type="checkbox"> 拍廣角：能看出整體受損範圍與養殖配置</label>
+<label><input class="ck evidence" type="checkbox"> 拍近照：牡蠣死亡／脫落、設施損壞等具體情形</label>
+<label><input class="ck evidence" type="checkbox"> 補一段影片：從環境→設施→受損牡蠣連續拍攝</label>
+<label><input class="ck evidence" type="checkbox"> 保留原始檔，不只傳到LINE後刪掉手機原檔</label>
+<label><input class="ck evidence" type="checkbox"> 整理既有養殖、放養／生產與交易資料，先不要上傳到這個網站</label>
+<label><input class="ck evidence" type="checkbox"> 清理／移除／復養前先問公所是否需要現地查勘</label>
+</div><div id="evidenceOut"></div><div class="note">臺南農業局已公開建議：在清理、移除或復養前，先拍攝受損範圍、養殖設施及牡蠣受損情形，並保留可供查核的養殖與交易資料；實際應備文件仍以受理公所通知為準。</div></section>
+
+<section class="card"><h2>3｜依 2026 年適用的官方額度，先粗估「這案子有多值得今天跑公所」</h2><div class="grid">
+<div><label>養殖方式</label><select id="method"><option value="flat">平掛式｜87,500元／公頃</option><option value="stake">插篊式｜12,000元／公頃</option><option value="raft">浮筏式｜25,000元／棚</option><option value="longline">延繩垂下式｜每組最高15,000元</option><option value="scaffold">棚架垂下式｜5,000元／棚</option></select></div>
+<div><label id="unitLabel">受損／申報規模（公頃）</label><input id="qty" type="number" min="0" step="0.01" value="1"></div></div><div id="moneyOut"></div>
+<div class="note warn"><b>這只是「官方單位額度 × 你輸入的規模」粗估，不是核定金額。</b>正式救助仍要符合公告資格、查估損失率達20%以上，以及公所／主管機關認定的申報面積或數量。</div>
+<div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://www.moa.gov.tw/redirect_files.php?id=61257">農業部：2026年牡蠣現金救助額度表</a></div></section>
+
+<section class="card"><h2>4｜額度表不要用舊版本：2026 年這次適用的是這組</h2><div class="stats"><div class="stat">平掛式<b>87,500/公頃</b></div><div class="stat">插篊式<b>12,000/公頃</b></div><div class="stat">浮筏式<b>25,000/棚</b></div><div class="stat">延繩垂下<b>最高15,000/組</b></div><div class="stat">棚架垂下<b>5,000/棚</b></div></div><p class="small">官方附表註明這組額度適用於 2026/1/1 以後發生的天然災害。延繩垂下式每組約100公尺、放養800串牡蠣種苗。</p></section>
+
+<section class="card"><h2>5｜今天到 9/23，別把「缺文件」和「沒資格」混為一談</h2><div class="note ok"><b>先聯絡受理公所確認當次文件清單。</b>公告確定的核心是：指定地區、牡蠣全品項、實際從事漁業生產的自然人、損失率達20%以上。身分、養殖與災損證明等細部文件依公所通知備妥。</div><div class="note">嘉義官方公告還明列：例假日得照常受理；若因天災、交通中斷、通訊中斷等不可歸責原因沒能在期限內申請，可在原因消滅後10日內申請回復原狀，由公所覈實認定。這是例外機制，不要把它當成一般延長。</div><div class="actions"><a class="btn" target="_blank" rel="noopener" href="https://www.moa.gov.tw/sp_theme_data.php?id=9867&theme=publication">農業部：臺南牡蠣公告</a><a class="btn ghost" target="_blank" rel="noopener" href="https://www.moa.gov.tw/theme_data.php?id=9866&theme=publication">農業部：嘉義布袋／東石公告</a></div></section>
+
+<section class="card"><h2>6｜送件前 6 個防呆</h2><div class="checkgrid">
+<label><input class="ck action" type="checkbox"> 我確認養殖地在本次公告範圍</label>
+<label><input class="ck action" type="checkbox"> 我已在清理／復養前留下廣角＋近照／影片</label>
+<label><input class="ck action" type="checkbox"> 我保留原始影像與既有養殖／交易資料</label>
+<label><input class="ck action" type="checkbox"> 我已向轄區公所確認「這次」實際應備文件與現勘安排</label>
+<label><input class="ck action" type="checkbox"> 我知道20%要由查估認定，不拿自己的粗估當正式結果</label>
+<label><input class="ck action" type="checkbox"> 我已把 2026/9/23 當硬期限，不等到最後一天才第一次詢問</label>
+</div><div id="progressOut"></div></section>
+
+<section class="card"><h2>7｜一鍵產生「今天先做什麼」行動卡</h2><textarea id="card"></textarea><div class="actions"><button onclick="build(true)">更新行動卡</button><button class="ghost" onclick="copyText('card')">複製給家人／產銷班伙伴</button></div></section>
+
+<section class="card"><h2>8｜這個工具刻意不做</h2><div class="note"><ul><li>不要求上傳身分證、存摺、漁業權文件、交易明細或養殖場精確位置。</li><li>不替公所判定你的損失率有沒有20%。</li><li>不把粗估金額說成一定核准。</li><li>不拿舊年度補助額度套到2026這次災害。</li></ul></div></section>
+
+<section class="card"><h2>9｜真實使用驗證</h2><p>這輪追：<strong>獨立使用者 → 完成資格／存證快篩 → 留下非敏感流程回饋 → 確認真的先拍照存證、整理資料、聯絡公所或提出申請</strong>。</p><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/39">Oyster Aid 923 回饋區</a></div></section>
+
+<section class="card"><h2>10｜可直接轉貼給臺南／布袋／東石蚵農</h2><textarea id="promo">【今天9/10開始｜豪雨牡蠣現金救助，先拍再清，9/23截止】
+農業部9/9公告：
+・臺南市：牡蠣養殖全品項
+・嘉義縣：布袋鎮、東石鄉牡蠣養殖全品項
+・9/10–9/23向轄區公所申請
+・申請人須為實際從事漁業生產的自然人
+・查估損失率達20%以上才核予現金救助
+
+如果現場還沒清：先拍受損範圍、養殖設施、牡蠣受損情形，保留原始影像與養殖／交易資料，再問公所現勘與文件。
+
+2026適用額度：
+平掛式87,500元/公頃
+插篊式12,000元/公頃
+浮筏式25,000元/棚
+延繩垂下式每組最高15,000元
+棚架垂下式5,000元/棚
+
+Oyster Aid 923 不收個資，只幫你先做資格、存證、金額與期限防呆。</textarea><div class="actions"><button class="ghost" onclick="copyText('promo')">複製轉貼文</button></div></section>
+</main>
+<script>
+const $=id=>document.getElementById(id); const checks=cls=>[...document.querySelectorAll('.'+cls)]; const fmt=n=>'NT$'+Math.round(n).toLocaleString();
+const cfg={flat:{rate:87500,unit:'公頃',step:'0.01'},stake:{rate:12000,unit:'公頃',step:'0.01'},raft:{rate:25000,unit:'棚',step:'1'},longline:{rate:15000,unit:'組',step:'1'},scaffold:{rate:5000,unit:'棚',step:'1'}};
+function eligibility(){const r=$('region').value,p=$('producer').value,l=$('loss').value;let cls='ok',title='🟢 值得立刻進入存證＋公所確認',msg='現在最重要的是別讓清理／復養先把可查估的現況消掉。';if(r==='other'||p==='no'){cls='bad';title='⛔ 這張特定公告目前不適用';msg='其他地區不要硬套本頁；請回農業部最新天然災害公告查你的地區／品項。';}else if(p==='unknown'){cls='warn';title='🟡 先確認申請人資格';msg='官方要求實際從事漁業生產的自然人；先問受理公所，不要靠猜。';}else if(l==='under'){cls='warn';title='🟡 你估計低於20%，但別把粗估當正式查估';msg='若損失接近門檻或仍在發生延遲性死亡，先存證並向公所說明，正式損失率由查估認定。';}else if(l==='near'||l==='unknown'){cls='warn';title='🟡 損失率還不清楚：先存證、再讓官方查估';msg='20%是核給門檻，不是要求你自己先精算到小數點。';}$('eligOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;return title;}
+function evidence(){const a=checks('evidence'),n=a.filter(x=>x.checked).length;$('evidenceOut').innerHTML=`<div class="note ${n>=5?'ok':'warn'}">清理前存證 ${n}/${a.length}。${n>=5?'證據包已接近可用；下一步是確認公所現勘與文件。':'如果現場還沒清，先完成影像存證，這比先研究所有表格更不可逆。'}</div>`;return n;}
+function money(){const m=$('method').value,c=cfg[m],q=Math.max(0,+$('qty').value||0);$('unitLabel').textContent=`受損／申報規模（${c.unit}）`;$('qty').step=c.step;const est=q*c.rate;$('moneyOut').innerHTML=`<div class="note ok"><div class="money">${fmt(est)}</div><b>官方單位額度粗估</b>＝${q.toLocaleString()} ${c.unit} × ${fmt(c.rate)}／${c.unit}。${m==='longline'?'延繩垂下式是「每組最高」額度。':''}</div>`;return {est,q,unit:c.unit,rate:c.rate};}
+function progress(){const a=checks('action'),n=a.filter(x=>x.checked).length;$('progressOut').innerHTML=`<div class="note ${n===a.length?'ok':'warn'}">送件防呆 ${n}/${a.length}。${n===a.length?'已完成本頁核心行動。':'不要只看完；把未完成項目變成今天的下一步。'}</div>`;return n;}
+function build(countCore){const e=eligibility(),ev=evidence(),m=money(),p=progress();const region=$('region').selectedOptions[0].textContent,method=$('method').selectedOptions[0].textContent;$('card').value=`【Oyster Aid 923｜豪雨牡蠣現金救助行動卡】\n受理：2026/9/10–9/23\n地區：${region}\n資格／損失判斷：${e}\n養殖方式：${method}\n規模：${m.q} ${m.unit}\n官方額度粗估：${fmt(m.est)}\n清理前存證：${ev}/6\n送件防呆：${p}/6\n\n今天先做：\n1. 現場未清理／復養：先拍整體範圍＋近照＋影片，保存原始檔。\n2. 整理既有養殖／生產與交易資料，不上傳到第三方網站。\n3. 打轄區公所確認這次應備文件與現勘時間。\n4. 20%由官方查估認定；接近門檻不要自己先放棄。\n5. 9/23前完成申請。\n\n臺南官方公告：https://www.moa.gov.tw/sp_theme_data.php?id=9867&theme=publication\n嘉義布袋／東石官方公告：https://www.moa.gov.tw/theme_data.php?id=9866&theme=publication\n2026牡蠣救助額度：https://www.moa.gov.tw/redirect_files.php?id=61257\n\n本卡不保存個資，也不等於正式核定。`;if(countCore&&window.PGLabImpact)PGLabImpact.core('oyster-aid-precheck-complete');}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+['region','producer','loss','method'].forEach(id=>$(id).addEventListener('change',()=>build(false)));$('qty').addEventListener('input',()=>build(false));document.querySelectorAll('.evidence,.action').forEach(x=>x.addEventListener('change',()=>build(false)));build(false);
+</script>
+<script src="../impact.js" data-project="oyster-aid-923" data-action-text="我已完成牡蠣豪雨救助資格／存證快篩" data-real-text="我已真的先拍照存證／整理資料／聯絡公所／提出申請" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/39"></script>
+</body></html>
