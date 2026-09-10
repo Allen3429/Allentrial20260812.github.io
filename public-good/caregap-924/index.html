@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="caregap-924">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="CareGap 924：多元陪伴照顧服務第三階段試辦單位 9/24 申請前檢核、評選自評與服務缺口證據包。">
+<title>CareGap 924｜多元陪伴照顧第三階段申請前檢核</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#a32323}
+*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1120px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}
+h1{font-size:clamp(34px,7vw,60px);line-height:1.04;margin:.12em 0 .25em}.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:980px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:11px 13px;border-radius:9px;line-height:1.7;margin:10px 0}
+.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}
+label{display:block;font-weight:760;margin-bottom:5px}select,input,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}textarea{min-height:240px;resize:vertical}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}
+.big{font-size:clamp(23px,4vw,31px);font-weight:950}.score{font-size:clamp(32px,6vw,48px);font-weight:950}
+.checkgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:8px}.ck{width:auto;transform:scale(1.12);margin-right:7px}.small{font-size:13px;color:var(--muted);line-height:1.65}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:9px}.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:25px;margin-top:4px}
+.scoregrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px}.scorebox{border:1px solid var(--line);border-radius:14px;padding:12px}.scorebox input{margin-top:7px}
+.deadline{font-size:clamp(28px,5vw,40px);font-weight:950}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · Taiwan · 勞動部規則校對 2026/09/10</div>
+<h1>CareGap 924<br>照顧空窗還有地理缺口；9/24 前，把能供給服務的 NPO 推進申請。</h1>
+<p class="lead">勞動部已於 <strong>2026/9/3</strong> 開放「多元陪伴照顧服務試辦計畫」第三階段試辦單位申請，截止 <strong>9/24</strong>。這個服務處理的是「臨時、短期、緊急」照顧空窗，例如術後返家、長照服務銜接、外籍家庭看護返國期間。此頁不收個案病歷、員工／移工個資或內部財務，只協助符合資格的公益／非營利組織做申請前檢核。</p>
+
+<section class="card">
+<h2>1｜為什麼值得現在補供給？</h2>
+<div class="stats">
+<div class="stat">2026/1 官方累計服務<b>3.4萬+小時</b></div>
+<div class="stat">累計服務<b>3,900+人次</b></div>
+<div class="stat">當時服務範圍<b>16縣市</b></div>
+<div class="stat">第三階段截止<b>9/24</b></div>
+</div>
+<div class="note">勞動部 2026/1/30 統計：需求最大類型為「短期重大傷／術後出院照顧」約 35%，其次是「長照服務空窗」與「外籍家庭看護喘息」合計約 27%。過去擴大服務時，官方也明確提到曾收到家庭反映「所在縣市沒有試辦單位」。</div>
+<div class="note warn"><b>地理缺口提示：</b>依官方先前公布的第一、二階段服務區域與 2026/1 新增基隆後的 16 縣市覆蓋推算，主島仍值得優先確認新竹市、新竹縣、苗栗縣的服務供給；這是依公開資料做的「外展優先假設」，不是官方最新缺口名單。送件前請向專案辦公室確認當下服務地圖與政策需求。</div>
+</section>
+
+<section class="card">
+<h2>2｜組織資格快篩</h2>
+<div class="grid">
+<div><label>組織型態</label>
+<select id="orgtype">
+<option value="eligible">財團法人／非營利社團法人</option>
+<option value="other">公司、行號、政府機關或其他型態</option>
+<option value="unknown">不確定</option>
+</select></div>
+<div><label>依法設立／登記年資</label>
+<select id="years">
+<option value="5">滿 5 年</option>
+<option value="lt5">未滿 5 年</option>
+<option value="unknown">不確定</option>
+</select></div>
+<div><label>是否能提出相關服務經驗／實績證明？</label>
+<select id="record">
+<option value="yes">有</option>
+<option value="no">沒有</option>
+<option value="unknown">還沒盤點</option>
+</select></div>
+<div><label>是否規劃委任私立就業服務機構？</label>
+<select id="agency">
+<option value="no">不委任／尚未決定</option>
+<option value="yes">會委任</option>
+</select></div>
+</div>
+<div id="eligOut"></div>
+<div class="note">若委任私立就業服務機構，官方另要求該機構符合評鑑、近年外國人引進／聘僱結構與就服法紀錄等條件；不要只拿一張許可證就當作已完成資格檢核。</div>
+</section>
+
+<section class="card">
+<h2>3｜9/24 送件真正容易漏的是「兩階段紙本」</h2>
+<div class="checkgrid">
+<label><input class="ck docs" type="checkbox"> 申請表</label>
+<label><input class="ck docs" type="checkbox"> 多元陪伴照顧服務計畫書</label>
+<label><input class="ck docs" type="checkbox"> 組織章程＋設立／登記／立案證明</label>
+<label><input class="ck docs" type="checkbox"> 相關服務經驗／實績證明</label>
+<label><input class="ck docs" type="checkbox"> 專業管理團隊學經歷證明</label>
+<label><input class="ck docs" type="checkbox"> 如委任仲介：許可、近5年評鑑、近2年引進／聘僱比率等證明</label>
+</div>
+<div id="docsOut"></div>
+<div class="note ok"><b>第一步：</b>先送 1 份紙本，並同步寄電子檔，讓專業團體做應備文件完整性檢核。</div>
+<div class="note warn"><b>第二步：</b>經通知補正完成或無須補正後，還要再備齊 <strong>1 式 12 份</strong>紙本，在通知期限內送達指定地點。第一步寄出去不代表流程已完成。</div>
+<div class="note">第三階段的初次申請以掛號郵寄至「多元陪伴照顧服務試辦計畫辦公室」，並以<strong>原寄郵局郵戳</strong>判斷是否逾期。</div>
+</section>
+
+<section class="card">
+<h2>4｜評選自評：先找出 70 分門檻前最薄弱的那一塊</h2>
+<p class="small">以下分數只是內部「紅隊演練」，不是官方評分。請保守自評；正式評選由評選委員進行，總分達 70 分才屬合格，再由勞動部依政策需要核定。</p>
+<div class="scoregrid">
+<div class="scorebox"><label>組織公益性及績優事蹟（0–20）</label><input id="s1" type="number" min="0" max="20" value="12"></div>
+<div class="scorebox"><label>服務內容及費用標準（0–15）</label><input id="s2" type="number" min="0" max="15" value="9"></div>
+<div class="scorebox"><label>組織專業性（0–15）</label><input id="s3" type="number" min="0" max="15" value="9"></div>
+<div class="scorebox"><label>服務品質確保機制（0–15）</label><input id="s4" type="number" min="0" max="15" value="9"></div>
+<div class="scorebox"><label>外籍工作者聘僱管理／訓練／後援（0–15）</label><input id="s5" type="number" min="0" max="15" value="8"></div>
+<div class="scorebox"><label>創新作為（0–20）</label><input id="s6" type="number" min="0" max="20" value="12"></div>
+</div>
+<div id="scoreOut"></div>
+</section>
+
+<section class="card">
+<h2>5｜服務缺口不要只寫「我們覺得有需求」：做一個 5 件證據包</h2>
+<div class="grid">
+<div><label>預計主要服務區域</label>
+<select id="county">
+<option>新竹市</option><option>新竹縣</option><option>苗栗縣</option>
+<option>基隆市</option><option>臺北市</option><option>新北市</option><option>桃園市</option>
+<option>臺中市</option><option>彰化縣</option><option>南投縣</option><option>雲林縣</option>
+<option>嘉義市</option><option>嘉義縣</option><option>臺南市</option><option>高雄市</option><option>屏東縣</option>
+<option>宜蘭縣</option><option>花蓮縣</option><option>臺東縣</option>
+<option>其他／跨縣市</option>
+</select></div>
+</div>
+<div class="checkgrid">
+<label><input class="ck evidence" type="checkbox"> 近 6–12 個月轉介／詢問「術後、長照空窗、看護返國」件數</label>
+<label><input class="ck evidence" type="checkbox"> 至少 2 個醫院出院準備／長照個管／照顧者團體合作意向</label>
+<label><input class="ck evidence" type="checkbox"> 可服務時段與最少 4 小時服務的人力配置</label>
+<label><input class="ck evidence" type="checkbox"> 偏鄉／跨區交通與臨時派班的可執行方案</label>
+<label><input class="ck evidence" type="checkbox"> 一個不含個資的真實照顧空窗案例流程：需求出現→媒合→服務→結案</label>
+</div>
+<div id="evidenceOut"></div>
+</section>
+
+<section class="card">
+<h2>6｜一鍵產生「申請前 1 頁紅隊摘要」</h2>
+<textarea id="brief"></textarea>
+<div class="actions">
+<button onclick="build(true)">更新紅隊摘要</button>
+<button class="ghost" onclick="copyText('brief')">複製給理監事／計畫負責人</button>
+<a class="btn" target="_blank" rel="noopener" href="https://mcs.wda.gov.tw/">官方多元陪伴照顧服務</a>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://www.mol.gov.tw/1607/1632/2665/98934/post">第三階段官方公告</a>
+</div>
+</section>
+
+<section class="card">
+<h2>7｜官方窗口與硬期限</h2>
+<div class="stats">
+<div class="stat">申請截止<b>9/24</b></div>
+<div class="stat">合格門檻<b>70分</b></div>
+<div class="stat">預計公布<b>12/4前</b></div>
+<div class="stat">專案辦公室<b>02-7756-2580</b></div>
+</div>
+<div class="actions">
+<a class="btn ghost" href="tel:0277562580">多元陪伴專案辦公室</a>
+<a class="btn ghost" href="tel:1955">1955 勞動部</a>
+</div>
+</section>
+
+<section class="card">
+<h2>8｜這個工具刻意不做</h2>
+<div class="note">
+<ul>
+<li>不代造服務實績、合作意向、移工資料、財務或仲介資格證明。</li>
+<li>不把自評 70 分當成「一定入選」；70 分只是官方合格門檻，核定仍看評選與政策需求。</li>
+<li>不收照顧個案姓名、健康資訊、員工／移工護照、居留證、薪資或內部契約。</li>
+<li>不把推算的「新竹／苗栗可能是主島服務缺口」當作官方指定優先區；送件前仍要向專案辦公室確認。</li>
+</ul>
+</div>
+</section>
+
+<section class="card">
+<h2>9｜真實使用驗證</h2>
+<p>這輪不追一般瀏覽量而已，真正驗證：<strong>符合或接近資格的組織，有沒有從「知道公告」走到「打電話、盤點服務區域、補文件、寄出第一份紙本＋電子檔」</strong>。</p>
+<div class="actions">
+<a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/37">CareGap 924 回饋區</a>
+</div>
+</section>
+
+<section class="card">
+<h2>10｜可直接轉給社福／長照 NPO</h2>
+<textarea id="promo">【9/24截止｜勞動部第三階段「多元陪伴照顧」正在找新的試辦單位】
+這不是一般長照補助，而是補「臨、短、急」照顧空窗：術後返家、長照等待、外籍家庭看護返國等。
+
+申請單位基本門檻：依法設立／登記滿5年的財團法人或非營利社團法人，並具相關服務能力。
+評選100分：
+・公益性／績優事蹟20
+・服務內容及費用15
+・組織專業15
+・品質確保15
+・外籍工作者聘僱管理／訓練／後援15
+・創新20
+總分70以上才屬合格，再由勞動部依政策需要核定。
+
+9/24前的第一步不是先印12份：
+先送1份紙本＋電子檔做完整性檢核；通過／補正後才依通知再備1式12份。
+
+CareGap 924 幫你做資格、文件、70分紅隊自評與服務缺口證據包，不收個案或移工個資。</textarea>
+<div class="actions"><button class="ghost" onclick="copyText('promo')">複製外展文案</button></div>
+</section>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+const checks=cls=>[...document.querySelectorAll('.'+cls)];
+function elig(){
+ const t=$('orgtype').value,y=$('years').value,r=$('record').value,a=$('agency').value;
+ let cls='ok',title='🟢 基本資格接近可送件',msg='接著確認全部附件、服務設計與評選弱項。';
+ if(t==='other'||y==='lt5'||r==='no'){cls='bad';title='⛔ 有明顯資格／實績缺口';msg='先向專案辦公室確認，不要投入大量印製與計畫書工時。';}
+ else if(t==='unknown'||y==='unknown'||r==='unknown'){cls='warn';title='🟡 先把組織資格查清楚';msg='最省成本的下一步是先用設立證明與過去服務紀錄向專案辦公室確認。';}
+ if(a==='yes') msg+=' 你另需完整檢核受委任私立就服機構的官方資格與證明。';
+ $('eligOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;
+ return title;
+}
+function docs(){
+ const a=checks('docs'),n=a.filter(x=>x.checked).length;
+ $('docsOut').innerHTML=`<div class="note ${n===a.length?'ok':'warn'}">初次送件資料 ${n}/${a.length}。${n===a.length?'可進入最後裝訂／電子檔一致性檢查。':'先補缺件；9/24不是只按一個線上送出鍵。'}</div>`;
+ return n;
+}
+function score(){
+ const ids=['s1','s2','s3','s4','s5','s6'],max=[20,15,15,15,15,20];
+ const vals=ids.map((id,i)=>Math.min(max[i],Math.max(0,+$(id).value||0)));
+ const total=vals.reduce((a,b)=>a+b,0);
+ const weakest=vals.map((v,i)=>({i,v,p:v/max[i]})).sort((a,b)=>a.p-b.p)[0];
+ const names=['公益性／績優事蹟','服務內容及費用','組織專業','品質確保','外籍工作者管理／訓練／後援','創新作為'];
+ const cls=total>=80?'ok':total>=70?'warn':'bad';
+ $('scoreOut').innerHTML=`<div class="note ${cls}"><span class="score">${total}/100</span><br>官方合格門檻為70分；你的自評最薄弱是「${names[weakest.i]}」。${total>=70?'不要只守70分，優先把最薄弱項補成可驗證證據。':'先不要印大量紙本；把最薄弱項補強後再紅隊一次。'}</div>`;
+ return {total,weak:names[weakest.i]};
+}
+function evidence(){
+ const a=checks('evidence'),n=a.filter(x=>x.checked).length;
+ $('evidenceOut').innerHTML=`<div class="note ${n>=4?'ok':'warn'}">服務缺口證據 ${n}/${a.length}。${n>=4?'已足以形成一段「有數據、有轉介、有執行」的需求敘事。':'少寫口號，多補轉介件數、合作意向與派班可行性。'}</div>`;
+ return n;
+}
+function build(countCore){
+ const e=elig(),d=docs(),s=score(),v=evidence();
+ $('brief').value=`【CareGap 924｜第三階段試辦單位申請前紅隊摘要】
+截止：2026/9/24（初次紙本以原寄郵局郵戳為憑）
+服務區域：${$('county').value}
+基本資格：${e}
+初次送件文件：${d}/6
+評選自評：${s.total}/100
+目前最薄弱評選項：${s.weak}
+服務缺口證據：${v}/5
+
+今天優先做：
+1. 不確定資格就先打02-7756-2580，不要先浪費時間印12份。
+2. 初次先備1份紙本＋同步電子檔，確認申請表、計畫書、設立證明、實績、專業團隊證明與必要的仲介文件。
+3. 計畫書不要只寫「高齡化所以需要」；放入不含個資的轉介件數、醫院／長照合作意向、可派班時段、交通與一個完整服務流程。
+4. 依官方六項評選權重做紅隊，先補最薄弱項；70分是合格門檻，不是保證核定。
+5. 通過文件檢核／補正後，依通知再備1式12份紙本。
+6. 9/24前完成掛號寄送；不要把「電子檔寄出」誤認成正式完成。
+
+官方第三階段公告：
+https://www.mol.gov.tw/1607/1632/2665/98934/post
+官方計畫網站：
+https://mcs.wda.gov.tw/
+專案辦公室：02-7756-2580
+1955：全年無休
+
+本卡不保存服務個案、移工或組織機密資料。`;
+ if(countCore&&window.PGLabImpact)PGLabImpact.core('application-preflight-complete');
+}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+['orgtype','years','record','agency','county'].forEach(id=>$(id).addEventListener('change',()=>build(false)));
+['s1','s2','s3','s4','s5','s6'].forEach(id=>$(id).addEventListener('input',()=>build(false)));
+document.querySelectorAll('.docs,.evidence').forEach(x=>x.addEventListener('change',()=>build(false)));
+build(false);
+</script>
+<script src="../impact.js" data-project="caregap-924" data-action-text="我已完成第三階段申請前檢核" data-real-text="我已真的打專案辦公室／盤點服務區域／補文件／寄出第一份紙本＋電子檔" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/37"></script>
+</body>
+</html>
