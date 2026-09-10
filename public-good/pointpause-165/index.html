@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="pointpause-165">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="PointPause 165：有人叫你買遊戲點數做驗證、保證、見面費或非遊戲用途？在傳序號前先停60秒。依2026最新警方與數位產業署防詐資訊整理。">
+<title>PointPause 165｜遊戲點數詐騙 60 秒止損卡</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#a32323;--info:#285c8d}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1080px;margin:auto;padding:24px 14px 72px}
+.kicker{font-size:14px;font-weight:850;color:var(--muted)}
+h1{font-size:clamp(36px,7vw,62px);line-height:1.03;margin:.12em 0 .25em}
+.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:970px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:11px 13px;border-radius:9px;line-height:1.7;margin:10px 0}
+.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}.info{border-left-color:var(--info)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:9px}
+.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:24px;margin-top:4px}
+label{display:block;font-weight:760;margin-bottom:5px}
+select,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}
+textarea{min-height:240px;resize:vertical}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}
+button,.btn{display:inline-block;border:0;border-radius:12px;padding:11px 14px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}
+.ghost{background:#edf1f5;color:#17212b}.danger{background:#8f2222}
+.big{font-size:clamp(24px,4vw,34px);font-weight:950}
+.stop{font-size:clamp(30px,7vw,58px);font-weight:1000;line-height:1.1;padding:22px;border:3px solid var(--bad);border-radius:18px;background:#fff;text-align:center}
+.small{font-size:13px;color:var(--muted);line-height:1.65}
+.checkgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(275px,1fr));gap:8px}
+.ck{width:auto;transform:scale(1.12);margin-right:7px}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · Taiwan · 依 2026/09/08 數位產業署＋刑事局近期警示整理</div>
+<h1>PointPause 165<br>序號還沒傳出去，就還有一個停下來的機會。</h1>
+<p class="lead">有人在線上要求你去超商買遊戲點數，說是「驗證身分、保證金、見面費、解鎖、手續費、金流驗證」或其他<strong>不是正常遊戲儲值</strong>的用途？先不要傳點數卡照片、序號或密碼。2026/9/8 數位產業署再次提醒：要求購買點數並提供序號／拍照傳送的異常交易是典型詐騙警訊。</p>
+
+<section class="card">
+<h2>1｜正在被催？先只做這件事</h2>
+<div class="stop">不要再買。<br>不要傳序號。<br>不要因威脅繼續付款。</div>
+<div class="actions">
+<a class="btn" href="tel:165">現在打 165 查證</a>
+<a class="btn danger" href="tel:110">被威脅／感到不安全：110</a>
+</div>
+<div class="note warn"><b>不需要先向對方解釋。</b>先停止付款、停止傳資料；對方說「最後一筆就退回」「驗證完全部返還」「不付就找你家人」，都不是你繼續付款的理由。</div>
+</section>
+
+<section class="card">
+<h2>2｜你到哪一步？只在這台裝置上判讀，不上傳</h2>
+<div class="grid">
+<div><label>對方要求遊戲點數的理由</label>
+<select id="reason">
+<option value="nongame">驗證／保證／見面／解鎖／手續費等非遊戲用途</option>
+<option value="cheap">低價代儲／優惠儲值</option>
+<option value="game">我只是自己在官方遊戲管道正常儲值</option>
+<option value="unknown">不確定</option>
+</select></div>
+<div><label>目前進度</label>
+<select id="stage">
+<option value="asked">只被要求，還沒買</option>
+<option value="bought">已買點數，但序號／照片還沒傳</option>
+<option value="sent">已把點數序號／照片傳給對方</option>
+<option value="money">另外已經匯款／轉帳</option>
+<option value="id">另外已傳身分證件照片或金融資料</option>
+<option value="threat">對方正在威脅、恐嚇或說要找本人／家人</option>
+</select></div>
+</div>
+<div id="routeOut"></div>
+</section>
+
+<section class="card">
+<h2>3｜依你所在階段，現在的最小止損動作</h2>
+<div id="stepsOut"></div>
+<div class="actions">
+<a class="btn" href="tel:165">165 反詐騙</a>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://165.npa.gov.tw/">165 全民防騙網</a>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://165dashboard.tw/">165 打詐儀錶板</a>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://moda.gov.tw/ADI/antifraud/af-third-case/20598">數位產業署 9/8 點數詐騙警示</a>
+</div>
+</section>
+
+<section class="card">
+<h2>4｜為什麼現在值得做：學生受害不是零星個案</h2>
+<div class="stats">
+<div class="stat">暑假學生受害<b>356人</b></div>
+<div class="stat">個案財損範圍<b>2千–30萬</b></div>
+<div class="stat">官方求助<b>165／110</b></div>
+</div>
+<div class="note bad">刑事局在 2026/8/23 表示，「色情應召詐財」長期位列 165 打詐儀錶板高發前 5 名；僅暑假期間就分析到 356 名學生受害。典型流程是先建立信任，再要求購買遊戲點數、交出序號／密碼，之後追加各種名目的付款，甚至以本人或家人安全威脅逼迫繼續付款。</div>
+<div class="note">這頁不需要知道你是因為交友、交易、遊戲、社群還是其他情境被要求買點數。<strong>只處理付款與求助的最後一哩。</strong></div>
+</section>
+
+<section class="card">
+<h2>5｜如果「已買、未傳」：這是最值得攔住的一刻</h2>
+<div class="note ok"><b>先不要撕掉／傳送序號或拍照給對方。</b>數位產業署過去的公私協力阻詐說明指出，若受騙點數序號尚未被使用，可先向原購買超商通路詢問退費；實際是否可退、需要哪些憑證，仍依點數業者與通路最新規則。</div>
+<div class="checkgrid">
+<label><input class="ck prep" type="checkbox"> 序號／密碼還沒有交給對方</label>
+<label><input class="ck prep" type="checkbox"> 我已停止繼續購買新的點數</label>
+<label><input class="ck prep" type="checkbox"> 我只從原購買通路或點數發行商官方網站找客服，不點對方給的客服連結</label>
+<label><input class="ck prep" type="checkbox"> 我會先問165，再決定下一步</label>
+</div>
+<div id="prepOut"></div>
+</section>
+
+<section class="card">
+<h2>6｜如果「已傳序號／已匯款」：重點不是追回面子，是搶時間</h2>
+<div class="note bad"><b>已傳點數：</b>停止再買，保存聊天、付款／購買紀錄與對方要求，不要刪除證據；立即撥 165。若點數尚未被使用，也可同步從發行商官方網站找客服詢問是否仍能止付／處理。</div>
+<div class="note bad"><b>已轉帳：</b>第一時間撥 165。警方公開說明，165 受理後可依案件情況通知銀行啟動圈存機制，越早處理越有機會攔阻款項；也可同步聯絡自己銀行的官方客服。</div>
+<div class="note bad"><b>被威脅：</b>不要赴約、不要再匯款、不要獨自處理。保留訊息；若有人身安全威脅、跟蹤、要求到指定地點或你現在感到不安全，直接撥 110。</div>
+</section>
+
+<section class="card">
+<h2>7｜一鍵產生「不描述私密細節」的求助摘要</h2>
+<textarea id="card"></textarea>
+<div class="actions">
+<button onclick="build(true)">更新止損卡</button>
+<button class="ghost" onclick="copyText('card')">複製給可信任的人／報案前備忘</button>
+</div>
+<p class="small">摘要刻意不要求寫交友內容、身分證號、點數序號、銀行帳號或私密影像。</p>
+</section>
+
+<section class="card">
+<h2>8｜這個工具刻意不做</h2>
+<div class="note">
+<ul>
+<li>不判斷你為什麼會接觸對方，也不要求說明任何性或交友細節。</li>
+<li>不收點數序號、聊天截圖、身分證件、學生證、帳號、銀行資料、對方帳號或位置。</li>
+<li>不提供「怎麼跟詐騙者周旋、反查、誘導對方」的方法；重點是停止付款與官方求助。</li>
+<li>不保證款項或點數一定追回；已匯出／已交序號後，能做的是越早通報越好。</li>
+</ul>
+</div>
+</section>
+
+<section class="card">
+<h2>9｜真實使用驗證</h2>
+<p>第一輪只追一件事：<strong>看到這張卡後，有沒有人真的少傳一組序號、少買下一張點數、打了165／110，或陪朋友求助。</strong>不蒐集受害情境細節。</p>
+<div class="actions">
+<a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/50">PointPause 165 回饋區</a>
+</div>
+</section>
+
+<section class="card">
+<h2>10｜可直接轉貼給學生、家長、宿舍／學務單位</h2>
+<textarea id="promo">【有人叫你買遊戲點數做「驗證／保證／見面費」？序號先不要傳】
+刑事局近期指出，暑假期間已有356名學生遭「假交友／色情應召＋遊戲點數」詐騙，財損從2,000元到30萬元。
+
+9/8數位產業署也再次提醒：
+・有人要求你買遊戲點數卡，再把序號／照片傳過去，是重大詐騙警訊
+・遊戲點數只應用在正常遊戲儲值，不要拿來做「保證金、驗證、手續費、見面費」等用途
+・被催「再買最後一張就退款」時，不要繼續
+・已買但序號還沒傳：先不要傳，問165；未使用點數可向原購買通路／點數官方客服詢問退費
+・已傳序號或已匯款：停止再付，留存證據，立刻打165
+・被威脅本人或家人：不要再付、不赴約；有安全疑慮直接110
+
+165：https://165.npa.gov.tw/
+PointPause 165 不收聊天、身分證、點數序號或銀行資料，只幫你先停下來。</textarea>
+<div class="actions"><button class="ghost" onclick="copyText('promo')">複製轉貼文</button></div>
+</section>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+const checks=cls=>[...document.querySelectorAll('.'+cls)];
+
+function route(){
+ const reason=$('reason').value,stage=$('stage').value;
+ let cls='warn',title='先停，不要把點數序號交出去',msg='';
+ if(reason==='game' && stage==='asked'){
+   cls='ok';title='如果是你自己在官方遊戲管道正常儲值，本工具不需要介入';
+   msg='仍請確認網址／App確實是官方管道；不要把序號轉傳給陌生人。';
+ } else if(stage==='asked'){
+   title='🟡 現在是最容易完全止損的階段';
+   msg='不要買點數、不要按對方連結、不要進入對方指定的「客服」。先掛斷／停止聊天並撥165查證。';
+ } else if(stage==='bought'){
+   cls='warn';title='🟡 已買但未傳：先守住序號';
+   msg='不要拍卡片／序號給對方，也不要再買下一張。可持購買憑證向原通路或點數發行商官方客服詢問未使用點數的退費方式，並先撥165。';
+ } else if(stage==='sent'){
+   cls='bad';title='🔴 已傳序號：立即停止追加付款';
+   msg='保存聊天與購買紀錄，撥165；同步從點數發行商官方網站找客服詢問該序號是否尚有處理可能。';
+ } else if(stage==='money'){
+   cls='bad';title='🔴 已匯款：現在優先撥165';
+   msg='越早通報越好；警方可依案件情況協助通知金融機構進行攔阻／圈存。也同步聯絡自己銀行的官方客服。';
+ } else if(stage==='id'){
+   cls='bad';title='🔴 已交證件／金融資料：不要再補更多「驗證資料」';
+   msg='保存證據並撥165／報案，由警方依你實際交出的資料提供後續處置；若有銀行帳戶／卡片資訊外流，也立即聯絡銀行官方客服。';
+ } else if(stage==='threat'){
+   cls='bad';title='🔴 被威脅：不要付款換「安全」';
+   msg='不要赴約或獨自處理。保存威脅訊息；有人身安全疑慮直接110，也可撥165處理詐騙部分。';
+ }
+ $('routeOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;
+ return {title,msg};
+}
+
+function steps(){
+ const stage=$('stage').value;
+ let arr=[];
+ if(stage==='asked') arr=['停止回覆付款要求','不要購買點數','不要點對方提供的客服／物流／驗證連結','撥165查證'];
+ if(stage==='bought') arr=['不要傳卡片照片、序號或密碼','停止再買新的點數','保留購買憑證','從原購買通路／點數發行商官方管道詢問未使用點數處理','撥165'];
+ if(stage==='sent') arr=['停止再買','保存聊天與購買紀錄','撥165','從點數發行商「自己搜尋到的官方網站」找客服，不用對方給的客服'];
+ if(stage==='money') arr=['停止追加匯款','立刻撥165','立刻聯絡自己銀行官方客服','保存匯款紀錄與對話','依165／警方指示完成報案'];
+ if(stage==='id') arr=['不要再傳證件／自拍／金融資料','保存已傳送內容的紀錄','撥165／報案','若金融資料外流，聯絡銀行官方客服'];
+ if(stage==='threat') arr=['不赴約、不再付款','保存威脅訊息','移到安全且有人陪伴的地方','有人身安全疑慮撥110','詐騙部分撥165'];
+ $('stepsOut').innerHTML='<div class="note info"><b>現在依序做：</b><ol>'+arr.map(x=>`<li>${x}</li>`).join('')+'</ol></div>';
+ return arr;
+}
+
+function prep(){
+ const a=checks('prep'),n=a.filter(x=>x.checked).length;
+ $('prepOut').innerHTML=`<div class="note ${n===a.length?'ok':'warn'}">未傳序號止損進度 ${n}/${a.length}。${n===a.length?'已把最關鍵的「序號不要出去」守住。':'最重要的是先停止傳序號與繼續購買。'}</div>`;
+ return n;
+}
+
+function build(countCore){
+ const r=route(),arr=steps(),p=prep();
+ $('card').value=`【PointPause 165｜60秒止損摘要】
+目前判讀：${r.title}
+
+我現在要做：
+${arr.map((x,i)=>`${i+1}. ${x}`).join('\n')}
+
+我不需要在求助前解釋私密細節。可以只說：
+「我遇到網路上的人要求我用遊戲點數／轉帳做非正常付款，現在可能是詐騙。對方正在催促${$('stage').value==='threat'?'，而且有威脅訊息':''}。我已停止付款，請協助我聯絡165／警方並整理證據。」
+
+官方：
+165反詐騙：165
+緊急人身安全：110
+165全民防騙網：https://165.npa.gov.tw/
+數位產業署9/8遊戲點數警示：https://moda.gov.tw/ADI/antifraud/af-third-case/20598
+
+提醒：
+・不要再買「最後一張」。
+・不要傳點數序號／密碼／照片。
+・不要用付款換取對方停止威脅。
+・不要刪除聊天、購買或匯款紀錄。
+・不要把點數序號、證件、銀行資料貼到公開回饋區。
+
+本卡不保存上述敏感資料，也不代表款項一定能追回。`;
+ if(countCore&&window.PGLabImpact)PGLabImpact.core('stop-card-complete');
+}
+
+async function copyText(id){
+ try{await navigator.clipboard.writeText($(id).value);alert('已複製')}
+ catch(e){$(id).select();document.execCommand('copy')}
+}
+
+['reason','stage'].forEach(id=>$(id).addEventListener('change',()=>build(false)));
+document.querySelectorAll('.prep').forEach(x=>x.addEventListener('change',()=>build(false)));
+build(false);
+</script>
+<script src="../impact.js" data-project="pointpause-165" data-action-text="我已完成60秒遊戲點數止損卡" data-real-text="我已真的停止傳序號／停止付款／向165或110求助" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/50"></script>
+</body>
+</html>
