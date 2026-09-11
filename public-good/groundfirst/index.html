@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="groundfirst">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="GroundFirst：雨後移動式起重機作業前60秒地盤STOP快篩；不估承載力，只把積水、泥濘、沖刷、回填土、地下設施與支腿補強等法規重點變成起吊前確認。">
+<title>GroundFirst｜雨後吊車地盤STOP快篩</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#a32323;--info:#285c8d}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC",sans-serif}.wrap{max-width:1080px;margin:auto;padding:22px 14px 70px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}h1{font-size:clamp(36px,7vw,62px);line-height:1.03;margin:.12em 0 .25em}.lead{font-size:18px;line-height:1.75;color:var(--muted)}.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:12px 14px;border-radius:9px;line-height:1.7;margin:10px 0}.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}.info{border-left-color:var(--info)}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(225px,1fr));gap:10px}label{display:block;font-weight:760;margin-bottom:5px}select,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}textarea{min-height:250px;resize:vertical}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}.status{font-size:clamp(30px,6vw,52px);font-weight:1000}.small{font-size:13px;color:var(--muted);line-height:1.65}.checkgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(285px,1fr));gap:8px}.ck{width:auto;transform:scale(1.12);margin-right:7px}@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head><body><main class="wrap">
+<div class="kicker">Public Good Lab · Construction Safety · 依職安署 2026/09/09 最新雨後地盤警示</div>
+<h1>GroundFirst<br>雨停 ≠ 地盤已恢復安全。</h1>
+<p class="lead">職安署指出，近期連日降雨後已接連發生吊車因作業位置承載力不足，造成支腿下陷、車體傾斜或翻覆。這個工具不計算地盤承載力，也不替專業人員核准作業；只把「起吊以前一定要重新確認」變成60秒STOP流程。</p>
+
+<section class="card"><h2>1｜先問：為什麼今天需要重做地盤確認？</h2><div class="grid">
+<div><label>近期是否有豪雨／連續降雨／場地曾積水？</label><select id="rain"><option value="yes">是</option><option value="no">沒有</option><option value="unknown">不確定</option></select></div>
+<div><label>今天是雨後重新進場／移機到新位置？</label><select id="reentry"><option value="yes">是</option><option value="no">不是</option></select></div>
+</div><div class="note info"><b>外觀正常不能當作承載力證明。</b>豪雨後原本看似穩固的地面可能已改變；回填土、地下管線、溝渠或其他地下設施也可能形成局部弱點。</div></section>
+
+<section class="card"><h2>2｜支腿／外伸撐座位置：逐項確認</h2><div class="grid">
+<div><label>地面有積水、泥濘、鬆軟、沖刷或明顯沉陷？</label><select id="surface"><option value="clear">未發現</option><option value="hazard">有</option><option value="unknown">看不清／不確定</option></select></div>
+<div><label>支撐點下方的地下管線、溝渠、孔洞、箱涵、回填土等已調查？</label><select id="underground"><option value="verified">已確認</option><option value="risk">已知有局部弱點／地下設施</option><option value="unknown">沒有資料／不確定</option></select></div>
+<div><label>作業範圍的地形、地質、作業空間、吊物重量、起重機種類／性能已事前調查？</label><select id="survey"><option value="done">已完成</option><option value="partial">只完成部分</option><option value="no">尚未</option></select></div>
+<div><label>若地盤偏軟或承載條件不足，必要補強措施是否已依評估完成？</label><select id="support"><option value="done">已依評估鋪設鐵板／墊料或採必要支撐措施</option><option value="na">專業評估後確認不需額外補強</option><option value="no">尚未完成</option><option value="unknown">不確定是否足夠</option></select></div>
+</div><div id="statusOut"></div></section>
+
+<section class="card"><h2>3｜只有兩個輸出：可以進入正式作業前確認，或 STOP</h2><div class="note bad"><b>任一「有危險／沒有資料／尚未完成」都不應被這個工具洗成綠燈。</b>職安署要求有疑慮時先停止作業、重新評估並完成必要補強，再恢復吊掛。</div><div class="actions"><button onclick="evaluate(true)">重新判讀</button><button class="ghost" onclick="window.print()">列印／存PDF給工班</button></div></section>
+
+<section class="card"><h2>4｜起吊前最後5項（不取代法定檢點）</h2><div class="checkgrid">
+<label><input class="ck prep" type="checkbox"> 地盤／支撐點已由現場負責人重新確認，不只沿用昨天結果</label>
+<label><input class="ck prep" type="checkbox"> 外伸撐座／支腿位置與補強措施已依機具、現場條件確認</label>
+<label><input class="ck prep" type="checkbox"> 已確認吊掛物重量、機具額定能力與作業半徑等既有作業條件</label>
+<label><input class="ck prep" type="checkbox"> 人員不進入吊舉物下方，作業區域已有管制／指揮安排</label>
+<label><input class="ck prep" type="checkbox"> 若條件改變（再下雨、地面沉陷、支腿異常），所有人知道立即停工回報</label>
+</div><div id="prepOut"></div></section>
+
+<section class="card"><h2>5｜一鍵產生工班LINE「作業前確認卡」</h2><textarea id="card"></textarea><div class="actions"><button onclick="buildCard(true)">更新確認卡</button><button class="ghost" onclick="copyText('card')">複製</button><a class="btn ghost" target="_blank" rel="noopener" href="https://www.osha.gov.tw/48110/48417/48419/212219/post">職安署9/9原文</a></div></section>
+
+<section class="card"><h2>6｜這個工具刻意不做</h2><div class="note"><ul><li>不輸入或估算地盤容許承載力、支腿反力、墊板尺寸或吊車負荷圖。</li><li>不把「沒有看到積水」當作地盤安全證明。</li><li>不要求上傳地下管線圖、工地地址、工程圖、吊車牌照、公司名稱或人員姓名。</li><li>不替雇主、原事業單位、吊車業者或具專業能力人員做安全核准。</li></ul></div></section>
+
+<section class="card"><h2>7｜真實使用驗證</h2><p>真正追的是：<strong>快篩後有沒有真的停工重評、改支腿位置、鋪設鐵板／墊料、確認地下設施或重做作業前調查。</strong>不是pageview。</p><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/64">GroundFirst 回饋區 #64</a></div></section>
+
+<section class="card"><h2>8｜可直接轉貼給吊車／工地主任群</h2><textarea id="promo">【雨停不代表地盤安全｜吊車起吊前先重做支撐點確認】
+職安署9/9最新提醒：近期連日降雨後，已接連發生吊車因作業位置承載力不足，造成支腿下陷、車體傾斜或翻覆。
+
+雨後重新進場，至少確認：
+・積水、泥濘、鬆軟、沖刷、沉陷
+・支腿下方是否有回填土、地下管線、溝渠、孔洞、箱涵或其他地下設施
+・作業範圍地形／地質／空間／吊物重量／機具種類性能已重新調查
+・承載條件不足時，已依專業評估鋪設鐵板、墊料或採必要補強
+
+任一項不確定：先STOP、重新評估，不要等支腿開始下陷才處理。
+
+GroundFirst 60秒快篩：
+https://allen3429.github.io/Allentrial20260812.github.io/public-good/groundfirst/
+
+這不是承載力計算器，也不能取代法定檢點或專業判斷。</textarea><div class="actions"><button class="ghost" onclick="copyText('promo')">複製轉貼文</button></div></section>
+</main>
+<script>
+const $=id=>document.getElementById(id), checks=sel=>[...document.querySelectorAll(sel)];
+function evaluate(countCore=false){const vals={rain:$('rain').value,reentry:$('reentry').value,surface:$('surface').value,underground:$('underground').value,survey:$('survey').value,support:$('support').value};let stop=false,reasons=[];
+if(vals.surface==='hazard'){stop=true;reasons.push('地面已有積水／泥濘／鬆軟／沖刷／沉陷');}if(vals.surface==='unknown'){stop=true;reasons.push('地表狀況無法確認');}if(vals.underground==='risk'){stop=true;reasons.push('支撐點下方存在已知地下設施／局部弱點，需重新評估');}if(vals.underground==='unknown'){stop=true;reasons.push('支撐點下方地下設施資訊不明');}if(vals.survey!=='done'){stop=true;reasons.push('作業前調查尚未完整');}if(vals.support==='no'||vals.support==='unknown'){stop=true;reasons.push('必要補強是否完成仍不明確');}if(vals.rain==='unknown'){stop=true;reasons.push('近期降雨／積水歷史不確定');}
+const box=$('statusOut');if(stop){box.innerHTML=`<div class="note bad"><div class="status">STOP｜先不要起吊</div><b>需要處理：</b><br>・${reasons.join('<br>・')}<br><br>完成現場重新評估與必要補強後，再依正式作業前程序決定是否作業。</div>`}else{box.innerHTML=`<div class="note ok"><div class="status">CHECK COMPLETE</div>本表目前沒有未完成紅旗；這只代表60秒快篩完成，<b>不是地盤承載力證明，也不是起吊許可</b>。仍須依正式作業前調查、檢點與現場專業判斷執行。</div>`}if(countCore&&window.PGLabImpact)PGLabImpact.core(stop?'stop-triggered':'screen-complete');buildCard(false);return {stop,reasons};}
+function prep(){const a=checks('.prep'),n=a.filter(x=>x.checked).length;$('prepOut').innerHTML=`<div class="note ${n===a.length?'ok':'warn'}">起吊前確認 ${n}/${a.length}。${n===a.length?'本表已完成，但仍不代表自動核准起吊。':'不要把未勾項目當成「現場應該有做」。'}</div>`;return n;}
+function buildCard(countCore=false){const r=evaluate(false),p=prep();$('card').value=`【GroundFirst｜雨後吊車作業前確認】\n60秒快篩：${r.stop?'STOP—需重新評估':'未出現未完成紅旗（不等於核准起吊）'}\n起吊前確認：${p}/5\n${r.reasons.length?'待處理：\n・'+r.reasons.join('\n・')+'\n':''}\n現場原則：\n1. 雨停不代表地盤恢復安全。\n2. 起吊前重新查積水、泥濘、鬆軟、沖刷與支撐點。\n3. 確認回填土、地下管線、溝渠、孔洞／箱涵等局部弱點。\n4. 軟弱地盤或承載不足場所，依專業評估採鐵板、墊料、外伸撐座等必要措施。\n5. 任一條件有疑慮：停止作業→重新評估→必要補強→再依正式程序決定。\n\n職安署原文：https://www.osha.gov.tw/48110/48417/48419/212219/post\n\n本卡不是承載力計算、工程設計或起吊核准。`;if(countCore&&window.PGLabImpact)PGLabImpact.core('share-card');}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+['rain','reentry','surface','underground','survey','support'].forEach(id=>$(id).addEventListener('change',()=>evaluate(false)));document.querySelectorAll('.prep').forEach(x=>x.addEventListener('change',()=>buildCard(false)));evaluate(false);prep();
+</script>
+<script src="../impact.js" data-project="groundfirst" data-action-text="我已完成一次雨後地盤STOP快篩" data-real-text="我已真的停工重評／改位置／補強／確認地下設施" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/64"></script>
+</body></html>
