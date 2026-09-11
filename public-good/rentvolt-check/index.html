@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="rentvolt-check">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="RentVolt Check：開學租屋季電費透明度與超收防漏。依住宅租屋電費新制，協助房客比較房東計費與台電當期平均電價，不保存地址、電號或個資。">
+<title>RentVolt Check｜租屋電費防漏</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#a32323;--info:#285c8d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1120px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}
+h1{font-size:clamp(38px,7vw,64px);line-height:1.03;margin:.12em 0 .25em}.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:1000px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:12px 14px;border-radius:9px;line-height:1.7;margin:10px 0}.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}.info{border-left-color:var(--info)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(225px,1fr));gap:10px}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:9px}
+.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:23px;margin-top:4px}
+label{display:block;font-weight:800;margin-bottom:6px}select,input,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}textarea{min-height:240px;resize:vertical}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}
+.big{font-size:clamp(24px,4vw,34px);font-weight:950}.money{font-size:clamp(34px,7vw,56px);font-weight:1000}.small{font-size:13px;color:var(--muted);line-height:1.65}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · 開學租屋季 · 依住宅租屋電費新制整理</div>
+<h1>RentVolt Check<br>房東說「每度5元」不是答案。<br>先看這期台電的平均電價。</h1>
+<p class="lead">自 2024/7/15 起，新的住宅租賃契約若由房客負擔電費，<strong>按度計費不得超過該租屋處台電帳單的「當期每度平均電價」</strong>；若不是按度計費，房東收的每期電費總額不得超過該期台電帳單總額。房東也有提供電費資訊義務，房客可自行向台電申辦查詢。</p>
+<section class="card">
+<h2>1｜先看你的租約是否屬新制</h2>
+<div class="grid">
+<div><label>目前這份租約何時簽／續約？</label><input id="contractDate" type="date"></div>
+<div><label>電費怎麼收？</label><select id="method"><option value="kwh">按用電度數（每度X元）</option><option value="flat">不是按度數：每期固定／分攤一筆</option><option value="included">已含在租金，不另外收</option><option value="unknown">不清楚</option></select></div>
+</div>
+<div id="contractOut"></div>
+</section>
+<section class="card">
+<h2>2｜按度計費：比較「房東每度」和「台電當期平均電價」</h2>
+<div class="grid">
+<div><label>房東這期收你每度多少元？</label><input id="landlordRate" type="number" min="0" step="0.01" placeholder="例：5"></div>
+<div><label>台電這期「當期每度平均電價」</label><input id="avgRate" type="number" min="0" step="0.0001" placeholder="從電費資訊／台電查詢取得"></div>
+<div><label>你這期被計的用電度數（可選）</label><input id="tenantKwh" type="number" min="0" step="1" placeholder="例：180"></div>
+</div>
+<div id="kwhOut"></div>
+<div class="note info">沒有「當期每度平均電價」？先不要用網路上的固定電價表猜。房東有提供電費資訊義務；你也可先向台電申辦「住宅租屋電費查詢」，之後查當期平均電價、用電度數、總金額與公共設施分攤資訊。</div>
+</section>
+<section class="card">
+<h2>3｜非按度計費：比較「房東這期總收費」和「台電這期總額」</h2>
+<div class="grid">
+<div><label>房東這期向你／本租屋標的收多少？</label><input id="landlordTotal" type="number" min="0" step="1" placeholder="例：2200"></div>
+<div><label>台電這期電費單總額</label><input id="taipowerTotal" type="number" min="0" step="1" placeholder="例：1800"></div>
+</div>
+<div id="flatOut"></div>
+</section>
+<section class="card">
+<h2>4｜公共設施電費：多收一筆時要再問一句</h2>
+<div class="grid">
+<div><label>房東是否另外向你收「公共電費／公電」？</label><select id="commonCharge"><option value="no">沒有</option><option value="yes">有</option><option value="unknown">不確定</option></select></div>
+<div><label>台電是否已把公設電費分攤併入租屋處電費？</label><select id="commonAllocated"><option value="yes">有／我查得到</option><option value="no">沒有</option><option value="unknown">不知道</option></select></div>
+</div>
+<div id="commonOut"></div>
+</section>
+<section class="card">
+<h2>5｜資訊不透明時，不必先跟房東吵：先把資料拿到</h2>
+<div class="actions">
+<a class="btn" target="_blank" rel="noopener" href="https://service.taipower.com.tw/ebpps2/simplebill/tenant/simple-query-bill" onclick="track('taipower-query')">台電｜住宅租屋電費查詢專區</a>
+<a class="btn ghost" href="tel:1911">台電 1911</a>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://www.land.moi.gov.tw/chhtml/news/89">內政部地政司｜租賃資訊</a>
+</div>
+<div class="note warn">台電目前說明：租屋電費查詢需先申辦，文件包含租賃契約、申請單與承諾書；查詢服務原則上提供到<strong>租賃有效期間結束後60日內</strong>，快退租的人更值得先把資料留存。</div>
+</section>
+<section class="card">
+<h2>6｜一鍵產生「請提供這期電費資訊」訊息</h2>
+<textarea id="ask"></textarea>
+<div class="actions"><button onclick="buildAsk(true)">更新訊息</button><button class="ghost" onclick="copyText('ask')">複製給房東</button></div>
+</section>
+<section class="card">
+<h2>7｜一鍵產生這期電費檢核卡</h2>
+<textarea id="card"></textarea>
+<div class="actions"><button onclick="buildCard(true)">更新檢核卡</button><button class="ghost" onclick="copyText('card')">複製</button></div>
+</section>
+<section class="card">
+<h2>8｜這個工具刻意不做</h2>
+<div class="note"><ul>
+<li>不收地址、電號、身分證、手機、租約照片或完整電費單。</li>
+<li>不把「房東收得比某個固定數字高」直接判成違法；按度計費的比較基準是<strong>該租屋處當期每度平均電價</strong>。</li>
+<li>不處理老租約的法律效力爭議；2024/7/15 前已簽、之後未重新簽訂的租約，可能涉及不溯及既往，應再看契約與官方說明。</li>
+<li>不替消保官、地政機關或法院做最終法律判斷。</li>
+</ul></div>
+</section>
+<section class="card">
+<h2>9｜真實使用驗證</h2>
+<p>這輪真正追：<strong>原本只知道「每度X元」 → 取得當期平均電價／總額 → 做比較 → 真的向房東詢問或申辦台電查詢 → 後續計費變透明。</strong></p>
+<div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/75">RentVolt Check 回饋區 #75</a></div>
+</section>
+<section class="card">
+<h2>10｜可直接轉給校外租屋學生／租屋群</h2>
+<textarea id="promo">【開學租屋｜房東說「每度5元」先別只看5這個數字】
+
+2024/7/15起的住宅租屋電費新制：
+・按度計費：每度不得超過「該租屋處電費單當期每度平均電價」
+・不是按度計費：每期收的電費不得超過該期電費單總額
+・公設電費如果沒有向台電申辦分攤併入租屋處電費，房東不得另外收
+・房東有提供電費資訊義務
+・房客也能向台電申辦住宅租屋電費查詢
+
+RentVolt Check：
+https://allen3429.github.io/Allentrial20260812.github.io/public-good/rentvolt-check/
+
+台電住宅租屋電費查詢：
+https://service.taipower.com.tw/ebpps2/simplebill/tenant/simple-query-bill
+
+不要公開貼地址、電號、身分證、完整帳單或租約。</textarea>
+<div class="actions"><button class="ghost" onclick="copyText('promo')">複製轉貼文</button></div>
+</section>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+function contractCheck(){
+ const d=$('contractDate').value, method=$('method').value;
+ let cls='info',msg='還沒填租約日期；若目前租約是在 2024/7/15 之後簽訂／續約，原則上應先用新制檢核。';
+ if(d){if(d>='2024-07-15'){cls='ok';msg='🟢 你填的目前租約日期在 2024/7/15 之後：值得直接用新制檢核。';}else{cls='warn';msg='🟡 你填的租約日期早於 2024/7/15。若是舊約一路延續、沒有重新簽訂，新制可能不當然溯及；先看契約與官方說明。若之後已有續約／重簽，請改填最新契約日期。';}}
+ if(method==='included')msg+=' 電費若確實已含在租金、沒有另收，本頁的超收計算不適用。';
+ if(method==='unknown')msg+=' 先看租約電費條款：由誰負擔、按度還是非按度，應寫清楚。';
+ $('contractOut').innerHTML=`<div class="note ${cls}">${msg}</div>`; return {date:d,method,msg};
+}
+function kwhCheck(){
+ const lr=Number($('landlordRate').value), ar=Number($('avgRate').value), k=Number($('tenantKwh').value);
+ let cls='warn',msg='先取得這期的「當期每度平均電價」。';
+ if(lr>0&&ar>0){const diff=lr-ar;if(diff>0.00001){const extra=k>0?diff*k:0;cls='bad';msg=`🔴 房東每度 NT$${lr.toFixed(2)}，高於這期平均電價 NT$${ar.toFixed(4)}，每度差約 NT$${diff.toFixed(2)}${k>0?`；以 ${k} 度估算，這期差額約 NT$${Math.round(extra).toLocaleString()}`:''}。先保存計費資料並要求說明。`;}else{cls='ok';msg=`🟢 房東每度 NT$${lr.toFixed(2)}，沒有高於你輸入的這期平均電價 NT$${ar.toFixed(4)}。仍保留當期電費資訊。`;}}
+ else if(lr>0&&!ar){msg=`🟡 你知道房東收 NT$${lr.toFixed(2)}／度，但缺少這一期真正的平均電價，現在還不能可靠判斷有沒有超收。`;}
+ $('kwhOut').innerHTML=`<div class="note ${cls}">${msg}</div>`; return {lr,ar,k,msg};
+}
+function flatCheck(){
+ const l=Number($('landlordTotal').value),t=Number($('taipowerTotal').value);let cls='warn',msg='如果不是按度數收費，請比較房東這期總收費與該租賃標的台電這期總額。';
+ if(l>0&&t>0){if(l>t){cls='bad';msg=`🔴 房東這期收 NT$${l.toLocaleString()}，高於台電這期總額 NT$${t.toLocaleString()}，差約 NT$${(l-t).toLocaleString()}。值得要求說明。`;}else{cls='ok';msg=`🟢 你輸入的房東收費沒有超過台電這期總額。`;}}
+ $('flatOut').innerHTML=`<div class="note ${cls}">${msg}</div>`;return {l,t,msg};
+}
+function commonCheck(){
+ const c=$('commonCharge').value,a=$('commonAllocated').value;let cls='ok',msg='目前沒有另外收公共電費的紅旗。';
+ if(c==='yes'&&a==='no'){cls='bad';msg='🔴 你勾選「另外收公電」且台電未把公共設施電費分攤併入租屋處電費。新制明定這種情況房東不得再額外收取該公共設施電費。';}
+ else if(c==='yes'&&a==='unknown'){cls='warn';msg='🟡 房東另外收公電，但你不知道台電是否已申辦分攤。請把「是否已申辦公共設施電費分攤併入租屋處電費」一起問清楚。';}
+ else if(c==='unknown'){cls='warn';msg='🟡 先看帳單／收費訊息，有沒有另外列「公電、公共電費、走道電費」等項目。';}
+ $('commonOut').innerHTML=`<div class="note ${cls}">${msg}</div>`;return {c,a,msg};
+}
+function buildAsk(countCore){
+ commonCheck();$('ask').value=`您好，想確認這一期租屋電費的計算方式，麻煩提供這個租屋處的：
+1. 當期台電用電度數
+2. 當期每度平均電價
+3. 當期電費總金額
+4. 若另外收公共電費，也請告知是否已向台電申辦公共設施電費分攤併入租屋處電費
+
+依住宅租屋電費新制，按度計費應以該租屋處「當期每度平均電價」為上限；我想把這期帳務核對清楚，謝謝。`; if(countCore&&window.PGLabImpact)PGLabImpact.core('ask-landlord');
+}
+function buildCard(countCore){
+ const c=contractCheck(),k=kwhCheck(),f=flatCheck(),cm=commonCheck();const method={kwh:'按度計費',flat:'非按度計費',included:'含在租金',unknown:'不清楚'}[c.method];
+ $('card').value=`【RentVolt Check｜這期租屋電費檢核】
+目前租約日期：${c.date||'尚未填'}
+計費方式：${method}
+
+按度檢核：
+${k.msg}
+
+非按度檢核：
+${f.msg}
+
+公共電費：
+${cm.msg}
+
+下一步：
+・缺「當期平均電價／總額」→ 先向房東索取；必要時向台電申辦住宅租屋電費查詢。
+・快退租者注意：台電查詢服務原則上提供到租賃有效期間結束後60日內，重要資料先留存。
+・法律或租賃爭議可再找地方地政機關、消保服務或法律扶助。
+
+台電查詢：
+https://service.taipower.com.tw/ebpps2/simplebill/tenant/simple-query-bill
+台電客服：1911
+
+本卡不保存地址、電號、身分證、手機或完整帳單。`;if(countCore&&window.PGLabImpact)PGLabImpact.core('rent-electricity-card');
+}
+function refresh(){contractCheck();kwhCheck();flatCheck();commonCheck();buildAsk(false);buildCard(false)}
+function track(label){if(window.PGLabImpact)PGLabImpact.core(label)}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+['contractDate','method','landlordRate','avgRate','tenantKwh','landlordTotal','taipowerTotal','commonCharge','commonAllocated'].forEach(id=>$(id).addEventListener('change',refresh));refresh();
+</script>
+<script src="../impact.js" data-project="rentvolt-check" data-action-text="我已完成租屋電費快篩" data-real-text="我已真的取得當期電費資訊／向房東詢問／申辦台電查詢／修正後續計費" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/75"></script>
+</body></html>
