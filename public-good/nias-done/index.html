@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="nias-done">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="NIAS Done：校園流感疫苗線上意願書防漏工具。記住各校自己的截止日，確認做到『填寫已完成』，並可下載行事曆提醒；不保存疫苗意願或學生健康資料。">
+<title>NIAS Done｜校園疫苗意願書防漏</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#a32323;--info:#285c8d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1100px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}
+h1{font-size:clamp(38px,7vw,64px);line-height:1.03;margin:.12em 0 .25em}.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:980px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:12px 14px;border-radius:9px;line-height:1.7;margin:10px 0}.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}.info{border-left-color:var(--info)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:9px}
+.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:23px;margin-top:4px}
+label{display:block;font-weight:800;margin-bottom:6px}input,select,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}textarea{min-height:230px;resize:vertical}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}
+.big{font-size:clamp(24px,4vw,34px);font-weight:950}.small{font-size:13px;color:var(--muted);line-height:1.65}.checkgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:8px}.ck{width:auto;transform:scale(1.12);margin-right:7px}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · 115學年度校園流感疫苗 · 依疾管署 NIAS 校園流程整理</div>
+<h1>NIAS Done<br>「有點進去」不等於「學校收到完成的意願書」。</h1>
+<p class="lead">115學年度校園流感疫苗已進入家長線上簽署期。每間學校的<strong>簽署截止日、接種日、專屬NIAS連結都可能不同</strong>。這個工具不替家長決定要不要接種；只防一個很實際的漏件：找到校方專屬連結、完成同意或不同意的意願表達，並確認真的看到「意願書填寫已完成」。</p>
+
+<section class="card">
+<h2>1｜現在為什麼值得先把簽署流程做完？</h2>
+<div class="stats">
+<div class="stat">流感現況<b>已進流行期</b></div>
+<div class="stat">NIAS校園工具<b>全國核心流程</b></div>
+<div class="stat">各校截止日<b>不一樣</b></div>
+<div class="stat">最終成功訊號<b>「填寫已完成」</b></div>
+</div>
+<div class="note warn">近期學校公告已開始陸續釋出115學年度NIAS簽署時程。例如有學校公告 9/21–9/26 受理，並特別提醒：<strong>同意或不同意在校接種，都要依校方要求完成線上意願簽署，而且要做到最後出現「意願書填寫已完成，可離開此頁」才算完成。</strong>請以自己學校通知為準。</div>
+</section>
+
+<section class="card">
+<h2>2｜先填「你學校自己的」兩個日期</h2>
+<div class="grid">
+<div><label>學校 NIAS 簽署截止日</label><input id="deadline" type="date"></div>
+<div><label>校園預定接種日（若已公告）</label><input id="vaccDate" type="date"></div>
+</div>
+<div id="dateOut"></div>
+<div class="actions">
+<button onclick="downloadDeadline()">下載「截止日前1天」提醒</button>
+<button class="ghost" onclick="downloadVacc()">下載「校園接種日」提醒</button>
+</div>
+<div class="note info">本頁不假設全臺同一天，也不需要輸入學校名稱。真正簽署時，請使用<strong>學校提供的專屬 QR code／連結</strong>，不要用陌生人轉傳的私人連結。</div>
+</section>
+
+<section class="card">
+<h2>3｜三步防漏：做到最後一格才算完成</h2>
+<div class="checkgrid">
+<label><input class="ck step" type="checkbox"> ① 我已找到「自己學校」提供的 NIAS 專屬 QR code／連結</label>
+<label><input class="ck step" type="checkbox"> ② 我已在 NIAS 依自己的決定完成「同意／不同意」意願填寫與簽署</label>
+<label><input class="ck step" type="checkbox"> ③ 我已看到系統顯示「意願書填寫已完成」或校方等效完成畫面</label>
+</div>
+<div id="stepOut"></div>
+<div class="note ok"><b>重點不是選哪個答案。</b>本工具完全不問你同意或不同意，也不保存疫苗意願；它只確認你有沒有把校方要求的行政流程完成。</div>
+</section>
+
+<section class="card">
+<h2>4｜如果你還沒拿到學校專屬連結</h2>
+<div class="note info">先回學校健康中心、校網、家長LINE／簡訊或紙本通知找「NIAS校園流感疫苗意願書」。疾管署的校園專區有115年度操作流程、家長簽署影片與多語意願書，但<strong>真正的學生線上簽署入口通常仍以學校發出的專屬連結／QR code為準</strong>。</div>
+<div class="actions">
+<a class="btn" target="_blank" rel="noopener" href="https://www.cdc.gov.tw/Category/MPage/qZP9B9QiGPOQ7-abmXOMhw" onclick="track('cdc-campus')">疾管署｜校園疫苗專區</a>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://nias.cdc.gov.tw/" onclick="track('nias-official')">NIAS 官方系統</a>
+<a class="btn ghost" href="tel:1922">1922 防疫專線</a>
+</div>
+</section>
+
+<section class="card">
+<h2>5｜家裡有兩個以上孩子？不要用「我記得差不多」</h2>
+<div class="note warn">不同學校、甚至同一家庭不同孩子，都可能有不同簽署期限與接種日。這版刻意不收孩子姓名；建議每個孩子各開一次頁面，輸入對應日期後下載提醒，再把行事曆標題自行改成你認得的稱呼。</div>
+</section>
+
+<section class="card">
+<h2>6｜一鍵產生「我還差哪一步」確認卡</h2>
+<textarea id="card"></textarea>
+<div class="actions"><button onclick="build(true)">更新確認卡</button><button class="ghost" onclick="copyText('card')">複製給家人</button></div>
+</section>
+
+<section class="card">
+<h2>7｜這個工具刻意不做</h2>
+<div class="note">
+<ul>
+<li>不替你決定孩子要不要接種流感疫苗，也不做個人醫療建議。</li>
+<li>不收學生姓名、身分證、生日、學校、班級、過敏史、病史、疫苗意願或簽名。</li>
+<li>不保存學校專屬NIAS私人連結；真正簽署請直接從校方通知進入。</li>
+<li>不把「截止日」寫死成全國同一天；每校時程不同，必須以校方公告為準。</li>
+</ul>
+</div>
+</section>
+
+<section class="card">
+<h2>8｜真實使用驗證</h2>
+<p>這輪真正追：<strong>原本只看到通知／以為不同意就不用填 → 找到專屬連結 → 做到完成頁 → 設好截止提醒。</strong>公開回饋不要貼學生個資、疫苗意願或學校專屬私人連結。</p>
+<div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/68">NIAS Done 回饋區 #68</a></div>
+</section>
+
+<section class="card">
+<h2>9｜可直接轉給家長群／健康中心</h2>
+<textarea id="promo">【115學年度校園流感疫苗｜NIAS 線上意願書不要做到一半】
+今年各校會依自己的時程發出 NIAS 校園流感疫苗意願書。
+
+請注意：
+・每校簽署截止日不同，以自己學校公告為準
+・「同意」或「不同意」在校接種，都可能需要依校方要求完成線上意願簽署
+・真正完成不是「有點進去」，而是做到最後，看到「意願書填寫已完成」或校方等效完成畫面
+・真正簽署請使用學校提供的專屬 QR code／連結
+
+NIAS Done 幫你做：
+1. 記學校自己的截止日
+2. 三步完成防漏
+3. 下載截止日前1天行事曆提醒
+4. 不保存孩子姓名、身分證、疫苗意願或健康資料
+
+https://allen3429.github.io/Allentrial20260812.github.io/public-good/nias-done/
+
+疾管署校園專區：
+https://www.cdc.gov.tw/Category/MPage/qZP9B9QiGPOQ7-abmXOMhw</textarea>
+<div class="actions"><button class="ghost" onclick="copyText('promo')">複製轉貼文</button></div>
+</section>
+</main>
+
+<script>
+const $=id=>document.getElementById(id), steps=()=>[...document.querySelectorAll('.step')];
+
+function dateState(){
+ const d=$('deadline').value,v=$('vaccDate').value;
+ let msg='先從學校通知找到自己的簽署截止日。',cls='warn';
+ if(d){
+  const target=new Date(d+'T23:59:59');
+  const now=new Date();
+  const diff=Math.ceil((target-now)/86400000);
+  if(diff<0){cls='bad';msg='你輸入的簽署截止日已過。請直接聯絡學校健康中心確認是否仍有補簽／紙本或其他處理方式。';}
+  else if(diff===0){cls='bad';msg='今天就是你輸入的簽署截止日。不要只設提醒，現在就回校方專屬NIAS連結完成流程。';}
+  else if(diff<=3){cls='warn';msg=`距離你輸入的簽署截止日約還有 ${diff} 天。建議今天完成，不要等最後一天。`;}
+  else{cls='ok';msg=`距離你輸入的簽署截止日約還有 ${diff} 天。現在完成，避免通知被訊息淹掉。`;}
+ }
+ $('dateOut').innerHTML=`<div class="note ${cls}">${msg}${v?`<br>校園接種日：${v}。`:''}</div>`;
+ return {deadline:d,vaccDate:v,msg};
+}
+
+function stepState(){
+ const a=steps(),n=a.filter(x=>x.checked).length;
+ let cls=n===3?'ok':'warn',txt=n===3?'🟢 3/3：行政流程完成。疫苗醫療決策仍以你與醫療專業資訊為準。':`🟡 ${n}/3：還沒完成。下一步只做第一個沒勾的項目。`;
+ $('stepOut').innerHTML=`<div class="note ${cls}"><div class="big">${txt}</div></div>`;
+ return n;
+}
+
+function build(countCore){
+ const ds=dateState(),n=stepState();
+ const undone=[];
+ if(!steps()[0].checked)undone.push('找到自己學校提供的 NIAS 專屬連結／QR code');
+ if(!steps()[1].checked)undone.push('在 NIAS 完成同意／不同意意願填寫與簽署');
+ if(!steps()[2].checked)undone.push('確認看到「意願書填寫已完成」或校方等效完成畫面');
+ $('card').value=`【NIAS Done｜校園流感疫苗意願書防漏卡】
+簽署截止日：${ds.deadline||'尚未填'}
+校園接種日：${ds.vaccDate||'尚未公告／未填'}
+完成度：${n}/3
+
+${n===3?'我已完成校方要求的NIAS意願簽署流程。':'我還差：\n・'+undone.join('\n・')}
+
+提醒：
+・每校截止日不同，以自己學校通知為準。
+・同意或不同意，都依校方要求把線上意願書做到最後。
+・真正完成要看到「意願書填寫已完成」或校方等效完成畫面。
+・真正簽署用學校提供的專屬連結／QR code。
+・本卡不記錄疫苗意願，也不取代醫療專業建議。
+
+疾管署校園專區：
+https://www.cdc.gov.tw/Category/MPage/qZP9B9QiGPOQ7-abmXOMhw`;
+ if(countCore&&window.PGLabImpact)PGLabImpact.core('completion-card');
+}
+
+function icsDate(dateStr,hour,minute){
+ const d=new Date(dateStr+'T00:00:00');
+ d.setHours(hour,minute,0,0);
+ const pad=x=>String(x).padStart(2,'0');
+ return d.getFullYear()+pad(d.getMonth()+1)+pad(d.getDate())+'T'+pad(d.getHours())+pad(d.getMinutes())+'00';
+}
+function downloadIcs(name,start,end,summary,description){
+ const ics=`BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//NIASDone//TW\r\nBEGIN:VEVENT\r\nDTSTART;TZID=Asia/Taipei:${start}\r\nDTEND;TZID=Asia/Taipei:${end}\r\nSUMMARY:${summary}\r\nDESCRIPTION:${description}\r\nEND:VEVENT\r\nEND:VCALENDAR`;
+ const blob=new Blob([ics],{type:'text/calendar;charset=utf-8'});
+ const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();URL.revokeObjectURL(a.href);
+}
+function downloadDeadline(){
+ const d=$('deadline').value;if(!d)return alert('請先填學校的簽署截止日');
+ const day=new Date(d+'T00:00:00');day.setDate(day.getDate()-1);
+ const iso=day.toLocaleDateString('en-CA');
+ downloadIcs('nias-deadline-reminder.ics',icsDate(iso,20,0),icsDate(iso,20,15),'明天是校園NIAS意願書截止日','回學校提供的專屬NIAS連結，完成同意／不同意意願簽署，並確認看到「意願書填寫已完成」。');
+ if(window.PGLabImpact)PGLabImpact.core('deadline-reminder');
+}
+function downloadVacc(){
+ const d=$('vaccDate').value;if(!d)return alert('請先填校園預定接種日');
+ downloadIcs('school-flu-vaccine-day.ics',icsDate(d,7,0),icsDate(d,7,15),'今天是學校公告的流感疫苗接種日','依學校通知準備。若有健康或接種適宜性問題，請詢問醫療專業人員或1922。');
+ if(window.PGLabImpact)PGLabImpact.core('vaccination-day-reminder');
+}
+function track(label){if(window.PGLabImpact)PGLabImpact.core(label)}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+
+['deadline','vaccDate'].forEach(id=>$(id).addEventListener('change',()=>build(false)));
+steps().forEach(x=>x.addEventListener('change',()=>build(false)));
+build(false);
+</script>
+<script src="../impact.js" data-project="nias-done" data-action-text="我已完成NIAS簽署防漏3步檢核" data-real-text="我已真的完成校方要求的NIAS意願簽署／設定截止提醒" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/68"></script>
+</body></html>
