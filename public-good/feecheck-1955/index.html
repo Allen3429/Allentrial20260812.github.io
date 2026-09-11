@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="feecheck-1955">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="FeeCheck 1955：移工仲介月服務費、續聘／轉換／買工費的付款前快篩。支援中文、English、Tiếng Việt、Bahasa Indonesia；不收個資。">
+<title>FeeCheck 1955｜移工仲介費快篩</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#a32323;--info:#285c8d}
+*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1100px;margin:auto;padding:24px 14px 72px} .kicker{font-size:14px;font-weight:850;color:var(--muted)}
+h1{font-size:clamp(38px,7vw,64px);line-height:1.03;margin:.12em 0 .25em} h2{margin-top:.2em}
+.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:980px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:12px 14px;border-radius:9px;line-height:1.7;margin:10px 0}
+.ok{border-left-color:var(--ok)} .warn{border-left-color:var(--warn)} .bad{border-left-color:var(--bad)} .info{border-left-color:var(--info)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:9px} .stat{border:1px solid var(--line);border-radius:14px;padding:12px} .stat b{display:block;font-size:23px;margin-top:4px}
+label{display:block;font-weight:760;margin-bottom:5px} select,input,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}
+textarea{min-height:260px;resize:vertical} .actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}
+button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}
+.ghost{background:#edf1f5;color:#17212b} .lang button{background:#edf1f5;color:#17212b} .lang button.active{background:#17212b;color:#fff}
+.big{font-size:clamp(24px,4vw,34px);font-weight:950} .money{font-size:clamp(34px,7vw,58px);font-weight:1000} .small{font-size:13px;color:var(--muted);line-height:1.65}
+table{width:100%;border-collapse:collapse} th,td{padding:9px;border-bottom:1px solid var(--line);text-align:left} th{font-size:13px;color:var(--muted)}
+.quicklangs{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px} .ql{border:1px solid var(--line);border-radius:14px;padding:12px;line-height:1.6}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · Taiwan · Official rules cross-checked 2026/09/10</div>
+<h1>FeeCheck 1955<br><span id="heroSub">被要求付「仲介費」時，先分清楚是哪一種錢。</span></h1>
+<p class="lead" id="lead">勞動部9/10更新多國語宣導：移工期滿續聘或轉換雇主時，仲介不得向移工本人收取仲介費／買工費。一般月服務費則有契約、服務事實、不得預收與金額上限。這個工具在付款前先快篩；不收姓名、雇主或仲介資料。</p>
+
+<section class="card">
+<h2 id="langTitle">語言 / Language</h2>
+<div class="actions lang">
+<button data-lang="zh" class="active" onclick="setLang('zh')">中文</button>
+<button data-lang="en" onclick="setLang('en')">English</button>
+<button data-lang="vi" onclick="setLang('vi')">Tiếng Việt</button>
+<button data-lang="id" onclick="setLang('id')">Bahasa Indonesia</button>
+</div>
+</section>
+
+<section class="card">
+<h2 id="s1">1｜這筆錢叫什麼？</h2>
+<div class="grid">
+<div><label id="feeTypeLabel">對方說這筆費用是：</label>
+<select id="feeType">
+<option value="service">每月仲介「服務費」</option>
+<option value="transfer">轉換雇主費／買工費</option>
+<option value="renewal">續聘／期滿續聘費</option>
+<option value="other">其他一次性仲介費</option>
+<option value="unknown">講不清楚，只叫我先付</option>
+</select></div>
+<div><label id="yearLabel">你這次入國後，在臺累計工作期間：</label>
+<select id="year">
+<option value="1">第1年</option><option value="2">第2年</option><option value="3">第3年起</option>
+</select></div>
+<div><label id="amountLabel">這個月／這次要求你付多少新臺幣？</label><input id="amount" type="number" min="0" step="50" value="1800"></div>
+</div>
+<div id="typeOut"></div>
+</section>
+
+<section class="card" id="serviceCard">
+<h2 id="s2">2｜如果對方說是「每月服務費」，再看3個條件</h2>
+<div class="grid">
+<div><label id="contractLabel">你和仲介有書面服務契約嗎？</label><select id="contract"><option value="yes">有</option><option value="no">沒有</option><option value="unknown">不知道</option></select></div>
+<div><label id="serviceLabel">這個月仲介有實際提供服務嗎？</label><select id="provided"><option value="yes">有</option><option value="no">沒有</option><option value="unknown">不知道</option></select></div>
+<div><label id="advanceLabel">這筆錢是不是預先收未來月份？</label><select id="advance"><option value="no">不是，只收本月</option><option value="yes">是，先收未來月份</option><option value="unknown">不確定</option></select></div>
+<div><label id="deductLabel">是否由雇主直接從你的薪資扣掉，再交給仲介？</label><select id="deduct"><option value="no">不是</option><option value="yes">是</option><option value="unknown">不確定</option></select></div>
+</div>
+<div id="serviceOut"></div>
+</section>
+
+<section class="card">
+<h2 id="s3">3｜現行官方上限：只針對「月服務費」</h2>
+<div style="overflow:auto"><table>
+<thead><tr><th id="thYear">本次入國後累計工作期間</th><th id="thCap">每月最高服務費</th></tr></thead>
+<tbody><tr><td id="y1">第1年</td><td>NT$1,800</td></tr><tr><td id="y2">第2年</td><td>NT$1,700</td></tr><tr><td id="y3">第3年起</td><td>NT$1,500</td></tr></tbody>
+</table></div>
+<div class="note warn" id="capNote">這不是「仲介可以固定收滿」的保證。官方規則同時要求有簽約、有服務事實、不能預先收費。續聘／轉換雇主的仲介費則是另一件事：不得向移工本人收取。</div>
+</section>
+
+<section class="card">
+<h2 id="s4">4｜如果有紅旗，先不要付款：保留證據 → 1955</h2>
+<div class="actions">
+<a class="btn" href="tel:1955" onclick="track('call-1955')">📞 1955</a>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://fw.wda.gov.tw/wda-employer/home/file/2c95efb39c53aa51019c559b21450d8e" onclick="track('official-multilang')">官方多國語：續聘／轉換不得收仲介費</a>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://fw.wda.gov.tw/wda-employer/home/activity/2c95efb37a38360b017a385d8a9c001e" onclick="track('official-service')">官方：服務費3條件＋多國語附件</a>
+</div>
+<div class="note info" id="hotlineNote">1955提供24小時免付費、多國語服務（中文、印尼語、越南語、英語、泰語），可做法令諮詢、申訴與通譯。若你擔心申訴影響工作，可先只詢問規則，不必在這個工具留下任何身分資料。</div>
+</section>
+
+<section class="card">
+<h2 id="s5">5｜一鍵產生「付款前先確認」卡</h2>
+<textarea id="card"></textarea>
+<div class="actions"><button onclick="build(true)" id="updateBtn">更新卡片</button><button class="ghost" onclick="copyText('card')" id="copyBtn">複製</button></div>
+</section>
+
+<section class="card">
+<h2>Quick reference / Ringkasan / Tóm tắt</h2>
+<div class="quicklangs">
+<div class="ql"><b>中文</b><br>續聘／轉換雇主的仲介費、買工費：<strong>不得向移工收。</strong><br>月服務費：第1年1800、第2年1700、第3年起1500上限；要有契約、有實際服務、不得預收。疑問：1955。</div>
+<div class="ql"><b>English</b><br>Brokerage / job-purchase fees for renewal or employer transfer: <strong>do not pay before checking — brokers may not charge the worker.</strong><br>Monthly service fee caps: Year 1 NT$1,800; Year 2 NT$1,700; Year 3+ NT$1,500. Contract + actual service + no advance collection. Call 1955.</div>
+<div class="ql"><b>Tiếng Việt</b><br>Phí môi giới / “mua việc” khi gia hạn hoặc chuyển chủ: <strong>không được thu từ người lao động di trú.</strong><br>Phí dịch vụ theo tháng tối đa: năm 1: 1.800 NT$, năm 2: 1.700 NT$, từ năm 3: 1.500 NT$. Phải có hợp đồng, có dịch vụ thực tế, không thu trước. Gọi 1955.</div>
+<div class="ql"><b>Bahasa Indonesia</b><br>Biaya broker / “biaya beli kerja” untuk perpanjangan atau pindah majikan: <strong>tidak boleh dibebankan kepada pekerja migran.</strong><br>Batas biaya layanan bulanan: tahun 1 NT$1.800; tahun 2 NT$1.700; tahun 3+ NT$1.500. Harus ada kontrak, layanan nyata, dan tidak dipungut di muka. Hubungi 1955.</div>
+</div>
+</section>
+
+<section class="card">
+<h2 id="s6">6｜這個工具刻意不做</h2>
+<div class="note">
+<ul id="dontList">
+<li>不收姓名、護照／居留證、雇主／仲介名稱、工作地址、銀行帳戶或轉帳紀錄。</li>
+<li>不替主管機關正式認定特定仲介違法；它只標示「值得停止付款並查證」的規則紅旗。</li>
+<li>不把雇主應繳的「就業安定費」和移工支付仲介服務費混在一起。</li>
+<li>不鼓勵你直接公開指控；先保留契約、收據、收費訊息等證據，交1955／主管機關處理。</li>
+</ul>
+</div>
+</section>
+
+<section class="card">
+<h2 id="s7">7｜真實使用驗證</h2>
+<p id="validationText">這輪真正追：<strong>被要求付錢 → 分清費用類型 → 發現紅旗 → 先停止付款／要求契約與收據 → 真的問1955。</strong>公開回饋不要貼雇主、仲介或個資。</p>
+<div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/65">FeeCheck 1955 回饋區 #65</a></div>
+</section>
+</main>
+
+<script>
+let lang='zh';
+const $=id=>document.getElementById(id);
+const caps={1:1800,2:1700,3:1500};
+const i18n={
+zh:{
+heroSub:'被要求付「仲介費」時，先分清楚是哪一種錢。',
+lead:'勞動部9/10更新多國語宣導：移工期滿續聘或轉換雇主時，仲介不得向移工本人收取仲介費／買工費。一般月服務費則有契約、服務事實、不得預收與金額上限。這個工具在付款前先快篩；不收姓名、雇主或仲介資料。',
+s1:'1｜這筆錢叫什麼？',feeTypeLabel:'對方說這筆費用是：',yearLabel:'你這次入國後，在臺累計工作期間：',amountLabel:'這個月／這次要求你付多少新臺幣？',
+feeOptions:['每月仲介「服務費」','轉換雇主費／買工費','續聘／期滿續聘費','其他一次性仲介費','講不清楚，只叫我先付'],
+years:['第1年','第2年','第3年起'],
+s2:'2｜如果對方說是「每月服務費」，再看3個條件',contractLabel:'你和仲介有書面服務契約嗎？',serviceLabel:'這個月仲介有實際提供服務嗎？',advanceLabel:'這筆錢是不是預先收未來月份？',deductLabel:'是否由雇主直接從你的薪資扣掉，再交給仲介？',
+yes:'有／是',no:'沒有／不是',unknown:'不知道／不確定',advanceNo:'不是，只收本月',
+s3:'3｜現行官方上限：只針對「月服務費」',thYear:'本次入國後累計工作期間',thCap:'每月最高服務費',
+capNote:'這不是「仲介可以固定收滿」的保證。官方規則同時要求有簽約、有服務事實、不能預先收費。續聘／轉換雇主的仲介費則是另一件事：不得向移工本人收取。',
+s4:'4｜如果有紅旗，先不要付款：保留證據 → 1955',
+hotlineNote:'1955提供24小時免付費、多國語服務（中文、印尼語、越南語、英語、泰語），可做法令諮詢、申訴與通譯。若你擔心申訴影響工作，可先只詢問規則，不必在這個工具留下任何身分資料。',
+s5:'5｜一鍵產生「付款前先確認」卡',updateBtn:'更新卡片',copyBtn:'複製',
+s6:'6｜這個工具刻意不做',s7:'7｜真實使用驗證',
+validationText:'這輪真正追：被要求付錢 → 分清費用類型 → 發現紅旗 → 先停止付款／要求契約與收據 → 真的問1955。公開回饋不要貼雇主、仲介或個資。',
+typeStop:'🔴 先停止付款並查1955',typeService:'🔵 這是「月服務費」路徑，還要看條件與上限',typeUnknown:'🟡 名目不清楚，不要先付',
+serviceOk:'🟢 目前未超過月上限，且你勾選的條件看起來齊全；仍保留契約與收據。',serviceBad:'🔴 目前有服務費紅旗：',over:'金額超過官方月上限',noContract:'沒有書面服務契約',noService:'本月沒有實際服務',advance:'預先收取未來月份',deduct:'由雇主從薪資代扣交給仲介',uncertain:'有條件不確定，先問1955',
+},
+en:{
+heroSub:'Before paying a “broker fee”, identify what the money is actually for.',
+lead:'Taiwan’s Ministry of Labor updated multilingual guidance on Sep. 10: when a migrant worker renews employment or changes employers, the broker may not charge the worker a brokerage / job-purchase fee. Monthly service fees have separate rules: written contract, actual service, no advance collection, and monthly caps.',
+s1:'1 | What is this payment called?',feeTypeLabel:'They say the payment is:',yearLabel:'Work period in Taiwan since this entry:',amountLabel:'Amount requested this month / this time (NT$):',
+feeOptions:['Monthly brokerage service fee','Employer-transfer / job-purchase fee','Renewal / continued-employment fee','Other one-time broker fee','Unclear — they only told me to pay first'],
+years:['Year 1','Year 2','Year 3+'],
+s2:'2 | If they call it a monthly service fee, check these conditions',contractLabel:'Do you have a written service contract with the broker?',serviceLabel:'Did the broker actually provide a service this month?',advanceLabel:'Are they collecting future months in advance?',deductLabel:'Does the employer deduct it directly from your wages and pay the broker?',
+yes:'Yes',no:'No',unknown:'Unsure',advanceNo:'No, only this month',
+s3:'3 | Current official caps — monthly service fee only',thYear:'Cumulative work period since this entry',thCap:'Monthly service-fee cap',
+capNote:'The cap does not mean the broker may automatically charge the maximum. Official rules also require a contract, actual service and no advance collection. Renewal / employer-transfer brokerage fees are a different category and may not be charged to the migrant worker.',
+s4:'4 | If there is a red flag, pause payment: keep evidence → contact 1955',
+hotlineNote:'1955 is a 24-hour toll-free multilingual service (Chinese, Indonesian, Vietnamese, English and Thai) for consultation, complaints and interpretation. You can first ask about the rule without entering personal data into this tool.',
+s5:'5 | Make a “check before paying” card',updateBtn:'Update card',copyBtn:'Copy',
+s6:'6 | What this tool does NOT do',s7:'7 | Real-world validation',
+validationText:'We track whether a worker can identify the fee, stop questionable payment, ask for a contract/receipt, and actually contact 1955. Do not post employer, broker or personal data.',
+typeStop:'🔴 Pause payment and check with 1955',typeService:'🔵 Monthly service-fee route: check conditions and cap',typeUnknown:'🟡 The fee name is unclear — do not pay first',
+serviceOk:'🟢 The amount is not above the monthly cap and the selected conditions look complete. Keep the contract and receipt.',serviceBad:'🔴 Service-fee red flag(s):',over:'amount exceeds the official monthly cap',noContract:'no written service contract',noService:'no actual service this month',advance:'future months collected in advance',deduct:'employer deducts it from wages and pays the broker',uncertain:'one or more conditions are unclear — ask 1955',
+},
+vi:{
+heroSub:'Trước khi trả “phí môi giới”, hãy xác định chính xác khoản tiền đó là gì.',
+lead:'Ngày 10/9, Bộ Lao động Đài Loan cập nhật tài liệu đa ngôn ngữ: khi gia hạn việc làm hoặc chuyển chủ, công ty môi giới không được thu “phí môi giới / phí mua việc” từ lao động di trú. Phí dịch vụ hàng tháng có quy định riêng: phải có hợp đồng, có dịch vụ thực tế, không thu trước và có mức trần.',
+s1:'1 | Khoản tiền này được gọi là gì?',feeTypeLabel:'Họ nói đây là:',yearLabel:'Thời gian làm việc tích lũy tại Đài Loan kể từ lần nhập cảnh này:',amountLabel:'Số tiền họ yêu cầu lần này / tháng này (NT$):',
+feeOptions:['Phí dịch vụ môi giới hàng tháng','Phí chuyển chủ / phí mua việc','Phí gia hạn / tiếp tục tuyển dụng','Phí môi giới một lần khác','Không rõ — chỉ bảo tôi trả trước'],
+years:['Năm 1','Năm 2','Từ năm 3'],
+s2:'2 | Nếu họ nói là phí dịch vụ hàng tháng, kiểm tra các điều kiện',contractLabel:'Bạn có hợp đồng dịch vụ bằng văn bản với công ty môi giới không?',serviceLabel:'Tháng này công ty môi giới có thực sự cung cấp dịch vụ không?',advanceLabel:'Họ có thu trước phí của các tháng tương lai không?',deductLabel:'Chủ sử dụng có trừ trực tiếp khoản này từ lương rồi đưa cho môi giới không?',
+yes:'Có',no:'Không',unknown:'Không chắc',advanceNo:'Không, chỉ tháng này',
+s3:'3 | Mức trần chính thức hiện hành — chỉ áp dụng phí dịch vụ hàng tháng',thYear:'Thời gian làm việc tích lũy',thCap:'Mức trần phí dịch vụ / tháng',
+capNote:'Mức trần không có nghĩa môi giới đương nhiên được thu tối đa. Vẫn phải có hợp đồng, có dịch vụ thực tế và không được thu trước. Phí môi giới khi gia hạn / chuyển chủ là loại khác và không được thu từ người lao động.',
+s4:'4 | Có dấu hiệu đỏ thì dừng trả tiền: giữ bằng chứng → gọi 1955',
+hotlineNote:'1955 là đường dây miễn phí 24 giờ, đa ngôn ngữ (Trung, Indonesia, Việt, Anh, Thái), hỗ trợ tư vấn, khiếu nại và phiên dịch. Bạn có thể hỏi quy định trước; công cụ này không cần dữ liệu cá nhân.',
+s5:'5 | Tạo thẻ “kiểm tra trước khi trả tiền”',updateBtn:'Cập nhật',copyBtn:'Sao chép',
+s6:'6 | Công cụ này không làm gì',s7:'7 | Kiểm chứng sử dụng thực tế',
+validationText:'Mục tiêu là: hiểu loại phí → phát hiện dấu hiệu đỏ → dừng trả tiền / yêu cầu hợp đồng, biên lai → thật sự hỏi 1955. Không đăng thông tin cá nhân hoặc tên môi giới/chủ sử dụng.',
+typeStop:'🔴 Dừng trả tiền và hỏi 1955',typeService:'🔵 Đây là phí dịch vụ hàng tháng: kiểm tra điều kiện và mức trần',typeUnknown:'🟡 Tên khoản phí không rõ — đừng trả trước',
+serviceOk:'🟢 Số tiền chưa vượt mức trần và các điều kiện bạn chọn có vẻ đầy đủ. Hãy giữ hợp đồng và biên lai.',serviceBad:'🔴 Dấu hiệu đỏ về phí dịch vụ:',over:'số tiền vượt mức trần chính thức',noContract:'không có hợp đồng dịch vụ bằng văn bản',noService:'tháng này không có dịch vụ thực tế',advance:'thu trước các tháng tương lai',deduct:'chủ sử dụng trừ từ lương rồi trả cho môi giới',uncertain:'có điều kiện chưa rõ — hãy hỏi 1955',
+},
+id:{
+heroSub:'Sebelum membayar “biaya broker”, pastikan dulu uang itu sebenarnya untuk apa.',
+lead:'Kementerian Ketenagakerjaan Taiwan memperbarui panduan multibahasa pada 10 September: saat pekerja migran memperpanjang pekerjaan atau pindah majikan, broker tidak boleh membebankan biaya broker / “biaya beli kerja” kepada pekerja. Biaya layanan bulanan punya aturan terpisah: kontrak tertulis, layanan nyata, tidak dipungut di muka, dan batas bulanan.',
+s1:'1 | Uang ini disebut biaya apa?',feeTypeLabel:'Mereka menyebut biaya ini:',yearLabel:'Masa kerja kumulatif di Taiwan sejak masuk kali ini:',amountLabel:'Jumlah yang diminta bulan ini / kali ini (NT$):',
+feeOptions:['Biaya layanan broker bulanan','Biaya pindah majikan / biaya beli kerja','Biaya perpanjangan / lanjut kerja','Biaya broker satu kali lainnya','Tidak jelas — hanya disuruh bayar dulu'],
+years:['Tahun 1','Tahun 2','Tahun 3+'],
+s2:'2 | Jika disebut biaya layanan bulanan, periksa syarat ini',contractLabel:'Apakah ada kontrak layanan tertulis dengan broker?',serviceLabel:'Apakah broker benar-benar memberi layanan bulan ini?',advanceLabel:'Apakah biaya bulan-bulan berikutnya dipungut di muka?',deductLabel:'Apakah majikan memotong langsung dari gaji lalu membayar broker?',
+yes:'Ya',no:'Tidak',unknown:'Tidak yakin',advanceNo:'Tidak, hanya bulan ini',
+s3:'3 | Batas resmi saat ini — hanya untuk biaya layanan bulanan',thYear:'Masa kerja kumulatif',thCap:'Batas biaya layanan / bulan',
+capNote:'Batas ini bukan berarti broker otomatis boleh memungut jumlah maksimum. Tetap harus ada kontrak, layanan nyata, dan tidak boleh dipungut di muka. Biaya broker untuk perpanjangan / pindah majikan adalah kategori berbeda dan tidak boleh dibebankan kepada pekerja.',
+s4:'4 | Jika ada tanda merah, berhenti bayar: simpan bukti → hubungi 1955',
+hotlineNote:'1955 adalah layanan gratis 24 jam dan multibahasa (Mandarin, Indonesia, Vietnam, Inggris, Thailand) untuk konsultasi, pengaduan, dan penerjemahan. Anda dapat menanyakan aturan terlebih dahulu tanpa memasukkan data pribadi ke alat ini.',
+s5:'5 | Buat kartu “cek sebelum bayar”',updateBtn:'Perbarui',copyBtn:'Salin',
+s6:'6 | Yang tidak dilakukan alat ini',s7:'7 | Validasi penggunaan nyata',
+validationText:'Yang diuji: kenali jenis biaya → temukan tanda merah → hentikan pembayaran / minta kontrak dan kuitansi → benar-benar hubungi 1955. Jangan unggah data pribadi atau nama broker/majikan.',
+typeStop:'🔴 Hentikan pembayaran dan cek ke 1955',typeService:'🔵 Jalur biaya layanan bulanan: cek syarat dan batas',typeUnknown:'🟡 Nama biaya tidak jelas — jangan bayar dulu',
+serviceOk:'🟢 Jumlah tidak melebihi batas bulanan dan syarat yang dipilih tampak lengkap. Simpan kontrak dan kuitansi.',serviceBad:'🔴 Tanda merah biaya layanan:',over:'jumlah melebihi batas bulanan resmi',noContract:'tidak ada kontrak layanan tertulis',noService:'tidak ada layanan nyata bulan ini',advance:'biaya bulan depan dipungut di muka',deduct:'majikan memotong dari gaji lalu membayar broker',uncertain:'ada syarat yang tidak jelas — tanyakan 1955',
+}
+};
+
+function setSelectText(){
+ const t=i18n[lang];
+ [...$('feeType').options].forEach((o,i)=>o.textContent=t.feeOptions[i]);
+ [...$('year').options].forEach((o,i)=>o.textContent=t.years[i]);
+ ['contract','provided'].forEach(id=>{$(id).options[0].textContent=t.yes;$(id).options[1].textContent=t.no;$(id).options[2].textContent=t.unknown;});
+ $('advance').options[0].textContent=t.advanceNo;$('advance').options[1].textContent=t.yes;$('advance').options[2].textContent=t.unknown;
+ $('deduct').options[0].textContent=t.no;$('deduct').options[1].textContent=t.yes;$('deduct').options[2].textContent=t.unknown;
+}
+function setLang(l){
+ lang=l; document.documentElement.lang=l==='zh'?'zh-Hant':l;
+ document.querySelectorAll('.lang button').forEach(b=>b.classList.toggle('active',b.dataset.lang===l));
+ const t=i18n[l];
+ ['heroSub','lead','s1','feeTypeLabel','yearLabel','amountLabel','s2','contractLabel','serviceLabel','advanceLabel','deductLabel','s3','thYear','thCap','capNote','s4','hotlineNote','s5','updateBtn','copyBtn','s6','s7','validationText'].forEach(id=>{if($(id)&&t[id]) $(id).textContent=t[id];});
+ $('y1').textContent=t.years[0];$('y2').textContent=t.years[1];$('y3').textContent=t.years[2];
+ setSelectText(); build(false);
+ if(window.PGLabImpact)PGLabImpact.core('lang-'+l);
+}
+function typeCheck(){
+ const t=i18n[lang],type=$('feeType').value;
+ let cls='info',title=t.typeService,msg='';
+ if(['transfer','renewal','other'].includes(type)){cls='bad';title=t.typeStop;msg=lang==='zh'?'續聘／轉換雇主的仲介費或買工費，不得向移工本人收取。保留收費訊息、收據或轉帳要求，先問1955。':lang==='en'?'Brokerage/job-purchase fees for renewal or employer transfer may not be charged to the migrant worker. Keep evidence and contact 1955 before paying.':lang==='vi'?'Phí môi giới / mua việc khi gia hạn hoặc chuyển chủ không được thu từ lao động di trú. Hãy giữ bằng chứng và hỏi 1955 trước khi trả.':'Biaya broker / beli kerja untuk perpanjangan atau pindah majikan tidak boleh dibebankan kepada pekerja migran. Simpan bukti dan hubungi 1955 sebelum membayar.';}
+ else if(type==='unknown'){cls='warn';title=t.typeUnknown;msg=lang==='zh'?'先要求對方把費用名稱、依據、契約與收據寫清楚；不要因「大家都這樣付」就先付款。':lang==='en'?'Ask for the fee name, basis, contract and receipt in writing. Do not pay just because “everyone pays it.”':lang==='vi'?'Yêu cầu ghi rõ tên khoản phí, căn cứ, hợp đồng và biên lai. Đừng trả chỉ vì họ nói “ai cũng trả”.':'Minta nama biaya, dasar, kontrak, dan kuitansi secara tertulis. Jangan bayar hanya karena “semua orang membayar”.';}
+ $('typeOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;
+ $('serviceCard').style.display=type==='service'?'block':'none';
+ return title;
+}
+function serviceCheck(){
+ if($('feeType').value!=='service')return '';
+ const t=i18n[lang],cap=caps[$('year').value],amt=Math.max(0,Number($('amount').value)||0);
+ const flags=[];
+ if(amt>cap)flags.push(t.over);
+ if($('contract').value==='no')flags.push(t.noContract);
+ if($('provided').value==='no')flags.push(t.noService);
+ if($('advance').value==='yes')flags.push(t.advance);
+ if($('deduct').value==='yes')flags.push(t.deduct);
+ if([$('contract').value,$('provided').value,$('advance').value,$('deduct').value].includes('unknown'))flags.push(t.uncertain);
+ const cls=flags.length?'bad':'ok';
+ $('serviceOut').innerHTML=`<div class="note ${cls}"><div class="money">NT$${amt.toLocaleString()} / cap NT$${cap.toLocaleString()}</div>${flags.length?`<b>${t.serviceBad}</b><br>・${flags.join('<br>・')}`:t.serviceOk}</div>`;
+ return flags;
+}
+function build(countCore){
+ const t=i18n[lang],typeTitle=typeCheck(),flags=serviceCheck();
+ const type=$('feeType').value,amt=Math.max(0,Number($('amount').value)||0),cap=caps[$('year').value];
+ let body='';
+ if(lang==='zh') body=`【FeeCheck 1955｜付款前確認卡】
+目前判讀：${typeTitle}
+對方要求：NT$${amt.toLocaleString()}
+${type==='service'?`本年資月服務費上限：NT$${cap.toLocaleString()}`:'這不是一般月服務費路徑'}
+
+先做：
+1. 不清楚費用名稱就先不付。
+2. 續聘／轉換雇主的仲介費、買工費不得向移工本人收。
+3. 月服務費要有書面契約、有實際服務、不得預先收取；第1年1800、第2年1700、第3年起1500元上限。
+4. 保留契約、收據、收費訊息等證據，不必公開貼個資。
+5. 有疑義直接撥1955；可先只問規則。
+
+官方多國語資料：
+https://fw.wda.gov.tw/wda-employer/home/file/2c95efb39c53aa51019c559b21450d8e
+1955：24小時免付費多國語服務。`;
+ else if(lang==='en') body=`【FeeCheck 1955 | Check before paying】
+Result: ${typeTitle}
+Requested: NT$${amt.toLocaleString()}
+${type==='service'?`Monthly service-fee cap for this work period: NT$${cap.toLocaleString()}`:'This is not the normal monthly service-fee route.'}
+
+Before paying:
+1. If the fee name is unclear, pause.
+2. Brokers may not charge migrant workers brokerage/job-purchase fees for renewal or employer transfer.
+3. Monthly service fee: written contract + actual service + no advance collection; caps are Year 1 NT$1,800, Year 2 NT$1,700, Year 3+ NT$1,500.
+4. Keep contracts, receipts and fee messages. Do not post personal data publicly.
+5. Call 1955 to confirm. You can ask about the rule first.
+
+Official multilingual information:
+https://fw.wda.gov.tw/wda-employer/home/file/2c95efb39c53aa51019c559b21450d8e
+1955: 24-hour toll-free multilingual service.`;
+ else if(lang==='vi') body=`【FeeCheck 1955 | Kiểm tra trước khi trả tiền】
+Kết quả: ${typeTitle}
+Số tiền yêu cầu: NT$${amt.toLocaleString()}
+${type==='service'?`Mức trần phí dịch vụ tháng: NT$${cap.toLocaleString()}`:'Đây không phải trường hợp phí dịch vụ hàng tháng thông thường.'}
+
+Trước khi trả:
+1. Nếu tên khoản phí không rõ, hãy dừng lại.
+2. Môi giới không được thu phí môi giới / mua việc từ lao động khi gia hạn hoặc chuyển chủ.
+3. Phí dịch vụ tháng phải có hợp đồng + dịch vụ thực tế + không thu trước; mức trần: năm 1: 1.800, năm 2: 1.700, năm 3+: 1.500 NT$.
+4. Giữ hợp đồng, biên lai, tin nhắn thu phí; không đăng dữ liệu cá nhân công khai.
+5. Gọi 1955 để xác nhận quy định.
+
+Tài liệu đa ngôn ngữ chính thức:
+https://fw.wda.gov.tw/wda-employer/home/file/2c95efb39c53aa51019c559b21450d8e
+1955: miễn phí 24 giờ, đa ngôn ngữ.`;
+ else body=`【FeeCheck 1955 | Cek sebelum membayar】
+Hasil: ${typeTitle}
+Jumlah diminta: NT$${amt.toLocaleString()}
+${type==='service'?`Batas biaya layanan bulanan: NT$${cap.toLocaleString()}`:'Ini bukan jalur biaya layanan bulanan biasa.'}
+
+Sebelum membayar:
+1. Jika nama biaya tidak jelas, berhenti dulu.
+2. Broker tidak boleh membebankan biaya broker / beli kerja kepada pekerja untuk perpanjangan atau pindah majikan.
+3. Biaya layanan bulanan harus ada kontrak + layanan nyata + tidak dipungut di muka; batas: tahun 1 NT$1.800, tahun 2 NT$1.700, tahun 3+ NT$1.500.
+4. Simpan kontrak, kuitansi, dan pesan penagihan; jangan unggah data pribadi secara publik.
+5. Hubungi 1955 untuk memastikan aturan.
+
+Informasi resmi multibahasa:
+https://fw.wda.gov.tw/wda-employer/home/file/2c95efb39c53aa51019c559b21450d8e
+1955: layanan gratis 24 jam multibahasa.`;
+ $('card').value=body;
+ if(countCore&&window.PGLabImpact)PGLabImpact.core('fee-check-card');
+}
+function track(label){if(window.PGLabImpact)PGLabImpact.core(label)}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert(lang==='zh'?'已複製':'Copied')}catch(e){$(id).select();document.execCommand('copy')}}
+['feeType','year','contract','provided','advance','deduct'].forEach(id=>$(id).addEventListener('change',()=>build(false)));
+$('amount').addEventListener('input',()=>build(false));
+setLang('zh');
+</script>
+<script src="../impact.js" data-project="feecheck-1955" data-action-text="我已完成仲介費付款前快篩" data-real-text="我已真的停止付款／要求契約收據／保留證據／聯絡1955" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/65"></script>
+</body></html>
