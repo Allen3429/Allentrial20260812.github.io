@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="eatfirst-3">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="EatFirst 3：把冰箱裡最容易忘記的食物排出前三名，72小時內吃完、冷凍或安全處理。熟食剩菜超過官方冷藏參考範圍會優先顯示食安警示。">
+<title>EatFirst 3｜冰箱先吃清單</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#a32323;--info:#285c8d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1120px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}
+h1{font-size:clamp(38px,7vw,64px);line-height:1.03;margin:.12em 0 .25em}.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:1000px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:12px 14px;border-radius:9px;line-height:1.7;margin:10px 0}.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}.info{border-left-color:var(--info)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:9px}.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:23px;margin-top:4px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(225px,1fr));gap:10px}label{display:block;font-weight:800;margin-bottom:5px}input,select,textarea{width:100%;font:inherit;padding:9px;border:1px solid #cbd5df;border-radius:12px;background:#fff}
+textarea{min-height:230px;resize:vertical}table{width:100%;border-collapse:collapse;min-width:900px}th,td{padding:8px;border-bottom:1px solid var(--line);vertical-align:middle}th{font-size:13px;color:var(--muted);text-align:left}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}
+.big{font-size:clamp(24px,4vw,34px);font-weight:950}.small{font-size:13px;color:var(--muted);line-height:1.6}
+.todo{border:1px solid var(--line);border-radius:14px;padding:13px;margin:9px 0}.todo b{font-size:20px}.done{opacity:.55;text-decoration:line-through}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · Taiwan · 2026/09/11</div>
+<h1>EatFirst 3<br>冰箱不要做成資料庫：今天只決定最先處理的 3 樣。</h1>
+<p class="lead">環境部本週再次把「促銷多買、忘了冰箱裡已有什麼、想著明天再吃卻一路放到過期」列為家戶剩食的日常場景。這個工具不要求拍冰箱、不做食物辨識，只把你自己輸入的期限與冷藏時間排成前三名。</p>
+
+<section class="card">
+<h2>1｜需求不是小數字</h2>
+<div class="stats">
+<div class="stat">家戶廚餘<b>約52萬噸/年</b></div>
+<div class="stat">113年家戶量<b>50.5萬噸</b></div>
+<div class="stat">占總廚餘<b>約65%</b></div>
+<div class="stat">這版目標<b>先救3樣</b></div>
+</div>
+<div class="note info">環境部近期惜食展直接點名「促銷買太多、生活太忙、不了解保存、明天再吃」等情境。後端再利用很重要，但官方食物處理優先次序仍把「源頭減量、避免食物變成廚餘」放在前面。</div>
+</section>
+
+<section class="card">
+<h2>2｜輸入最多8樣：你自己看得到的資訊就好</h2>
+<p class="small">包裝食品：填包裝上的有效日期／你自己決定的優先使用日。蔬果、開封食品：若沒有可靠期限，就填「你希望最晚處理日」，本工具不替食品判定安全。熟食剩菜可填「冷藏開始日」；超過官方一般冷藏剩食 2–3 天參考範圍時，工具只顯示食安警示，不會鼓勵硬吃。</p>
+<div style="overflow:auto"><table>
+<thead><tr><th>食物</th><th>類型</th><th>日期</th><th>份數</th><th>平常看得到嗎？</th><th>狀態</th></tr></thead>
+<tbody id="rows"></tbody>
+</table></div>
+<div class="actions">
+<button onclick="rank(true)">排出 Top 3</button>
+<button class="ghost" onclick="addRow()">＋新增一樣</button>
+<button class="ghost" onclick="clearAll()">清空本機資料</button>
+</div>
+<div id="rankOut"></div>
+</section>
+
+<section class="card">
+<h2>3｜今天只處理這3樣</h2>
+<div id="top3"></div>
+<div class="note warn">若熟食剩菜已超過一般冷藏 2–3 天參考範圍，優先處理的是<strong>食安風險</strong>，不是「為了惜食一定要吃掉」。外觀或氣味正常也不能當作所有食品安全風險的可靠證明。</div>
+</section>
+
+<section class="card">
+<h2>4｜72小時內回來，只更新「真的發生什麼」</h2>
+<div class="stats">
+<div class="stat">已吃完<b id="ate">0</b></div>
+<div class="stat">已冷凍<b id="froze">0</b></div>
+<div class="stat">已丟棄<b id="discarded">0</b></div>
+<div class="stat">仍待處理<b id="pending">0</b></div>
+</div>
+<div class="note ok">我們真正要量測的不是「開過網頁」，而是有沒有把一樣原本可能忘記的食物，在它變成廚餘前吃完或妥善冷凍。</div>
+</section>
+
+<section class="card">
+<h2>5｜一鍵產生「今晚先吃」卡</h2>
+<textarea id="card"></textarea>
+<div class="actions"><button onclick="buildCard(true)">更新卡片</button><button class="ghost" onclick="copyText('card')">複製給家人／室友</button></div>
+</section>
+
+<section class="card">
+<h2>6｜這個工具刻意不做</h2>
+<div class="note">
+<ul>
+<li>不拍照辨識食物，不收地址、購物紀錄、會員資料或冰箱照片。</li>
+<li>不替包裝食品重新發明有效期限；以你自己讀到的標示為準。</li>
+<li>不因「惜食」鼓勵食用超出安全建議或自己已懷疑變質的食品。</li>
+<li>不把全冰箱都變成繁重 inventory；一次只顯示 Top 3，測試低摩擦能不能真的改變行動。</li>
+</ul>
+</div>
+</section>
+
+<section class="card">
+<h2>7｜真實使用驗證</h2>
+<p>這輪真正追：<strong>盤點至少3樣 → 產生 Top 3 → 72小時內回來更新 → 至少一樣真的吃完或冷凍。</strong></p>
+<div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/71">EatFirst 3 回饋區 #71</a></div>
+</section>
+
+<section class="card">
+<h2>8｜可直接轉給家庭／宿舍群</h2>
+<textarea id="promo">【冰箱最容易浪費的，不一定是最貴的，而是「看不到＋想著明天再吃」】
+環境部9/8再次把家戶剩食列為近期惜食重點。
+臺灣每年家戶回收廚餘約52萬公噸。
+
+不用先做完整冰箱管理。
+今晚只做一件事：
+找出最容易先壞／先過期的 3 樣。
+
+EatFirst 3：
+https://allen3429.github.io/Allentrial20260812.github.io/public-good/eatfirst-3/
+
+做法：
+1. 輸入食物名稱
+2. 填你自己看到的有效日期／最晚處理日
+3. 熟食剩菜填冷藏開始日
+4. 只看 Top 3
+5. 72小時後更新：吃完／冷凍／丟棄
+
+提醒：
+一般冷藏熟食剩菜的官方參考是 2–3 天；超過範圍不要因「惜食」而勉強食用。</textarea>
+<div class="actions"><button class="ghost" onclick="copyText('promo')">複製轉貼文</button></div>
+</section>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+const STORE='eatfirst3:v1';
+let data=load();
+
+function load(){try{return JSON.parse(localStorage.getItem(STORE)||'null')||{items:[],history:{ate:0,froze:0,discarded:0}}}catch(e){return {items:[],history:{ate:0,froze:0,discarded:0}}}}
+function save(){localStorage.setItem(STORE,JSON.stringify(data));renderStats()}
+function todayKey(){return new Date().toLocaleDateString('en-CA')}
+function daysBetween(a,b){return Math.floor((new Date(b+'T12:00:00')-new Date(a+'T12:00:00'))/86400000)}
+function addRow(item={}){
+ if(data.items.length>=8)return alert('這版最多8樣；先把最可能忘記的8樣放進來。');
+ data.items.push({id:Date.now()+Math.random(),name:item.name||'',type:item.type||'packaged',date:item.date||'',servings:item.servings||1,visible:item.visible||'no',status:item.status||'pending'});
+ save();renderRows();
+}
+function removeItem(id){data.items=data.items.filter(x=>x.id!==id);save();renderRows();rank(false)}
+function renderRows(){
+ if(!data.items.length){addRow();addRow();addRow();return}
+ const body=$('rows');body.innerHTML='';
+ data.items.forEach(item=>{
+  const tr=document.createElement('tr');
+  tr.innerHTML=`<td><input data-k="name" value="${esc(item.name)}" placeholder="例：昨晚咖哩"></td>
+  <td><select data-k="type"><option value="packaged">包裝食品</option><option value="produce">蔬果／開封食品</option><option value="leftover">熟食剩菜（冷藏）</option></select></td>
+  <td><input data-k="date" type="date" value="${item.date||''}"><div class="small">${item.type==='leftover'?'冷藏開始日':'有效／最晚處理日'}</div></td>
+  <td><input data-k="servings" type="number" min="1" max="20" value="${item.servings||1}"></td>
+  <td><select data-k="visible"><option value="yes">常看得到</option><option value="no">容易被擋住／忘記</option></select></td>
+  <td><select data-k="status"><option value="pending">待處理</option><option value="ate">吃完</option><option value="froze">冷凍</option><option value="discarded">丟棄</option></select><button class="ghost" style="margin-top:6px" onclick="removeItem(${item.id})">刪除</button></td>`;
+  tr.querySelector('[data-k="type"]').value=item.type;
+  tr.querySelector('[data-k="visible"]').value=item.visible;
+  tr.querySelector('[data-k="status"]').value=item.status;
+  tr.querySelectorAll('[data-k]').forEach(el=>el.addEventListener('change',()=>{
+    const k=el.dataset.k,old=item.status;
+    item[k]=k==='servings'?Math.max(1,Number(el.value)||1):el.value;
+    if(k==='status'&&old==='pending'&&item.status!=='pending')data.history[item.status]=(data.history[item.status]||0)+1;
+    save();renderRows();rank(false);
+  }));
+  body.appendChild(tr);
+ });
+ renderStats();
+}
+function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function score(item){
+ if(item.status!=='pending'||!item.name)return null;
+ const t=todayKey();
+ if(!item.date)return {score:50,why:'沒有日期，先確認期限／何時放進冰箱',unsafe:false};
+ if(item.type==='leftover'){
+  const age=daysBetween(item.date,t);
+  if(age>=3)return {score:999,why:`已冷藏約 ${age} 天：超過一般2–3天參考範圍，優先做食安判斷`,unsafe:true};
+  return {score:200+age*50+(item.visible==='no'?15:0),why:`已冷藏約 ${Math.max(0,age)} 天`,unsafe:false};
+ }
+ const left=daysBetween(t,item.date);
+ let s=100-left*10+(item.visible==='no'?15:0)+Math.min(10,item.servings);
+ return {score:s,why:left<0?`你填的日期已過 ${Math.abs(left)} 天`:left===0?'今天就是你填的日期':`距你填的日期 ${left} 天`,unsafe:left<0&&item.type==='packaged'};
+}
+function ranked(){
+ return data.items.map(x=>({item:x,meta:score(x)})).filter(x=>x.meta).sort((a,b)=>b.meta.score-a.meta.score);
+}
+function rank(countCore){
+ const list=ranked(),top=list.slice(0,3),box=$('top3');box.innerHTML='';
+ if(!top.length)box.innerHTML='<div class="note ok">目前沒有待處理項目。可以把下一批最容易忘記的食物加進來。</div>';
+ top.forEach((x,i)=>{
+  const cls=x.meta.unsafe?'bad':i===0?'warn':'info';
+  const div=document.createElement('div');div.className=`todo note ${cls}`;
+  div.innerHTML=`<b>${i+1}. ${esc(x.item.name)}</b><br>${esc(x.meta.why)} · ${x.item.servings}份 · ${x.item.visible==='no'?'容易被忘記':'常看得到'}<br>
+  <span class="small">${x.meta.unsafe?'⚠️ 這一項不要用「惜食」理由勉強食用；回到包裝標示或食品安全原則。':'今天先決定：吃完、冷凍，或依安全原則處理。'}</span>`;
+  box.appendChild(div);
+ });
+ $('rankOut').innerHTML=`<div class="note ${top.length?'ok':'warn'}">${top.length?`已把 ${list.length} 樣待處理食物縮成 Top ${top.length}。不要再優化清單，先處理第一樣。`:'先輸入食物名稱與日期。'}</div>`;
+ buildCard(false);
+ if(countCore&&window.PGLabImpact)PGLabImpact.core('top3-rank');
+ return top;
+}
+function renderStats(){
+ const h=data.history||{},p=data.items.filter(x=>x.status==='pending').length;
+ $('ate').textContent=h.ate||0;$('froze').textContent=h.froze||0;$('discarded').textContent=h.discarded||0;$('pending').textContent=p;
+}
+function buildCard(countCore){
+ const top=ranked().slice(0,3);
+ $('card').value=`【EatFirst 3｜今晚先處理】
+${top.map((x,i)=>`${i+1}. ${x.item.name} — ${x.meta.why}${x.meta.unsafe?'（食安優先，不要勉強吃）':''}`).join('\n')||'目前沒有待處理項目'}
+
+規則：
+・一次只處理前三樣。
+・能安全食用就優先吃完；吃不完且適合冷凍的就及時冷凍。
+・包裝食品依標示與你的實際保存條件。
+・一般冷藏熟食剩菜以2–3天為官方參考；超出範圍時食安優先。
+・72小時後回來更新：吃完／冷凍／丟棄。
+
+EatFirst 3：
+https://allen3429.github.io/Allentrial20260812.github.io/public-good/eatfirst-3/`;
+ if(countCore&&window.PGLabImpact)PGLabImpact.core('action-card');
+}
+function clearAll(){if(!confirm('清除這台瀏覽器的 EatFirst 3 紀錄？'))return;localStorage.removeItem(STORE);data={items:[],history:{ate:0,froze:0,discarded:0}};renderRows();rank(false)}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+renderRows();rank(false);
+</script>
+<script src="../impact.js" data-project="eatfirst-3" data-action-text="我已完成冰箱Top 3先吃排序" data-real-text="我已真的吃完／冷凍至少一樣原本可能被忘記的食物" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/71"></script>
+</body></html>
