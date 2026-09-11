@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="powerrecall-tw">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="PowerRecall TW：用品牌／型號快速比對2026年臺灣標檢局行動電源召回公告；查無不代表安全，最後仍回官方召回資料確認。">
+<title>PowerRecall TW｜行動電源召回一分鐘自查</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#687480;--line:#dce4eb;--ok:#176b45;--warn:#986500;--bad:#a32323;--info:#285c8d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1120px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}h1{font-size:clamp(38px,7vw,64px);line-height:1.03;margin:.12em 0 .25em}
+.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:1000px}.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:12px 14px;border-radius:9px;line-height:1.7;margin:10px 0}.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}.info{border-left-color:var(--info)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:9px}.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:23px;margin-top:4px}
+label{display:block;font-weight:800;margin-bottom:6px}input,textarea{width:100%;font:inherit;padding:12px;border:1px solid #cbd5df;border-radius:12px;background:#fff}textarea{min-height:220px;resize:vertical}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}button,.btn{display:inline-block;border:0;border-radius:12px;padding:11px 14px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}
+.big{font-size:clamp(24px,4vw,34px);font-weight:950}.small{font-size:13px;color:var(--muted);line-height:1.65}
+table{width:100%;border-collapse:collapse;min-width:850px}th,td{padding:9px;border-bottom:1px solid var(--line);vertical-align:top}th{font-size:13px;color:var(--muted);text-align:left}
+mark{padding:2px 4px;border-radius:4px}@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · 臺灣行動電源召回索引 · 2026/09/11 查核</div>
+<h1>PowerRecall TW<br>先翻到背面看「型號」，不要只看品牌。</h1>
+<p class="lead">2026 年本輪交叉查到的臺灣標準檢驗局行動電源召回公告，合計至少 <strong>76,389 台</strong>，風險包含過熱、膨脹、自燃、冒煙、起火。這個工具只做召回索引：<strong>命中＝先停止使用並看官方召回；查無＝未在本索引找到，不等於安全。</strong></p>
+
+<section class="card">
+<h2>1｜為什麼值得現在查？</h2>
+<div class="stats">
+<div class="stat">本索引公告組數<b>8組</b></div>
+<div class="stat">列入型號<b>10個</b></div>
+<div class="stat">公告數量合計<b>76,389台</b></div>
+<div class="stat">官方召回入口<b>9/11仍更新</b></div>
+</div>
+<div class="note warn">近期召回不是單一品牌事件：Q哥、acer Gadget、LaPO、PUREGEAR、YOMIX、GUXON、GTCASE、ADAM elements 都有 2026 年公告。最晚一波為 8/18 的 Q哥 3 型號召回，原因涉及電池自燃。這就是為什麼「我這顆用了好幾個月都沒事」不能當作召回查核。</div>
+</section>
+
+<section class="card">
+<h2>2｜輸入背面的品牌或型號</h2>
+<label>例：P-187、WT-08P、POT-528、GFC10000、LaPO、優迷</label>
+<input id="q" autocomplete="off" placeholder="輸入品牌或型號">
+<div class="actions"><button onclick="searchRecall(true)">查召回索引</button><button class="ghost" onclick="example()">不知道怎麼找型號？</button></div>
+<div id="result"></div>
+</section>
+
+<section class="card">
+<h2>3｜型號在哪裡？先做這30秒</h2>
+<div class="note info" id="howto">拔掉充電線、停止充電，找產品背面／側邊的小字標示，優先找「Model／型號」。有些召回還會限定產製期間、批號或出廠號碼，所以<strong>型號命中後一定要再開官方公告核對</strong>。不要為了找標示拆機殼。</div>
+</section>
+
+<section class="card">
+<h2>4｜目前索引（資料源全部是標準檢驗局召回公告）</h2>
+<div style="overflow:auto"><table><thead><tr><th>品牌</th><th>型號</th><th>期間／批號</th><th>公告數量</th><th>主要風險</th><th>官方</th></tr></thead><tbody id="catalog"></tbody></table></div>
+<div class="note info">這不是全臺所有歷年召回的完整資料庫；它是本輪查到的 2026 臺灣行動電源召回索引。標檢局仍可能新增公告，所以查無結果時請再查官方召回入口。</div>
+</section>
+
+<section class="card">
+<h2>5｜如果命中，最短路徑</h2>
+<div class="note bad"><b>先停止充電與使用。</b>不要繼續測試「是不是只有充快一點才會熱」，也不要自行拆機、刺破、壓平膨脹電池或更換電芯。接著打開該型號的標檢局公告，依公告中的業者客服辦理回收、檢測、換貨或退費。</div>
+<div class="actions">
+<a class="btn" target="_blank" rel="noopener" href="https://www.bsmi.gov.tw/wSite/np?ctNode=4735&mp=1" onclick="track('bsmi-recall-hub')">標檢局商品召回入口</a>
+<a class="btn ghost" href="tel:0800007123">標檢局諮詢 0800-007-123</a>
+</div>
+</section>
+
+<section class="card">
+<h2>6｜一鍵產生「我查了哪顆」安全卡</h2>
+<textarea id="card"></textarea>
+<div class="actions"><button onclick="buildCard(true)">更新安全卡</button><button class="ghost" onclick="copyText('card')">複製</button></div>
+</section>
+
+<section class="card">
+<h2>7｜這個工具刻意不做</h2>
+<div class="note">
+<ul>
+<li>不說「查不到＝安全」；查無只代表不在這份 2026 索引。</li>
+<li>不靠照片 AI 猜型號，也不要求上傳產品、序號、發票或事故照片。</li>
+<li>不建議自行拆行動電源或處理電池芯。</li>
+<li>不把所有同品牌商品都標成召回；召回通常看型號，部分還要看產製期間、批號或出廠號碼。</li>
+</ul>
+</div>
+</section>
+
+<section class="card">
+<h2>8｜真實使用驗證</h2>
+<p>這輪真正追：<strong>找到型號 → 查索引 → 點官方公告 → 命中者真的停止使用並聯絡業者。</strong>公開回饋只要品牌／型號與流程摩擦，不要貼完整序號、發票或個資。</p>
+<div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/73">PowerRecall TW 回饋區 #73</a></div>
+</section>
+
+<section class="card">
+<h2>9｜可直接轉給宿舍／家庭／同事群</h2>
+<textarea id="promo">【你包包裡那顆行動電源，型號有查過召回嗎？】
+2026年本輪從標準檢驗局召回公告交叉整理：
+至少8組臺灣行動電源召回公告、10個型號，公告數量合計至少76,389台。
+
+包含：
+Q哥 POT-482S / POT-487S / POT-528
+acer Gadget P-187
+LaPO WT-08P
+PUREGEAR 10488PG（特定出廠號碼）
+YOMIX POT-536
+GUXON GFC10000（特定批號）
+GTCASE POT-648
+ADAM elements GRAVITY 30W
+
+先翻產品背面找「Model／型號」：
+https://allen3429.github.io/Allentrial20260812.github.io/public-good/powerrecall-tw/
+
+重要：
+・命中型號後還要核對產製期間／批號
+・查無不代表安全，最後仍回標檢局官方召回資料
+・命中召回先停止使用，不要自行拆電池
+
+標檢局商品召回：
+https://www.bsmi.gov.tw/wSite/np?ctNode=4735&mp=1</textarea>
+<div class="actions"><button class="ghost" onclick="copyText('promo')">複製轉貼文</button></div>
+</section>
+</main>
+<script>
+const recalls=[{"brand":"Q哥","model":"POT-482S","period":"2025/09/01–2025/11/30","qty":2077,"risk":"電池自燃；公告稱疑因少數電池單體材料差異造成過充、破裂","contact":"0966-000-199","url":"https://www.bsmi.gov.tw/wSite/ct?ctNode=8268&mp=1&xItem=128826"},{"brand":"Q哥","model":"POT-487S","period":"2025/08/01–2025/12/31","qty":1789,"risk":"電池自燃；公告稱疑因少數電池單體材料差異造成過充、破裂","contact":"0966-000-199","url":"https://www.bsmi.gov.tw/wSite/ct?ctNode=8268&mp=1&xItem=128826"},{"brand":"Q哥","model":"POT-528","period":"2025/08/01–2026/03/31","qty":3317,"risk":"電池自燃；公告稱疑因少數電池單體材料差異造成過充、破裂","contact":"0966-000-199","url":"https://www.bsmi.gov.tw/wSite/ct?ctNode=8268&mp=1&xItem=128826"},{"brand":"acer Gadget","model":"P-187","period":"2025/09/01–2026/05/06","qty":17856,"risk":"特定批次可能過熱；公告載有2件財損事故","contact":"06-3965568 / 0963-879-801 / LINE @049mifwu","url":"https://www.bsmi.gov.tw/wSite/ct?ctNode=8275&mp=1&xItem=128393"},{"brand":"LaPO","model":"WT-08P","period":"2025/04–2025/10","qty":25000,"risk":"電池膨脹高風險安全疑慮；公告載電池芯自燃","contact":"02-2219-5056 / LINE @lapo","url":"https://www.bsmi.gov.tw/wSite/ct?ctNode=8268&mp=1&xItem=127945"},{"brand":"PUREGEAR 普格爾","model":"10488PG","period":"2025/04–2025/12；序號/出廠號碼 F4FAD","qty":1000,"risk":"少數電芯瑕疵，可能冒煙、起火；公告載2件事故","contact":"03-3661699 / LINE @puregeartw","url":"https://www.bsmi.gov.tw/wSite/ct?ctNode=8268&mp=65&xItem=127921"},{"brand":"YOMIX 優迷","model":"POT-536","period":"2025/08–2025/10","qty":3210,"risk":"少數電芯瑕疵，可能冒煙、起火；公告載1件事故","contact":"02-27366992 / LINE @v66700243","url":"https://www.bsmi.gov.tw/SafetyGIP/wSite/ct?ctNode=8206&mp=65&xItem=127041"},{"brand":"GUXON","model":"GFC10000","period":"2025/04；批號 GK25004093、GK25004071","qty":10140,"risk":"二次鋰單電池內部瑕疵，可能起火或爆炸；公告載火災","contact":"LINE @GUXON","url":"https://www.bsmi.gov.tw/wSite/ct?ctNode=8268&mp=1&xItem=126392"},{"brand":"GTCASE","model":"POT-648","period":"2025/09–2025/11","qty":3000,"risk":"充放電管理晶片部分異常，可能冒煙、起火","contact":"04-25395223 / LINE @376ZLIPR","url":"https://www.bsmi.gov.tw/wSite/ct?ctNode=8268&mp=1&xItem=126312"},{"brand":"ADAM elements 亞果元素","model":"GRAVITY 30W","period":"2024/07–2025/01","qty":9000,"risk":"部分電池芯可能異常升溫、外殼變形或熱失控","contact":"02-2736-7999 / 02-2738-9900 / LINE @adamstore","url":"https://www.bsmi.gov.tw/SafetyGIP/wSite/ct?ctNode=8206&mp=65&xItem=126289"}];
+const $=id=>document.getElementById(id);
+let last={query:'',matches:[]};
+function norm(s){return String(s||'').toUpperCase().replace(/[\s_-]+/g,'').replace(/普格爾/g,'PUREGEAR').replace(/優迷/g,'YOMIX').replace(/亞果元素/g,'ADAMELEMENTS')}
+function match(item,q){const n=norm(q);return n&&(norm(item.brand).includes(n)||norm(item.model).includes(n)||norm(item.period).includes(n)||n.includes(norm(item.model)))}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function searchRecall(countCore){const q=$('q').value.trim();const matches=recalls.filter(x=>match(x,q));last={query:q,matches};if(!q){$('result').innerHTML='<div class="note warn">先翻到行動電源背面，輸入品牌或型號。</div>';buildCard(false);return;}if(matches.length){$('result').innerHTML='<div class="note bad"><div class="big">🔴 命中這份召回索引</div>'+matches.map(x=>`<p><b>${esc(x.brand)} ${esc(x.model)}</b><br>${esc(x.period)}<br>${esc(x.risk)}<br><a target="_blank" rel="noopener" href="${x.url}" onclick="track('official-match')">開啟標檢局官方公告</a> · 聯絡：${esc(x.contact)}</p>`).join('')+'<b>現在先停止充電／使用，再核對官方公告的期間、批號或序號條件。</b></div>';}else{$('result').innerHTML='<div class="note warn"><div class="big">🟡 未在本索引找到</div>這不是「安全認證」。可能是型號輸入不同、屬其他年份召回、或標檢局有更新。本工具最後查核日是 2026/09/11，請再用標檢局商品召回入口確認。</div>';}buildCard(false);if(countCore&&window.PGLabImpact)PGLabImpact.core('recall-search');}
+function renderCatalog(){$('catalog').innerHTML=recalls.map(x=>`<tr><td>${esc(x.brand)}</td><td><b>${esc(x.model)}</b></td><td>${esc(x.period)}</td><td>${x.qty.toLocaleString()}</td><td>${esc(x.risk)}</td><td><a href="${x.url}" target="_blank" rel="noopener">標檢局</a></td></tr>`).join('')}
+function example(){$('q').value='P-187';searchRecall(true);$('howto').className='note warn';$('howto').innerHTML='示範已帶入 <b>P-187</b>。實際操作時請看你自己的產品標示；不要依外觀或記憶猜型號。部分召回還限定產製期間／批號／出廠號碼。';}
+function buildCard(countCore){const lines=last.matches.map(x=>`・${x.brand} ${x.model}：命中索引；${x.period}；官方 ${x.url}`);$('card').value=`【PowerRecall TW｜我的行動電源召回自查】\n我查的關鍵字：${last.query||'尚未輸入'}\n結果：${last.query?(last.matches.length?'命中本索引':'未在本索引找到（不代表安全）'):'尚未查'}\n\n${lines.join('\n')||'下一步：翻產品背面找品牌＋Model／型號。'}\n\n安全原則：\n1. 命中型號後，再核對官方公告的產製期間／批號／出廠號碼。\n2. 命中召回：先停止充電與使用，依業者公告辦理回收／檢測／換貨／退費。\n3. 不自行拆機、不刺破或壓平膨脹電池。\n4. 查無結果仍回標檢局商品召回入口做最後確認。\n\n標檢局召回入口：\nhttps://www.bsmi.gov.tw/wSite/np?ctNode=4735&mp=1\n\n本工具資料交叉查核日：2026/09/11`;if(countCore&&window.PGLabImpact)PGLabImpact.core('safety-card');}
+function track(label){if(window.PGLabImpact)PGLabImpact.core(label)}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+$('q').addEventListener('keydown',e=>{if(e.key==='Enter')searchRecall(true)});renderCatalog();buildCard(false);
+</script>
+<script src="../impact.js" data-project="powerrecall-tw" data-action-text="我已完成至少一顆行動電源召回自查" data-real-text="我已真的找到型號／停止使用疑似召回品／聯絡業者／完成換貨或回收" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/73"></script>
+</body></html>
