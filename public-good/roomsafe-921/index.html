@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="roomsafe-921">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="RoomSafe 921：在9/21國家防災日前，用5分鐘掃描一個最常待的房間：家具會不會倒、東西會不會掉、出口會不會被堵，並產生今晚15分鐘處理清單。">
+<title>RoomSafe 921｜一個房間的地震風險掃描</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#a32323;--info:#285c8d}
+*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1120px;margin:auto;padding:24px 14px 72px} .kicker{font-size:14px;font-weight:850;color:var(--muted)}
+h1{font-size:clamp(38px,7vw,64px);line-height:1.03;margin:.12em 0 .25em} .lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:1000px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:12px 14px;border-radius:9px;line-height:1.7;margin:10px 0}
+.ok{border-left-color:var(--ok)} .warn{border-left-color:var(--warn)} .bad{border-left-color:var(--bad)} .info{border-left-color:var(--info)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:10px} .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:9px}
+.stat{border:1px solid var(--line);border-radius:14px;padding:12px} .stat b{display:block;font-size:23px;margin-top:4px}
+.item{border:1px solid var(--line);border-radius:15px;padding:14px} label{display:block;font-weight:830;margin-bottom:6px}
+select,input,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff} textarea{min-height:250px;resize:vertical}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px} button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}
+.ghost{background:#edf1f5;color:#17212b} .big{font-size:clamp(24px,4vw,34px);font-weight:950} .small{font-size:13px;color:var(--muted);line-height:1.6}
+.checkgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:8px} .ck{width:auto;transform:scale(1.12);margin-right:7px}
+.task{padding:10px 0;border-bottom:1px solid var(--line)} .task:last-child{border-bottom:0} .countdown{font-size:clamp(34px,7vw,62px);font-weight:1000}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · Taiwan · 2026 國家防災日</div>
+<h1>RoomSafe 921<br>地震前最值得先做的，不是買更多東西，而是讓「會倒、會掉、會堵門」的東西今晚少一件。</h1>
+<p class="lead">2026/9/21 上午 9:21 將進行國家防災日地震速報演練。官方也再次提醒家具固定、緊急避難包與家庭防災會議。這個工具刻意只掃描<strong>一個你最常待的房間</strong>，把今天能完成的15分鐘改善先做掉。</p>
+
+<section class="card">
+<h2>1｜離 9/21 09:21 演練還有</h2>
+<div class="countdown" id="countdown">—</div>
+<div class="actions">
+<button onclick="downloadDrill()">加入 9/21 09:21 演練提醒</button>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://bear.emic.gov.tw/MY2/topic/takeShelter/eq" onclick="track('official-eq')">消防署｜地震避難官方說明</a>
+</div>
+<div class="note info">演練收到地震速報時，先就地做「趴下、掩護、穩住」，不是先往外跑。室內也不要使用電梯。</div>
+</section>
+
+<section class="card">
+<h2>2｜先選一個房間，不做整間房子</h2>
+<div class="grid">
+<div><label>你現在掃描的是</label>
+<select id="room">
+<option>臥室</option><option>宿舍房間</option><option>客廳</option><option>書房／工作區</option><option>其他最常待的房間</option>
+</select></div>
+</div>
+<div class="note ok">只做一間，是為了讓你真的完成。優先選「睡最久、坐最久」的地方。</div>
+</section>
+
+<section class="card">
+<h2>3｜5分鐘掃描：6個紅旗</h2>
+<div class="grid">
+<div class="item"><label>① 高大家具會倒向床、沙發、書桌或常坐的位置嗎？</label><select id="fall"><option value="safe">不會／已妥善固定</option><option value="risk">會或可能會</option><option value="unknown">不知道／沒想過</option></select></div>
+<div class="item"><label>② 床、座位或走道上方，有重物、玻璃、層板物品可能掉落嗎？</label><select id="drop"><option value="safe">沒有／已移低或固定</option><option value="risk">有</option><option value="unknown">不知道／沒檢查</option></select></div>
+<div class="item"><label>③ 家具、冰箱、書櫃若移動／傾倒，可能卡住房門或主要出口嗎？</label><select id="exit"><option value="safe">不會</option><option value="risk">可能會</option><option value="unknown">不知道</option></select></div>
+<div class="item"><label>④ 你最常坐／睡的位置緊鄰大面玻璃、窗戶或易碎物嗎？</label><select id="glass"><option value="safe">不是／已避開</option><option value="risk">是</option><option value="unknown">不確定</option></select></div>
+<div class="item"><label>⑤ 地震一來，你知道這個房間「就地掩護」的位置在哪嗎？</label><select id="cover"><option value="safe">知道，有堅固桌下／可保護頭頸的位置</option><option value="risk">沒有明確位置</option><option value="unknown">不確定哪裡適合</option></select></div>
+<div class="item"><label>⑥ 夜間地震時，床邊是否有容易穿的鞋與可立即取用的照明？</label><select id="night"><option value="safe">有</option><option value="risk">沒有</option><option value="unknown">不確定放哪裡</option></select></div>
+</div>
+<div id="scanOut"></div>
+</section>
+
+<section class="card">
+<h2>4｜今晚15分鐘，先做最有效的前3件</h2>
+<div id="tasks"></div>
+<div class="note warn"><b>租屋／宿舍不能鑽牆？</b>不要因此什麼都不做。可以先調整家具方向與位置，避免倒向床、座位或出口；重物移到低處；使用符合家具／牆體條件與產品說明的防傾倒裝置。涉及鑽牆或固定方式不確定時，先和房東／宿舍管理單位確認。</div>
+</section>
+
+<section class="card">
+<h2>5｜家庭／室友只約定兩件事</h2>
+<div class="grid">
+<div><label>集合點簡稱（不要填完整門牌）</label><input id="meet" placeholder="例：社區大門旁空地／校門口"></div>
+<div><label>外地聯絡人暱稱（不要填電話）</label><input id="contact" placeholder="例：阿姨／A同學"></div>
+</div>
+<div class="note info">消防署建議家庭防災會議先約定集合地點與聯絡方式。這兩格只在你目前頁面裡使用，不會上傳或儲存。</div>
+</section>
+
+<section class="card">
+<h2>6｜床邊「2分鐘版」：不用先買完整避難包</h2>
+<div class="checkgrid">
+<label><input class="ck bedside" type="checkbox"> 包覆腳部、可快速穿上的鞋</label>
+<label><input class="ck bedside" type="checkbox"> 手電筒／可立即使用的照明</label>
+<label><input class="ck bedside" type="checkbox"> 手機或行動電源在可取位置</label>
+<label><input class="ck bedside" type="checkbox"> 房門到出口動線沒有堆物</label>
+</div>
+<div id="bedOut"></div>
+</section>
+
+<section class="card">
+<h2>7｜一鍵產生「今晚就做」防災卡</h2>
+<textarea id="card"></textarea>
+<div class="actions">
+<button onclick="build(true)">更新防災卡</button>
+<button class="ghost" onclick="copyText('card')">複製給家人／室友</button>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://bear.emic.gov.tw/MY2/forDimmies/eq">全民防災e點通</a>
+</div>
+</section>
+
+<section class="card">
+<h2>8｜這個工具刻意不做</h2>
+<div class="note">
+<ul>
+<li>不判定建築物耐震安全，也不取代結構技師或專業評估。</li>
+<li>不要求上傳住宅照片、格局圖、門牌、精確位置或家人姓名。</li>
+<li>不提供「某種固定器一定安全」的保證；家具、牆體與安裝方式不同，應依產品與專業指引。</li>
+<li>不把緊急避難包當成唯一答案；這一輪先把會壓人、會掉、會堵門的風險減少。</li>
+</ul>
+</div>
+</section>
+
+<section class="card">
+<h2>9｜真實使用驗證</h2>
+<p>這輪真正追：<strong>掃完一個房間 → 找出原本沒想到的風險 → 今晚真的移動／固定／清出口 → 9/21真的演練一次。</strong>公開回饋不要貼住址、照片或格局。</p>
+<div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/70">RoomSafe 921 回饋區 #70</a></div>
+</section>
+
+<section class="card">
+<h2>10｜可直接轉給宿舍／家庭／社區群</h2>
+<textarea id="promo">【9/21 09:21 國家防災日｜今晚先掃一個房間】
+9/21上午9:21會發送地震速報演練訊息，收到時就地做：
+趴下、掩護、穩住。
+
+但演練前更值得做的是：
+看你最常待的房間裡，有沒有東西會「倒、掉、堵」。
+
+先看6個：
+1. 高大家具會不會倒向床／書桌？
+2. 頭頂有沒有重物／玻璃？
+3. 家具倒下會不會卡住房門？
+4. 睡／坐的位置是否緊鄰玻璃？
+5. 地震時你知道就地掩護位置嗎？
+6. 床邊有鞋＋照明嗎？
+
+RoomSafe 921：
+https://allen3429.github.io/Allentrial20260812.github.io/public-good/roomsafe-921/
+
+消防署全民防災e點通：
+https://bear.emic.gov.tw/MY2/forDimmies/eq
+
+不用公開貼住址、房間照片或格局。</textarea>
+<div class="actions"><button class="ghost" onclick="copyText('promo')">複製轉貼文</button></div>
+</section>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+const ids=['fall','drop','exit','glass','cover','night'];
+const labels={
+ fall:'高大家具可能壓到床／座位',
+ drop:'上方有可能掉落的重物／玻璃',
+ exit:'家具可能堵住出口',
+ glass:'常待位置緊鄰玻璃／易碎物',
+ cover:'沒有明確就地掩護位置',
+ night:'床邊缺鞋或照明'
+};
+const fixes={
+ fall:'把高大家具移到不會倒向床／座位／出口的位置；若條件允許，依牆體與家具條件做適當防傾倒固定。',
+ drop:'把高處重物移到低處；移除床、座位與主要走道上方容易掉落的物品。',
+ exit:'重新調整家具方向或位置，確保傾倒／滑動後不會卡住房門與主要出口。',
+ glass:'把床／座位移離大面玻璃與易碎物；至少先不要把頭部長時間放在玻璃旁。',
+ cover:'現在就指定一個地震時的就地掩護點；有堅固桌子就練習進桌下並抓住桌腳。',
+ night:'今晚先在床邊放一雙包覆腳部的鞋與可立即使用的手電筒／照明。'
+};
+
+function scan(){
+ const rows=ids.map(id=>[id,$(id).value]);
+ const risks=rows.filter(x=>x[1]!=='safe').map(x=>x[0]);
+ const red=rows.filter(x=>x[1]==='risk').length, unk=rows.filter(x=>x[1]==='unknown').length;
+ let cls='ok',title='🟢 這輪沒有抓到未處理紅旗',msg='仍建議實際站在房間中央看一次：家具倒下的方向、上方物品與出口動線。';
+ if(risks.length){
+  cls=red?'bad':'warn';title=`${red?'🔴':'🟡'} 找到 ${risks.length} 個要處理／確認的點`;
+  msg=`明顯風險 ${red} 項，不確定 ${unk} 項。「不知道」也列入待辦，因為真正地震不會給你時間再想。`;
+ }
+ $('scanOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;
+ return {rows,risks,red,unk,title};
+}
+
+function renderTasks(){
+ const s=scan(), ordered=[...s.risks];
+ const box=$('tasks');box.innerHTML='';
+ if(!ordered.length){
+  box.innerHTML='<div class="note ok">先做一個實際動作：站到房門口，確認主要出口沒有堆物，再下載9/21演練提醒。</div>';
+  return s;
+ }
+ ordered.slice(0,3).forEach((id,i)=>{
+  const div=document.createElement('div');div.className='task';
+  div.innerHTML=`<b>${i+1}. ${labels[id]}</b><br>${fixes[id]}`;
+  box.appendChild(div);
+ });
+ if(ordered.length>3){
+  const div=document.createElement('div');div.className='note info';
+  div.textContent=`另外還有 ${ordered.length-3} 項；先完成前三件，再回來重掃一次。`;
+  box.appendChild(div);
+ }
+ return s;
+}
+
+function bedside(){
+ const a=[...document.querySelectorAll('.bedside')],n=a.filter(x=>x.checked).length;
+ $('bedOut').innerHTML=`<div class="note ${n>=3?'ok':'warn'}">床邊／夜間準備 ${n}/4。${n>=3?'已足夠形成一個低門檻起點。':'先補鞋＋照明，不用等完整避難包都買齊才開始。'}</div>`;
+ return n;
+}
+
+function build(countCore){
+ const s=renderTasks(), n=bedside(), room=$('room').value;
+ const meet=$('meet').value.trim()||'尚未約定';
+ const contact=$('contact').value.trim()||'尚未約定';
+ const todo=s.risks.slice(0,3).map((id,i)=>`${i+1}. ${fixes[id]}`).join('\n')||'1. 實際站在房門口確認出口動線。\n2. 下載9/21 09:21演練提醒。';
+ $('card').value=`【RoomSafe 921｜今晚15分鐘地震整備卡】
+房間：${room}
+掃描結果：明顯風險 ${s.red} 項；不確定 ${s.unk} 項
+床邊／夜間準備：${n}/4
+
+今晚先做：
+${todo}
+
+家庭／室友：
+・集合點簡稱：${meet}
+・外地聯絡人暱稱：${contact}
+
+9/21 09:21 演練：
+收到地震速報 → 趴下、掩護、穩住。
+室內不要急著往外跑，也不要使用電梯。
+
+官方：
+https://bear.emic.gov.tw/MY2/topic/takeShelter/eq
+
+本卡不保存住址、精確位置、住宅照片或家人姓名。`;
+ if(countCore&&window.PGLabImpact)PGLabImpact.core('room-scan-card');
+}
+
+function countdown(){
+ const target=new Date('2026-09-21T09:21:00+08:00'), now=new Date(), ms=target-now;
+ if(ms<=0){$('countdown').textContent='演練時間已到／已過';return}
+ const days=Math.floor(ms/86400000),hrs=Math.floor(ms%86400000/3600000),mins=Math.floor(ms%3600000/60000);
+ $('countdown').textContent=`${days}天 ${hrs}小時 ${mins}分`;
+}
+
+function downloadDrill(){
+ const ics=`BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//RoomSafe921//TW\r\nBEGIN:VEVENT\r\nDTSTART;TZID=Asia/Taipei:20260921T091800\r\nDTEND;TZID=Asia/Taipei:20260921T092500\r\nSUMMARY:09:21 國家防災日地震速報演練\r\nDESCRIPTION:09:21 收到地震速報演練訊息時，就地趴下、掩護、穩住，約1分鐘。室內不要急著衝出門或搭電梯。\r\nEND:VEVENT\r\nEND:VCALENDAR`;
+ const blob=new Blob([ics],{type:'text/calendar;charset=utf-8'});
+ const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='roomsafe-921-drill.ics';a.click();URL.revokeObjectURL(a.href);
+ if(window.PGLabImpact)PGLabImpact.core('921-reminder');
+}
+function track(label){if(window.PGLabImpact)PGLabImpact.core(label)}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+
+ids.forEach(id=>$(id).addEventListener('change',()=>build(false)));
+$('room').addEventListener('change',()=>build(false));
+['meet','contact'].forEach(id=>$(id).addEventListener('input',()=>build(false)));
+document.querySelectorAll('.bedside').forEach(x=>x.addEventListener('change',()=>build(false)));
+countdown();setInterval(countdown,60000);build(false);
+</script>
+<script src="../impact.js" data-project="roomsafe-921" data-action-text="我已完成一個房間的地震風險掃描" data-real-text="我已真的移動／固定家具、清空出口、準備鞋與照明或約定集合點" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/70"></script>
+</body></html>
