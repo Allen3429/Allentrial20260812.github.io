@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="lamploop-1031">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="LampLoop 1031：2026/9/9–10/31 照明亮久久活動，幫家庭找出最值得先換的老舊燈、估算節電，並把舊燈妥善包裝送回收。">
+<title>LampLoop 1031｜老舊照明先換哪一顆？</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#a32323;--info:#285c8d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1120px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}
+h1{font-size:clamp(38px,7vw,64px);line-height:1.03;margin:.12em 0 .25em}h2{margin-top:.15em}.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:1000px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:12px 14px;border-radius:9px;line-height:1.7;margin:10px 0}
+.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}.info{border-left-color:var(--info)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:9px}
+.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:23px;margin-top:4px}
+label{display:block;font-weight:800;margin-bottom:5px}input,select,textarea{width:100%;font:inherit;padding:9px;border:1px solid #cbd5df;border-radius:12px;background:#fff}
+textarea{min-height:245px;resize:vertical}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}
+button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}
+.big{font-size:clamp(24px,4vw,34px);font-weight:950}.money{font-size:clamp(30px,6vw,48px);font-weight:1000}.small{font-size:13px;color:var(--muted);line-height:1.6}
+table{width:100%;border-collapse:collapse;min-width:760px}th,td{padding:8px;border-bottom:1px solid var(--line);vertical-align:middle}th{font-size:13px;color:var(--muted);text-align:left}
+.rank{font-weight:950}.checkgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(275px,1fr));gap:8px}.ck{width:auto;transform:scale(1.12);margin-right:7px}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · Taiwan · 環境部「照明亮久久」2026/09/09–10/31</div>
+<h1>LampLoop 1031<br>不是「全部燈都換掉」：先找出最耗電、用最久的那幾顆。</h1>
+<p class="lead">環境部今年把老舊照明汰換活動拉到 10/31。這個工具幫你用「瓦數 × 使用時數 × 數量」排出優先順序，再把換下來的燈管／燈泡妥善包裝送回收；不需要上傳電費單、地址或購買紀錄。</p>
+
+<section class="card">
+<h2>1｜這輪為什麼值得做？</h2>
+<div class="stats">
+<div class="stat">活動期間<b>9/9–10/31</b></div>
+<div class="stat">合作業者<b>12家</b></div>
+<div class="stat">實體參與<b>600+門市</b></div>
+<div class="stat">官方20顆範例<b>省約NT$2,000/年</b></div>
+</div>
+<div class="note info">環境部官方範例：以 16W LED 取代 23W 省電燈泡，每顆一年約可省 100 元電費、減少約 10 公斤碳排；3房2廳若 20 顆都更換，一年約省 2,000 元、減少 200 公斤碳排。這是官方示例，不代表你家每顆都一定省一樣多。</div>
+</section>
+
+<section class="card">
+<h2>2｜把家裡「最常開的燈」先輸入，工具幫你排優先順序</h2>
+<p class="small">年節電量公式只做基本物理估算： (舊瓦數 − 新瓦數) × 每日使用小時 × 365 × 數量 ÷ 1000。電價請自行填估算值；不填或填0就只看 kWh。</p>
+<div class="grid">
+<div><label>估算電價（NT$/kWh，可自行修改）</label><input id="price" type="number" min="0" step="0.1" value="3.0"></div>
+<div><label>你希望最多盤點幾組？</label><select id="rowsN" onchange="renderRows()"><option>3</option><option selected>5</option><option>8</option></select></div>
+</div>
+<div style="overflow:auto;margin-top:12px">
+<table>
+<thead><tr><th>空間／用途</th><th>舊燈 W</th><th>預計 LED W</th><th>數量</th><th>每天小時</th><th>年省電</th></tr></thead>
+<tbody id="lampRows"></tbody>
+</table>
+</div>
+<div class="actions"><button onclick="calculate(true)">重新計算＋排序</button><button class="ghost" onclick="example()">套用官方23W→16W範例</button><button class="ghost" onclick="clearAll()">清空</button></div>
+<div id="calcOut"></div>
+</section>
+
+<section class="card">
+<h2>3｜不要只算錢：換下來的舊燈要「完整帶去回收」</h2>
+<div class="checkgrid">
+<label><input class="ck recycle" type="checkbox"> 舊燈先用新品紙套／原包裝或家中紙箱包好，避免碰撞破損</label>
+<label><input class="ck recycle" type="checkbox"> 不混入一般垃圾</label>
+<label><input class="ck recycle" type="checkbox"> 交給販賣照明光源的通路，或資源回收車</label>
+<label><input class="ck recycle" type="checkbox"> 有破損或特殊狀況先問資源回收專線 0800-085-717</label>
+</div>
+<div id="recycleOut"></div>
+<div class="note warn">環境部提醒，汰換下來的照明光源應妥善包裝再回收，重點是避免破損並保護第一線回收人員。廢照明光源經處理後可回收玻璃、鐵、鋁、塑膠等材料；螢光粉中的汞則有專門處理程序。</div>
+</section>
+
+<section class="card">
+<h2>4｜活動不是只有買燈：先看官方優惠，再決定去哪裡處理</h2>
+<div class="note ok">今年合作包含 4 家連鎖販售通路、5 家照明品牌、3 家網路電商；各家優惠形式不同，有折扣、抽獎、回收折價或滿額回饋。不要把任何單一店家的優惠當成全活動規則。</div>
+<div class="actions">
+<a class="btn" target="_blank" rel="noopener" href="https://recycle2.moenv.gov.tw/people/lightreca.html" onclick="track('official-campaign')">環境部活動詳情／合作優惠</a>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://recycle.moenv.gov.tw/Project/LightingSource" onclick="track('recycle-info')">廢照明光源官方回收資訊</a>
+<a class="btn ghost" href="tel:0800085717">資源回收專線 0800-085-717</a>
+</div>
+</section>
+
+<section class="card">
+<h2>5｜一鍵產生「這週先換哪幾顆」行動卡</h2>
+<textarea id="card"></textarea>
+<div class="actions"><button onclick="buildCard(true)">更新行動卡</button><button class="ghost" onclick="copyText('card')">複製給家人</button><button class="ghost" onclick="downloadReminder()">下載 10/31 前完成提醒</button></div>
+</section>
+
+<section class="card">
+<h2>6｜這個工具刻意不做</h2>
+<div class="note">
+<ul>
+<li>不要求你把還正常、低使用頻率的燈全部立刻報廢；它只幫你找「最值得優先換」的組別。</li>
+<li>不收電號、完整電費單、地址、購買品牌或定位。</li>
+<li>不假裝知道你家實際電價；成本試算用的是你自行輸入的 NT$/kWh。</li>
+<li>不把活動優惠寫死在工具裡；優惠可能依通路更新，最終回官方活動頁確認。</li>
+</ul>
+</div>
+</section>
+
+<section class="card">
+<h2>7｜真實使用驗證</h2>
+<p>這輪真正追：<strong>盤點 → 找出優先汰換 → 真的換成 LED → 舊燈完整包裝 → 真的交回收。</strong>公開回饋不用貼住址、購物紀錄或電費單。</p>
+<div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/69">LampLoop 1031 回饋區 #69</a></div>
+</section>
+
+<section class="card">
+<h2>8｜可直接轉貼給家庭／宿舍／社區群</h2>
+<textarea id="promo">【家裡還有省電燈泡／老舊燈管？9/9–10/31 正好一起換新＋回收】
+環境部「照明亮久久」今年已開跑到10/31：
+・12家合作業者
+・超過600家實體門市
+・另有網路電商參與
+・各家有折扣、抽獎、回收折價或滿額回饋
+
+不用一次全部換，先找「最耗電＋每天開最久」的幾顆。
+
+環境部官方範例：
+23W省電燈泡 → 16W LED
+每顆一年約省100元電費、約10公斤碳排；
+20顆約省2,000元／年。
+
+換下來的燈：
+1. 用新品包裝／紙箱包好，避免破損
+2. 不要丟一般垃圾
+3. 交販賣通路或資源回收車
+
+LampLoop 1031：
+https://allen3429.github.io/Allentrial20260812.github.io/public-good/lamploop-1031/
+
+官方活動：
+https://recycle2.moenv.gov.tw/people/lightreca.html</textarea>
+<div class="actions"><button class="ghost" onclick="copyText('promo')">複製轉貼文</button></div>
+</section>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+const STORE='lamploop1031:v1';
+
+function renderRows(){
+ const n=Number($('rowsN').value)||5, body=$('lampRows');
+ const old=readRows();body.innerHTML='';
+ for(let i=0;i<n;i++){
+  const v=old[i]||{name:'',oldW:'',newW:'',count:1,hours:''};
+  const tr=document.createElement('tr');
+  tr.innerHTML=`<td><input class="nm" placeholder="客廳／書桌…" value="${esc(v.name||'')}"></td>
+  <td><input class="ow" type="number" min="0" step="1" value="${v.oldW??''}"></td>
+  <td><input class="nw" type="number" min="0" step="1" value="${v.newW??''}"></td>
+  <td><input class="ct" type="number" min="1" step="1" value="${v.count||1}"></td>
+  <td><input class="hr" type="number" min="0" max="24" step="0.5" value="${v.hours??''}"></td>
+  <td class="save">—</td>`;
+  body.appendChild(tr);
+ }
+ document.querySelectorAll('#lampRows input').forEach(x=>x.addEventListener('input',()=>calculate(false)));
+ calculate(false);
+}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function readRows(){
+ return [...document.querySelectorAll('#lampRows tr')].map(tr=>({
+  name:tr.querySelector('.nm').value.trim(),
+  oldW:Number(tr.querySelector('.ow').value)||0,
+  newW:Number(tr.querySelector('.nw').value)||0,
+  count:Math.max(1,Number(tr.querySelector('.ct').value)||1),
+  hours:Math.max(0,Number(tr.querySelector('.hr').value)||0),
+  el:tr
+ }));
+}
+function calculate(countCore){
+ const price=Math.max(0,Number($('price').value)||0), rows=readRows();
+ rows.forEach(r=>{
+  r.kwh=Math.max(0,r.oldW-r.newW)*r.hours*365*r.count/1000;
+  r.money=r.kwh*price;
+  r.el.querySelector('.save').textContent=r.kwh?`${r.kwh.toFixed(1)} kWh${price?` / 約NT$${Math.round(r.money).toLocaleString()}`:''}`:'—';
+ });
+ const useful=rows.filter(r=>r.name&&r.kwh>0).sort((a,b)=>b.kwh-a.kwh);
+ const total=useful.reduce((s,r)=>s+r.kwh,0), money=total*price;
+ const list=useful.slice(0,3).map((r,i)=>`${i+1}. ${r.name}：${r.kwh.toFixed(1)} kWh/年${price?`（約NT$${Math.round(r.money).toLocaleString()}）`:''}`).join('<br>');
+ $('calcOut').innerHTML=`<div class="note ${useful.length?'ok':'warn'}">${useful.length?`<div class="money">合計約省 ${total.toFixed(1)} kWh／年</div>${price?`約 NT$${Math.round(money).toLocaleString()}／年（依你輸入的電價）<br>`:''}<br><b>優先順序：</b><br>${list}`:'先輸入至少一組「空間、舊瓦數、新瓦數、每日使用時數」。'}</div>`;
+ localStorage.setItem(STORE,JSON.stringify({price,rows:rows.map(r=>({name:r.name,oldW:r.oldW,newW:r.newW,count:r.count,hours:r.hours}))}));
+ if(countCore&&window.PGLabImpact)PGLabImpact.core('savings-calc');
+ buildCard(false);
+ return {useful,total,money,price};
+}
+function example(){
+ $('price').value='3.0';$('rowsN').value='3';renderRows();
+ const r=[...document.querySelectorAll('#lampRows tr')];
+ const ex=[['客廳主燈',23,16,4,5],['書桌燈',23,16,2,4],['走道／玄關',23,16,2,2]];
+ ex.forEach((v,i)=>{r[i].querySelector('.nm').value=v[0];r[i].querySelector('.ow').value=v[1];r[i].querySelector('.nw').value=v[2];r[i].querySelector('.ct').value=v[3];r[i].querySelector('.hr').value=v[4];});
+ calculate(true);
+}
+function clearAll(){localStorage.removeItem(STORE);$('price').value='3.0';$('rowsN').value='5';renderRows()}
+function recycleState(){
+ const a=[...document.querySelectorAll('.recycle')],n=a.filter(x=>x.checked).length;
+ $('recycleOut').innerHTML=`<div class="note ${n===4?'ok':'warn'}">回收準備 ${n}/4。${n===4?'不是只有「換新」，舊燈也有完整去向。':'最重要的兩件事：完整包好、不要混一般垃圾。'}</div>`;
+ return n;
+}
+function buildCard(countCore){
+ const c=calculateNoLoop(),n=recycleState();
+ const top=c.useful.slice(0,3).map((r,i)=>`${i+1}. ${r.name} — 年省約 ${r.kwh.toFixed(1)} kWh${c.price?`／NT$${Math.round(r.money).toLocaleString()}`:''}`).join('\n');
+ $('card').value=`【LampLoop 1031｜這週換燈＋回收行動卡】
+活動：2026/09/09–10/31
+估算年節電：${c.total.toFixed(1)} kWh${c.price?`／約NT$${Math.round(c.money).toLocaleString()}`:''}
+
+優先汰換：
+${top||'尚未輸入完整燈具資料'}
+
+舊燈回收準備：${n}/4
+1. 新品紙套／原包裝或紙箱完整包好，避免碰撞破損。
+2. 不混一般垃圾。
+3. 交販賣照明光源的通路或資源回收車。
+4. 破損或特殊狀況：0800-085-717。
+
+官方活動（各家優惠不同，以這裡為準）：
+https://recycle2.moenv.gov.tw/people/lightreca.html
+
+本卡不保存住址、電號或購物紀錄。`;
+ if(countCore&&window.PGLabImpact)PGLabImpact.core('action-card');
+}
+function calculateNoLoop(){
+ const price=Math.max(0,Number($('price').value)||0),rows=readRows();
+ rows.forEach(r=>{r.kwh=Math.max(0,r.oldW-r.newW)*r.hours*365*r.count/1000;r.money=r.kwh*price});
+ const useful=rows.filter(r=>r.name&&r.kwh>0).sort((a,b)=>b.kwh-a.kwh);
+ const total=useful.reduce((s,r)=>s+r.kwh,0);return {useful,total,money:total*price,price};
+}
+function downloadReminder(){
+ const ics=`BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//LampLoop1031//TW\r\nBEGIN:VEVENT\r\nDTSTART;TZID=Asia/Taipei:20261024T100000\r\nDTEND;TZID=Asia/Taipei:20261024T103000\r\nSUMMARY:10/31前完成舊燈換LED＋回收\r\nDESCRIPTION:環境部照明亮久久活動到10/31。把優先燈具換新，舊燈完整包裝後交販售通路或資源回收車。活動：https://recycle2.moenv.gov.tw/people/lightreca.html\r\nEND:VEVENT\r\nEND:VCALENDAR`;
+ const blob=new Blob([ics],{type:'text/calendar;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='lamploop-before-1031.ics';a.click();URL.revokeObjectURL(a.href);
+ if(window.PGLabImpact)PGLabImpact.core('1031-reminder');
+}
+function track(label){if(window.PGLabImpact)PGLabImpact.core(label)}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+
+$('price').addEventListener('input',()=>calculate(false));
+document.querySelectorAll('.recycle').forEach(x=>x.addEventListener('change',()=>buildCard(false)));
+try{
+ const s=JSON.parse(localStorage.getItem(STORE)||'null');
+ if(s){$('price').value=s.price??3;$('rowsN').value=String(Math.max(3,Math.min(8,s.rows?.length||5)));}
+ renderRows();
+ if(s?.rows){
+  const trs=[...document.querySelectorAll('#lampRows tr')];
+  s.rows.slice(0,trs.length).forEach((v,i)=>{trs[i].querySelector('.nm').value=v.name||'';trs[i].querySelector('.ow').value=v.oldW||'';trs[i].querySelector('.nw').value=v.newW||'';trs[i].querySelector('.ct').value=v.count||1;trs[i].querySelector('.hr').value=v.hours||'';});
+  calculate(false);
+ }
+}catch(e){renderRows()}
+recycleState();buildCard(false);
+</script>
+<script src="../impact.js" data-project="lamploop-1031" data-action-text="我已完成照明節電盤點／優先排序" data-real-text="我已真的換成LED／把舊燈妥善包裝並交回收" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/69"></script>
+</body></html>
