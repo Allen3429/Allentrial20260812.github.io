@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="rideready-4">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="RideReady 4：2026交通安全月，把機車輪胎、燈光、煞車、潤滑油4項官方健檢變成60秒出門前自查，異常或不確定就導向官方免費健檢站。">
+<title>RideReady 4｜機車60秒車況快篩</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#a32323;--info:#285c8d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1100px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}
+h1{font-size:clamp(38px,7vw,64px);line-height:1.03;margin:.12em 0 .25em}.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:980px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:12px 14px;border-radius:9px;line-height:1.7;margin:10px 0}
+.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}.info{border-left-color:var(--info)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:9px}.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:23px;margin-top:4px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}
+.item{border:1px solid var(--line);border-radius:15px;padding:14px}label{display:block;font-weight:850;margin-bottom:7px}select,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}
+textarea{min-height:230px;resize:vertical}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}
+button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}
+.ghost{background:#edf1f5;color:#17212b}.big{font-size:clamp(24px,4vw,34px);font-weight:950}.small{font-size:13px;color:var(--muted);line-height:1.65}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · 2026交通安全月 · 依交通部官方4項健檢整理</div>
+<h1>RideReady 4<br>「還能騎」不代表「不用檢查」。</h1>
+<p class="lead">交通安全月官方機車健檢就是4項：<strong>輪胎（含胎紋）、燈光、煞車、潤滑油</strong>。截至 2026/9/11 官方頁面顯示，已有 226,747 台完成健檢，其中 151,910 台在健檢後進行維修，約 67%。這個工具只做60秒「該不該去檢查」分流，不自行診斷故障。</p>
+
+<section class="card">
+<h2>1｜需求訊號：健檢後真的有很多車需要處理</h2>
+<div class="stats">
+<div class="stat">已健檢<b>226,747台</b></div>
+<div class="stat">健檢後維修<b>151,910台</b></div>
+<div class="stat">約需維修<b>67.0%</b></div>
+<div class="stat">參與門市<b>7,391家</b></div>
+</div>
+<div class="note info">以上是交通安全月官方健檢站頁面本輪查核的即時統計快照；官方註明數據每週五更新。真正的價值不是自己猜故障，而是把「沒把握」變成去免費健檢站確認。</div>
+</section>
+
+<section class="card">
+<h2>2｜60秒自查：4項任一「異常／不知道」就去健檢</h2>
+<div class="grid">
+<div class="item">
+<label>① 輪胎／胎紋</label>
+<select id="tire"><option value="ok">看起來正常，沒有明顯龜裂／異物／過度磨耗</option><option value="bad">有龜裂、異物、磨耗到指示點或明顯異常</option><option value="unknown">不知道怎麼看／沒檢查</option></select>
+</div>
+<div class="item">
+<label>② 燈光</label>
+<select id="light"><option value="ok">頭燈、方向燈、尾燈／煞車燈都確認正常</option><option value="bad">有燈不亮、閃爍異常或明顯損壞</option><option value="unknown">沒有實際逐項確認</option></select>
+</div>
+<div class="item">
+<label>③ 煞車</label>
+<select id="brake"><option value="ok">煞車操作感正常，沒有明顯異音／異常行程</option><option value="bad">煞車手感、制動、異音或行程有明顯異常</option><option value="unknown">不確定什麼叫正常</option></select>
+</div>
+<div class="item">
+<label>④ 潤滑油／保養狀態</label>
+<select id="oil"><option value="ok">保養週期清楚，近期沒有異常警示／漏油</option><option value="bad">逾期、漏油、警示或其他明顯異常</option><option value="unknown">不知道上次何時保養／不確定</option></select>
+</div>
+</div>
+<div id="result"></div>
+<div class="actions">
+<a class="btn" target="_blank" rel="noopener" href="https://roadsafetymonth115.thb.gov.tw/health-stations" onclick="track('station-finder')">查官方免費健檢站</a>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://roadsafetymonth115.thb.gov.tw/">2026交通安全月官網</a>
+</div>
+</section>
+
+<section class="card">
+<h2>3｜這個快篩故意「寧可多去一次」</h2>
+<div class="note warn"><b>「不知道」直接視為需要檢查。</b>因為這不是考試，不需要先學會當技師。真正的問題是：騎士常用「我昨天還能騎」取代車況確認。官方今年已經把超過7,000家門市整理成免費健檢站，讓專業人員做下一步。</div>
+<div class="note bad"><b>若煞車、輪胎、燈光已有明顯異常，不要為了到健檢站而勉強騎車。</b>應先以安全方式安排檢修或運送；本頁不提供「能不能撐著騎」判斷。</div>
+</section>
+
+<section class="card">
+<h2>4｜30秒出門前口訣</h2>
+<div class="grid">
+<div class="item"><div class="big">胎</div>看胎壓感受、胎紋、龜裂、異物與明顯變形。</div>
+<div class="item"><div class="big">燈</div>頭燈、方向燈、尾燈與煞車燈至少實際亮一次。</div>
+<div class="item"><div class="big">煞</div>起步前確認前後煞車操作感，異常就不要硬騎。</div>
+<div class="item"><div class="big">油</div>知道保養週期；有漏油、警示或逾期就交車行確認。</div>
+</div>
+</section>
+
+<section class="card">
+<h2>5｜一鍵產生「去車行前」確認卡</h2>
+<textarea id="card"></textarea>
+<div class="actions">
+<button onclick="build(true)">更新確認卡</button>
+<button class="ghost" onclick="copyText('card')">複製</button>
+</div>
+</section>
+
+<section class="card">
+<h2>6｜這個工具刻意不做</h2>
+<div class="note">
+<ul>
+<li>不判斷你的車「可以安全騎幾公里」，也不取代技師檢查。</li>
+<li>不要求上傳車牌、行照、照片、事故紀錄或維修單。</li>
+<li>不把「免費健檢」解讀成所有維修都免費；是否需維修、費用多少由現場確認。</li>
+<li>不把四項自查變成「四項都勾正常＝絕對安全」；它只是發現明顯缺口的入口。</li>
+</ul>
+</div>
+</section>
+
+<section class="card">
+<h2>7｜真實使用驗證</h2>
+<p>這輪真正追：<strong>完成4項快篩 → 點官方健檢站 → 真正到店檢查 → 有問題就維修。</strong>公開回饋不要貼車牌、電話、地址或維修單。</p>
+<div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/67">RideReady 4 回饋區 #67</a></div>
+</section>
+
+<section class="card">
+<h2>8｜可直接轉給學生／通勤機車群</h2>
+<textarea id="promo">【9月交通安全月｜你的機車真的有檢查過嗎？】
+交通安全月官方現在推「全民機車安全健檢」。
+
+截至9/11官方頁面：
+・226,747台已完成健檢
+・151,910台健檢後有進行維修
+・約67%
+・全台7,391家參與門市
+
+官方4項就是：
+1. 輪胎（含胎紋）
+2. 燈光
+3. 煞車
+4. 潤滑油
+
+任何一項「異常」或「不知道怎麼看」，不要用「還能騎」當答案，直接找官方免費健檢站：
+https://roadsafetymonth115.thb.gov.tw/health-stations
+
+RideReady 4：
+https://allen3429.github.io/Allentrial20260812.github.io/public-good/rideready-4/
+
+提醒：免費健檢不等於後續所有維修免費；明顯煞車／輪胎異常時，也不要為了去車行勉強騎過去。</textarea>
+<div class="actions"><button class="ghost" onclick="copyText('promo')">複製轉貼文</button></div>
+</section>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+const ids=['tire','light','brake','oil'];
+const names={tire:'輪胎／胎紋',light:'燈光',brake:'煞車',oil:'潤滑油／保養狀態'};
+
+function check(){
+ const vals=ids.map(id=>[id,$(id).value]);
+ const bad=vals.filter(x=>x[1]==='bad').map(x=>names[x[0]]);
+ const unknown=vals.filter(x=>x[1]==='unknown').map(x=>names[x[0]]);
+ let cls='ok',title='🟢 這次自查沒有抓到明顯缺口',msg='仍建議趁交通安全月使用官方免費健檢，尤其如果很久沒有專業檢查。';
+ if(bad.length){
+  cls='bad';title='🔴 先不要把「還能騎」當作安全證明';
+  msg='你勾選明顯異常：'+bad.join('、')+'。若涉及煞車、輪胎等安全關鍵，不要勉強騎去車行；用安全方式安排檢修。';
+ }else if(unknown.length){
+  cls='warn';title='🟡 有「不知道」＝值得直接去免費健檢';
+  msg='你沒有把握：'+unknown.join('、')+'。不需要先自己學會判斷，直接讓健檢站確認。';
+ }
+ $('result').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;
+ return {bad,unknown,title};
+}
+
+function build(countCore){
+ const r=check();
+ $('card').value=`【RideReady 4｜機車60秒車況確認卡】
+目前判讀：${r.title}
+明顯異常：${r.bad.length?r.bad.join('、'):'無'}
+不確定：${r.unknown.length?r.unknown.join('、'):'無'}
+
+官方4項健檢：
+1. 輪胎（含胎紋）
+2. 燈光
+3. 煞車
+4. 潤滑油
+
+下一步：
+・有任何異常／不知道 → 直接找官方免費健檢站。
+・若煞車、輪胎已有明顯異常，不要為了到車行而勉強騎乘。
+・免費健檢不代表後續所有維修免費，現場先確認。
+
+官方健檢站：
+https://roadsafetymonth115.thb.gov.tw/health-stations
+
+本工具不保存車牌、行照、事故或維修資料。`;
+ if(countCore&&window.PGLabImpact)PGLabImpact.core('4-item-check');
+}
+function track(label){if(window.PGLabImpact)PGLabImpact.core(label)}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+ids.forEach(id=>$(id).addEventListener('change',()=>build(false)));
+build(false);
+</script>
+<script src="../impact.js" data-project="rideready-4" data-action-text="我已完成機車4項快篩" data-real-text="我已真的到店健檢／完成維修" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/67"></script>
+</body></html>
