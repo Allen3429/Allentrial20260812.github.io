@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="soapfirst-ev">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="SoapFirst EV：開學季腸病毒上升，把『酒精不夠、肥皂洗手、500ppm重點清消』變成家長與教托育現場可執行的防漏卡。">
+<title>SoapFirst EV｜腸病毒防漏卡</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#a32323;--info:#285c8d}
+*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1100px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}
+h1{font-size:clamp(38px,7vw,64px);line-height:1.03;margin:.12em 0 .25em}.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:980px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:12px 14px;border-radius:9px;line-height:1.7;margin:10px 0}.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}.info{border-left-color:var(--info)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(225px,1fr));gap:10px}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:9px}
+.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:23px;margin-top:4px}
+label{display:block;font-weight:760;margin-bottom:5px}select,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}textarea{min-height:245px;resize:vertical}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}
+.big{font-size:clamp(24px,4vw,34px);font-weight:950}.small{font-size:13px;color:var(--muted);line-height:1.65}
+.checkgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(275px,1fr));gap:8px}.ck{width:auto;transform:scale(1.12);margin-right:7px}
+.progress{height:16px;background:#edf1f5;border-radius:999px;overflow:hidden}.progress>div{height:100%;background:#17212b;width:0;transition:width .2s}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · Taiwan · 依疾管署 2026/09/08 最新疫情與防治指引整理</div>
+<h1>SoapFirst EV<br>腸病毒上升時，別把「有噴酒精」當成已經做好手部防護。</h1>
+<p class="lead">疾管署 9/8 明確提醒：腸病毒傳染力強，酒精對腸病毒的毒殺效果有限；最基本仍是以肥皂／洗手乳正確洗手。這個工具把「什麼時候一定要洗手、哪些表面要做重點清消、什麼症狀不要拖」做成家長與教托育現場可直接使用的卡片。</p>
+<section class="card"><h2>1｜現在為什麼值得特別處理？</h2><div class="stats"><div class="stat">8/30–9/5 門急診<b>8,475</b></div><div class="stat">較前週<b>+17.7%</b></div><div class="stat">今年重症確診<b>7例</b></div><div class="stat">其中死亡<b>1例</b></div></div><div class="note warn">疾管署指出目前國內腸病毒疫情呈上升趨勢，且開學後校園、幼兒園與托育場域互動密集，容易傳播。社區近四週以克沙奇A6型為多，其次為腸病毒D68型及克沙奇A16型。</div></section>
+<section class="card"><h2>2｜先抓最大的行為誤區：你現在主要靠什麼清潔手？</h2><div class="grid"><div><label>孩子／照顧者在關鍵時點最常用：</label><select id="hand"><option value="soap">肥皂／洗手乳＋清水</option><option value="alcohol">酒精／乾洗手為主</option><option value="mixed">有洗手，但常用酒精取代</option><option value="unknown">沒有固定習慣</option></select></div></div><div id="handOut"></div></section>
+<section class="card"><h2>3｜今天先做到這5個「一定要洗」時點</h2><div class="checkgrid"><label><input class="ck moment" type="checkbox"> 吃東西前</label><label><input class="ck moment" type="checkbox"> 跟小寶寶玩／照顧嬰幼兒前</label><label><input class="ck moment" type="checkbox"> 擤鼻涕後</label><label><input class="ck moment" type="checkbox"> 上廁所／換尿布後</label><label><input class="ck moment" type="checkbox"> 看病前後</label></div><div class="progress"><div id="momentBar"></div></div><div id="momentOut"></div></section>
+<section class="card"><h2>4｜環境不是「全場噴藥」，而是抓常摸表面做重點清消</h2><div class="note info">疾管署建議一般環境可使用 <strong>500 ppm 含氯漂白水</strong>，優先處理幼兒常接觸的門把、課桌椅、餐桌、樓梯扶把、玩具、遊樂設施、嬰兒床柵欄等。</div><div class="note ok"><div class="big">固定官方配方</div>若使用一般家庭含氯漂白水（約5–6%）：<strong>100 mL 漂白水 + 10 公升清水 ≈ 500 ppm</strong>。調配與使用時穿戴防水手套、口罩、圍裙並保持通風。</div><div class="note bad"><b>不要把漂白水和其他清潔劑混在一起。</b>含氯漂白水與酸性等清潔劑混合可能產生有毒氣體；不要為了「更強」自行混配。</div></section>
+<section class="card"><h2>5｜今天的重點清消：只做最常摸的5處</h2><div class="checkgrid"><label><input class="ck clean" type="checkbox"> 門把／電燈開關</label><label><input class="ck clean" type="checkbox"> 桌椅／餐桌</label><label><input class="ck clean" type="checkbox"> 水龍頭／廁所常摸處</label><label><input class="ck clean" type="checkbox"> 玩具／遊樂設施</label><label><input class="ck clean" type="checkbox"> 嬰兒床柵欄／推車等照護用品</label></div><div id="cleanOut"></div></section>
+<section class="card"><h2>6｜5歲以下幼兒若已感染，這些重症前兆不要在家等</h2><div class="note bad">嗜睡、意識不清、活力不佳、手腳無力或麻痺、肌抽躍（無故驚嚇或突然全身肌肉收縮）、持續嘔吐、呼吸急促或心跳加快。疾管署提醒重症病程可能快速發展，出現上述任一情況應儘速送大醫院。</div><div class="actions"><a class="btn" href="tel:1922">防疫專線 1922</a><a class="btn ghost" target="_blank" rel="noopener" href="https://www.cdc.gov.tw/Category/Page/FgfRlDl6XxDkuqaOghuNfQ">疾管署腸病毒官方頁</a></div></section>
+<section class="card"><h2>7｜一鍵產生「家長／班級今天就做」卡</h2><textarea id="card"></textarea><div class="actions"><button onclick="build(true)">更新卡片</button><button class="ghost" onclick="copyText('card')">複製到家長群／班群</button></div></section>
+<section class="card"><h2>8｜這個工具刻意不做</h2><div class="note"><ul><li>不診斷是不是腸病毒，也不替醫師判斷病情。</li><li>不收孩子姓名、學校、症狀、病歷、班級或健康資料。</li><li>不提供任意濃度的漂白水計算器；只顯示疾管署公開的固定一般環境配方，避免自行誤算。</li><li>不把「大規模噴藥」當成重點；官方指引強調常接觸物體表面的重點清消。</li></ul></div></section>
+<section class="card"><h2>9｜真實使用驗證</h2><p>這輪真正追：<strong>原本主要靠酒精 → 改成關鍵時點肥皂洗手 → 今天真的完成5處重點清消 → 家長／教托育人員知道重症前兆。</strong>公開回饋不要貼孩子健康資料。</p><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/66">SoapFirst EV 回饋區</a></div></section>
+<section class="card"><h2>10｜可直接轉貼</h2><textarea id="promo">【開學後腸病毒上升｜最容易犯的錯：以為酒精乾洗手就夠】
+疾管署9/8公布：
+・8/30–9/5腸病毒門急診 8,475 人次
+・比前一週增加 17.7%
+・今年已累計7例重症、1例死亡
+
+先記一件事：
+酒精對腸病毒的毒殺效果有限。
+關鍵時點仍要用肥皂／洗手乳＋清水洗手。
+
+5個一定要洗的時點：
+・吃東西前
+・跟小寶寶玩前
+・擤鼻涕後
+・上廁所／換尿布後
+・看病前後
+
+一般環境重點清消：
+家庭含氯漂白水約5–6%時，100mL漂白水＋10L清水 ≈ 500ppm。
+穿手套、口罩、圍裙，保持通風，不要把漂白水和其他清潔劑混用。
+
+SoapFirst EV：
+https://allen3429.github.io/Allentrial20260812.github.io/public-good/soapfirst-ev/
+
+防疫專線：1922</textarea><div class="actions"><button class="ghost" onclick="copyText('promo')">複製轉貼文</button></div></section>
+</main>
+<script>
+const $=id=>document.getElementById(id), checks=sel=>[...document.querySelectorAll(sel)];
+function handCheck(){const h=$('hand').value;let cls='ok',title='🟢 關鍵時點有用肥皂／洗手乳＋清水',msg='持續把這個做法固定在吃東西前、照顧嬰幼兒前、擤鼻涕後、上廁所／換尿布後與看病前後。';if(h==='alcohol'){cls='bad';title='🔴 不要把酒精乾洗手當腸病毒主力';msg='疾管署9/8明確提醒：酒精對腸病毒的毒殺效果有限。能洗手時，請回到肥皂／洗手乳＋清水。';}else if(h==='mixed'){cls='warn';title='🟡 有洗手，但「常用酒精取代」仍是缺口';msg='把酒精從「替代洗手」改成「其他情境的輔助」，腸病毒關鍵時點優先肥皂洗手。';}else if(h==='unknown'){cls='warn';title='🟡 沒有固定習慣，比知道規則更容易漏';msg='先不要追求完美：今天只固定5個關鍵時點，每次都用肥皂／洗手乳＋清水。';}$('handOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;return title;}
+function progress(){const m=checks('.moment'),mn=m.filter(x=>x.checked).length;$('momentBar').style.width=`${mn/m.length*100}%`;$('momentOut').innerHTML=`<div class="note ${mn===m.length?'ok':'warn'}">今天關鍵洗手時點 ${mn}/${m.length}。${mn===m.length?'已把「知道要洗」轉成可執行清單。':'不用整天記規則，先把這5個時點做滿。'}</div>`;const c=checks('.clean'),cn=c.filter(x=>x.checked).length;$('cleanOut').innerHTML=`<div class="note ${cn>=4?'ok':'warn'}">今日重點清消 ${cn}/${c.length}。${cn>=4?'已完成大部分高接觸表面。':'不用全場噴藥，先把常摸的表面擦到位。'}</div>`;return {mn,cn};}
+function build(countCore){const h=handCheck(),p=progress();$('card').value=`【SoapFirst EV｜今天的腸病毒防漏卡】
+目前手部衛生判讀：${h}
+關鍵洗手：${p.mn}/5
+重點清消：${p.cn}/5
+
+今天只做4件事：
+1. 吃東西前、跟小寶寶玩前、擤鼻涕後、上廁所／換尿布後、看病前後：用肥皂／洗手乳＋清水洗手。
+2. 不把酒精乾洗手當腸病毒的主要替代方案；疾管署提醒酒精對腸病毒毒殺效果有限。
+3. 門把、桌椅、水龍頭、玩具、嬰兒床柵欄等常摸表面做重點清消。一般環境可用500ppm含氯漂白水；家庭漂白水約5–6%時，100mL＋10L清水。
+4. 漂白水要戴防水手套、口罩、圍裙並通風；不要和其他清潔劑混用。
+
+5歲以下感染後若出現：
+嗜睡／意識不清／活力差、手腳無力或麻痺、肌抽躍、持續嘔吐、呼吸急促或心跳加快 → 儘速送大醫院。
+
+防疫專線：1922
+疾管署：https://www.cdc.gov.tw/Category/Page/FgfRlDl6XxDkuqaOghuNfQ
+
+本卡不診斷、不保存孩子健康資料。`;if(countCore&&window.PGLabImpact)PGLabImpact.core('daily-prevention-card');}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+$('hand').addEventListener('change',()=>build(false));document.querySelectorAll('.moment,.clean').forEach(x=>x.addEventListener('change',()=>build(false)));build(false);
+</script>
+<script src="../impact.js" data-project="soapfirst-ev" data-action-text="我已完成腸病毒防漏快篩／今日清單" data-real-text="我已真的改用肥皂洗手／完成重點清消／轉貼家長群" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/66"></script>
+</body></html>
