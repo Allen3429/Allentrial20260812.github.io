@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="oilback-930">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="OilBack 930：泰山疑慮油品9/30退款防漏。分清受影響批號與4–6月擴大退款範圍，沒有發票但仍有產品者也有官方公告的退款路徑。">
+<title>OilBack 930｜泰山疑慮油品退款防漏</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#a32323;--info:#285c8d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1120px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}
+h1{font-size:clamp(38px,7vw,64px);line-height:1.03;margin:.12em 0 .25em}.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:1000px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:12px 14px;border-radius:9px;line-height:1.7;margin:10px 0}.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}.info{border-left-color:var(--info)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:10px}label{display:block;font-weight:800;margin-bottom:6px}select,input,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}textarea{min-height:250px;resize:vertical}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}
+.big{font-size:clamp(24px,4vw,34px);font-weight:950}.countdown{font-size:clamp(34px,7vw,58px);font-weight:1000}.small{font-size:13px;color:var(--muted);line-height:1.65}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:9px}.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:22px;margin-top:4px}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · 中聯油脂事件消費者退款 · 2026/09/12</div>
+<h1>OilBack 930<br>「受污染批號」和「可退款範圍」<br>不是同一件事。</h1>
+<p class="lead">泰山最新退款公告仍受理到 <strong>2026/9/30</strong>。真正容易搞混的是兩層範圍：第一層是食藥署／業者列出的<strong>受影響批號</strong>；第二層是泰山為降低消費者疑慮，額外接受 <strong>2026 年 4–6 月購買、屬匡列疑慮品項</strong>的退款。甚至沒有發票、但還留著實際購買產品的人，也有「由公司安排到府親收」的公告路徑。</p>
+<section class="card"><h2>1｜先分清「安全」和「退款」</h2><div class="stats"><div class="stat">退款受理到<b>9/30</b></div><div class="stat">有憑證<b>可寄回辦理</b></div><div class="stat">沒發票但有產品<b>可洽到府收取</b></div><div class="stat">原購買通路<b>通常最快</b></div></div><div class="note bad"><b>受影響批號：</b>若瓶身印製號碼命中官方受影響清單，停止使用並辦理退貨退款。</div><div class="note info"><b>不在受影響批號：</b>不能因此說「所有泰山油都受污染」。泰山／行政院消保會公告明確區分受影響批號；但對 4–6 月購買的匡列疑慮品項，泰山仍擴大接受退款。</div></section>
+<section class="card"><h2>2｜30秒退款路徑前篩</h2><div class="grid"><div><label>這是泰山公告「退貨商品更新通知」列出的疑慮品項嗎？</label><select id="listed"><option value="yes">是</option><option value="unknown">不確定，要查官方表</option><option value="no">不是</option></select></div><div><label>大約是 2026 年 4–6 月購買嗎？</label><select id="period"><option value="yes">是</option><option value="unknown">不確定</option><option value="no">不是</option></select></div><div><label>瓶身印製號碼是否命中官方受影響清單？</label><select id="batch"><option value="unknown">還沒查／看不懂</option><option value="yes">有命中</option><option value="no">確認沒有命中</option></select></div><div><label>還有購買證明／發票嗎？</label><select id="proof"><option value="yes">有（紙本、電子發票列印或其他購買紀錄）</option><option value="no">沒有</option></select></div><div><label>實際產品還在嗎？</label><select id="product"><option value="yes">還在（即使已使用一部分）</option><option value="no">已丟掉／沒有產品</option></select></div></div><div id="result"></div><div class="actions"><a class="btn" target="_blank" rel="noopener" href="https://www.taisun.com.tw/260711/" onclick="track('taisun-list')">泰山最新退貨／批號表</a><a class="btn ghost" target="_blank" rel="noopener" href="https://www.fda.gov.tw/TC/site13712.aspx" onclick="track('fda-hub')">食藥署 115年油脂案專區</a><a class="btn ghost" target="_blank" rel="noopener" href="https://www.fda.gov.tw/RelistedList/index.aspx" onclick="track('fda-relist')">食藥署可重新上架清單</a></div></section>
+<section class="card"><h2>3｜退款路徑怎麼走</h2><div id="route"></div><div class="note ok"><b>有發票／購買紀錄：</b>如果原通路有受理，官方建議先找原購買通路，通常最快。若原通路不受理或電商鑑賞期已過，泰山仍公告有憑證退款路徑。</div><div class="note ok"><b>沒有發票：</b>只要能提供在上述期間實際購買的產品，泰山公告將委由專人聯繫安排到府親收產品。不要因「發票早丟了」就直接放棄。</div><div class="actions"><a class="btn" href="tel:0800079080">泰山油品退款 0800-079080</a><a class="btn ghost" href="tel:1950">消費者服務 1950</a><a class="btn ghost" target="_blank" rel="noopener" href="https://cpc.ey.gov.tw/Page/A3DEC5A597EC43C7">行政院消保會退款資訊</a></div></section>
+<section class="card"><h2>4｜距 9/30 受理期限</h2><div id="countdown" class="countdown">—</div><div class="actions"><button onclick="downloadReminder()">加入 9/27 退款提醒</button></div></section>
+<section class="card"><h2>5｜一鍵產生「退款準備卡」</h2><textarea id="card"></textarea><div class="actions"><button onclick="buildCard(true)">更新退款卡</button><button class="ghost" onclick="copyText('card')">複製</button></div><div class="note info">卡片刻意不要求輸入住址、電話、發票號碼或銀行資料。真正需要聯絡／寄送時，直接走業者或官方消保管道。</div></section>
+<section class="card"><h2>6｜如果產品已經用掉一部分呢？</h2><div class="note info">泰山公告寫的是「問題產品有無使用」都可依購買憑證／發票辦理；所以不要因為瓶子已開封或用掉部分內容物就先認定完全不能處理。實際退款金額與受理方式仍由通路／泰山依個案確認。</div></section>
+<section class="card"><h2>7｜這個工具刻意不做</h2><div class="note"><ul><li>不收姓名、地址、電話、發票號碼、完整電子發票條碼、銀行資料。</li><li>不把「泰山擴大退款」誤寫成「全部產品都受污染」。</li><li>不靠自行輸入文字替你判定批號；安全狀態以食藥署與業者目前公告表為準。</li><li>不判定個人健康是否受害；若有健康疑慮，請就醫或洽地方衛生局／食藥署。</li></ul></div></section>
+<section class="card"><h2>8｜真實使用驗證</h2><p>這輪真正追：<strong>查清批號 → 分清安全與退款 → 找到正確路徑 → 9/30前真的退款／聯絡安排收取</strong>。</p><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/86">OilBack 930 回饋區 #86</a></div></section>
+<section class="card"><h2>9｜可直接轉給家人／社區群</h2><textarea id="share">【泰山疑慮油品退款到 9/30｜沒有發票也先別放棄】
+
+中聯油脂事件後，請先分清兩件事：
+1. 是否命中官方「受影響批號」
+2. 是否屬泰山 2026年4–6月購買的擴大退款疑慮品項
+
+泰山／行政院消保會目前公告：
+・有購買紀錄：先找原購買通路通常最快
+・其他通路／電商過鑑賞期，也有憑證退款路徑
+・問題產品即使已使用，也可依公告方式處理
+・沒有發票，但還有上述期間實際購買產品：可聯絡泰山安排到府親收
+・受理到 9/30
+・退款專線 0800-079080
+
+注意：擴大退款 ≠ 全部泰山油都受污染。受影響批號要以官方最新清單確認。
+
+OilBack 930：
+https://allen3429.github.io/Allentrial20260812.github.io/public-good/oilback-930/
+
+行政院消保會：
+https://cpc.ey.gov.tw/Page/A3DEC5A597EC43C7
+
+食藥署油脂案專區：
+https://www.fda.gov.tw/TC/site13712.aspx</textarea><div class="actions"><button class="ghost" onclick="copyText('share');track('share-copy')">複製轉貼文</button></div></section>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+function assess(){const listed=$('listed').value,period=$('period').value,batch=$('batch').value,proof=$('proof').value,product=$('product').value;let cls='info',title='先查官方產品／批號表',msg='';if(batch==='yes'){cls='bad';title='🔴 命中受影響批號：停止使用，優先辦理退貨退款';msg='先保存瓶身／包裝與購買資料；原購買通路有受理時通常最快。';}else if(listed==='yes'&&period==='yes'){cls='ok';title='🟢 即使未命中受影響批號，也可能在泰山擴大退款範圍';msg='泰山公告接受2026年4–6月購買、屬匡列疑慮品項的退款。這是「擴大退款」，不是在說所有這些產品都受污染。';}else if(listed==='no'){cls='info';title='🔵 目前不像這次泰山公告的典型退款品項';msg='若產品名稱／規格可能看錯，先用最新官方表確認；不要用品牌名稱單獨判定。';}else{cls='warn';title='🟡 有資訊還沒確認';msg='先打開泰山最新退貨／批號表；如果是4–6月購買但日期記不清，也可以直接打退款專線詢問。';}if(proof==='no'&&product==='yes'){msg+=' 你沒有發票但產品還在：泰山公告有「安排到府親收產品」路徑。';}else if(proof==='no'&&product==='no'){msg+=' 目前既沒有購買證明也沒有產品，公告未保證一定能退；請直接聯絡泰山確認，不要自行假設可退。';}$('result').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;return{listed,period,batch,proof,product,title,msg};}
+function buildRoute(){const r=assess(),routes=[];if(r.batch==='yes')routes.push('停止使用；保存產品／包裝資訊，先聯絡原購買通路或泰山。');if(r.proof==='yes')routes.push('有購買證明：原購買通路可先問；若通路不受理／電商鑑賞期已過，改走泰山憑證退款。');if(r.proof==='no'&&r.product==='yes')routes.push('沒有發票但產品還在：打 0800-079080，依公告安排專人到府親收。');if(r.proof==='no'&&r.product==='no')routes.push('沒有憑證也沒有產品：直接問泰山個案能否處理，不保證退款。');if(r.batch==='no'&&r.listed==='yes'&&r.period==='yes')routes.push('批號未受影響但屬4–6月擴大退款：如仍有疑慮，可在9/30前依公告退款；安全與退款要分開理解。');$('route').innerHTML=routes.map((x,i)=>`<div class="note ${i===0&&r.batch==='yes'?'bad':'info'}"><b>${i+1}.</b> ${x}</div>`).join('');return r;}
+function buildCard(countCore){const r=buildRoute();$('card').value=`【OilBack 930｜退款準備卡】
+受理期限：2026/09/30
+
+我目前的前篩：
+・是否為官方匡列疑慮品項：${r.listed==='yes'?'是':r.listed==='no'?'不是':'不確定'}
+・是否約在2026年4–6月購買：${r.period==='yes'?'是':r.period==='no'?'不是':'不確定'}
+・瓶身批號是否命中受影響清單：${r.batch==='yes'?'有命中':r.batch==='no'?'確認沒有命中':'尚未確認'}
+・購買證明：${r.proof==='yes'?'有':'沒有'}
+・實際產品：${r.product==='yes'?'還在':'不在'}
+
+現在做：
+1. 先用泰山／食藥署最新表確認產品與批號。
+2. 命中受影響批號 → 停止使用，辦理退貨退款。
+3. 原購買通路有受理 → 通常先走原通路最快。
+4. 有憑證但原通路不處理 → 看泰山憑證退款方式。
+5. 沒發票但產品還在 → 聯絡泰山，依公告安排到府親收。
+6. 9/30前完成聯絡／退款。
+
+泰山最新退款：
+https://www.taisun.com.tw/260711/
+行政院消保會：
+https://cpc.ey.gov.tw/Page/A3DEC5A597EC43C7
+食藥署油脂案專區：
+https://www.fda.gov.tw/TC/site13712.aspx
+退款專線：0800-079080
+消費者服務：1950
+
+提醒：擴大退款不等於全部產品受污染；安全批號與退款資格要分開看。
+本工具不保存地址、電話、發票號碼或銀行資料。`;if(countCore&&window.PGLabImpact)PGLabImpact.core('refund-card');}
+function countdown(){const t=new Date('2026-10-01T00:00:00+08:00'),ms=t-new Date();if(ms<=0){$('countdown').textContent='9/30公告退款受理期限已過；請直接向泰山／消保管道確認後續。';return}const d=Math.floor(ms/86400000),h=Math.floor(ms%86400000/3600000);$('countdown').textContent=`約 ${d} 天 ${h} 小時`;}
+function downloadReminder(){const ics=`BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//OilBack930//TW\r\nBEGIN:VEVENT\r\nDTSTART;TZID=Asia/Taipei:20260927T190000\r\nDTEND;TZID=Asia/Taipei:20260927T192000\r\nSUMMARY:9/30前處理泰山疑慮油品退款\r\nDESCRIPTION:查批號、整理購買證明；沒發票但產品還在也可依公告聯絡泰山安排到府親收。退款專線0800-079080。\r\nEND:VEVENT\r\nEND:VCALENDAR`;const b=new Blob([ics],{type:'text/calendar;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='oilback-before-930.ics';a.click();URL.revokeObjectURL(a.href);if(window.PGLabImpact)PGLabImpact.core('930-reminder');}
+function track(label){if(window.PGLabImpact)PGLabImpact.core(label)}async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+['listed','period','batch','proof','product'].forEach(id=>$(id).addEventListener('change',()=>buildCard(false)));countdown();setInterval(countdown,60000);buildCard(false);
+</script>
+<script src="../impact.js" data-project="oilback-930" data-action-text="我已完成安全批號＋退款路徑前篩" data-real-text="我已真的完成原通路退款／寄憑證／聯絡到府收取／向消保管道確認" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/86"></script>
+</body></html>
