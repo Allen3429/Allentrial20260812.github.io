@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="oilrefund-930">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="OilRefund 930：中聯油脂事件後，協助泰山油品消費者在9/30前完成官方批次查核、選對退款路徑，不收發票、地址或個資。">
+<title>OilRefund 930｜泰山油品退款防漏</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#a32323;--info:#285c8d}
+*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1100px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}
+h1{font-size:clamp(38px,7vw,64px);line-height:1.03;margin:.12em 0 .25em}.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:980px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:12px 14px;border-radius:9px;line-height:1.7;margin:10px 0}
+.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}.info{border-left-color:var(--info)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(225px,1fr));gap:10px}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:9px}
+.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:23px;margin-top:4px}
+label{display:block;font-weight:800;margin-bottom:5px}select,input,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}
+textarea{min-height:250px;resize:vertical}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}
+button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}
+.big{font-size:clamp(24px,4vw,34px);font-weight:950}.countdown{font-size:clamp(40px,8vw,72px);font-weight:1000;letter-spacing:-.04em}.small{font-size:13px;color:var(--muted);line-height:1.65}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · 消費者權益 · 中聯油脂事件後續</div>
+<h1>OilRefund 930<br>瓶子放著、發票找不到、批次看不懂：先別拖過 9/30。</h1>
+<p class="lead">泰山針對中聯油脂事件的匡列疑慮商品提供多種退款方式，並表示 2026 年 4–6 月曾購買匡列商品的消費者，相關退款作業受理到 <strong>2026/9/30</strong>。這個工具不替主管機關判定你的批次，只幫你完成「官方查核 → 選退款路徑 → 在期限前處理」。</p>
+
+<section class="card">
+<h2>1｜先把期限變成行動</h2>
+<div class="countdown" id="countdown">—</div>
+<div class="actions"><button onclick="downloadReminder()">加入 9/27「別拖到最後一天」提醒</button></div>
+<div class="note warn">9/30 是泰山公告的退款作業受理期限。若你手上還有疑慮油品或購買紀錄，現在最有價值的動作不是繼續猜，而是先用官方批次資料確認。</div>
+</section>
+
+<section class="card">
+<h2>2｜第一步不是看品牌，而是看「官方批次」</h2>
+<div class="note info">食藥署已建立「中聯油脂案專區：可重新上架之產品清單」，可依業者、品項、有效日期等查詢；泰山也有自己的退貨商品／瓶身印製號碼對照。因清單曾經持續更新，本工具不把完整批號硬編進網頁，避免離線清單過期。</div>
+<div class="actions">
+<a class="btn" target="_blank" rel="noopener" href="https://www.fda.gov.tw/RelistedList/index.aspx" onclick="track('fda-relisted')">食藥署｜可重新上架清單</a>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://www.taisun.com.tw/260711/" onclick="track('taisun-batch')">泰山｜退貨商品與批次</a>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://cpc.ey.gov.tw/Page/FFEE11F8F477B3E0">行政院消保會｜中聯油脂事件專區</a>
+</div>
+</section>
+
+<section class="card">
+<h2>3｜查完官方資料後，選你的狀況</h2>
+<div class="grid">
+<div><label>官方批次查核結果</label>
+<select id="batch">
+<option value="affected">確認在匡列／退款範圍</option>
+<option value="clear">確認不在匡列，或已由官方列為可重新上架批次</option>
+<option value="unknown">還沒查清楚／瓶身號碼看不懂</option>
+</select></div>
+<div><label>是否在 2026 年 4–6 月購買？</label>
+<select id="period">
+<option value="yes">是</option><option value="no">不是</option><option value="unknown">不確定</option>
+</select></div>
+<div><label>購買證明／發票</label>
+<select id="proof">
+<option value="yes">有</option><option value="no">沒有</option><option value="unknown">可能有電子發票，但還沒找</option>
+</select></div>
+<div><label>油品／容器目前還在嗎？</label>
+<select id="product">
+<option value="yes">還在</option><option value="used">已使用完／不在了</option><option value="unknown">不確定</option>
+</select></div>
+<div><label>原購買通路找得到嗎？</label>
+<select id="retailer">
+<option value="yes">找得到</option><option value="no">找不到／不方便</option><option value="online">電商訂單還查得到</option>
+</select></div>
+</div>
+<div id="routeOut"></div>
+</section>
+
+<section class="card">
+<h2>4｜退款路徑：先走最短的，不用自己發明流程</h2>
+<div id="routeSteps"></div>
+<div class="actions">
+<a class="btn" href="tel:0800079080" onclick="track('taisun-phone')">泰山客服 0800-079-080</a>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://www.taisun.com.tw/30718/">泰山事件說明</a>
+<a class="btn ghost" href="tel:1950">1950 消費者服務專線</a>
+</div>
+</section>
+
+<section class="card">
+<h2>5｜這個工具特別處理「沒有發票」</h2>
+<div class="note ok">泰山與行政院消保會公開資訊都寫到：若沒有發票，只要能提供在公告期間實際購買的資訊，業者可再聯繫安排後續處理；若有購買憑證／電子發票，則可以走相對直接的退款路徑。是否符合最終退款條件仍以官方與業者核對結果為準。</div>
+<div class="note info">若是在通路購買，泰山建議先洽原購買通路，通常較快；電商則先看訂單紀錄與該平台公告，再決定是否轉泰山客服。</div>
+</section>
+
+<section class="card">
+<h2>6｜一鍵產生「我還差哪一步」退款卡</h2>
+<textarea id="card"></textarea>
+<div class="actions"><button onclick="build(true)">更新退款卡</button><button class="ghost" onclick="copyText('card')">複製</button></div>
+</section>
+
+<section class="card">
+<h2>7｜這個工具刻意不做</h2>
+<div class="note">
+<ul>
+<li>不把所有泰山油品都標成問題商品，也不把品牌名稱當作判斷依據。</li>
+<li>不替食藥署判定批次安全；批次狀態要回官方清單確認。</li>
+<li>不收發票照片、姓名、地址、電話、訂單編號或銀行資料。</li>
+<li>不提供「吃了會怎樣」的個人醫療判斷；若有健康疑慮應詢問醫療專業人員。</li>
+</ul>
+</div>
+</section>
+
+<section class="card">
+<h2>8｜真實使用驗證</h2>
+<p>這輪真正追：<strong>原本擱著不處理 → 查官方批次 → 選對退款路徑 → 9/30 前真的送出／到店／聯絡客服。</strong></p>
+<div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/72">OilRefund 930 回饋區</a></div>
+</section>
+
+<section class="card">
+<h2>9｜可直接轉給家庭／社區群</h2>
+<textarea id="promo">【家裡還有泰山大豆油相關產品？退款作業別拖過9/30】
+中聯油脂事件後，泰山針對匡列疑慮商品提供退款處理。
+行政院消保會與泰山目前都載明：
+・2026年4–6月曾購買匡列商品者，可依官方流程辦理
+・產品有無使用都可先依購買證明／實際購買情況詢問
+・沒有發票也不代表直接沒辦法處理
+・原購買通路找得到時，先洽通路通常較快
+・相關退款作業受理到 2026/9/30
+
+最重要：不要只看「泰山」兩個字，要看官方批次。
+食藥署可重新上架清單：
+https://www.fda.gov.tw/RelistedList/index.aspx
+
+泰山退貨商品／批次：
+https://www.taisun.com.tw/260711/
+
+OilRefund 930：
+https://allen3429.github.io/Allentrial20260812.github.io/public-good/oilrefund-930/
+
+泰山客服：0800-079-080</textarea>
+<div class="actions"><button class="ghost" onclick="copyText('promo')">複製轉貼文</button></div>
+</section>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+
+function route(){
+ const b=$('batch').value,p=$('period').value,proof=$('proof').value,prod=$('product').value,ret=$('retailer').value;
+ let cls='ok',title='🟢 先確認官方批次',steps=[];
+ if(b==='clear'){
+   title='🟢 官方查核顯示不是本次退款重點批次';
+   steps=['保留你查到的官方結果。','若仍對商品狀態有疑問，直接向原通路或泰山客服確認，不要只靠社群截圖。'];
+ }else if(b==='unknown'){
+   cls='warn';title='🟡 先不要跳到退款：你現在缺的是批次確認';
+   steps=['打開食藥署可重新上架清單或泰山瓶身號碼對照。','用產品名稱、有效日期／瓶身印製號碼核對。','看不懂時直接打 0800-079-080，請客服協助確認。'];
+ }else{
+   cls='bad';title='🔴 已確認在匡列／退款範圍：現在就走退款路徑';
+   if((ret==='yes'||ret==='online')&&proof!=='no'){
+     steps.push('先找原購買通路／電商訂單，依通路退款辦法處理；泰山公開資訊也建議這條通常較快。');
+   }else{
+     steps.push('直接聯絡泰山 0800-079-080 或官方 LINE／客服，說明你已查到匡列批次。');
+   }
+   if(proof==='yes'||proof==='unknown') steps.push('找出紙本或電子發票／訂單紀錄；有購買憑證會讓路徑更直接。');
+   if(proof==='no') steps.push('沒有發票：不要直接放棄。依泰山公開說明，仍可提供實際購買資訊，由客服確認後續處理方式。');
+   if(prod==='yes') steps.push('先保留商品與包裝，不要丟掉瓶身批次資訊，直到退款流程確認完成。');
+   if(prod==='used') steps.push('商品已使用完也仍可先依購買證明／實際購買情況向官方客服詢問。');
+   if(p!=='yes') steps.push('你不確定是否屬 2026/4–6 月購買範圍：不要自行推定資格，直接把購買時間交給通路／泰山客服核對。');
+   steps.push('在 9/30 前完成聯絡或送件，不要等最後一天。');
+ }
+ $('routeOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${steps[0]||''}</div>`;
+ $('routeSteps').innerHTML=steps.map((s,i)=>`<div class="note ${i===0?cls:'info'}"><b>${i+1}.</b> ${s}</div>`).join('');
+ return {title,steps};
+}
+function build(countCore){
+ const r=route();
+ $('card').value=`【OilRefund 930｜我的退款防漏卡】
+目前狀態：${r.title}
+
+下一步：
+${r.steps.map((x,i)=>`${i+1}. ${x}`).join('\n')}
+
+官方查核：
+食藥署可重新上架清單
+https://www.fda.gov.tw/RelistedList/index.aspx
+
+泰山退貨商品／批次
+https://www.taisun.com.tw/260711/
+
+中聯油脂事件專區
+https://cpc.ey.gov.tw/Page/FFEE11F8F477B3E0
+
+泰山客服：0800-079-080
+退款作業受理期限：2026/9/30
+
+這張卡不保存發票、地址、訂單或銀行資料。`;
+ if(countCore&&window.PGLabImpact)PGLabImpact.core('refund-route-card');
+}
+function countdown(){
+ const target=new Date('2026-10-01T00:00:00+08:00'),now=new Date(),ms=target-now;
+ if(ms<=0){$('countdown').textContent='9/30 受理期限已過';return}
+ const d=Math.floor(ms/86400000),h=Math.floor(ms%86400000/3600000);
+ $('countdown').textContent=`距 9/30 截止約 ${d} 天 ${h} 小時`;
+}
+function downloadReminder(){
+ const ics=`BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//OilRefund930//TW\r\nBEGIN:VEVENT\r\nDTSTART;TZID=Asia/Taipei:20260927T100000\r\nDTEND;TZID=Asia/Taipei:20260927T103000\r\nSUMMARY:9/30前完成泰山疑慮油品退款處理\r\nDESCRIPTION:先查官方批次，再依原購買通路或泰山客服退款。食藥署：https://www.fda.gov.tw/RelistedList/index.aspx 泰山客服：0800-079-080\r\nEND:VEVENT\r\nEND:VCALENDAR`;
+ const blob=new Blob([ics],{type:'text/calendar;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='oilrefund-before-930.ics';a.click();URL.revokeObjectURL(a.href);
+ if(window.PGLabImpact)PGLabImpact.core('930-reminder');
+}
+function track(label){if(window.PGLabImpact)PGLabImpact.core(label)}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+['batch','period','proof','product','retailer'].forEach(id=>$(id).addEventListener('change',()=>build(false)));
+countdown();setInterval(countdown,60000);build(false);
+</script>
+<script src="../impact.js" data-project="oilrefund-930" data-action-text="我已完成官方批次＋退款路徑檢核" data-real-text="我已真的向原通路／泰山客服送出退款處理" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/72"></script>
+</body></html>
