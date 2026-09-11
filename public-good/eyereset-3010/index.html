@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="eyereset-3010">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="EyeReset 3010：開學後把教育部護眼3010與每天戶外120分鐘變成可執行的本機計時器，不追蹤內容、不收健康資料。">
+<title>EyeReset 3010｜近距離用眼節奏器</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--ok:#176b45;--warn:#946200;--info:#285c8d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1100px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}
+h1{font-size:clamp(38px,7vw,64px);line-height:1.03;margin:.12em 0 .25em}h2{margin-top:.2em}
+.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:980px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:12px 14px;border-radius:9px;line-height:1.7;margin:10px 0}
+.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.info{border-left-color:var(--info)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:9px}
+.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:23px;margin-top:4px}
+.timer{font-size:clamp(60px,13vw,112px);font-weight:1000;letter-spacing:-.05em;line-height:1;text-align:center;margin:18px 0}
+.phase{font-size:21px;font-weight:900;text-align:center}
+.actions{display:flex;gap:9px;flex-wrap:wrap;justify-content:center;margin-top:12px}
+button,.btn{display:inline-block;border:0;border-radius:12px;padding:11px 14px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}
+.ghost{background:#edf1f5;color:#17212b}.big{font-size:clamp(23px,4vw,34px);font-weight:950}
+.small{font-size:13px;color:var(--muted);line-height:1.6}label{font-weight:760;display:block;margin-bottom:5px}
+input,select,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}
+textarea{min-height:235px;resize:vertical}table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:9px;border-bottom:1px solid var(--line)}th{font-size:13px;color:var(--muted)}
+.progress{height:16px;background:#edf1f5;border-radius:999px;overflow:hidden}.progress>div{height:100%;background:#17212b;width:0;transition:width .2s}
+.checkgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:8px}.ck{width:auto;transform:scale(1.12);margin-right:7px}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · 開學版 · 依教育部國教署 2026/09/08「護眼123」</div>
+<h1>EyeReset 3010<br>不是「少用手機」而已：讀書、寫作業、平板學習都要記得30/10。</h1>
+<p class="lead">國教署的新學期提醒是：至少每半年眼科檢查、每天戶外活動2小時、近距離用眼30分鐘後休息10分鐘。這個工具只幫你把節奏做出來；不看你在讀什麼、不看瀏覽內容，也不把孩子的紀錄傳給家長或伺服器。</p>
+
+<section class="card">
+<h2>1｜現在就做一輪 30/10</h2>
+<div class="phase" id="phase">近距離用眼｜30分鐘</div>
+<div class="timer" id="timer">30:00</div>
+<div class="progress"><div id="bar"></div></div>
+<div class="actions">
+<button id="startBtn" onclick="toggleTimer()">開始</button>
+<button class="ghost" onclick="resetTimer()">重設本輪</button>
+<button class="ghost" onclick="skipPhase()">切換到休息／下一輪</button>
+<button class="ghost" onclick="requestNotify()">開啟瀏覽器提醒</button>
+</div>
+<div class="note info">「近距離用眼」不只手機：閱讀、書寫作業、平板、電腦等都算。休息10分鐘時，建議離開近距離活動、起身、看遠方；本工具不宣稱能治療或預防個別眼病。</div>
+</section>
+
+<section class="card">
+<h2>2｜今天戶外120分鐘：只記總時間，不追GPS</h2>
+<div class="big" id="outdoorText">今天 0 / 120 分鐘</div>
+<div class="progress"><div id="outdoorBar"></div></div>
+<div class="actions">
+<button onclick="addOutdoor(15)">+15分鐘</button>
+<button onclick="addOutdoor(30)">+30分鐘</button>
+<button onclick="addOutdoor(60)">+60分鐘</button>
+<button class="ghost" onclick="undoOutdoor()">復原一次</button>
+</div>
+<div class="note ok">教育部建議每天戶外活動2小時，可善用課間、課後與假日散步、騎自行車、球類等。這裡只存「分鐘數」在你的瀏覽器，不記地點。</div>
+</section>
+
+<section class="card">
+<h2>3｜7日本機摘要：看的是「有沒有做到」，不是監控內容</h2>
+<div class="stats">
+<div class="stat">今天完成30分鐘輪數<b id="cyclesToday">0</b></div>
+<div class="stat">今天完成休息輪數<b id="breaksToday">0</b></div>
+<div class="stat">今天戶外分鐘<b id="outdoorToday">0</b></div>
+<div class="stat">近7天有使用天數<b id="activeDays">0</b></div>
+</div>
+<div style="overflow:auto"><table><thead><tr><th>日期</th><th>30分鐘輪數</th><th>10分鐘休息</th><th>戶外分鐘</th></tr></thead><tbody id="weekBody"></tbody></table></div>
+<div class="actions"><button class="ghost" onclick="clearLocal()">清除這台裝置的本機紀錄</button></div>
+</section>
+
+<section class="card">
+<h2>4｜每半年眼科檢查：不要只靠記憶</h2>
+<div class="note warn">國教署建議學童至少每半年接受眼科檢查；如已近視，應持續接受專業醫療評估與治療至18歲。這個按鈕只建立一個「半年後安排檢查」的本機行事曆提醒，不替代醫師建議。</div>
+<div class="actions"><button onclick="downloadEyeExam()">下載半年後檢查提醒 .ics</button></div>
+</section>
+
+<section class="card">
+<h2>5｜家長若要管手機，先用系統內建工具，不必裝來路不明App</h2>
+<div class="note info">教育部已有免費數位工具包，教家長使用 iOS 分級保護控制與 Google Family Link，可設定停用時間、App限制、每日上限、下載核准，並查看各App使用時間。若不會設定，教育部也曾宣導可到合作電信門市取得協助。</div>
+<div class="actions">
+<a class="btn" target="_blank" rel="noopener" href="https://gov.tw/bLU" onclick="track('edu-toolkit')">教育部免費數位工具包</a>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://www.k12ea.gov.tw/Tw/News/K12eaNewsDetail?filter=9F92BBB7-0251-4CB7-BF06-82385FD996A0&id=7bfd0190-1935-421b-bb28-f09d862ff3a4">9/8 護眼123官方說明</a>
+</div>
+</section>
+
+<section class="card">
+<h2>6｜一鍵產生「不監控內容」的親子3010共識卡</h2>
+<div class="grid">
+<div><label>平日最容易忘記休息的情境</label>
+<select id="hard">
+<option>寫作業／讀書</option><option>平板／電腦學習</option><option>遊戲</option><option>短影音／社群</option><option>聊天</option>
+</select></div>
+<div><label>戶外120分鐘最容易放在哪裡？</label>
+<select id="outdoorPlan">
+<option>課間＋放學後分段完成</option><option>放學後一次完成</option><option>平日分段＋週末補足</option><option>先從每天30–60分鐘增加</option>
+</select></div>
+</div>
+<textarea id="agreement"></textarea>
+<div class="actions"><button onclick="buildAgreement(true)">更新共識卡</button><button class="ghost" onclick="copyText('agreement')">複製</button></div>
+</section>
+
+<section class="card">
+<h2>7｜這個工具刻意不做</h2>
+<div class="note">
+<ul>
+<li>不記錄瀏覽網站、App內容、訊息、照片、GPS或孩子身分。</li>
+<li>不把「30/10」當成醫療處方，也不診斷近視或眼睛疾病。</li>
+<li>不要求家長遠端查看本工具紀錄；這版設計成孩子／家庭共同使用，而不是監控工具。</li>
+<li>不把全部問題簡化成「手機成癮」；學習、閱讀與書寫本身也是近距離用眼，真正要驗證的是節奏是否做得到。</li>
+</ul>
+</div>
+</section>
+
+<section class="card">
+<h2>8｜真實使用驗證</h2>
+<p>這輪真正追：<strong>知道3010 → 真的完成一輪 → 戶外時間有被記起來 → 家長需要時真的打開教育部工具包。</strong>公開回饋不要貼孩子姓名、學校、螢幕報表或健康資料。</p>
+<div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/63">EyeReset 3010 回饋區 #63</a></div>
+</section>
+
+<section class="card">
+<h2>9｜可直接轉給家長群／班群</h2>
+<textarea id="promo">【開學後不是只有「少用手機」｜寫作業也要3010】
+教育部國教署9/8提醒「護眼123」：
+1. 至少每半年眼科檢查
+2. 每天戶外活動2小時
+3. 近距離用眼30分鐘，休息10分鐘
+
+重點：閱讀、書寫作業、平板、電腦都算近距離用眼，不是只有娛樂3C。
+
+9/2公布的8,465份青少兒調查也顯示：
+・85.8%已有個人手機
+・每週平均手機使用30.71小時
+・每週平均電腦上網31.22小時
+・調查指出「知道不能長時間上網，但無法自主管理」仍是問題
+
+EyeReset 3010 是不監控內容的本機工具：
+・30/10計時
+・每天戶外120分鐘
+・7日本機摘要
+・半年眼科檢查提醒
+・親子共識卡
+https://allen3429.github.io/Allentrial20260812.github.io/public-good/eyereset-3010/
+
+教育部免費手機管理工具包：
+https://gov.tw/bLU</textarea>
+<div class="actions"><button class="ghost" onclick="copyText('promo')">複製轉貼文</button></div>
+</section>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+const STORE='eyereset3010:v1';
+let state=load();
+let timer={phase:'focus',remaining:1800,running:false,endAt:null};
+let tickHandle=null;
+
+function dateKey(d=new Date()){return d.toLocaleDateString('en-CA')}
+function load(){
+ try{return JSON.parse(localStorage.getItem(STORE))||{days:{},outdoorUndo:[]}}catch(e){return {days:{},outdoorUndo:[]}}
+}
+function save(){localStorage.setItem(STORE,JSON.stringify(state));renderStats()}
+function day(k=dateKey()){
+ if(!state.days[k]) state.days[k]={focus:0,breaks:0,outdoor:0};
+ return state.days[k];
+}
+function fmt(sec){sec=Math.max(0,Math.ceil(sec));return `${String(Math.floor(sec/60)).padStart(2,'0')}:${String(sec%60).padStart(2,'0')}`}
+function phaseTotal(){return timer.phase==='focus'?1800:600}
+function renderTimer(){
+ $('phase').textContent=timer.phase==='focus'?'近距離用眼｜30分鐘':'休息｜10分鐘';
+ $('timer').textContent=fmt(timer.remaining);
+ $('startBtn').textContent=timer.running?'暫停':'開始';
+ $('bar').style.width=`${Math.min(100,Math.max(0,(1-timer.remaining/phaseTotal())*100))}%`;
+ document.title=`${fmt(timer.remaining)} · ${timer.phase==='focus'?'3010用眼':'休息'}`;
+}
+function toggleTimer(){
+ if(timer.running) pauseTimer(); else startTimer();
+}
+function startTimer(){
+ if(timer.remaining<=0) timer.remaining=phaseTotal();
+ timer.running=true;timer.endAt=Date.now()+timer.remaining*1000;
+ clearInterval(tickHandle);tickHandle=setInterval(tick,250);renderTimer();
+ if(window.PGLabImpact)PGLabImpact.core('timer-start');
+}
+function pauseTimer(){
+ if(timer.running) timer.remaining=Math.max(0,(timer.endAt-Date.now())/1000);
+ timer.running=false;timer.endAt=null;clearInterval(tickHandle);renderTimer();
+}
+function tick(){
+ if(!timer.running)return;
+ timer.remaining=Math.max(0,(timer.endAt-Date.now())/1000);
+ if(timer.remaining<=0) completePhase(); else renderTimer();
+}
+function completePhase(){
+ const was=timer.phase; timer.running=false;clearInterval(tickHandle);
+ if(was==='focus'){day().focus++;timer.phase='break';timer.remaining=600;notify('30分鐘完成','現在休息10分鐘，離開近距離用眼。');if(window.PGLabImpact)PGLabImpact.core('focus-complete')}
+ else{day().breaks++;timer.phase='focus';timer.remaining=1800;notify('休息完成','如果要繼續近距離用眼，可以開始下一輪30分鐘。');if(window.PGLabImpact)PGLabImpact.core('break-complete')}
+ save();renderTimer();
+}
+function resetTimer(){pauseTimer();timer={phase:'focus',remaining:1800,running:false,endAt:null};renderTimer()}
+function skipPhase(){pauseTimer();timer.phase=timer.phase==='focus'?'break':'focus';timer.remaining=phaseTotal();renderTimer()}
+async function requestNotify(){
+ if(!('Notification'in window)) return alert('此瀏覽器不支援通知，可直接使用頁面倒數。');
+ const p=await Notification.requestPermission();alert(p==='granted'?'已允許提醒。':'未開啟通知；頁面倒數仍可使用。');
+}
+function notify(title,body){if('Notification'in window&&Notification.permission==='granted')new Notification(title,{body})}
+
+function addOutdoor(min){
+ const k=dateKey();day(k).outdoor+=min;state.outdoorUndo.push({k,min});save();if(window.PGLabImpact)PGLabImpact.core('outdoor-log');
+}
+function undoOutdoor(){
+ const x=state.outdoorUndo.pop();if(!x)return;
+ if(state.days[x.k]) state.days[x.k].outdoor=Math.max(0,state.days[x.k].outdoor-x.min);save();
+}
+function renderStats(){
+ const d=day();$('cyclesToday').textContent=d.focus;$('breaksToday').textContent=d.breaks;$('outdoorToday').textContent=d.outdoor;
+ $('outdoorText').textContent=`今天 ${d.outdoor} / 120 分鐘`;
+ $('outdoorBar').style.width=`${Math.min(100,d.outdoor/120*100)}%`;
+ const body=$('weekBody');body.innerHTML='';let active=0;
+ for(let i=6;i>=0;i--){const x=new Date();x.setDate(x.getDate()-i);const k=dateKey(x),v=state.days[k]||{focus:0,breaks:0,outdoor:0};
+  if(v.focus||v.breaks||v.outdoor)active++;
+  const tr=document.createElement('tr');tr.innerHTML=`<td>${k}</td><td>${v.focus}</td><td>${v.breaks}</td><td>${v.outdoor}</td>`;body.appendChild(tr);
+ }
+ $('activeDays').textContent=active;
+}
+function clearLocal(){
+ if(!confirm('只會清除這台瀏覽器裡 EyeReset 的紀錄，確定嗎？'))return;
+ state={days:{},outdoorUndo:[]};localStorage.removeItem(STORE);renderStats();
+}
+function downloadEyeExam(){
+ const d=new Date();d.setMonth(d.getMonth()+6);d.setHours(9,0,0,0);
+ const end=new Date(d.getTime()+30*60000);
+ const fmt=x=>x.getFullYear()+String(x.getMonth()+1).padStart(2,'0')+String(x.getDate()).padStart(2,'0')+'T'+String(x.getHours()).padStart(2,'0')+String(x.getMinutes()).padStart(2,'0')+'00';
+ const ics=`BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//EyeReset3010//TW\nBEGIN:VEVENT\nDTSTART:${fmt(d)}\nDTEND:${fmt(end)}\nSUMMARY:安排學童眼科檢查\nDESCRIPTION:國教署建議至少每半年接受眼科檢查。請依孩子實際狀況與醫師建議安排。\nEND:VEVENT\nEND:VCALENDAR`;
+ const blob=new Blob([ics],{type:'text/calendar;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='eyereset-eye-exam-6months.ics';a.click();URL.revokeObjectURL(a.href);
+ if(window.PGLabImpact)PGLabImpact.core('exam-reminder');
+}
+function buildAgreement(countCore){
+ const hard=$('hard').value,out=$('outdoorPlan').value;
+ $('agreement').value=`【我們家的 EyeReset 3010 共識】\n\n我們不是要互相監控內容，而是一起把用眼節奏做出來。\n\n1. 近距離用眼：閱讀、寫作業、平板、電腦連續30分鐘後，休息10分鐘。\n2. 最容易忘記休息的情境：${hard}。看到計時提醒時，先完成休息，不用爭論「這算不算螢幕時間」。\n3. 戶外目標：每天120分鐘；我們先用「${out}」完成。\n4. 家長若要做手機管理，優先使用iOS內建分級保護控制／Google Family Link，不用來路不明監控App。\n5. 本工具不查看聊天、網站、照片或App內容；只記時間節奏。\n6. 至少每半年安排眼科檢查；已有近視或眼睛不適時，依眼科專業建議處理。\n7. 每週只一起看一次「有沒有做到」，不用每天用紀錄責備彼此。\n\n教育部免費數位工具包：https://gov.tw/bLU`;
+ if(countCore&&window.PGLabImpact)PGLabImpact.core('family-agreement');
+}
+function track(label){if(window.PGLabImpact)PGLabImpact.core(label)}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+['hard','outdoorPlan'].forEach(id=>$(id).addEventListener('change',()=>buildAgreement(false)));
+renderTimer();renderStats();buildAgreement(false);
+</script>
+<script src="../impact.js" data-project="eyereset-3010" data-action-text="我已真的完成一輪3010／戶外紀錄" data-real-text="我已連續使用／完成戶外活動／設定官方家長工具" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/63"></script>
+</body></html>
