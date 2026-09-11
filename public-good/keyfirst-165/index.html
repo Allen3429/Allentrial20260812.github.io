@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="keyfirst-165">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="KeyFirst 165：開學租屋季，針對假房東『寄鑰匙＋假物流實名認證』釣魚的付款前防漏快篩。">
+<title>KeyFirst 165｜寄鑰匙租屋詐騙防漏</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#a32323;--info:#285c8d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1120px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}
+h1{font-size:clamp(36px,7vw,62px);line-height:1.03;margin:.12em 0 .25em}.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:1000px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:12px 14px;border-radius:9px;line-height:1.7;margin:10px 0}
+.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}.info{border-left-color:var(--info)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(225px,1fr));gap:10px}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:9px}
+.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:23px;margin-top:4px}
+label{display:block;font-weight:760;margin-bottom:5px}select,input,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}
+textarea{min-height:230px;resize:vertical}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}
+button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}
+.ghost{background:#edf1f5;color:#17212b}.big{font-size:clamp(24px,4vw,34px);font-weight:950}.host{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:clamp(18px,3vw,28px);word-break:break-all}
+.small{font-size:13px;color:var(--muted);line-height:1.65}.checkgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(275px,1fr));gap:8px}.ck{width:auto;transform:scale(1.12);margin-right:7px}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · Taiwan · 依刑事警察局 2026/09/06–09/07 開學租屋季最新警示</div>
+<h1>KeyFirst 165<br>「我人在外地，先寄鑰匙給你」不是方便，是現在要特別停下來查證的租屋話術。</h1>
+<p class="lead">刑事警察局最新揭露的手法：社群租屋廣告 → 假房東說人在外地 → 用超商物流「寄鑰匙」 → 傳假物流網站 → 說你尚未「實名認證」 → 要你操作網銀、匯款或買遊戲點數。這個工具不替165判定網站真偽，只幫你在付款前把網址主機名與交易流程看清楚。</p>
+<section class="card"><h2>1｜這不是抽象風險：近期已有社會新鮮人損失5.5萬元</h2><div class="stats"><div class="stat">租屋場景<b>開學季</b></div><div class="stat">起點<b>Threads/社群</b></div><div class="stat">誘因<b>低租金＋好裝潢</b></div><div class="stat">個案損失<b>NT$55,000</b></div></div><div class="note bad">刑事局公布的近期案例中，一名北部社會新鮮人看到大安區套房廣告，假房東稱人在外地、可先寄鑰匙；其後假物流頁面以「未實名認證」為由導向銀行帳戶驗證。被害人先匯3萬元，又購買2萬5,000元遊戲點數，共損失5萬5,000元。</div></section>
+<section class="card"><h2>2｜先看交易流程，不用先猜網站是不是假的</h2><div class="grid"><div><label>你有沒有親自／可信任代理人現場看過這間房？</label><select id="seen"><option value="no">沒有</option><option value="yes">有</option></select></div><div><label>你有沒有核對「對方有權出租」？</label><select id="owner"><option value="no">沒有</option><option value="yes">有，已核對所有權人或合法授權</option><option value="unknown">不確定怎麼核對</option></select></div><div><label>有沒有正式簽租賃契約？</label><select id="signed"><option value="no">還沒有</option><option value="yes">有</option></select></div><div><label>對方現在要求什麼？</label><select id="ask"><option value="key">先用物流寄鑰匙，要我填資料</option><option value="bank">要做「實名認證／帳戶驗證／網銀操作」</option><option value="pay">看屋前先付訂金／押金／租金</option><option value="points">買遊戲點數／提供序號</option><option value="normal">目前沒有以上要求</option></select></div></div><div id="flowOut"></div></section>
+<section class="card"><h2>3｜把可疑連結貼進來：只拆出「真正主機名」，不連線、不上傳</h2><p class="small">本機處理。不要貼含姓名、token、驗證碼的完整私人連結；如果網址後面有很長的查詢參數，最好只貼到網域／路徑前段。</p><div class="grid"><div><label>網址</label><input id="url" inputmode="url" placeholder="例如：https://example.com/verify"></div></div><div id="urlOut"></div><div class="actions"><button onclick="inspectUrl(true)">只檢查網址結構</button><a class="btn ghost" target="_blank" rel="noopener" href="https://165dashboard.tw/" onclick="track('165-dashboard')">交給165打詐儀錶板查涉詐網址</a></div></section>
+<section class="card"><h2>4｜網址工具只抓「值得停下來」的結構紅旗</h2><div class="note info">它會顯示真正 hostname，並提醒：非HTTPS、IP位址直接當網域、punycode（<code>xn--</code>）、常見短網址、或網址中大量出現「verify／auth／login／bank／realname」等驗證字樣。<strong>這些都不是詐騙定罪。</strong>反過來，即使沒有紅旗，也不代表安全；刑事局已提供165打詐儀錶板的涉詐網址查詢，正式查證請回官方。</div></section>
+<section class="card"><h2>5｜刑事局給的最短安全流程</h2><div class="checkgrid"><label><input class="ck prep" type="checkbox"> 現場看屋，而不是只靠寄鑰匙／照片／視訊</label><label><input class="ck prep" type="checkbox"> 核對出租人身分與「有權出租」</label><label><input class="ck prep" type="checkbox"> 使用正式租賃契約，簽約後才付款</label><label><input class="ck prep" type="checkbox"> 不因「物流實名認證」操作網銀、匯款或買點數</label><label><input class="ck prep" type="checkbox"> 有疑義就停下來打165，不繼續跟假客服排除問題</label></div><div id="prepOut"></div></section>
+<section class="card"><h2>6｜簽約時再防一個常見租屋風險：押金上限</h2><div class="note ok">行政院消保資訊與住宅租賃定型化契約都明確：住宅租賃押金最高不得超過<strong>2個月房租總額</strong>。這跟「假物流釣魚」是不同風險，但正好同樣發生在付款前，值得一起核對。</div><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://cpc.ey.gov.tw/Page/53501D87F6A06C23/6155e4aa-6311-47fa-876a-4078d27359e9">官方押金說明</a></div></section>
+<section class="card"><h2>7｜一鍵產生「先不付款」核對卡</h2><textarea id="card"></textarea><div class="actions"><button onclick="build(true)">更新核對卡</button><button class="ghost" onclick="copyText('card')">複製給同學／家人</button><a class="btn" href="tel:165">撥165</a><a class="btn ghost" href="tel:110">緊急／已受騙：110</a></div></section>
+<section class="card"><h2>8｜這個工具刻意不做</h2><div class="note"><ul><li>不替警察認定某個房東／網址一定是詐騙。</li><li>不開啟你貼的可疑網址，也不要求登入任何物流、銀行或租屋帳號。</li><li>不收完整租屋地址、姓名、電話、身分證、銀行帳號、信用卡、OTP或聊天截圖。</li><li>不提供繞過平台或銀行防詐機制的方法；一旦流程出現網銀驗證／遊戲點數，直接停下來查證。</li></ul></div></section>
+<section class="card"><h2>9｜真實使用驗證</h2><p>這輪真正追：<strong>原本覺得寄鑰匙很方便 → 看懂真正網域與流程紅旗 → 停止付款 → 改成現場看屋／核對權源／165查詢。</strong></p><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/62">KeyFirst 165 回饋區 #62</a></div></section>
+<section class="card"><h2>10｜可直接轉給新生／租屋群</h2><textarea id="promo">【開學租屋新話術｜「我人在外地，先寄鑰匙給你」請停一下】
+刑事局9/6–9/7提醒：近期假房東會在社群刊登低價漂亮套房，說自己人在外地，可以透過超商物流寄鑰匙給你自己看。
+
+接著可能：
+1. 傳假物流官網
+2. 說你「尚未實名認證」
+3. 要你聯繫假客服
+4. 要你操作網銀／匯款／買遊戲點數
+
+近期一名北部社會新鮮人因此損失5萬5,000元。
+
+租屋最短原則：
+・現場看屋
+・核對身分與出租權源
+・簽約後再付款
+・超商物流不會因實名認證要求你匯款／操作網銀
+・可疑就停，打165或用165打詐儀錶板查網址
+
+KeyFirst 165：
+https://allen3429.github.io/Allentrial20260812.github.io/public-good/keyfirst-165/
+
+公開群組不要貼完整地址、身分證、銀行資料、OTP或私人聊天截圖。</textarea><div class="actions"><button class="ghost" onclick="copyText('promo')">複製轉貼文</button></div></section>
+</main>
+<script>
+const $=id=>document.getElementById(id), checks=sel=>[...document.querySelectorAll(sel)];
+function flow(){const seen=$('seen').value,owner=$('owner').value,signed=$('signed').value,ask=$('ask').value;let cls='ok',title='🟢 目前未出現本案典型付款紅旗',msg='仍應完成現場看屋、核對出租權源、正式簽約後再付款。';if(ask==='bank'||ask==='points'){cls='bad';title='🔴 立即停止操作，不要再付款';msg=ask==='bank'?'刑事局最新警示正是「假物流實名認證／銀行帳戶驗證」話術。超商物流不會以實名認證為由要求你匯款或操作網銀。':'要求購買遊戲點數或交序號，是近期刑事局個案實際出現的詐騙流程。直接停下並打165。';}else if(ask==='key'){cls='bad';title='🔴 「寄鑰匙＋物流填資料」命中最新警示手法';msg='不要點對方傳來的物流認證連結。把租屋流程改回：現場看屋→核對身分／權源→正式簽約→付款。';}else if(ask==='pay'&&seen==='no'){cls='bad';title='🔴 還沒現場看屋就要付款：先停';msg='刑事局提醒，過往假租屋也常在實際看屋前要求訂金。先現場看屋與核對出租人。';}else if(seen==='no'||owner!=='yes'||signed==='no'){cls='warn';title='🟡 還沒有走完付款前的三道防線';msg='至少補齊：現場看屋、核對有權出租、簽正式租約。';}$('flowOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;return title;}
+function inspectUrl(countCore=false){const raw=$('url').value.trim();if(!raw){$('urlOut').innerHTML='<div class="note warn">貼入網址後才會解析；不會連線到該網址。</div>';return null;}let u;try{u=new URL(raw.includes('://')?raw:'https://'+raw)}catch(e){$('urlOut').innerHTML='<div class="note bad">網址格式解析失敗。不要為了測試而去打開它；直接把情境交給165查證。</div>';return null;}const host=u.hostname.toLowerCase();const flags=[];if(u.protocol!=='https:')flags.push('不是HTTPS');if(/^\d{1,3}(\.\d{1,3}){3}$/.test(host)||host.includes(':'))flags.push('直接使用IP位址');if(host.includes('xn--'))flags.push('含punycode國際化網域');if(['bit.ly','tinyurl.com','reurl.cc','ppt.cc','lihi.cc','is.gd','t.ly'].some(x=>host===x||host.endsWith('.'+x)))flags.push('短網址會隱藏最終目的地');const text=(host+u.pathname).toLowerCase();const words=['verify','verification','auth','login','bank','realname','account','secure','member'];const hits=words.filter(w=>text.includes(w));if(hits.length)flags.push('網址含驗證／登入相關字樣：'+hits.join(', '));const cls=flags.length?'warn':'info';$('urlOut').innerHTML=`<div class="note ${cls}"><div>你真正要看的主機名：</div><div class="host">${escapeHtml(host)}</div>${flags.length?'<b>結構紅旗：</b><br>・'+flags.map(escapeHtml).join('<br>・'):'本機結構檢查沒有抓到明顯紅旗，但這<strong>不代表網站安全</strong>。'}<br><span class="small">本工具沒有連線到該網址，也沒有查詐騙資料庫。正式涉詐網址查詢請用165打詐儀錶板。</span></div>`;if(countCore&&window.PGLabImpact)PGLabImpact.core('url-structure-check');return {host,flags};}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function prep(){const a=checks('.prep'),n=a.filter(x=>x.checked).length;$('prepOut').innerHTML=`<div class="note ${n>=4?'ok':'warn'}">付款前防線 ${n}/${a.length}。${n>=4?'已經把流程從「相信對方」切回「可查證」。':'最小下一步：不要付款，先補現場看屋＋身分／權源核對。'}</div>`;return n;}
+function track(label){if(window.PGLabImpact)PGLabImpact.core(label)}
+function build(countCore){const f=flow(),p=prep();const parsed=inspectUrl(false);$('card').value=`【KeyFirst 165｜租屋付款前核對卡】\n目前判讀：${f}\n付款前防線：${p}/5\n${parsed?`可疑連結主機名：${parsed.host}`:'尚未檢查網址'}\n\n我現在先做：\n1. 不在實際看屋前支付訂金／押金／租金。\n2. 不因「寄鑰匙」「物流實名認證」「銀行帳戶驗證」操作網銀或匯款。\n3. 現場看屋。\n4. 核對出租人身分，以及對方是否有權出租。\n5. 使用正式租賃契約，簽約後才付款。\n6. 住宅租賃押金上限原則為2個月房租總額。\n7. 可疑網址用165打詐儀錶板查，不自行登入測試：\nhttps://165dashboard.tw/\n8. 可疑情境直接撥165；若已受騙或需立即協助可撥110。\n\n這張卡不判定特定人犯罪，也不保存地址、銀行資料或聊天內容。`;if(countCore&&window.PGLabImpact)PGLabImpact.core('prepay-card');}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+['seen','owner','signed','ask'].forEach(id=>$(id).addEventListener('change',()=>build(false)));$('url').addEventListener('input',()=>inspectUrl(false));document.querySelectorAll('.prep').forEach(x=>x.addEventListener('change',()=>build(false)));build(false);
+</script>
+<script src="../impact.js" data-project="keyfirst-165" data-action-text="我已完成租屋付款前快篩" data-real-text="我已真的停止付款／現場看屋／核對出租權源／用165查證" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/62"></script>
+</body></html>
