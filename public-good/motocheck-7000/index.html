@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="motocheck-7000">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="MotoCheck 7000：2026交通安全月全民機車免費健檢30秒快篩。輪胎、車燈、潤滑油、煞車四項，導向全臺7,000+合作車行官方查詢。">
+<title>MotoCheck 7000｜免費機車健檢30秒快篩</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#a32323;--info:#285c8d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1120px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}
+h1{font-size:clamp(38px,7vw,64px);line-height:1.03;margin:.12em 0 .25em}.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:1000px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:12px 14px;border-radius:9px;line-height:1.7;margin:10px 0}.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}.info{border-left-color:var(--info)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:9px}.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:23px;margin-top:4px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:10px}label{display:block;font-weight:800;margin-bottom:6px}select,input,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}textarea{min-height:240px;resize:vertical}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}
+.big{font-size:clamp(24px,4vw,34px);font-weight:950}.danger{font-size:clamp(30px,6vw,48px);font-weight:1000}.small{font-size:13px;color:var(--muted);line-height:1.65}
+.item{border:1px solid var(--line);border-radius:15px;padding:14px}.checkrow{display:grid;grid-template-columns:1fr;gap:7px}.tag{display:inline-block;padding:4px 8px;border-radius:999px;background:#edf1f5;font-size:12px;font-weight:800}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · 2026 交通安全月 · 機車安全</div>
+<h1>MotoCheck 7000<br>免費健檢已經有了，<br>別等「真的壞掉」才去。</h1>
+<p class="lead">2026/9/1–12/31，全臺超過 <strong>7,000 家</strong>合作車行提供全民機車免費健檢，官方檢查重點就是 <strong>輪胎、車燈、潤滑油、煞車</strong>。這個工具不替車行診斷，只用 30 秒幫你決定：今天就去、本週去，或把免費健檢列進行程。</p>
+<section class="card"><h2>1｜30 秒快篩：四項就好</h2><div class="grid"><div class="item"><span class="tag">輪胎</span><label>有明顯裂痕、鼓包、異物／露線，或胎紋已非常淺嗎？</label><select id="tire"><option value="ok">看起來正常</option><option value="warn">有可疑狀況</option><option value="unknown">不知道怎麼看</option></select></div><div class="item"><span class="tag">車燈</span><label>頭燈、方向燈、煞車燈有不亮／忽明忽暗嗎？</label><select id="light"><option value="ok">目前都正常</option><option value="warn">至少一項異常</option><option value="unknown">沒有檢查過</option></select></div><div class="item"><span class="tag">煞車</span><label>最近有變軟、行程突然變長、制動變弱、異常震動／聲音嗎？</label><select id="brake"><option value="ok">沒有明顯異常</option><option value="critical">有明顯異常</option><option value="unknown">不確定</option></select></div><div class="item"><span class="tag">潤滑油</span><label>很久沒確認機油／潤滑狀況，或根本不記得上次何時處理？</label><select id="oil"><option value="ok">近期有確認／保養</option><option value="warn">可能該檢查</option><option value="unknown">完全不確定</option></select></div></div><div id="result"></div><div class="actions"><button onclick="screen(true)">產生建議</button><a class="btn ghost" target="_blank" rel="noopener" href="https://roadsafetymonth115.thb.gov.tw/health-stations" onclick="track('station-map')">官方 7,000+ 健檢站查詢</a></div></section>
+<section class="card"><h2>2｜紅旗怎麼處理？</h2><div class="note bad"><b>煞車明顯異常、輪胎鼓包／露線／嚴重損傷、必要燈具失效</b>時，不要把「免費健檢」當成可以繼續正常騎一陣子的理由。優先由專業人員檢查；若已影響制動或輪胎安全，避免勉強騎車前往。</div><div class="note info">免費的是這次活動的「健檢」。若現場建議更換零件或進一步維修，付費前先確認項目、價格與是否一定要現在做；你可以先拿到檢查結果，再決定後續。</div></section>
+<section class="card"><h2>3｜「我車還很新」也可以去</h2><div class="stats"><div class="stat">活動期間<b>9/1–12/31</b></div><div class="stat">合作站點<b>7,000+</b></div><div class="stat">官方檢查<b>4大項</b></div><div class="stat">你的成本<b>約一次停車時間</b></div></div><div class="note ok">這個活動不是只給老車或已經故障的車。對通勤族來說，最實用的價值是把「平常根本不會主動看」的項目一次交給專業人員確認。</div></section>
+<section class="card"><h2>4｜把「有空再去」變成這週末</h2><div class="actions"><button onclick="downloadWeekend()">加入下一個週六的健檢提醒</button><a class="btn ghost" target="_blank" rel="noopener" href="https://roadsafetymonth115.thb.gov.tw/health-stations" onclick="track('station-map-2')">先找附近合作車行</a></div><div class="note info">官方活動期間到 12/31；如果你現在沒有紅旗，不需要今天硬擠時間，但最好直接排一個具體日期，不然「免費健檢」很容易一路拖過年底。</div></section>
+<section class="card"><h2>5｜一鍵揪室友／同學／同事一起去</h2><textarea id="share">【這週一起去免費機車健檢？】
+9/1–12/31 全臺有超過 7,000 家合作車行做免費機車健檢，官方檢查四項：
+・輪胎
+・車燈
+・潤滑油
+・煞車
+
+不用等車壞掉才去。我想這週找一家附近的，一起把車騎去看一下。
+
+官方健檢站：
+https://roadsafetymonth115.thb.gov.tw/health-stations
+
+MotoCheck 7000：
+https://allen3429.github.io/Allentrial20260812.github.io/public-good/motocheck-7000/</textarea><div class="actions"><button class="ghost" onclick="copyText('share');track('share-copy')">複製揪團訊息</button></div></section>
+<section class="card"><h2>6｜一鍵產生自己的健檢卡</h2><textarea id="card"></textarea><div class="actions"><button onclick="buildCard(true)">更新健檢卡</button><button class="ghost" onclick="copyText('card')">複製</button></div></section>
+<section class="card"><h2>7｜這個工具刻意不做</h2><div class="note"><ul><li>不收車牌、姓名、電話、精確位置、維修紀錄或發票。</li><li>不靠照片 AI 判斷煞車、胎體或機械狀況；這些需要實車檢查。</li><li>不把「自查正常」寫成「安全保證」；自查只是幫你決定何時去專業檢查。</li><li>不替任何車行背書；合作站點以交通安全月官方查詢為準。</li></ul></div></section>
+<section class="card"><h2>8｜真實使用驗證</h2><p>這輪真正追：<strong>完成四項快篩 → 找到官方合作站 → 真的去免費健檢 → 發現原本沒注意到的問題</strong>。</p><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/81">MotoCheck 7000 回饋區 #81</a></div></section>
+<section class="card"><h2>9｜官方入口</h2><div class="actions"><a class="btn" target="_blank" rel="noopener" href="https://roadsafetymonth115.thb.gov.tw/health-stations" onclick="track('station-map-3')">免費健檢站查詢</a><a class="btn ghost" target="_blank" rel="noopener" href="https://roadsafetymonth115.thb.gov.tw/" onclick="track('traffic-month')">2026 交通安全月</a></div></section>
+</main>
+<script>
+const $=id=>document.getElementById(id);const ids=['tire','light','brake','oil'];
+function screen(countCore){const v=Object.fromEntries(ids.map(id=>[id,$(id).value]));const critical=v.brake==='critical'||v.tire==='warn'||v.light==='warn';const unknown=ids.filter(id=>v[id]==='unknown').length;const warnings=ids.filter(id=>v[id]==='warn').length;let cls='ok',title='🟢 沒抓到明顯紅旗，但還是值得用掉免費健檢',msg='把官方合作站找好，安排在這週或下一個方便的時段。';if(critical){cls='bad';title='🔴 今天優先處理，不要繼續拖';msg='你勾選到煞車、輪胎或燈具的明顯異常。先由專業人員檢查；若已影響煞車或輪胎安全，不要勉強騎去車行。'}else if(warnings||unknown){cls='warn';title='🟡 本週去免費健檢最划算';msg=`你有 ${warnings} 個可疑項目、${unknown} 個「不確定」。不確定本身就是很好的健檢理由。`}$('result').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;buildCard(false);if(countCore&&window.PGLabImpact)PGLabImpact.core('four-item-screen');return{v,critical,warnings,unknown,title,msg}}
+function buildCard(countCore){const r=screenNoLoop();const name={tire:'輪胎',light:'車燈',brake:'煞車',oil:'潤滑油'};const lines=ids.map(id=>`・${name[id]}：${r.v[id]==='ok'?'目前自查正常':r.v[id]==='unknown'?'不確定':'有可疑／異常'}`);$('card').value=`【MotoCheck 7000｜我的機車免費健檢卡】
+判斷：${r.title}
+
+四項自查：
+${lines.join('\n')}
+
+下一步：
+${r.critical?'・優先由專業人員檢查；若煞車／輪胎已影響安全，避免勉強騎乘。':'・打開官方地圖，找一家方便的合作車行。'}
+・活動期間：2026/9/1–12/31
+・官方免費健檢：輪胎、車燈、潤滑油、煞車
+・後續若涉及付費維修，先確認項目與價格再決定。
+
+官方 7,000+ 健檢站：
+https://roadsafetymonth115.thb.gov.tw/health-stations
+
+本工具不保存車牌、姓名、電話、位置或維修紀錄。`;if(countCore&&window.PGLabImpact)PGLabImpact.core('inspection-card')}
+function screenNoLoop(){const v=Object.fromEntries(ids.map(id=>[id,$(id).value]));const critical=v.brake==='critical'||v.tire==='warn'||v.light==='warn';const unknown=ids.filter(id=>v[id]==='unknown').length;const warnings=ids.filter(id=>v[id]==='warn').length;let title='🟢 沒抓到明顯紅旗，但還是值得用掉免費健檢';if(critical)title='🔴 今天優先處理，不要繼續拖';else if(warnings||unknown)title='🟡 本週去免費健檢最划算';return{v,critical,unknown,warnings,title}}
+function nextSaturday(){const now=new Date(),d=new Date(now);const delta=(6-d.getDay()+7)%7||7;d.setDate(d.getDate()+delta);d.setHours(10,0,0,0);return d}function fmtICS(d){const p=n=>String(n).padStart(2,'0');return `${d.getFullYear()}${p(d.getMonth()+1)}${p(d.getDate())}T${p(d.getHours())}${p(d.getMinutes())}00`}
+function downloadWeekend(){const d=nextSaturday(),end=new Date(d.getTime()+45*60000);const ics=`BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//MotoCheck7000//TW\r\nBEGIN:VEVENT\r\nDTSTART;TZID=Asia/Taipei:${fmtICS(d)}\r\nDTEND;TZID=Asia/Taipei:${fmtICS(end)}\r\nSUMMARY:去做免費機車健檢\r\nDESCRIPTION:2026交通安全月全民機車免費健檢：輪胎、車燈、潤滑油、煞車。先查合作站：https://roadsafetymonth115.thb.gov.tw/health-stations\r\nEND:VEVENT\r\nEND:VCALENDAR`;const blob=new Blob([ics],{type:'text/calendar;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='motocheck-this-saturday.ics';a.click();URL.revokeObjectURL(a.href);if(window.PGLabImpact)PGLabImpact.core('weekend-reminder')}
+function track(label){if(window.PGLabImpact)PGLabImpact.core(label)}async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}ids.forEach(id=>$(id).addEventListener('change',()=>screen(false)));screen(false);
+</script>
+<script src="../impact.js" data-project="motocheck-7000" data-action-text="我已完成機車四項安全快篩" data-real-text="我已真的到合作車行完成免費機車健檢" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/81"></script>
+</body></html>
