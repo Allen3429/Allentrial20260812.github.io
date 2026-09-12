@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="holiday928">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Holiday928：2026中秋節與教師節國定假日班表、調移與出勤工資前篩。">
+<title>Holiday928｜9/25・9/28 國定假日權益防漏</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#687480;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#a32323;--info:#285c8d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1120px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}h1{font-size:clamp(38px,7vw,64px);line-height:1.03;margin:.12em 0 .25em}.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:1000px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:12px 14px;border-radius:9px;line-height:1.7;margin:10px 0}.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}.info{border-left-color:var(--info)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:10px}label{display:block;font-weight:800;margin-bottom:6px}select,input,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}textarea{min-height:260px;resize:vertical}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}.big{font-size:clamp(24px,4vw,34px);font-weight:950}.money{font-size:clamp(34px,7vw,56px);font-weight:1000}.small{font-size:13px;color:var(--muted);line-height:1.65}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:9px}.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:22px;margin-top:4px}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style></head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · 勞動部 2026/09/11 最新連假工資說明</div>
+<h1>Holiday928<br>9/25、9/28 都是國定假日。<br>先看你的班表，再看工資。</h1>
+<p class="lead">2026 年 <strong>9/25 中秋節（星期五）</strong>與<strong>9/28 教師節（星期一）</strong>都是國定假日。對一般週一到週五工作者會形成 4 天連假，但排班、餐飲、零售、醫療與工讀族最容易搞錯：這一天在你的個人班表上原本是工作日、休息日還是例假？公司有沒有經你個別同意把國定假日調移？</p>
+
+<section class="card"><h2>1｜先分清你這一天的法律性質</h2>
+<div class="grid">
+<div><label>要檢查哪一天？</label><select id="date"><option value="0925">9/25 中秋節</option><option value="0928">9/28 教師節</option></select></div>
+<div><label>這一天在你「原本班表」上是？</label><select id="daytype"><option value="work">原約定工作日</option><option value="rest">休息日</option><option value="regular">例假</option><option value="unknown">不確定</option></select></div>
+<div><label>公司有說把這個國定假日調到別天嗎？</label><select id="moved"><option value="no">沒有</option><option value="yes">有，而且我知道替代休假日</option><option value="vague">公司說有調，但沒說清楚哪天／我沒個別同意</option><option value="unknown">不確定</option></select></div>
+<div><label>若有明確調移，替代休假日</label><input id="movedDate" type="date"></div>
+</div><div id="routeOut"></div></section>
+
+<section class="card"><h2>2｜先記住 4 個不容易踩錯的規則</h2>
+<div class="stats"><div class="stat">國定假日原工作日<b>休假＋工資照給</b></div><div class="stat">同意出勤 8 小時內<b>加發 1 日工資</b></div><div class="stat">碰到休息日／例假<b>另補假</b></div><div class="stat">國定假日調移<b>要個別同意＋明確日期</b></div></div>
+<div class="note warn">「公司公告統一調移」不等於一定完成合法調移。勞動部說明，國定假日與工作日對調涉及個別勞動條件變更，仍應徵得勞工<strong>個人同意</strong>，並明確指出調移後真正休假的工作日。</div></section>
+
+<section class="card"><h2>3｜月薪制標準 8 小時情境：算這天如果上班，至少多多少</h2>
+<div class="grid"><div><label>月工資（NT$）</label><input id="monthly" type="number" min="0" step="100" value="36000"></div><div><label>這天實際工作幾小時？</label><input id="hours" type="number" min="0" max="12" step="0.5" value="8"></div></div>
+<div id="moneyOut"></div>
+<div class="note info">這個計算只適用「月薪制、每日正常工時 8 小時、這一天原本是工作日、沒有有效調移」的前篩。若原本是休息日／例假、輪班、變形工時、84條之1或其他特殊制度，直接改用勞動部官方試算／1955。</div></section>
+
+<section class="card"><h2>4｜時薪／工讀生也有國定假日權益</h2>
+<div class="grid"><div><label>約定時薪（NT$）</label><input id="hourly" type="number" min="0" step="1" value="196"></div><div><label>這天原本排定正常工時（小時）</label><input id="scheduled" type="number" min="0" max="8" step="0.5" value="4"></div></div>
+<div id="hourlyOut"></div>
+<div class="note info">按時計酬的最低時薪並沒有把「國定假日工資」折進去。若國定假日原本就是你的工作日，仍有休假工資權益；若受雇主同意要求於國定假日出勤，還有加倍工資規則。排班很零碎時，請用實際約定工時與官方／1955再核對。</div></section>
+
+<section class="card"><h2>5｜四天連假不是四天都用同一種算法</h2>
+<div class="note info">以一般「週一至週五工作、週六休息日、週日例假」為例：<br><b>9/25（五）中秋節：</b>國定假日。<br><b>9/26（六）：</b>休息日。<br><b>9/27（日）：</b>例假，原則上非天災、事變或突發事件不得使勞工出勤。<br><b>9/28（一）教師節：</b>國定假日。</div>
+<div class="actions"><a class="btn" target="_blank" rel="noopener" href="https://www.mol.gov.tw/1607/1632/1633/99001/post" onclick="track('latest-mol')">勞動部 9/11 最新說明</a><a class="btn ghost" target="_blank" rel="noopener" href="https://www.mol.gov.tw/1607/28162/28166/28180/81521/81533/" onclick="track('holiday-pay')">國定假日工資說明</a><a class="btn ghost" href="tel:1955">1955</a></div></section>
+
+<section class="card"><h2>6｜一鍵產生「請 HR 幫我確認」核對卡</h2>
+<textarea id="card"></textarea><div class="actions"><button onclick="buildCard(true)">更新核對卡</button><button class="ghost" onclick="copyText('card')">複製</button></div></section>
+
+<section class="card"><h2>7｜這個工具刻意不做</h2><div class="note"><ul>
+<li>不收姓名、公司名、員工編號、薪資單、打卡紀錄、帳戶或身分資料。</li><li>不替公司或勞政機關認定你的彈性／變形工時制度是否合法。</li><li>不把「公司有公告」直接視為你已同意國定假日調移。</li><li>不把前篩金額直接寫成「公司欠薪」；正式仍要核對班表、協議與工資資料。</li>
+</ul></div></section>
+
+<section class="card"><h2>8｜真實使用驗證</h2><p>這輪真正追：<strong>原本搞不清楚 → 確認日別 → 確認是否真的調移 → 算出工資／補假 → 真的向 HR、1955 或地方勞政核對</strong>。</p><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/94">Holiday928 回饋區 #94</a></div></section>
+
+<section class="card"><h2>9｜可直接轉給同事／工讀群</h2><textarea id="share">【9/25中秋＋9/28教師節都是國定假日｜不要把4天連假全用同一種算法】
+
+2026年勞動部最新提醒：
+・9/25（五）中秋節：國定假日
+・9/26（六）：若你的班表是週六休息日，就用休息日規則
+・9/27（日）：若是例假，原則上非特殊狀況不得出勤
+・9/28（一）教師節：國定假日
+
+如果國定假日原本是你的工作日：應休假、工資照給；經你同意出勤，8小時內應加倍發給。
+
+如果公司說「我們把928移到別天」：國定假日調移涉及個別勞動條件變更，需要勞工個人同意，而且要講清楚真正替代的休假日。
+
+Holiday928：
+https://allen3429.github.io/Allentrial20260812.github.io/public-good/holiday928/
+
+勞動部9/11最新說明：
+https://www.mol.gov.tw/1607/1632/1633/99001/post
+
+1955勞工諮詢
+
+公開回饋不要貼公司名、薪資單、班表截圖或員工個資。</textarea><div class="actions"><button class="ghost" onclick="copyText('share');track('share-copy')">複製轉貼文</button></div></section>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+function route(){
+ const d=$('date').value,t=$('daytype').value,m=$('moved').value,md=$('movedDate').value;
+ let cls='info',title='先確認班表與是否調移',msg='';
+ const day=d==='0925'?'9/25 中秋節':'9/28 教師節';
+ if(t==='unknown'){cls='warn';title='🟡 先確認這天在你的班表上原本是哪種日別';msg='同一個曆日，對不同排班者可能是工作日、休息日或例假，算法會不同。';}
+ else if(m==='vague'){cls='bad';title='🔴 「公司說有調」還不夠';msg='國定假日調移應徵得勞工個人同意，並明確指出哪一個原工作日改成國定假日休假。先請公司說清楚日期與你的同意紀錄。';}
+ else if(m==='yes'&&!md){cls='warn';title='🟡 已勾選調移，但還沒有替代日期';msg='有效調移的核心不是口頭說「之後再補」，而是有明確休假日。';}
+ else if(m==='yes'&&md){cls='ok';title='🟢 若調移有效，原 '+day+' 會成為一般工作日';msg=`你填的替代國定假日是 ${md}。該替代日才具有國定假日性質；若替代日再出勤，才用國定假日出勤規則。`;}
+ else if(t==='work'){cls='ok';title='🟢 '+day+' 原本是工作日：應休假、工資照給';msg='若雇主徵得你同意當天出勤，8小時內應依法加倍發給工資。';}
+ else if(t==='rest'){cls='warn';title='🟡 '+day+' 撞到你的休息日：應另給補假';msg='補假應排在其他工作日，補假當天本身就是國定假日；9/25或9/28本日則先依原休息日性質處理。';}
+ else if(t==='regular'){cls='warn';title='🟡 '+day+' 撞到你的例假：應另給補假';msg='補假排在其他工作日；原例假原則上非天災、事變或突發事件不得使勞工出勤。';}
+ $('routeOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;
+ return {d,t,m,md,day,title,msg};
+}
+function money(){
+ const monthly=Math.max(0,Number($('monthly').value)||0),hours=Math.max(0,Number($('hours').value)||0),r=route();
+ const dayPay=monthly/30,hour=monthly/240;let extra=0,msg='',supported=r.t==='work'&&r.m==='no';
+ if(supported){
+   if(hours===0){msg='當天休假，月薪不得因國定假日被扣減；沒有額外出勤加發。';}
+   else {extra=dayPay;if(hours>8){const ot=Math.min(hours-8,2)*hour*(4/3)+Math.min(Math.max(hours-10,0),2)*hour*(5/3);extra+=ot;msg=`8小時內前篩加發1日工資約 NT$${Math.round(dayPay).toLocaleString()}；超過8小時部分再依延長工時倍率計。`; } else msg=`即使當天出勤未滿8小時，國定假日出勤在8小時內的前篩仍是加發1日工資約 NT$${Math.round(dayPay).toLocaleString()}。`;}
+ } else msg='目前日別或調移狀態不屬本計算器支援的「原工作日＋未調移」情境；請依上方分流使用官方規則。';
+ $('moneyOut').innerHTML=`<div class="note ${supported?'ok':'info'}"><div class="money">${supported?'額外約 NT$'+Math.round(extra).toLocaleString():'—'}</div>${msg}<br><span class="small">月工資 ÷ 30 = 1日工資；月工資 ÷ 240 = 平日每小時工資額。這是標準8小時月薪制前篩。</span></div>`;
+ return {monthly,hours,dayPay,hour,extra,supported};
+}
+function hourlyCalc(){
+ const rate=Math.max(0,Number($('hourly').value)||0),scheduled=Math.max(0,Number($('scheduled').value)||0),r=route();
+ let msg='',cls='info';const holidayPay=rate*scheduled;
+ if(r.t==='work'&&r.m==='no'){cls='ok';msg=`如果這天原本排定 ${scheduled} 小時工作，休國定假日的工資前篩約 NT$${Math.round(holidayPay).toLocaleString()}。若又經同意於國定假日出勤，還有加倍工資規則；零碎排班請以原約定工時向官方再核對。`;}
+ else msg='時薪制也要先看這天原本是否有出勤義務，以及是否有有效調移；目前情境先依上方分流，不直接硬算。';
+ $('hourlyOut').innerHTML=`<div class="note ${cls}">${msg}</div>`;return {rate,scheduled,holidayPay};
+}
+function buildCard(countCore){
+ const r=route(),m=money(),h=hourlyCalc();
+ $('card').value=`【Holiday928｜國定假日班表核對卡】\n日期：${r.day}\n原班表日別：${r.t==='work'?'工作日':r.t==='rest'?'休息日':r.t==='regular'?'例假':'不確定'}\n公司是否主張調移：${r.m==='no'?'沒有':r.m==='yes'?'有，替代日 '+(r.md||'未填'):r.m==='vague'?'有說，但未明確／未個別同意':'不確定'}\n\n前篩：\n${r.title}\n${r.msg}\n\n若為月薪制標準8小時、原工作日且未調移：\n・月工資：NT$${m.monthly.toLocaleString()}\n・當日實際出勤：${m.hours}小時\n・國定假日出勤額外工資前篩：${m.supported?'約 NT$'+Math.round(m.extra).toLocaleString():'不適用本簡化試算'}\n\n我想請HR／主管確認：\n1. 9/25或9/28在我的個人班表原本是哪種日別？\n2. 若公司主張國定假日調移，替代休假日是哪一天？我何時表示個人同意？\n3. 若原本是休息日／例假，補假排在哪一個工作日？\n4. 若國定假日出勤，工資如何列在薪資單？\n\n官方最新說明：\nhttps://www.mol.gov.tw/1607/1632/1633/99001/post\n1955勞工諮詢\n\n提醒：不要把公司名、薪資單、班表或員工個資貼到公開回饋。`;
+ if(countCore&&window.PGLabImpact)PGLabImpact.core('audit-card');
+}
+function track(label){if(window.PGLabImpact)PGLabImpact.core(label)}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+['date','daytype','moved','movedDate'].forEach(id=>$(id).addEventListener('change',()=>buildCard(false)));
+['monthly','hours','hourly','scheduled'].forEach(id=>$(id).addEventListener('input',()=>buildCard(false)));
+buildCard(false);
+</script>
+<script src="../impact.js" data-project="holiday928" data-action-text="我已完成9/25或9/28日別＋調移＋工資前篩" data-real-text="我已真的確認班表／調移日／補假／向HR或1955核對" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/94"></script>
+</body></html>
