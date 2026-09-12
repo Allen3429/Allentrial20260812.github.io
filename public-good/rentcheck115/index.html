@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="rentcheck115">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="RentCheck 115：2026新學期租屋前，先確認這間房能不能申請租金補貼；同時檢查房東同意、合租與電費條款。">
+<title>RentCheck 115｜簽約前先查這間房能不能拿租補</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#a32323;--info:#285c8d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1080px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}h1{font-size:clamp(38px,7vw,62px);line-height:1.04;margin:.15em 0 .25em}
+.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:970px}.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:12px 14px;border-radius:9px;line-height:1.7;margin:10px 0}.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}.info{border-left-color:var(--info)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(225px,1fr));gap:10px}label{display:block;font-weight:800;margin:7px 0 6px}select,input,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}textarea{min-height:260px;resize:vertical}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}
+.big{font-size:clamp(24px,4vw,34px);font-weight:950}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:9px}.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:22px;margin-top:4px}
+.small{font-size:13px;color:var(--muted);line-height:1.65}.q{border:1px solid var(--line);border-radius:14px;padding:12px;margin:8px 0}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · 115年度租金補貼新制 · 新學期租屋前版</div>
+<h1>RentCheck 115<br>先別急著簽。<br>先查這間房能不能拿租補。</h1>
+<p class="lead">2026年起，新申請「300億元中央擴大租金補貼」的租屋，房屋本身多了一道關卡：必須具<strong>房屋稅籍</strong>，且<strong>已保存登記或有合法建築證明</strong>。未保存登記的頂樓加蓋等新案可能直接被擋。這個工具不收地址，只幫你在簽約前把最容易漏的5件事查完。</p>
+<section class="card"><h2>1｜先分清你是新案還是舊案</h2><div class="grid">
+<div><label>你的情況最接近哪一種？</label><select id="caseType"><option value="new">115年度新申請／以前沒有這個地址的租補</option><option value="same">114年度已核定，115年度仍是同一租屋地址</option><option value="move">114年度已核定，但115年度要換租屋地址</option><option value="unknown">不確定</option></select></div>
+<div><label>房屋有「房屋稅籍」嗎？</label><select id="tax"><option value="yes">房東／仲介可確認有</option><option value="no">確認沒有</option><option value="unknown">還沒確認</option></select></div>
+<div><label>有保存登記，或可提出合法建築證明嗎？</label><select id="legal"><option value="yes">有／可提出</option><option value="no">確認沒有</option><option value="unknown">還沒確認</option></select></div>
+<div><label>是否屬於未保存登記的頂樓加蓋等空間？</label><select id="top"><option value="no">不是／不知道</option><option value="yes">是</option></select></div></div><div id="eligOut"></div></section>
+<section class="card"><h2>2｜今年最關鍵的規則</h2><div class="stats"><div class="stat">115年度申請期間<b>1/1–12/31</b></div><div class="stat">一般月補貼<b>2,000–8,000元</b></div><div class="stat">房東同意<b>不需要</b></div><div class="stat">新案建物條件<b>要先查</b></div></div><div class="note warn"><b>舊案有過渡，不等於換房也能沿用。</b>114年度已核定、115年度同址續租且審查合格者，可不受新制建物條件限制，最長續領至115年12月31日；但只要換地址，新租屋就要符合新制。</div><div class="actions"><a class="btn" target="_blank" rel="noopener" href="https://has.nlma.gov.tw/house300e/" onclick="track('house300')">國土署115年度租金補貼專區</a><a class="btn ghost" target="_blank" rel="noopener" href="https://pip.moi.gov.tw/v3/B/SCRB0102.aspx" onclick="track('subsidy')">不動產資訊平台｜租金補貼</a></div></section>
+<section class="card"><h2>3｜房東說「不准申請租補」？先不要被嚇退</h2><div class="grid"><div><label>房東／仲介有沒有說「不能申請租金補貼」？</label><select id="ban"><option value="no">沒有</option><option value="yes">有</option></select></div><div><label>是否說「你申請就漲租／把增加的稅轉嫁給你」？</label><select id="retaliate"><option value="no">沒有</option><option value="yes">有</option></select></div></div><div id="rightsOut"></div><div class="note info">政府消保資訊已明確說明：房客申請租金補貼<strong>不需要房東事先同意</strong>。租賃期間內，房東也不能因房客申請租補就片面調漲租金，或以不當方式提前終止租約。</div><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://www.cip.gov.tw/zh-tw/news/data-list/6EBE68EA8288674E/7897B0E557862BD5F6BA256524B47291-info.html" onclick="track('tenant-rights')">政府｜房客申請租補無須房東同意</a></div></section>
+<section class="card"><h2>4｜合租學生：兩個人都想申請，重點是「都要寫在租約」</h2><div class="grid"><div><label>是否和朋友／同學合租？</label><select id="share"><option value="no">不是</option><option value="yes">是</option></select></div><div><label>需要申請補貼的人，都有被列為租約承租人嗎？</label><select id="named"><option value="yes">有</option><option value="no">沒有</option><option value="unknown">還沒簽／還不確定</option></select></div></div><div id="shareOut"></div><div class="note warn">同一租約若有2人以上承租人，可各自申請，但前提是真實租屋、租約確實載明。不要為了補貼製作人頭或虛假租約；國土署目前會比對異常多人申請與租屋事實。</div></section>
+<section class="card"><h2>5｜簽約前順手把電費也問清楚</h2><div class="grid"><div><label>房東怎麼收電費？</label><select id="power"><option value="meter">按用電度數計費</option><option value="flat">每期固定／其他方式</option><option value="unknown">還沒談</option></select></div><div><label>願意提供電費單／讓你知道當期平均每度電價嗎？</label><select id="bill"><option value="yes">願意</option><option value="no">不願意</option><option value="unknown">還沒問</option></select></div><div><label>另外收「公共電費」嗎？</label><select id="common"><option value="no">沒有／已併入台電分攤</option><option value="yes">另外收，但不知道是否有併入台電帳單</option><option value="unknown">還沒問</option></select></div></div><div id="powerOut"></div><div class="note info">目前住宅租賃電費規則：若按度數計費，每度不得超過該租賃標的電費單「當期每度平均電價」；若公共設施電費沒有向台電申辦分攤並併入該租賃標的電費單，房東不得另外收取。</div><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://www.klcg.gov.tw/tw/klland/2312-290477.html" onclick="track('electricity')">政府｜租屋電費新制說明</a></div></section>
+<section class="card"><h2>6｜簽約前5問：直接拿去問房東／仲介</h2><div class="q">1. 這間房有房屋稅籍嗎？</div><div class="q">2. 有建物保存登記，或可提供合法建築證明嗎？</div><div class="q">3. 如果我申請租金補貼，租約條件與租金不會因此改變，對嗎？</div><div class="q">4. 如果是合租，需要申請租補的人都可以列在承租人欄位嗎？</div><div class="q">5. 電費若按度數收，會依台電帳單「當期每度平均電價」計收，並提供電費資訊嗎？</div><div class="actions"><button onclick="copyQuestions()">複製5問</button></div></section>
+<section class="card"><h2>7｜一鍵產生「這間房簽不簽」確認卡</h2><textarea id="card"></textarea><div class="actions"><button onclick="buildCard(true)">更新確認卡</button><button class="ghost" onclick="copyText('card')">複製</button></div></section>
+<section class="card"><h2>8｜這個工具刻意不收</h2><div class="note"><ul><li>不收精確地址、房東姓名／電話、建號、房屋稅籍號碼。</li><li>不要求上傳租約、謄本、電費單、身分證或銀行資料。</li><li>不替政府正式判定建物是否合法；不確定就用國土署專區的官方查詢。</li><li>不鼓勵製作人頭、假租約或不實申請。</li></ul></div></section>
+<section class="card"><h2>9｜真實使用驗證</h2><p>這輪真正追：<strong>簽約前發現補貼風險 → 問清楚建物／租補／電費 → 真的改租屋決策、完成申請或更正不合理條款。</strong></p><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/104">RentCheck 115 回饋區 #104</a></div></section>
+<section class="card"><h2>10｜可直接轉給新生／租屋群</h2><textarea id="shareText">【2026新學期租屋｜先查這間房能不能拿租補再簽】
+
+今年起，新申請300億元租金補貼的房子要先過建物條件：
+・有房屋稅籍
+・有保存登記，或有合法建築證明
+
+未保存登記的頂樓加蓋等，新案可能不能申請。
+如果你是114年已核定的舊戶，同址續租有過渡；但一換地址，新房子就要符合新制。
+
+另外：
+・申請租補不需要房東同意
+・房東不能因你申請租補就在租期中片面漲租
+・合租者要各自申請，記得需要申請的人都要列在租約承租人
+・按度數收電費時，每度不得超過台電帳單「當期每度平均電價」
+
+RentCheck 115：
+https://allen3429.github.io/Allentrial20260812.github.io/public-good/rentcheck115/
+
+官方115年度租金補貼：
+https://has.nlma.gov.tw/house300e/
+
+公開回饋不要貼地址、租約、房東姓名電話或建物資料。</textarea><div class="actions"><button class="ghost" onclick="copyText('shareText');track('share-copy')">複製轉貼文</button></div></section>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+function eligibility(){const c=$('caseType').value,t=$('tax').value,l=$('legal').value,top=$('top').value;let cls='warn',title='🟡 簽約前先查建物條件',msg='';if(c==='same'){cls='info';title='🔵 你可能屬114年度舊案同址過渡';msg='若114年度已核定、115年度仍是同一租賃地址且審查合格，可不受新制建物條件限制，最長續領至115年12月31日。';}else if(c==='new'||c==='move'){if(t==='yes'&&l==='yes'&&top!=='yes'){cls='ok';title='🟢 建物條件前篩看起來可往下申請';msg='仍要符合所得、無自有住宅等其他資格；正式結果以國土署／地方政府審查為準。';}else if(t==='no'||l==='no'||top==='yes'){cls='bad';title='🔴 簽約前先停一下：這間房有租補新制風險';msg='115年度新案／換地址後的新租屋，若沒有房屋稅籍、沒有保存登記或合法建築證明，或屬未保存登記頂加等情況，可能無法申請。先用官方專區查證，再決定是否簽。';}else{msg='新案與換地址都要符合115年度建物條件。不要等簽完才問房東。';}}else{msg='不確定是不是舊案時，先查自己的114年度核定狀態與今年租屋地址。';}$('eligOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;return{c,t,l,top,title,msg,cls};}
+function rights(){const b=$('ban').value,r=$('retaliate').value;let cls='ok',title='🟢 租補是房客可自行申請的權利',msg='不需要先取得房東同意。';if(b==='yes'||r==='yes'){cls='bad';title='🔴 有租補阻擋紅旗';msg='政府消保資訊明確說明：房東不得藉禁止申請、租期中片面調漲租金或不當提前終止租約來阻擋房客申請。保留對話紀錄，必要時向地方地政或消保官申訴。';}$('rightsOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;return{b,r,title,msg};}
+function sharing(){const s=$('share').value,n=$('named').value;let cls='info',msg='單人租屋不用處理合租欄位。';if(s==='yes'&&n==='yes'){cls='ok';msg='🟢 合租者都列在租約承租人：可各自依自身資格申請。仍須有真實租屋事實。';}else if(s==='yes'&&n!=='yes'){cls='warn';msg='🟡 簽約前先把承租人欄位談清楚。若兩人都要申請，租約應實際載明承租人；不要事後做虛假租約。';}$('shareOut').innerHTML=`<div class="note ${cls}">${msg}</div>`;return{s,n,msg};}
+function power(){const p=$('power').value,b=$('bill').value,c=$('common').value;let cls='ok',msg='目前沒有看到明顯電費紅旗。';if(p==='meter'&&(b==='no'||c==='yes')){cls='warn';msg='🟡 簽約前把電費寫清楚：按度數收費不得高於電費單當期每度平均電價；要求房東提供可核對的電費資訊。未併入台電帳單的公共設施電費，不應另外收。';}else if(p==='unknown'||b==='unknown'||c==='unknown'){cls='info';msg='🔵 還沒談電費，現在正是最好問的時候。把計價方式、台電當期平均電價與公共電費寫進租約。';}$('powerOut').innerHTML=`<div class="note ${cls}">${msg}</div>`;return{p,b,c,msg};}
+function buildCard(countCore){const e=eligibility(),r=rights(),s=sharing(),p=power();$('card').value=`【RentCheck 115｜簽約前確認卡】\n這是前篩，不保存地址，也不是正式核定。\n\n租金補貼建物條件：\n${e.title}\n${e.msg}\n\n房東／租補權利：\n${r.title}\n${r.msg}\n\n合租：\n${s.msg}\n\n電費：\n${p.msg}\n\n簽約前我要確認：\n1. 有房屋稅籍。\n2. 有保存登記，或可提供合法建築證明。\n3. 房東不會因我申請租補而改租金／阻止申請。\n4. 合租者若都要申請，租約承租人要如實列名。\n5. 按度數收電費時，以台電帳單「當期每度平均電價」為上限，且可以查看電費資訊。\n\n官方115年度租金補貼專區：\nhttps://has.nlma.gov.tw/house300e/\n\n租補諮詢：02-7729-8003\n\n請不要把精確地址、房東姓名電話、租約、謄本或電費單貼到公開回饋。`;if(countCore&&window.PGLabImpact)PGLabImpact.core('presign-card');}
+function copyQuestions(){const t=`簽約前想先確認5件事：\n1. 這間房有房屋稅籍嗎？\n2. 有建物保存登記，或可提供合法建築證明嗎？\n3. 如果我申請租金補貼，租約條件與租金不會因此改變，對嗎？\n4. 如果是合租，需要申請租補的人都可以列在承租人欄位嗎？\n5. 電費若按度數收，會依台電帳單「當期每度平均電價」計收，並提供電費資訊嗎？`;navigator.clipboard.writeText(t).then(()=>alert('已複製')).catch(()=>prompt('複製以下文字：',t));if(window.PGLabImpact)PGLabImpact.core('five-questions');}
+function track(label){if(window.PGLabImpact)PGLabImpact.core(label)}async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+['caseType','tax','legal','top','ban','retaliate','share','named','power','bill','common'].forEach(id=>$(id).addEventListener('change',()=>buildCard(false)));buildCard(false);
+</script>
+<script src="../impact.js" data-project="rentcheck115" data-action-text="我已完成租補建物條件＋房東權利＋電費前篩" data-real-text="我已真的向房東／仲介確認建物文件／改變租屋決策／完成租補申請／要求正確電費資訊" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/104"></script>
+</body></html>
