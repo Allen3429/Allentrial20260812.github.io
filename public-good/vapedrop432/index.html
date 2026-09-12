@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="VapeDrop 432：電子煙匿名退出工具。2026/9/8起國健署設置回收點，9/9更新為全臺432處；不記名、不留個資，並釐清現行禁用與持有罰則仍屬修法草案。">
-<title>VapeDrop 432｜匿名把電子煙交出去</title>
+<meta name="description" content="VapeDrop：電子煙匿名退出工具。2026/9/8起國健署設置全臺431處起跑回收點；不記名、不留個資，並釐清現行禁用與持有罰則仍屬修法草案。據點以官方即時清單為準。">
+<title>VapeDrop｜匿名把電子煙交出去</title>
 <style>
 :root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#687480;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#a32323;--info:#285c8d}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
@@ -20,103 +20,21 @@
 </head>
 <body><main class="wrap">
 <div class="kicker">Public Good Lab · 國健署電子煙回收新制 · 2026/09/12</div>
-<h1>VapeDrop 432<br>不用具名。<br>把電子煙安全交出去。</h1>
-<p class="lead">國健署自 2026/9/8 起設置電子煙回收點，官方清單在 9/9 新增桃園市婦幼衛生所後，總計已更新為 <strong>432 處</strong>。投遞<strong>不記名、不要求個資</strong>。這個工具只幫你把「現在法律到哪裡、怎麼找官方回收點、怎麼避免漏液碰撞、如果想戒怎麼接上資源」一次整理好。</p>
-
-<section class="card">
-<h2>1｜先釐清：現行規定 vs. 還在修法的「持有」罰則</h2>
-<div class="stats">
-<div class="stat">電子煙使用<b>現行已禁止</b></div>
-<div class="stat">持有罰則<b>目前仍是修法草案</b></div>
-<div class="stat">官方回收點<b>432處</b></div>
-<div class="stat">投遞個資<b>不用提供</b></div>
-</div>
-<div class="note warn"><b>不要把草案說成已經生效。</b>截至 2026/9/12，衛福部公開說明仍是「修正草案已由行政院通過並送立法院審議」，正式施行日期尚未確定。</div>
-<div class="note info">草案目前規劃：未來若修法完成並施行，自施行日起有 1 個月緩衝期；緩衝期後若仍持有電子煙，規劃處 3 萬至 10 萬元罰鍰並沒入物品。現行法律已禁止電子煙的製造、輸入、販賣、供應、展示、廣告及使用。</div>
-</section>
-
-<section class="card">
-<h2>2｜你現在是哪種情況？</h2>
-<div class="grid">
-<div><label>目前手邊是否有電子煙／煙彈／煙油相關物品？</label>
-<select id="holding"><option value="yes">有，想處理掉</option><option value="friend">我是在幫家人／朋友找資訊</option><option value="no">沒有，只想知道規則</option></select></div>
-<div><label>物品目前是否有明顯漏液／破損？</label>
-<select id="damage"><option value="no">沒有明顯漏液或破損</option><option value="yes">有漏液／破損</option><option value="unknown">不確定</option></select></div>
-<div><label>是否也想獲得戒菸／戒尼古丁支持？</label>
-<select id="quit"><option value="no">目前只想完成回收</option><option value="yes">需要</option><option value="friend">替家人／朋友找</option></select></div>
-</div>
-<div id="routeOut"></div>
-</section>
-
-<section class="card">
-<h2>3｜官方投遞流程，壓成3步</h2>
-<div class="steps">
-<div class="step"><b>找官方點</b><br>進國健署「全臺電子煙回收桶據點」，按縣市打開清單。投遞時間依各回收點機關上班服務時間。</div>
-<div class="step"><b>妥善包裝</b><br>官方提醒：確認機身與煙油已妥善包裝，避免煙油外漏或碰撞危險。若已明顯漏液或破損，先打電話向欲前往的衛生局／衛生所確認再運送，不要自行拆解處理。</div>
-<div class="step"><b>匿名投遞</b><br>回收點投遞全程不記名，無須提供姓名、電話或其他個人資料。</div>
-</div>
-<div class="actions">
-<a class="btn" target="_blank" rel="noopener" href="https://www.hpa.gov.tw/Pages/List.aspx?nodeid=5089" onclick="track('official-directory')">官方432處回收點清單</a>
-<a class="btn ghost" target="_blank" rel="noopener" href="https://www.mohw.gov.tw/cp-7403-87793-1.html" onclick="track('official-news')">衛福部修法／回收說明</a>
-</div>
-</section>
-
-<section class="card">
-<h2>4｜縣市快速導航</h2>
-<label>你想查哪一縣市？</label>
-<select id="county">
-<option>臺北市</option><option>新北市</option><option>基隆市</option><option>宜蘭縣</option>
-<option>桃園市</option><option>新竹市</option><option>新竹縣</option><option>苗栗縣</option>
-<option>臺中市</option><option>彰化縣</option><option>南投縣</option><option>雲林縣</option>
-<option>嘉義市</option><option>嘉義縣</option><option>臺南市</option><option>高雄市</option>
-<option>屏東縣</option><option>花蓮縣</option><option>臺東縣</option><option>澎湖縣</option>
-<option>金門縣</option><option>連江縣</option>
-</select>
-<div class="note info" id="countyOut">選好縣市後，直接開官方清單，再在頁面點對應縣市；本工具不複製地址，避免官方增減據點後留下過期資料。</div>
-<div class="actions"><button onclick="openDirectory()">開官方清單去找這個縣市</button></div>
-</section>
-
-<section class="card">
-<h2>5｜如果「想丟掉」其實也代表想停用</h2>
-<div id="quitOut"></div>
-<div class="note ok">免費戒菸諮詢專線：<b>0800-636363</b>；官方也提供 LINE 諮詢（ID：@tsh0800636363）與全臺近 3,000 家戒菸服務機構。電子煙不是官方建議的戒菸工具。</div>
-<div class="actions"><a class="btn ghost" href="tel:0800636363" onclick="track('quit-call')">撥0800-636363</a><a class="btn ghost" target="_blank" rel="noopener" href="https://ttc.hpa.gov.tw/" onclick="track('quit-service')">查戒菸服務機構</a></div>
-</section>
-
-<section class="card">
-<h2>6｜一鍵產生「匿名回收準備卡」</h2>
-<textarea id="card"></textarea>
-<div class="actions"><button onclick="buildCard(true)">更新準備卡</button><button class="ghost" onclick="copyText('card')">複製給自己</button><button class="ghost" onclick="downloadReminder()">明天提醒我處理</button></div>
-</section>
-
-<section class="card">
-<h2>7｜給家長／老師／朋友：這樣幫，比質問有用</h2>
-<div class="note info">如果是在幫別人，重點不是逼對方交代「哪裡買、用了多久」。先把匿名回收點、官方規則與戒菸資源交給他；若涉及校園或未成年人，也不要把對方姓名、照片、聊天截圖貼到公開回饋區。</div>
-</section>
-
-<section class="card">
-<h2>8｜這個工具刻意不做</h2>
-<div class="note"><ul>
-<li>不問姓名、年齡、學校、公司、電話、精確位置或購買來源。</li>
-<li>不教如何使用、購買、改裝、補充或拆解電子煙。</li>
-<li>不要求拍照或上傳裝置、煙油、煙彈。</li>
-<li>不把「持有罰則草案」誤寫成現在已經生效。</li>
-<li>不自行維護432個地址副本；地址以國健署即時清單為準。</li>
-</ul></div>
-</section>
-
-<section class="card">
-<h2>9｜真實使用驗證</h2>
-<p>這輪真正追：<strong>知道可免具名 → 開官方清單 → 找到回收點 → 真的把物品交出去；有戒除需求者再接上戒菸服務。</strong></p>
-<div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/101">VapeDrop 432 回饋區 #101</a></div>
-</section>
-
-<section class="card">
-<h2>10｜可直接轉給朋友／家長／校園社群</h2>
-<textarea id="share">【電子煙可以免具名回收｜官方清單已更新為432處】
+<h1>VapeDrop<br>不用具名。<br>把電子煙安全交出去。</h1>
+<p class="lead">國健署自 2026/9/8 起於全臺設置電子煙回收點，官方公告為 <strong>431 處起跑</strong>；據點可能持續調整，因此本工具一律導向官方即時清單。投遞<strong>不記名、不要求個資</strong>。這個工具只幫你把「現在法律到哪裡、怎麼找官方回收點、怎麼避免漏液碰撞、如果想戒怎麼接上資源」一次整理好。</p>
+<section class="card"><h2>1｜先釐清：現行規定 vs. 還在修法的「持有」罰則</h2><div class="stats"><div class="stat">電子煙使用<b>現行已禁止</b></div><div class="stat">持有罰則<b>目前仍是修法草案</b></div><div class="stat">官方回收點<b>431處起跑</b></div><div class="stat">投遞個資<b>不用提供</b></div></div><div class="note warn"><b>不要把草案說成已經生效。</b>截至 2026/9/12，衛福部公開說明仍是「修正草案已由行政院通過並送立法院審議」，正式施行日期尚未確定。</div><div class="note info">草案目前規劃：未來若修法完成並施行，自施行日起有 1 個月緩衝期；緩衝期後若仍持有電子煙，規劃處 3 萬至 10 萬元罰鍰並沒入物品。現行法律已禁止電子煙的製造、輸入、販賣、供應、展示、廣告及使用。</div></section>
+<section class="card"><h2>2｜你現在是哪種情況？</h2><div class="grid"><div><label>目前手邊是否有電子煙／煙彈／煙油相關物品？</label><select id="holding"><option value="yes">有，想處理掉</option><option value="friend">我是在幫家人／朋友找資訊</option><option value="no">沒有，只想知道規則</option></select></div><div><label>物品目前是否有明顯漏液／破損？</label><select id="damage"><option value="no">沒有明顯漏液或破損</option><option value="yes">有漏液／破損</option><option value="unknown">不確定</option></select></div><div><label>是否也想獲得戒菸／戒尼古丁支持？</label><select id="quit"><option value="no">目前只想完成回收</option><option value="yes">需要</option><option value="friend">替家人／朋友找</option></select></div></div><div id="routeOut"></div></section>
+<section class="card"><h2>3｜官方投遞流程，壓成3步</h2><div class="steps"><div class="step"><b>找官方點</b><br>進國健署「全臺電子煙回收桶據點」，按縣市打開清單。投遞時間依各回收點機關上班服務時間。</div><div class="step"><b>妥善包裝</b><br>官方提醒：確認機身與煙油已妥善包裝，避免煙油外漏或碰撞危險。若已明顯漏液或破損，先打電話向欲前往的衛生局／衛生所確認再運送，不要自行拆解處理。</div><div class="step"><b>匿名投遞</b><br>回收點投遞全程不記名，無須提供姓名、電話或其他個人資料。</div></div><div class="actions"><a class="btn" target="_blank" rel="noopener" href="https://www.hpa.gov.tw/Pages/List.aspx?nodeid=5089" onclick="track('official-directory')">官方即時回收點清單</a><a class="btn ghost" target="_blank" rel="noopener" href="https://www.mohw.gov.tw/cp-7403-87793-1.html" onclick="track('official-news')">衛福部修法／回收說明</a></div></section>
+<section class="card"><h2>4｜縣市快速導航</h2><label>你想查哪一縣市？</label><select id="county"><option>臺北市</option><option>新北市</option><option>基隆市</option><option>宜蘭縣</option><option>桃園市</option><option>新竹市</option><option>新竹縣</option><option>苗栗縣</option><option>臺中市</option><option>彰化縣</option><option>南投縣</option><option>雲林縣</option><option>嘉義市</option><option>嘉義縣</option><option>臺南市</option><option>高雄市</option><option>屏東縣</option><option>花蓮縣</option><option>臺東縣</option><option>澎湖縣</option><option>金門縣</option><option>連江縣</option></select><div class="note info" id="countyOut">選好縣市後，直接開官方清單，再在頁面點對應縣市；本工具不複製地址，避免官方增減據點後留下過期資料。</div><div class="actions"><button onclick="openDirectory()">開官方清單去找這個縣市</button></div></section>
+<section class="card"><h2>5｜如果「想丟掉」其實也代表想停用</h2><div id="quitOut"></div><div class="note ok">免費戒菸諮詢專線：<b>0800-636363</b>；官方也提供 LINE 諮詢（ID：@tsh0800636363）與全臺近 3,000 家戒菸服務機構。電子煙不是官方建議的戒菸工具。</div><div class="actions"><a class="btn ghost" href="tel:0800636363" onclick="track('quit-call')">撥0800-636363</a><a class="btn ghost" target="_blank" rel="noopener" href="https://ttc.hpa.gov.tw/" onclick="track('quit-service')">查戒菸服務機構</a></div></section>
+<section class="card"><h2>6｜一鍵產生「匿名回收準備卡」</h2><textarea id="card"></textarea><div class="actions"><button onclick="buildCard(true)">更新準備卡</button><button class="ghost" onclick="copyText('card')">複製給自己</button><button class="ghost" onclick="downloadReminder()">明天提醒我處理</button></div></section>
+<section class="card"><h2>7｜給家長／老師／朋友：這樣幫，比質問有用</h2><div class="note info">如果是在幫別人，重點不是逼對方交代「哪裡買、用了多久」。先把匿名回收點、官方規則與戒菸資源交給他；若涉及校園或未成年人，也不要把對方姓名、照片、聊天截圖貼到公開回饋區。</div></section>
+<section class="card"><h2>8｜這個工具刻意不做</h2><div class="note"><ul><li>不問姓名、年齡、學校、公司、電話、精確位置或購買來源。</li><li>不教如何使用、購買、改裝、補充或拆解電子煙。</li><li>不要求拍照或上傳裝置、煙油、煙彈。</li><li>不把「持有罰則草案」誤寫成現在已經生效。</li><li>不自行維護回收點地址副本；地址以國健署即時清單為準。</li></ul></div></section>
+<section class="card"><h2>9｜真實使用驗證</h2><p>這輪真正追：<strong>知道可免具名 → 開官方清單 → 找到回收點 → 真的把物品交出去；有戒除需求者再接上戒菸服務。</strong></p><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/101">VapeDrop 回饋區 #101</a></div></section>
+<section class="card"><h2>10｜可直接轉給朋友／家長／校園社群</h2><textarea id="share">【電子煙可以免具名回收｜官方回收點9/8起跑】
 
 國健署自2026/9/8起開放電子煙回收。
-官方9/9新增桃園市婦幼衛生所後，目前清單共432處。
+衛福部9/5公告9/8起以全臺431處起跑；後續據點可能調整，請直接看國健署即時清單。
 
 重點：
 ・投遞不記名，不用提供個資
@@ -126,46 +44,22 @@
 ・現行法律已禁止電子煙使用、販售等
 ・「持有電子煙罰3萬～10萬元」目前仍是修法草案，尚未生效；草案規劃未來施行後有1個月緩衝期
 
-官方432處清單：
+官方即時清單：
 https://www.hpa.gov.tw/Pages/List.aspx?nodeid=5089
 
 如果也想戒：
 0800-636363 免費戒菸諮詢
 
-VapeDrop 432：
+VapeDrop：
 https://allen3429.github.io/Allentrial20260812.github.io/public-good/vapedrop432/
 
-不要在公開群組貼姓名、學校、購買來源或裝置照片。</textarea>
-<div class="actions"><button class="ghost" onclick="copyText('share');track('share-copy')">複製轉貼文</button></div>
-</section>
+不要在公開群組貼姓名、學校、購買來源或裝置照片。</textarea><div class="actions"><button class="ghost" onclick="copyText('share');track('share-copy')">複製轉貼文</button></div></section>
 </main>
-
 <script>
 const $=id=>document.getElementById(id);
-
-function route(){
- const h=$('holding').value,d=$('damage').value,q=$('quit').value;
- let cls='ok',title='🟢 最短路徑：官方清單 → 妥善包裝 → 匿名投遞',msg='不需要先提供個資，也不需要找民間代辦。';
- if(h==='no'){cls='info';title='🔵 沒有持有物品：先記住現行禁用與官方回收管道即可';msg='如果之後要幫家人朋友，直接把官方432處清單轉給對方。';}
- if(d==='yes'||d==='unknown'){cls='warn';title='🟡 有漏液／破損疑慮：先確認再運送';msg='依官方原則先妥善包裝以避免外漏與碰撞；若已明顯破損或不知道怎麼安全帶去，先打欲前往的衛生局／衛生所確認。不要自行拆解。';}
- if(q==='yes'||q==='friend') msg+=' 若也想停止尼古丁使用，可直接接上0800-636363或官方戒菸服務。';
- $('routeOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;
- return {h,d,q,title,msg};
-}
-
-function updateQuit(){
- const q=$('quit').value;
- let cls='info',msg='目前只想完成回收也可以；匿名回收與戒菸服務是兩條可分開使用的路徑。';
- if(q==='yes'){cls='ok';msg='🟢 建議把「回收裝置」和「處理尼古丁依賴」分成兩件事：先把裝置交出去，再用0800-636363或戒菸服務機構取得專業協助。';}
- if(q==='friend'){cls='ok';msg='🟢 幫別人時，不用逼他公開使用細節；直接把免費戒菸專線與回收點交給他即可。';}
- $('quitOut').innerHTML=`<div class="note ${cls}">${msg}</div>`;
- return msg;
-}
-
-function buildCard(countCore){
- const r=route(), county=$('county').value, q=updateQuit();
- $('countyOut').innerHTML=`<b>${county}</b>：官方清單有各縣市分項。為避免地址更新不同步，本工具只導向國健署即時名單。`;
- $('card').value=`【VapeDrop 432｜匿名回收準備卡】
+function route(){const h=$('holding').value,d=$('damage').value,q=$('quit').value;let cls='ok',title='🟢 最短路徑：官方清單 → 妥善包裝 → 匿名投遞',msg='不需要先提供個資，也不需要找民間代辦。';if(h==='no'){cls='info';title='🔵 沒有持有物品：先記住現行禁用與官方回收管道即可';msg='如果之後要幫家人朋友，直接把官方即時回收點清單轉給對方。';}if(d==='yes'||d==='unknown'){cls='warn';title='🟡 有漏液／破損疑慮：先確認再運送';msg='依官方原則先妥善包裝以避免外漏與碰撞；若已明顯破損或不知道怎麼安全帶去，先打欲前往的衛生局／衛生所確認。不要自行拆解。';}if(q==='yes'||q==='friend')msg+=' 若也想停止尼古丁使用，可直接接上0800-636363或官方戒菸服務。';$('routeOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;return{h,d,q,title,msg}}
+function updateQuit(){const q=$('quit').value;let cls='info',msg='目前只想完成回收也可以；匿名回收與戒菸服務是兩條可分開使用的路徑。';if(q==='yes'){cls='ok';msg='🟢 建議把「回收裝置」和「處理尼古丁依賴」分成兩件事：先把裝置交出去，再用0800-636363或戒菸服務機構取得專業協助。';}if(q==='friend'){cls='ok';msg='🟢 幫別人時，不用逼他公開使用細節；直接把免費戒菸專線與回收點交給他即可。';}$('quitOut').innerHTML=`<div class="note ${cls}">${msg}</div>`;return msg}
+function buildCard(countCore){const r=route(),county=$('county').value,q=updateQuit();$('countyOut').innerHTML=`<b>${county}</b>：官方清單有各縣市分項。為避免地址更新不同步，本工具只導向國健署即時名單。`;$('card').value=`【VapeDrop｜匿名回收準備卡】
 我要查的縣市：${county}
 
 現在的法律狀態：
@@ -191,29 +85,11 @@ LINE：@tsh0800636363
 ・不要在公開回饋貼姓名、學校、電話、購買來源或裝置照片
 
 官方說明：
-${`https://www.mohw.gov.tw/cp-7403-87793-1.html`}`;
- if(countCore&&window.PGLabImpact)PGLabImpact.core('disposal-card');
-}
-
-function openDirectory(){
- window.open('https://www.hpa.gov.tw/Pages/List.aspx?nodeid=5089','_blank','noopener');
- track('county-directory');
-}
-
-function downloadReminder(){
- const d=new Date();d.setDate(d.getDate()+1);d.setHours(17,30,0,0);
- const e=new Date(d.getTime()+20*60000);
- const f=x=>{const p=n=>String(n).padStart(2,'0');return `${x.getFullYear()}${p(x.getMonth()+1)}${p(x.getDate())}T${p(x.getHours())}${p(x.getMinutes())}00`};
- const ics=`BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//VapeDrop432//TW\r\nBEGIN:VEVENT\r\nDTSTART;TZID=Asia/Taipei:${f(d)}\r\nDTEND;TZID=Asia/Taipei:${f(e)}\r\nSUMMARY:查電子煙官方匿名回收點並完成投遞\r\nDESCRIPTION:官方全臺回收點：https://www.hpa.gov.tw/Pages/List.aspx?nodeid=5089 投遞不記名；妥善包裝避免煙油外漏或碰撞。\r\nEND:VEVENT\r\nEND:VCALENDAR`;
- const b=new Blob([ics],{type:'text/calendar;charset=utf-8'}),a=document.createElement('a');
- a.href=URL.createObjectURL(b);a.download='vapedrop432-reminder.ics';a.click();URL.revokeObjectURL(a.href);track('reminder');
-}
-
-function track(label){if(window.PGLabImpact)PGLabImpact.core(label)}
-async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
-
-['holding','damage','quit','county'].forEach(id=>$(id).addEventListener('change',()=>buildCard(false)));
-buildCard(false);
+https://www.mohw.gov.tw/cp-7403-87793-1.html`;if(countCore&&window.PGLabImpact)PGLabImpact.core('disposal-card')}
+function openDirectory(){window.open('https://www.hpa.gov.tw/Pages/List.aspx?nodeid=5089','_blank','noopener');track('county-directory')}
+function downloadReminder(){const d=new Date();d.setDate(d.getDate()+1);d.setHours(17,30,0,0);const e=new Date(d.getTime()+20*60000);const f=x=>{const p=n=>String(n).padStart(2,'0');return`${x.getFullYear()}${p(x.getMonth()+1)}${p(x.getDate())}T${p(x.getHours())}${p(x.getMinutes())}00`};const ics=`BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//VapeDrop//TW\r\nBEGIN:VEVENT\r\nDTSTART;TZID=Asia/Taipei:${f(d)}\r\nDTEND;TZID=Asia/Taipei:${f(e)}\r\nSUMMARY:查電子煙官方匿名回收點並完成投遞\r\nDESCRIPTION:官方全臺回收點：https://www.hpa.gov.tw/Pages/List.aspx?nodeid=5089 投遞不記名；妥善包裝避免煙油外漏或碰撞。\r\nEND:VEVENT\r\nEND:VCALENDAR`;const b=new Blob([ics],{type:'text/calendar;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='vapedrop-reminder.ics';a.click();URL.revokeObjectURL(a.href);track('reminder')}
+function track(label){if(window.PGLabImpact)PGLabImpact.core(label)}async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+['holding','damage','quit','county'].forEach(id=>$(id).addEventListener('change',()=>buildCard(false)));buildCard(false);
 </script>
 <script src="../impact.js" data-project="vapedrop432" data-action-text="我已完成電子煙匿名回收路徑／準備卡" data-real-text="我已真的找到回收點／完成匿名投遞／使用戒菸諮詢或戒菸服務" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/101"></script>
 </body></html>
