@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="hcv1118">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="HCV Recall 1118：板橋安泰淞鶴診所C肝群聚回溯檢驗前篩。2025/7/1–2026/8/27曾接受針劑治療者，提醒至新北29區衛生所免費抽血。">
+<title>HCV Recall 1118｜30秒確認要不要去免費抽血</title>
+<style>
+:root{color-scheme:light;--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#a32323;--info:#285c8d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1040px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}h1{font-size:clamp(38px,7vw,62px);line-height:1.03;margin:.15em 0 .25em}
+.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:960px}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:12px 14px;border-radius:9px;line-height:1.72;margin:10px 0}.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}.info{border-left-color:var(--info)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}label{display:block;font-weight:800;margin:7px 0 6px}select,input,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}
+textarea{min-height:245px;resize:vertical}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}
+.big{font-size:clamp(24px,4vw,34px);font-weight:950}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:9px}.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:22px;margin-top:4px}.small{font-size:13px;color:var(--muted);line-height:1.6}
+.slot{border:1px solid var(--line);border-radius:13px;padding:12px;margin:8px 0}.slot strong{font-size:18px}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · 新北C肝群聚回溯 · 2026/09/13</div>
+<h1>HCV Recall 1118<br>沒有症狀，<br>也可能要去抽血。</h1>
+<p class="lead">新北市板橋區「安泰淞鶴診所」C型肝炎群聚，官方回溯 <strong>2025/7/1–2026/8/27</strong> 曾在該診所接受<strong>針劑治療</strong>的 1,118 人。截至 9/7 只有 353 人完成檢驗，病例累計 13 例，而且新增個案中有人<strong>完全沒有症狀</strong>。符合條件者可到新北市 29 區衛生所免費抽血。</p>
+
+<section class="card">
+<h2>1｜30秒：你是不是回溯檢驗對象？</h2>
+<div class="grid">
+<div><label>2025/7/1–2026/8/27 是否曾到「安泰淞鶴診所」？</label>
+<select id="clinic"><option value="unknown">不確定／記不清</option><option value="yes">有</option><option value="no">沒有</option></select></div>
+<div><label>當時是否接受過任何針劑／注射治療？</label>
+<select id="inject"><option value="unknown">不確定／記不清</option><option value="yes">有</option><option value="no">沒有</option></select></div>
+<div><label>是否已經完成這次專案的免費抽血？</label>
+<select id="tested"><option value="no">還沒</option><option value="yes">已完成</option><option value="unknown">不確定是不是這次專案</option></select></div>
+</div>
+<div id="eligOut"></div>
+</section>
+
+<section class="card">
+<h2>2｜最容易漏的事：不要等症狀</h2>
+<div class="stats">
+<div class="stat">回溯對象<b>1,118人</b></div>
+<div class="stat">截至9/7完成檢驗<b>353人</b></div>
+<div class="stat">累計相關病例<b>13例</b></div>
+<div class="stat">新增病例中<b>有人無症狀</b></div>
+</div>
+<div class="note bad"><b>「我沒不舒服」不能當成不去驗的理由。</b>官方公布的新增個案中，有人無明顯症狀，是在回溯採檢後才發現感染。</div>
+<div class="note info">急性C型肝炎可能出現發燒、疲倦、食慾下降、腹部不適、噁心、嘔吐或黃疸等，但是否有症狀不能取代抽血檢驗。若已經很不舒服或出現黃疸等異常，應直接就醫。</div>
+</section>
+
+<section class="card">
+<h2>3｜去哪裡？不用只等白天，也不用只去板橋</h2>
+<div class="note ok"><b>全新北29區衛生所</b>都提供此專案檢驗。地方衛生所公告提醒：符合條件或接獲通知者，攜帶<strong>健保卡</strong>即可接受免費抽血。各所服務時間可能不同，出發前最好先電話確認。</div>
+
+<div class="slot"><strong>9/17（四）板橋衛生所｜晚間加開</strong><br><span class="small">官方已公告加開夜間抽血門診；確切時段建議出發前向衛生所確認。</span><div class="actions"><button class="ghost" onclick="reminder('2026-09-17','板橋衛生所 C肝專案晚間抽血')">加到行事曆</button><a class="btn ghost" href="tel:0222586606">板橋衛生所 02-2258-6606</a></div></div>
+
+<div class="slot"><strong>9/18（五）土城衛生所｜晚間加開</strong><br><span class="small">官方已公告加開夜間抽血門診；確切時段建議出發前向衛生所確認。</span><div class="actions"><button class="ghost" onclick="reminder('2026-09-18','土城衛生所 C肝專案晚間抽血')">加到行事曆</button><a class="btn ghost" href="tel:0222603181">土城衛生所 02-2260-3181</a></div></div>
+
+<div class="slot"><strong>9/19（六）板橋衛生所｜假日加開</strong><br><span class="small">不方便平日請假的人可優先考慮；確切時段建議先電話確認。</span><div class="actions"><button class="ghost" onclick="reminder('2026-09-19','板橋衛生所 C肝專案假日抽血')">加到行事曆</button></div></div>
+
+<div class="actions">
+<a class="btn" target="_blank" rel="noopener" href="https://www.health.ntpc.gov.tw/news/%E6%93%B4%E5%A4%A7%E5%9B%9E%E6%BA%AF%E5%86%8D%E5%A2%9E2%E4%BE%8BC%E8%82%9D%E6%84%9F%E6%9F%93%EF%BC%8C%E6%96%B0%E5%8C%97%E5%A2%9E%E9%96%8B%E5%A4%9C%E9%96%93%E5%8F%8A%E5%81%87%E6%97%A5%E9%96%80%E8%A8%BA%E6%8A%BD%E8%A1%80%E6%AA%A2%E9%A9%97" onclick="track('official-ntpc')">新北市衛生局最新專案公告</a>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://tucheng.health.ntpc.gov.tw/news/%E6%96%B0%E5%8C%97%E5%B8%82%E6%80%A5%E6%80%A7C%E5%9E%8B%E8%82%9D%E7%82%8E%E7%BE%A4%E8%81%9A%E4%BA%8B%E4%BB%B6" onclick="track('tucheng')">土城衛生所：免費抽血公告</a>
+<a class="btn ghost" href="tel:0222586923" onclick="track('hotline')">防疫專線 02-2258-6923</a>
+</div>
+</section>
+
+<section class="card">
+<h2>4｜如果「記不清有沒有打針」怎麼辦？</h2>
+<div class="note warn">不要為了先證明自己「一定有打過」而一直拖延。若你在回溯期間曾到該診所，但不確定是否有接受針劑治療，可直接打新北市衛生局防疫專線 <b>02-2258-6923</b>（官方另列 0911-183353），或向衛生所說明「我可能屬於安泰淞鶴診所回溯對象，想確認免費抽血資格」。</div>
+</section>
+
+<section class="card">
+<h2>5｜一鍵產生「我下一步要做什麼」卡</h2>
+<textarea id="card"></textarea>
+<div class="actions"><button onclick="buildCard(true)">更新行動卡</button><button class="ghost" onclick="copyText('card')">複製給自己／家人</button></div>
+</section>
+
+<section class="card">
+<h2>6｜這個工具刻意不做</h2>
+<div class="note"><ul>
+<li>不收姓名、生日、健保卡號、病歷、注射內容或檢驗結果。</li>
+<li>不判斷你有沒有感染C型肝炎；只有抽血檢驗與醫療追蹤能處理這件事。</li>
+<li>不要求你先出現症狀才去檢驗。</li>
+<li>不提供藥物或治療方案；若檢驗異常，請依醫師與衛生單位安排追蹤。</li>
+<li>不把個人健康資料貼到公開回饋區。</li>
+</ul></div>
+</section>
+
+<section class="card">
+<h2>7｜真實使用驗證</h2>
+<p>這輪真正追：<strong>不是有多少人看新聞，而是符合條件的人有沒有從「等等看／我沒症狀」走到真的完成免費抽血。</strong></p>
+<div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/108">HCV Recall 1118 回饋區 #108</a></div>
+</section>
+
+<section class="card">
+<h2>8｜可直接轉給家人／社區群組</h2>
+<textarea id="share">【板橋安泰淞鶴診所C肝群聚｜符合條件者請去免費抽血，不要等症狀】
+
+如果你或家人：
+・2025/7/1–2026/8/27
+・曾到板橋「安泰淞鶴診所」
+・接受過針劑／注射治療
+
+新北市衛生局已列為回溯檢驗對象。
+
+截至9/7：
+・回溯1,118人
+・只有353人完成檢驗
+・相關病例已13例
+・新增病例中有人完全沒有症狀
+
+所以「沒有不舒服」不能當成不用驗的理由。
+
+符合條件者可攜健保卡到新北市29區衛生所免費抽血。
+另外加開：
+・9/17 板橋衛生所晚間
+・9/18 土城衛生所晚間
+・9/19 板橋衛生所假日
+出發前先電話確認時段。
+
+新北防疫專線：02-2258-6923
+
+30秒前篩工具：
+https://allen3429.github.io/Allentrial20260812.github.io/public-good/hcv1118/
+
+請不要在群組貼健保卡、檢驗結果或病歷。</textarea>
+<div class="actions"><button class="ghost" onclick="copyText('share');track('share-copy')">複製轉貼文</button></div>
+</section>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+
+function assess(){
+ const c=$('clinic').value,i=$('inject').value,t=$('tested').value;
+ let cls='warn',title='🟡 先確認是否屬回溯對象',msg='';
+
+ if(t==='yes'){
+   cls='ok';title='🟢 已完成這次專案抽血';msg='依衛生單位／醫師通知處理後續即可。不要把檢驗結果貼到公開回饋。';
+ } else if(c==='yes'&&i==='yes'){
+   cls='bad';title='🔴 你符合官方回溯條件：請儘速完成免費抽血';
+   msg='不需要等出現症狀。攜健保卡到新北市29區衛生所；若平日不方便，可利用9/17板橋晚間、9/18土城晚間或9/19板橋假日加開場次。';
+ } else if(c==='yes'&&i==='unknown'){
+   cls='warn';title='🟡 曾去過診所但不確定有沒有打針：直接打防疫專線確認';
+   msg='不要因記不清而拖延。可說「我在回溯期間曾到安泰淞鶴診所，想確認是否屬免費抽血對象」。';
+ } else if(c==='unknown'){
+   cls='warn';title='🟡 記不清就先問家人／查自己的就醫紀錄，再打專線';
+   msg='本工具不需要你輸入就醫紀錄；若可能曾在該期間就醫，直接由衛生單位確認最可靠。';
+ } else if(c==='no'){
+   cls='info';title='🔵 目前不像這次1118人回溯專案對象';
+   msg='這個專案針對特定期間曾到該診所接受針劑治療者。若你有肝炎相關疑慮或症狀，仍可另外向醫療院所諮詢。';
+ } else if(c==='yes'&&i==='no'){
+   cls='info';title='🔵 目前不符合官方「曾接受針劑治療」的回溯條件';
+   msg='如果你其實不確定當時療程有沒有注射，改選「不確定」並打防疫專線確認。';
+ }
+ $('eligOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;
+ return {c,i,t,title,msg};
+}
+
+function buildCard(countCore){
+ const a=assess();
+ $('card').value=`【HCV Recall 1118｜我的下一步卡】
+這不是診斷工具。
+
+前篩結果：
+${a.title}
+${a.msg}
+
+官方回溯條件：
+・2025/7/1–2026/8/27
+・曾到板橋「安泰淞鶴診所」
+・接受過針劑／注射治療
+
+重要：
+・沒有症狀也不能排除；官方新增病例中有人無症狀。
+・符合條件者可攜健保卡到新北市29區衛生所免費抽血。
+・不確定有沒有打針：直接打新北防疫專線確認，不要拖。
+
+近期加開：
+・9/17 板橋衛生所晚間
+・9/18 土城衛生所晚間
+・9/19 板橋衛生所假日
+（確切時段出發前先電話確認）
+
+新北防疫專線：02-2258-6923
+官方公告：
+https://www.health.ntpc.gov.tw/news/%E6%93%B4%E5%A4%A7%E5%9B%9E%E6%BA%AF%E5%86%8D%E5%A2%9E2%E4%BE%8BC%E8%82%9D%E6%84%9F%E6%9F%93%EF%BC%8C%E6%96%B0%E5%8C%97%E5%A2%9E%E9%96%8B%E5%A4%9C%E9%96%93%E5%8F%8A%E5%81%87%E6%97%A5%E9%96%80%E8%A8%BA%E6%8A%BD%E8%A1%80%E6%AA%A2%E9%A9%97
+
+不要把健保卡、病歷、檢驗結果或就醫紀錄貼到公開回饋。`;
+ if(countCore&&window.PGLabImpact)PGLabImpact.core('action-card');
+}
+
+function reminder(date,title){
+ const start=new Date(date+'T18:00:00+08:00'),end=new Date(date+'T19:00:00+08:00');
+ const f=x=>{const p=n=>String(n).padStart(2,'0');return `${x.getFullYear()}${p(x.getMonth()+1)}${p(x.getDate())}T${p(x.getHours())}${p(x.getMinutes())}00`};
+ const ics=`BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//HCVRecall1118//TW\r\nBEGIN:VEVENT\r\nDTSTART;TZID=Asia/Taipei:${f(start)}\r\nDTEND;TZID=Asia/Taipei:${f(end)}\r\nSUMMARY:${title}\r\nDESCRIPTION:提醒：官方只公告「晚間／假日加開」，實際時段出發前請先電話確認。攜帶健保卡。新北防疫專線02-2258-6923。\r\nEND:VEVENT\r\nEND:VCALENDAR`;
+ const b=new Blob([ics],{type:'text/calendar;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='hcv-recall-'+date+'.ics';a.click();URL.revokeObjectURL(a.href);track('calendar');
+}
+function track(label){if(window.PGLabImpact)PGLabImpact.core(label)}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+['clinic','inject','tested'].forEach(id=>$(id).addEventListener('change',()=>buildCard(false)));
+buildCard(false);
+</script>
+<script src="../impact.js" data-project="hcv1118" data-action-text="我已完成C肝回溯資格＋免費檢驗前篩" data-real-text="我已真的完成免費抽血／致電防疫專線確認／帶家人完成檢驗" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/108"></script>
+</body></html>
