@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="otminute">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="OTMinute TW：月薪制標準工時勞工的分鐘級加班費前篩。抓出未滿1小時不算、只用底薪、強制補休與休息日倍率套錯。">
+<title>OTMinute TW｜加班費分鐘級防漏</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#687480;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#a32323;--info:#285c8d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1120px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}h1{font-size:clamp(38px,7vw,64px);line-height:1.03;margin:.12em 0 .25em}
+.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:1000px}.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:12px 14px;border-radius:9px;line-height:1.7;margin:10px 0}.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}.info{border-left-color:var(--info)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:10px}label{display:block;font-weight:800;margin-bottom:6px}select,input,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}textarea{min-height:250px;resize:vertical}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}
+.big{font-size:clamp(24px,4vw,34px);font-weight:950}.money{font-size:clamp(34px,7vw,56px);font-weight:1000}.small{font-size:13px;color:var(--muted);line-height:1.65}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:9px}.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:22px;margin-top:4px}
+.redflags label{font-weight:650;margin:9px 0}input[type=checkbox]{width:auto;margin-right:6px}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · 月薪制標準工時情境 · 2026/09/12</div>
+<h1>OTMinute TW<br>35 分鐘也是加班。<br>「不到1小時不算」不是合理算法。</h1>
+<p class="lead">這個前篩只處理最常見的<strong>月薪制、每日正常工時8小時、非變形工時／非84條之1</strong>情境。輸入一個工作日的實際加班分鐘，就能看到「分鐘級法定倍率前篩」、公司若少記分鐘可能差多少，以及公司是不是只用底薪當基礎。</p>
+
+<section class="card">
+<h2>1｜先算「平日每小時工資額」的前篩基礎</h2>
+<div class="grid">
+<div><label>正常工作時間內，屬於「工資」的月工資總額（NT$）</label><input id="wage" type="number" min="0" step="100" value="36000"></div>
+<div><label>公司薪資系統拿來算加班的月薪基礎（若知道）</label><input id="companyBase" type="number" min="0" step="100" value="36000"></div>
+</div>
+<div id="baseOut"></div>
+<div class="note info">月薪制常見前篩是「月工資總額 ÷ 240」得到平日每小時工資額。這裡的重點不是把所有入帳項目都算進去，而是確認公司是否只抓「底薪」；全勤獎金、夜班津貼等是否屬工資，要依實際給付性質判斷，必要時向勞政確認。</div>
+</section>
+
+<section class="card">
+<h2>2｜這一天是哪一種出勤？</h2>
+<div class="grid">
+<div><label>日別</label><select id="dayType">
+<option value="weekday">平日正常8小時後延長工時</option>
+<option value="rest">休息日出勤（本工具只算前8小時）</option>
+</select></div>
+<div><label>實際加班時間（分鐘）</label><input id="minutes" type="number" min="0" step="1" value="35"></div>
+<div><label>公司實際認列的加班分鐘（若不知道就填同上）</label><input id="recognized" type="number" min="0" step="1" value="35"></div>
+<div><label>薪資單這一天／這筆實際給的加班費（NT$，可留0做純試算）</label><input id="paid" type="number" min="0" step="1" value="0"></div>
+</div>
+<div id="calcOut"></div>
+<div class="note warn">平日一般情形，本工具只支援最多4小時延長工時；休息日只支援前8小時。超過範圍、輪班、彈性／變形工時、國定假日、例假、84條之1等，直接改用勞動部官方試算／1955確認。</div>
+</section>
+
+<section class="card">
+<h2>3｜四個常見紅旗</h2>
+<div class="redflags">
+<label><input id="flagHour" type="checkbox"> 公司規定「未滿1小時不算」或只認整小時</label>
+<label><input id="flagBase" type="checkbox"> 公司只用「本薪／底薪」算，其他固定正常工時給付一律不看</label>
+<label><input id="flagComp" type="checkbox"> 公司規定「加班一律只能換補休」</label>
+<label><input id="flagRecord" type="checkbox"> 我拿不到／看不到逐日到分鐘的出退勤紀錄</label>
+</div>
+<div id="flagOut"></div>
+<div class="note info">補休不是公司單方面指定的唯一選項；平日或休息日加班原則上應依法給加班費，勞工有意願並經協商才改補休。補休到期或契約終止沒休完，也要按原加班日標準折回加班費。</div>
+</section>
+
+<section class="card">
+<h2>4｜保留「能核對」的證據，不用先公開</h2>
+<div class="stats">
+<div class="stat">出勤時間<b>記到分鐘</b></div>
+<div class="stat">薪資單<b>保留該月</b></div>
+<div class="stat">加班申請／主管訊息<b>留存</b></div>
+<div class="stat">公司補休／四捨五入規則<b>截圖留存</b></div>
+</div>
+<div class="note ok">你不需要把這些東西上傳給本工具。先自己保存：打卡紀錄、班表、加班申請、主管要求延後下班的訊息、薪資單。若要向人資或勞政核對，先做一張去識別化摘要即可。</div>
+</section>
+
+<section class="card">
+<h2>5｜一鍵產生「向人資核對」摘要</h2>
+<textarea id="card"></textarea>
+<div class="actions"><button onclick="buildCard(true)">更新核對卡</button><button class="ghost" onclick="copyText('card')">複製</button></div>
+</section>
+
+<section class="card">
+<h2>6｜官方再確認</h2>
+<div class="actions">
+<a class="btn" target="_blank" rel="noopener" href="https://calcr2.mol.gov.tw/Index" onclick="track('official-calc')">勞動部官方加班費試算</a>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://www.mol.gov.tw/1607/28162/28166/28180/81521/81707/" onclick="track('official-rights')">勞動部｜加班費規則</a>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://www.mol.gov.tw/1607/28162/28166/28180/28182/28188/29026/post" onclick="track('monthly-rights')">月薪制勞工權益</a>
+<a class="btn ghost" href="tel:1955">1955 勞工諮詢</a>
+</div>
+</section>
+
+<section class="card">
+<h2>7｜這個工具刻意不做</h2>
+<div class="note"><ul>
+<li>不收姓名、公司名、員工編號、身分證、薪資單、打卡截圖、存摺或勞保資料。</li>
+<li>不替你認定某個獎金／津貼一定屬工資；只提醒「不要只看底薪」這個常見風險。</li>
+<li>不處理國定假日、例假、輪班、變形工時、84條之1、休息日超過8小時等複雜情境。</li>
+<li>不把前篩差額直接寫成「公司欠薪」；正式權益仍由實際契約、出勤與主管機關判斷。</li>
+</ul></div>
+</section>
+
+<section class="card">
+<h2>8｜真實使用驗證</h2>
+<p>這輪真正追：<strong>算出一筆 → 發現分鐘／基礎／補休紅旗 → 保存紀錄 → 真的向人資、1955或地方勞政核對</strong>。</p>
+<div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/91">OTMinute TW 回饋區 #91</a></div>
+</section>
+
+<section class="card">
+<h2>9｜可直接轉給同事／工讀群</h2>
+<textarea id="share">【加班35分鐘也要算｜4個常見加班費漏點】
+
+勞動部常見違規提醒：
+1. 「未滿1小時不算」：出勤紀錄要記到分鐘，未滿1小時仍可換算計薪。
+2. 只用底薪算：加班費基礎不是機械式只看「本薪」；正常工時內符合工資定義的給付要一起判斷。
+3. 倍率直接用1.33／1.66再捨尾數：可能持續少算。
+4. 公司規定只能補休：補休要勞工有意願並協商，不是雇主單方指定。
+
+OTMinute TW：
+https://allen3429.github.io/Allentrial20260812.github.io/public-good/otminute/
+
+勞動部官方加班費試算：
+https://calcr2.mol.gov.tw/Index
+
+1955 勞工諮詢
+
+不要在公開群組貼公司名、薪資單、打卡截圖、員工編號或個資。</textarea>
+<div class="actions"><button class="ghost" onclick="copyText('share');track('share-copy')">複製轉貼文</button></div>
+</section>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+
+function payForMinutes(hourly, minutes, type){
+  const m=Math.max(0,minutes);
+  if(type==='weekday'){
+    const m1=Math.min(m,120),m2=Math.max(0,Math.min(m-120,120));
+    return hourly*(m1/60)*(4/3)+hourly*(m2/60)*(5/3);
+  }
+  const m1=Math.min(m,120),m2=Math.max(0,Math.min(m-120,360));
+  return hourly*(m1/60)*(4/3)+hourly*(m2/60)*(5/3);
+}
+
+function calculate(){
+ const wage=Math.max(0,Number($('wage').value)||0);
+ const companyBase=Math.max(0,Number($('companyBase').value)||0);
+ const type=$('dayType').value;
+ const actual=Math.max(0,Math.floor(Number($('minutes').value)||0));
+ const recognized=Math.max(0,Math.floor(Number($('recognized').value)||0));
+ const paid=Math.max(0,Number($('paid').value)||0);
+ const hourly=wage/240;
+ const companyHourly=companyBase/240;
+ const supported=type==='weekday'?actual<=240:actual<=480;
+ const truePay=payForMinutes(hourly,actual,type);
+ const recordedPay=payForMinutes(hourly,recognized,type);
+ const companyFormulaPay=payForMinutes(companyHourly,recognized,type);
+ const minuteGap=Math.max(0,truePay-recordedPay);
+ const baseGap=Math.max(0,recordedPay-companyFormulaPay);
+ const paidGap=paid>0?truePay-paid:null;
+ const floorHour=Math.floor(actual/60)*60;
+ const wholeHourPay=payForMinutes(hourly,floorHour,type);
+ const floorGap=Math.max(0,truePay-wholeHourPay);
+
+ $('baseOut').innerHTML=`<div class="note ${companyBase<wage?'warn':'info'}"><b>你的前篩時薪：</b>NT$${hourly.toFixed(2)}／時　｜　<b>公司目前算法基礎：</b>NT$${companyHourly.toFixed(2)}／時${companyBase<wage?'<br>🟡 公司計算基礎比你填的正常工時工資總額低，值得核對「是否只抓底薪」。':''}</div>`;
+
+ let extra='';
+ if(supported){
+   extra += `<br>如果只算完整小時（${floorHour}分鐘），本筆前篩會少約 <b>NT$${Math.ceil(floorGap).toLocaleString()}</b>。`;
+   extra += `<br>你填的公司認列分鐘：${recognized} 分，單純因分鐘少記的前篩差額約 <b>NT$${Math.ceil(minuteGap).toLocaleString()}</b>。`;
+   extra += `<br>若公司同時使用較低工資基礎，光「基礎」造成的前篩差額約 <b>NT$${Math.ceil(baseGap).toLocaleString()}</b>。`;
+   if(paidGap!==null){
+      extra += paidGap>0
+       ? `<br>與你填的實領加班費相比，前篩可能少約 <b>NT$${Math.ceil(paidGap).toLocaleString()}</b>。`
+       : '<br>你填的實領金額沒有顯示少付；仍要核對假別、工時制度與工資基礎。';
+   }
+ }
+ $('calcOut').innerHTML=`<div class="note ${supported?'ok':'warn'}"><div class="money">${supported?'約 NT$'+Math.ceil(truePay).toLocaleString():'超出本工具支援範圍'}</div>${supported?`分鐘級前篩：平日每小時工資額約 NT$${hourly.toFixed(2)}；實際加班 ${actual} 分鐘。`:'請直接改用勞動部官方試算或1955確認。'}${extra}</div>`;
+ return {wage,companyBase,type,actual,recognized,paid,hourly,truePay,minuteGap,baseGap,paidGap,floorHour,floorGap,supported};
+}
+
+function flags(){
+ const flags=[];
+ if($('flagHour').checked) flags.push('公司有「未滿1小時不算／只認整小時」規則');
+ if($('flagBase').checked) flags.push('公司可能只用底薪作為加班費基礎');
+ if($('flagComp').checked) flags.push('公司規定加班一律只能補休');
+ if($('flagRecord').checked) flags.push('目前拿不到逐日到分鐘的出退勤紀錄');
+ $('flagOut').innerHTML=flags.length
+ ? `<div class="note warn"><b>目前有 ${flags.length} 個值得核對的紅旗：</b><br>${flags.map(x=>'・'+x).join('<br>')}</div>`
+ : '<div class="note ok">目前沒有勾選紅旗；仍可用實際薪資單與官方試算做一次核對。</div>';
+ return flags;
+}
+
+function buildCard(countCore){
+ const x=calculate(),f=flags();
+ const typeName=x.type==='weekday'?'平日延長工時':'休息日出勤（前8小時）';
+ $('card').value=`【OTMinute TW｜加班費核對卡】
+情境：月薪制、每日正常工時8小時的常見前篩
+日別：${typeName}
+
+這一筆：
+・正常工時工資總額（自行前篩）：NT$${x.wage.toLocaleString()}
+・公司目前計算基礎：NT$${x.companyBase.toLocaleString()}
+・前篩平日每小時工資額：NT$${x.hourly.toFixed(2)}
+・實際加班：${x.actual}分鐘
+・公司認列：${x.recognized}分鐘
+・分鐘級加班費前篩：${x.supported?'約 NT$'+Math.ceil(x.truePay).toLocaleString():'超出本工具範圍，改用官方試算'}
+・若只算整小時，這一筆可能少：約 NT$${Math.ceil(x.floorGap).toLocaleString()}
+${x.paid>0?`・薪資單實際給付：NT$${x.paid.toLocaleString()}
+・與前篩相比：${x.paidGap>0?'可能少約 NT$'+Math.ceil(x.paidGap).toLocaleString():'未顯示少付'}`:''}
+
+我想核對的紅旗：
+${f.length?f.map(v=>'・'+v).join('\n'):'・目前未勾選'}
+
+我會先保留：
+・出退勤時間／班表
+・加班申請或主管要求加班的紀錄
+・該月薪資單
+・公司關於加班分鐘、補休、計算基礎的規則
+
+請協助核對：
+1. 加班時間是否應計到分鐘？
+2. 加班費的「平日每小時工資額」目前採用哪些正常工時工資項目？
+3. 若採補休，是否為我有意願並經協商？
+4. 若計算不同，差異來自假別、工時制度還是工資基礎？
+
+勞動部官方試算：
+https://calcr2.mol.gov.tw/Index
+1955 勞工諮詢
+
+提醒：這是前篩，不是正式欠薪認定；輪班、變形工時、84條之1、國定假日、例假等請由官方再確認。`;
+ if(countCore&&window.PGLabImpact)PGLabImpact.core('audit-card');
+}
+
+function track(label){if(window.PGLabImpact)PGLabImpact.core(label)}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+
+['wage','companyBase','minutes','recognized','paid'].forEach(id=>$(id).addEventListener('input',()=>buildCard(false)));
+$('dayType').addEventListener('change',()=>buildCard(false));
+['flagHour','flagBase','flagComp','flagRecord'].forEach(id=>$(id).addEventListener('change',()=>buildCard(false)));
+buildCard(false);
+</script>
+<script src="../impact.js" data-project="otminute" data-action-text="我已完成一筆分鐘級加班費前篩" data-real-text="我已真的保存紀錄／向人資核對／要求補發／詢問1955或地方勞政" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/91"></script>
+</body></html>
