@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="oldhome930">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="OldHome 930：臺中115年度老宅延壽補助9/30截止。3分鐘判斷公寓／透天路徑、組出修繕項目並產生社區會議提案卡。">
+<title>OldHome 930｜臺中老宅延壽補助前篩</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#687480;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#a32323;--info:#285c8d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1060px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}h1{font-size:clamp(38px,7vw,62px);line-height:1.03;margin:.15em 0 .25em}
+.lead{font-size:18px;line-height:1.75;color:var(--muted)}.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:12px 14px;border-radius:9px;line-height:1.72;margin:10px 0}.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}.info{border-left-color:var(--info)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}label{display:block;font-weight:800;margin:7px 0 6px}select,input,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}
+textarea{min-height:260px;resize:vertical}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}
+.big{font-size:clamp(24px,4vw,34px);font-weight:950}.money{font-size:clamp(34px,7vw,56px);font-weight:1000}.small{font-size:13px;color:var(--muted);line-height:1.6}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:9px}.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:22px;margin-top:4px}
+.check{display:flex;gap:9px;align-items:flex-start;border:1px solid var(--line);border-radius:12px;padding:10px;margin:7px 0}.check input{width:auto;margin-top:4px}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style></head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · 臺中115年度老宅延壽 · 2026/09/13</div>
+<h1>OldHome 930<br>老屋不是只能「整棟都更」。<br>9/30前先判斷能不能修。</h1>
+<p class="lead">臺中市今年「老宅延壽機能復新計畫」受理到 <strong>9/30 17:00</strong>。中央方案主攻屋齡30年以上的4–6樓公寓、6樓以下透天；外牆、防水、管線、電梯／無障礙與戶內高齡安全都可能納入。這頁不收地址，只幫住戶把模糊的「我們家很舊」變成能拿去問市府、排管委會或住戶會議的具體提案。</p>
+
+<section class="card">
+<h2>1｜3分鐘資格前篩</h2>
+<div class="grid">
+<div><label>屋齡是否30年以上？</label><select id="age"><option value="yes">是</option><option value="no">否</option><option value="unknown">不確定</option></select></div>
+<div><label>建物型態</label><select id="type"><option value="apt">4–6樓公寓</option><option value="town">6樓以下透天住宅</option><option value="other">其他</option><option value="unknown">不確定</option></select></div>
+<div><label>合法建築狀態是否已確認？</label><select id="legal"><option value="yes">已確認</option><option value="unknown">還沒確認</option><option value="no">已知有疑義</option></select></div>
+<div><label>目前最急迫的問題</label><select id="urgent"><option>外牆老化／剝落</option><option>屋頂漏水／隔熱差</option><option>公共管線老舊</option><option>樓梯／出入口不便</option><option>缺乏電梯／無障礙</option><option>戶內長者跌倒／防墜風險</option></select></div>
+</div>
+<div id="eligOut"></div>
+</section>
+
+<section class="card">
+<h2>2｜公寓不是只挑1件：先組出至少3項公共改善</h2>
+<div id="publicItems">
+<label class="check"><input type="checkbox" value="外牆立面修繕"><span>外牆立面修繕</span></label>
+<label class="check"><input type="checkbox" value="屋頂防水／隔熱"><span>屋頂防水／隔熱</span></label>
+<label class="check"><input type="checkbox" value="樓梯間／公共空間改善"><span>樓梯間／公共空間改善</span></label>
+<label class="check"><input type="checkbox" value="公共管線更新"><span>公共管線更新</span></label>
+<label class="check"><input type="checkbox" value="增設電梯／無障礙設施"><span>增設電梯／無障礙設施</span></label>
+</div>
+<div id="publicOut"></div>
+<div class="note info">中央公開說明：公寓公共空間原則上至少選3項修繕；透天住宅至少選1項室外修繕。每項最高可補助65%。正式可補項目與核定金額仍以申請辦法及審查為準。</div>
+</section>
+
+<section class="card">
+<h2>3｜家裡有長者？室內也可能一起改善</h2>
+<div id="indoorItems">
+<label class="check"><input type="checkbox" value="增設扶手"><span>增設扶手</span></label>
+<label class="check"><input type="checkbox" value="改善地面高低差"><span>改善地面高低差</span></label>
+<label class="check"><input type="checkbox" value="鋪設防滑地坪"><span>鋪設防滑地坪</span></label>
+<label class="check"><input type="checkbox" value="增設防墜設備"><span>增設防墜設備</span></label>
+<label class="check"><input type="checkbox" value="戶內管線／無障礙改善"><span>戶內管線／無障礙改善</span></label>
+</div>
+<div class="stats">
+<div class="stat">每項補助比例<b>最高65%</b></div>
+<div class="stat">戶內一般上限<b>20萬元／戶</b></div>
+<div class="stat">高齡弱勢戶<b>最高30萬元／戶</b></div>
+<div class="stat">4樓公寓官方示例<b>最高390萬元</b><span class="small">外牆＋樓梯間＋公共管線等組合示例</span></div>
+</div>
+</section>
+
+<section class="card">
+<h2>4｜補助概念試算：先算「值得不值得啟動」</h2>
+<div class="grid">
+<div><label>預估公共／外部修繕總工程費（不知道可填0）</label><input id="budget" type="number" min="0" step="10000" value="1000000"></div>
+<div><label>戶內預估修繕費</label><input id="indoorBudget" type="number" min="0" step="5000" value="0"></div>
+<div><label>戶內是否屬高齡弱勢加碼情形？</label><select id="vulnerable"><option value="no">先按一般戶試算</option><option value="yes">是／可能是</option></select></div>
+</div>
+<div id="calcOut"></div>
+</section>
+
+<section class="card">
+<h2>5｜一鍵產生「社區會議／家族討論提案卡」</h2>
+<textarea id="proposal"></textarea>
+<div class="actions"><button onclick="buildProposal(true)">更新提案卡</button><button class="ghost" onclick="copyText('proposal')">複製到LINE／會議議程</button></div>
+</section>
+
+<section class="card">
+<h2>6｜9/30前最短路徑</h2>
+<div class="note">
+<b>公寓：</b>先把至少3項公共改善組合帶去問住宅發展工程處公寓大廈管理科：04-22289111 分機69500。<br>
+<b>透天：</b>先抓至少1項室外修繕，問都發局都市更新工程科：04-22289111 分機65500。<br>
+<b>合法建築／結構安全性能評估：</b>若狀態不確定，問都發局使用管理科：04-22289111 分機64300。<br><br>
+臺中115年度受理：<strong>7/1–9/30 17:00</strong>；郵寄以郵戳為憑，逾期不納入審查。
+</div>
+<div class="actions"><a class="btn" target="_blank" rel="noopener" href="https://www.central.taichung.gov.tw/3992568/post" onclick="track('taichung-announcement')">臺中市115年度正式公告</a><a class="btn ghost" target="_blank" rel="noopener" href="https://www.nlma.gov.tw/ch/titlelist/news/17026" onclick="track('central-rules')">國土署中央方案</a><a class="btn ghost" target="_blank" rel="noopener" href="https://www.ud.taichung.gov.tw/3347246/post" onclick="track('local-meetings')">臺中29區說明會資訊</a></div>
+</section>
+
+<section class="card">
+<h2>7｜這個工具刻意不做</h2>
+<div class="note"><ul>
+<li>不收地址、門牌、建號、權狀、住戶姓名或室內照片。</li>
+<li>不替市府正式認定合法建築、結構安全或核定補助金額。</li>
+<li>不把65%當成保證核給；只做政策上限的概念前篩。</li>
+<li>不替管委會／區分所有權人會議做法律決議。</li>
+<li>不讓「9/30截止」變成草率動工；實際工程仍需依法規與專業設計施工。</li>
+</ul></div>
+</section>
+
+<section class="card">
+<h2>8｜真實使用驗證</h2>
+<p>真正追：<strong>住戶有沒有從「老屋很麻煩」走到確認屋齡／合法狀態、組出修繕項目、打市府電話、排進住戶會議或找專業人員。</strong></p>
+<div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/110">OldHome 930 回饋區 #110</a></div>
+</section>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+function checked(sel){return [...document.querySelectorAll(sel+' input:checked')].map(x=>x.value)}
+function assess(){
+ const age=$('age').value,type=$('type').value,legal=$('legal').value;
+ let cls='warn',title='🟡 先補一個關鍵資訊',msg='先確認屋齡、建物型態與合法建築狀態，再決定申請路徑。';
+ if(age==='no'||type==='other'){cls='info';title='🔵 目前不屬中央方案主攻的30年以上4–6樓公寓／6樓以下透天';msg='仍可詢問臺中市其他整建維護、修繕貸款或無障礙補助，不要把所有老屋方案混成同一個。';}
+ else if(age==='yes'&&(type==='apt'||type==='town')&&legal==='yes'){cls='ok';title='🟢 主對象前篩看起來符合';msg=type==='apt'?'下一步不是只挑一項：先組出至少3項公共修繕，再問公寓窗口。':'先選至少1項室外修繕，向透天住宅窗口確認。';}
+ else if(age==='yes'&&(type==='apt'||type==='town')&&legal!=='yes'){cls='warn';title='🟡 建物型態／屋齡看起來接近，但先確認合法建築狀態';msg='臺中市另有合法建築認定窗口，先確認再投入設計與申請準備。';}
+ $('eligOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;
+ return {age,type,legal,title,msg};
+}
+function calc(){
+ const b=Math.max(0,Number($('budget').value)||0),i=Math.max(0,Number($('indoorBudget').value)||0);
+ const vuln=$('vulnerable').value==='yes';
+ const external=b*.65;
+ const indoor=Math.min(i*.65,vuln?300000:200000);
+ $('calcOut').innerHTML=`<div class="note info"><div class="money">概念補助上限約 NT$${Math.floor(external+indoor).toLocaleString()}</div>
+ 公共／外部工程按65%政策上限概算：NT$${Math.floor(external).toLocaleString()}。<br>
+ 戶內概算：NT$${Math.floor(indoor).toLocaleString()}（${vuln?'按高齡弱勢30萬元戶內上限':'按一般戶20萬元戶內上限'}）。<br>
+ <span class="small">這不是核定額；項目、單項上限、資格與實際補助均依正式審查。</span></div>`;
+ return {external,indoor,total:external+indoor};
+}
+function publicCheck(){
+ const a=assess(),items=checked('#publicItems'),need=a.type==='apt'?3:a.type==='town'?1:0;
+ let cls=items.length>=need&&need>0?'ok':'warn';
+ let msg=need?`已選 ${items.length} 項；${a.type==='apt'?'公寓公共空間先以至少3項組合為目標':'透天至少先選1項室外修繕'}。`:'先確認建物型態。';
+ $('publicOut').innerHTML=`<div class="note ${cls}">${msg}</div>`;
+ return {items,need};
+}
+function buildProposal(countCore){
+ const a=assess(),p=publicCheck(),indoor=checked('#indoorItems'),c=calc();
+ $('proposal').value=`【OldHome 930｜老宅延壽討論提案卡】
+截止：臺中115年度受理至2026/9/30 17:00。
+
+目前前篩：
+${a.title}
+${a.msg}
+
+最急迫問題：
+${$('urgent').value}
+
+預計公共／外部改善：
+${p.items.length?p.items.map(x=>'・'+x).join('\n'):'・尚未選擇'}
+${a.type==='apt'?`（公寓目前選${p.items.length}項，先以至少3項組合為目標）`:a.type==='town'?`（透天目前選${p.items.length}項，至少先有1項室外修繕）`:''}
+
+戶內安全改善：
+${indoor.length?indoor.map(x=>'・'+x).join('\n'):'・目前沒有勾選'}
+
+概念補助上限試算：約 NT$${Math.floor(c.total).toLocaleString()}
+※僅政策上限概算，不是核定額。
+
+這週要完成：
+1. 確認屋齡與合法建築狀態。
+2. 公寓：把至少3項公共改善排入管委會／住戶會議討論；透天：先確認至少1項室外修繕。
+3. 打臺中市府窗口確認資格、應備文件與申請方式。
+4. 視需要找建築師／專業人員評估。
+5. 9/30前完成正式申請程序。
+
+臺中窗口：
+・公寓：04-22289111#69500
+・透天：04-22289111#65500
+・結構安全／合法建築認定：04-22289111#64300
+
+正式公告：
+https://www.central.taichung.gov.tw/3992568/post
+
+公開回饋不要貼地址、權狀、住戶名冊或個資。`;
+ if(countCore&&window.PGLabImpact)PGLabImpact.core('proposal-card');
+}
+function track(x){if(window.PGLabImpact)PGLabImpact.core(x)}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+['age','type','legal','urgent','vulnerable'].forEach(id=>$(id).addEventListener('change',()=>buildProposal(false)));
+['budget','indoorBudget'].forEach(id=>$(id).addEventListener('input',()=>buildProposal(false)));
+document.querySelectorAll('#publicItems input,#indoorItems input').forEach(x=>x.addEventListener('change',()=>buildProposal(false)));
+buildProposal(false);
+</script>
+<script src="../impact.js" data-project="oldhome930" data-action-text="我已完成老宅資格＋修繕組合＋提案卡" data-real-text="我已真的確認屋齡／合法狀態／打市府電話／排入住戶會議／找專業人員／開始送件" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/110"></script>
+</body></html>
