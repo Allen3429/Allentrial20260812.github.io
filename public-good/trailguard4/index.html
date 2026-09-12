@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="trailguard4">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="TrailGuard 4：出發前4道防迷途安全門。查即時開放／許可、離線地圖飛航測試、折返時間、留守卡。">
+<title>TrailGuard 4｜出發前4道防迷途安全門</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#a32323;--info:#285c8d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1080px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}h1{font-size:clamp(38px,7vw,64px);line-height:1.03;margin:.15em 0 .25em}
+.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:980px}.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:12px 14px;border-radius:9px;line-height:1.7;margin:10px 0}.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}.info{border-left-color:var(--info)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}label{display:block;font-weight:800;margin:7px 0 6px}select,input,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}textarea{min-height:250px;resize:vertical}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}
+.big{font-size:clamp(24px,4vw,34px);font-weight:950}.score{font-size:clamp(34px,7vw,58px);font-weight:1000}.small{font-size:13px;color:var(--muted);line-height:1.65}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:9px}.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:23px;margin-top:4px}
+.gate{border:1px solid var(--line);border-radius:15px;padding:14px;margin:10px 0}.gate h3{margin:.1em 0 .55em}.checkrow{display:flex;gap:9px;align-items:flex-start;margin:8px 0}.checkrow input{width:auto;margin-top:4px}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · 山域事故防迷途 · 2026/09/13</div>
+<h1>TrailGuard 4<br>登山前不是只看天氣。<br>先過4道安全門。</h1>
+<p class="lead">官方資料指出，「迷途」長年是最常見的山域事故類型。臺中市消防局分析2025年60件山域救援，45件（75%）發生在海拔2,500公尺以下的中級山，谷關七雄就有32件；常見問題包含<strong>沒有離線地圖、沒有頭燈、低估單日時間與體能</strong>。這個工具不保證路線安全，只強迫自己出發前完成4個最容易漏掉的動作。</p>
+<section class="card"><h2>1｜需求不是「更多登山知識」，而是出發前真的做完</h2><div class="stats"><div class="stat">最常見山域事故<b>迷途</b></div><div class="stat">臺中2025救援<b>60件</b></div><div class="stat">中級山案件<b>45件／75%</b></div><div class="stat">谷關七雄<b>32件</b></div></div><div class="note warn">山況是動態的。山林悠遊網在 2026/9/11 仍新增「佐倉步道 9/15–9/24 暫停開放」公告；前一次走過、舊遊記寫可通行，都不能取代出發前再查一次官方狀態。</div></section>
+<section class="card"><h2>2｜四道安全門</h2><div class="gate"><h3>Gate 1｜今天真的能走嗎？</h3><div class="checkrow"><input id="statusChecked" type="checkbox"><label for="statusChecked">我已在<strong>今天／出發前</strong>查過官方路線開放、道路／步道管制資訊。</label></div><div class="checkrow"><input id="permitChecked" type="checkbox"><label for="permitChecked">我已確認這條路線是否需要入山／入園／自然保護區／山屋營地申請；需要的話已完成。</label></div><div class="actions"><a class="btn" target="_blank" rel="noopener" href="https://hike.taiwan.gov.tw/" onclick="track('official-hike')">臺灣登山申請一站式</a><a class="btn ghost" target="_blank" rel="noopener" href="https://recreation.forest.gov.tw/Index" onclick="track('forest-status')">山林悠遊即時訊息</a></div></div>
+<div class="gate"><h3>Gate 2｜離線地圖不是「有裝App」：要切飛航模式測過</h3><div class="checkrow"><input id="mapDownloaded" type="checkbox"><label for="mapDownloaded">我已把預計路線與周邊區域下載到手機，沒有網路也能看。</label></div><div class="checkrow"><input id="airplaneTest" type="checkbox"><label for="airplaneTest">我已切到<strong>飛航模式</strong>重新打開地圖，確認路線與目前定位功能仍可用。</label></div><div class="note info">林業保育署 8/28 特別以「離線地圖操作」做防迷途宣導：下午起霧、天色變暗、體力下降時，誤入不明路跡或獸徑是典型風險。下載完成但沒實測，不能算真的離線可用。</div></div>
+<div class="gate"><h3>Gate 3｜先定折返時間，不是只定攻頂時間</h3><div class="grid"><div><label>預計開始時間</label><input id="startTime" type="time" value="06:00"></div><div><label>最晚折返時間</label><input id="turnTime" type="time" value="13:00"></div><div><label>預計回到登山口／安全點</label><input id="returnTime" type="time" value="17:00"></div></div><div class="checkrow"><input id="turnCommitted" type="checkbox"><label for="turnCommitted">即使「差一點就到」，到折返時間也以安全下山為優先，不因攻頂目標把時間一直往後推。</label></div></div>
+<div class="gate"><h3>Gate 4｜至少有一個山下的人知道你去哪、何時該報警</h3><div class="grid"><div><label>路線／山名（可簡寫）</label><input id="routeName" placeholder="例：谷關七雄某路線"></div><div><label>同行總人數</label><input id="partySize" type="number" min="1" value="2"></div><div><label>約定最晚安全回報時間</label><input id="checkinTime" type="time" value="19:00"></div></div><div class="checkrow"><input id="guardSent" type="checkbox"><label for="guardSent">我已把這頁產生的「留守卡」傳給一位<strong>不同行</strong>的人，並告訴對方超過回報時間該怎麼做。</label></div></div><div id="gateOut"></div></section>
+<section class="card"><h2>3｜最小裝備檢查：中級山也不是郊遊路線</h2><div class="grid"><label class="checkrow"><input class="gear" type="checkbox" value="頭燈＋備用電力"><span>頭燈＋備用電力</span></label><label class="checkrow"><input class="gear" type="checkbox" value="手機＋行動電源"><span>手機＋行動電源</span></label><label class="checkrow"><input class="gear" type="checkbox" value="防水／保暖衣物"><span>防水／保暖衣物</span></label><label class="checkrow"><input class="gear" type="checkbox" value="足量飲水與備用糧"><span>足量飲水與備用糧</span></label><label class="checkrow"><input class="gear" type="checkbox" value="簡易急救用品"><span>簡易急救用品</span></label><label class="checkrow"><input class="gear" type="checkbox" value="非手機的備援導航／紙本重點"><span>非手機的備援導航／紙本重點（有則更好）</span></label></div></section>
+<section class="card"><h2>4｜一鍵產生「山下留守卡」</h2><textarea id="guardCard"></textarea><div class="actions"><button onclick="buildGuard(true)">更新留守卡</button><button class="ghost" onclick="copyText('guardCard')">複製給留守人</button></div><div class="note warn"><b>留守人不是收到訊息就算了。</b>要事先約好「最晚幾點前一定回報」。若明顯逾時且聯絡不上，留守人應依情況聯絡119，並提供已知的路線、隊伍人數、最後聯繫時間與位置資訊。</div></section>
+<section class="card"><h2>5｜事故發生時的簡短求援模板</h2><textarea id="emergency">【山域求援資訊】
+我需要山域救援。
+
+1. 山名／路線：
+2. 人數：
+3. 發生狀況：
+4. 目前可取得的位置／座標：
+5. 最後經過的明確地標／里程牌：
+6. 傷者狀況：
+7. 現有保暖、飲水、電量：
+8. 是否可通話／只能傳訊息：
+
+已撥／請協助撥 119。
+
+不要為了取得訊號繼續往不確定、暴露或危險地形移動。</textarea><div class="actions"><button class="ghost" onclick="copyText('emergency');track('emergency-template')">複製求援模板</button><a class="btn" href="tel:119">撥119</a></div></section>
+<section class="card"><h2>6｜一鍵產生「我今天到底該不該出發」防漏卡</h2><textarea id="tripCard"></textarea><div class="actions"><button onclick="buildTrip(true)">更新行前卡</button><button class="ghost" onclick="copyText('tripCard')">複製</button></div><div class="note info">四道安全門全過，只代表<strong>最低限度的行前準備完成</strong>，不是「這條路線現在一定安全」。天候、體能、現地路況、領隊能力與突發狀況仍可能讓正確決策變成取消或折返。</div></section>
+<section class="card"><h2>7｜這個工具刻意不做</h2><div class="note"><ul><li>不替你判斷某條路線「一定安全」或「一定適合你的能力」。</li><li>不收姓名、身分證、住址、手機號碼或家庭精確位置。</li><li>不追蹤即時GPS，也不能取代119／正式搜救系統。</li><li>不把網友GPX、舊遊記或社群貼文當作官方開放狀態。</li><li>不鼓勵獨攀、硬闖封閉路線或為攻頂目標超過折返時間。</li></ul></div></section>
+<section class="card"><h2>8｜真實使用驗證</h2><p>這輪真正追：<strong>不是「看過安全知識」，而是出發前真的查狀態、離線地圖飛航測試、設定折返時間、把留守卡傳出去，並因此修改過不安全的計畫。</strong></p><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/107">TrailGuard 4 回饋區 #107</a></div></section>
+<section class="card"><h2>9｜可直接轉給登山群／社團</h2><textarea id="share">【中級山不是郊遊｜出發前先過4道安全門】
+
+官方統計指出，「迷途」長年是最常見山域事故類型。
+臺中2025年山域救援60件，其中45件（75%）在海拔2,500m以下中級山，谷關七雄就32件。
+
+出發前4件事：
+1. 今天重新查官方「路線開放＋是否需申請」
+2. 離線地圖下載後，真的切飛航模式測一次
+3. 先定「最晚折返時間」，不要只定攻頂時間
+4. 把路線、人數、預計回報時間傳給山下留守人
+
+另外一定帶頭燈與備用電力。
+
+TrailGuard 4：
+https://allen3429.github.io/Allentrial20260812.github.io/public-good/trailguard4/
+
+官方登山申請一站式：
+https://hike.taiwan.gov.tw/
+
+山林悠遊即時開放／施工資訊：
+https://recreation.forest.gov.tw/Index
+
+公開回饋不要貼姓名、手機、住址或即時精確位置。</textarea><div class="actions"><button class="ghost" onclick="copyText('share');track('share-copy')">複製轉貼文</button></div></section>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+function gateState(){const gates=[$('statusChecked').checked&&$('permitChecked').checked,$('mapDownloaded').checked&&$('airplaneTest').checked,$('turnCommitted').checked&&!!$('turnTime').value,$('guardSent').checked&&!!$('checkinTime').value];const passed=gates.filter(Boolean).length;let cls='bad',title=`🔴 ${passed}／4 道安全門完成`,msg='還有核心行前準備沒完成；不要把「已經約好朋友／車到了」當成必須出發的理由。';if(passed===3){cls='warn';title='🟡 3／4 完成：差一個就補完再出發';msg='缺的那一道通常就是事故發生後最難補救的一道。';}if(passed===4){cls='ok';title='🟢 4／4 最低限度行前準備完成';msg='這不是安全保證。出發前仍要看最新天候、現地資訊、隊伍能力；必要時取消或折返。';}$('gateOut').innerHTML=`<div class="note ${cls}"><div class="score">${passed}／4</div><div class="big">${title}</div>${msg}</div>`;return{passed,gates,title,msg};}
+function gearList(){return[...document.querySelectorAll('.gear:checked')].map(x=>x.value);}
+function buildGuard(countCore){const route=$('routeName').value.trim()||'尚未填寫';const party=Math.max(1,Number($('partySize').value)||1);const start=$('startTime').value||'未填';const turn=$('turnTime').value||'未填';const ret=$('returnTime').value||'未填';const check=$('checkinTime').value||'未填';$('guardCard').value=`【TrailGuard 4｜山下留守卡】\n\n路線／山名：${route}\n同行總人數：${party}人\n預計開始：${start}\n最晚折返：${turn}\n預計回到登山口／安全點：${ret}\n約定最晚安全回報：${check}\n\n留守人請記住：\n1. 我會在「${check}」前主動報平安。\n2. 若明顯逾時且聯絡不上，先嘗試電話／訊息。\n3. 若有山域事故疑慮，請撥119，提供這張卡、最後聯繫時間、已知路線及人數。\n4. 我若在山上傳來座標／里程牌／明確地標，請保留原訊息，不要只轉述。\n5. 不要把這張卡公開貼社群；只給留守人與真正需要救援的單位。\n\n出發前我應已完成：\n□ 查今日官方開放／管制\n□ 確認入山／入園／山屋等申請\n□ 離線地圖飛航模式測試\n□ 設定折返時間\n□ 頭燈與備用電力\n\n官方登山申請一站式：\nhttps://hike.taiwan.gov.tw/`;if(countCore&&window.PGLabImpact)PGLabImpact.core('guard-card');}
+function buildTrip(countCore){const g=gateState();const gears=gearList();const missing=[];if(!$('statusChecked').checked)missing.push('重新查今日官方開放／管制');if(!$('permitChecked').checked)missing.push('確認入山／入園／山屋等申請');if(!$('mapDownloaded').checked)missing.push('下載離線路線與周邊地圖');if(!$('airplaneTest').checked)missing.push('切飛航模式實測離線地圖');if(!$('turnCommitted').checked)missing.push('承諾遵守折返時間');if(!$('guardSent').checked)missing.push('把留守卡真的傳給山下留守人');if(!gears.includes('頭燈＋備用電力'))missing.push('頭燈＋備用電力');if(!gears.includes('手機＋行動電源'))missing.push('手機＋行動電源');$('tripCard').value=`【TrailGuard 4｜今天行前防漏卡】\n核心安全門：${g.passed}／4\n\n${g.title}\n${g.msg}\n\n目前還缺：\n${missing.length?missing.map(x=>'□ '+x).join('\n'):'核心項目已完成；仍需依最新天候、現地路況與隊伍能力決定是否出發。'}\n\n時間：\n開始：${$('startTime').value||'未填'}\n最晚折返：${$('turnTime').value||'未填'}\n預計回安全點：${$('returnTime').value||'未填'}\n最晚回報：${$('checkinTime').value||'未填'}\n\n已勾裝備：\n${gears.length?gears.map(x=>'✓ '+x).join('\n'):'尚未勾選'}\n\n重要：\n・中級山也可能迷途、摸黑、體力透支。\n・離線地圖一定要飛航模式測過。\n・到折返時間，即使差一點也優先下山。\n・官方路線狀態可能因施工、豪雨、颱風隨時變更。\n・這張卡不是「安全認證」。\n\n官方即時資訊：\nhttps://hike.taiwan.gov.tw/\nhttps://recreation.forest.gov.tw/Index`;if(countCore&&window.PGLabImpact)PGLabImpact.core('trip-card');buildGuard(false);}
+function track(label){if(window.PGLabImpact)PGLabImpact.core(label)}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+['statusChecked','permitChecked','mapDownloaded','airplaneTest','turnCommitted','guardSent','startTime','turnTime','returnTime','checkinTime','routeName','partySize'].forEach(id=>$(id).addEventListener('change',()=>buildTrip(false)));document.querySelectorAll('.gear').forEach(x=>x.addEventListener('change',()=>buildTrip(false)));$('routeName').addEventListener('input',()=>buildTrip(false));$('partySize').addEventListener('input',()=>buildTrip(false));buildTrip(false);
+</script>
+<script src="../impact.js" data-project="trailguard4" data-action-text="我已完成4道出發前安全門／留守卡" data-real-text="我已真的查即時狀態／離線地圖飛航測試／設定折返時間／把留守卡傳給山下的人／因此修改行程" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/107"></script>
+</body></html>
