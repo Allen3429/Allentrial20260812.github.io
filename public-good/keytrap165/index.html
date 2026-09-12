@@ -1,1 +1,97 @@
-PLACEHOLDER
+<!doctype html>
+<html lang="zh-Hant" data-project="keytrap165">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="KeyTrap 165：開學季假房東寄鑰匙＋物流實名釣魚防漏。對話只在本機掃描，不打開連結、不上傳。">
+<title>KeyTrap 165｜假房東寄鑰匙釣魚防漏</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#a32323;--info:#285c8d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1060px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}h1{font-size:clamp(38px,7vw,64px);line-height:1.03;margin:.15em 0 .25em}
+.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:980px}.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:12px 14px;border-radius:9px;line-height:1.72;margin:10px 0}.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}.info{border-left-color:var(--info)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}label{display:block;font-weight:800;margin:7px 0 6px}select,input,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}textarea{min-height:230px;resize:vertical}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}
+.big{font-size:clamp(24px,4vw,34px);font-weight:950}.score{font-size:clamp(38px,8vw,62px);font-weight:1000}.small{font-size:13px;color:var(--muted);line-height:1.6}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:9px}.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:22px;margin-top:4px}
+.finding{border:1px solid var(--line);border-radius:12px;padding:10px;margin:7px 0}.host{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;overflow-wrap:anywhere}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · 刑事局 2026/09/06 最新租屋詐術 · 2026/09/13</div>
+<h1>KeyTrap 165<br>「房東人在外地，<br>我寄鑰匙給你」先別點連結。</h1>
+<p class="lead">刑事局 9/6 公開最新開學季租屋詐騙：假房東刊登低於行情、裝潢漂亮的物件，聲稱人在外地，可用<strong>超商物流寄鑰匙</strong>讓租客自行看房；接著傳仿冒物流頁面，以<strong>實名認證</strong>為由引導操作網銀。警方揭露已有社會新鮮人因此損失 5 萬多元。</p>
+
+<section class="card"><h2>1｜五個紅旗，命中越多越該停</h2><div class="grid">
+<div><label>房東是否拒絕／無法現場帶看？</label><select id="remote"><option value="no">沒有</option><option value="yes">是，說人在外地／不方便</option><option value="unknown">不確定</option></select></div>
+<div><label>是否說可以「寄鑰匙」讓你自己看房？</label><select id="key"><option value="no">沒有</option><option value="yes">有</option></select></div>
+<div><label>是否傳超商／物流「交貨便」類連結？</label><select id="logistics"><option value="no">沒有</option><option value="yes">有</option></select></div>
+<div><label>是否要求「實名認證」？</label><select id="verify"><option value="no">沒有</option><option value="yes">有</option></select></div>
+<div><label>是否要求操作網銀、轉帳、匯款或輸入金融資料？</label><select id="bank"><option value="no">沒有</option><option value="yes">有</option></select></div>
+</div><div id="riskOut"></div></section>
+
+<section class="card"><h2>2｜刑事局公布的「新型態」關鍵組合</h2><div class="stats"><div class="stat">低於行情精美物件<b>誘餌</b></div><div class="stat">房東人在外地<b>降低見面</b></div><div class="stat">寄鑰匙自行看房<b>建立合理感</b></div><div class="stat">物流實名＋網銀<b>核心詐術</b></div></div><div class="note bad"><b>超商物流業者不會以「實名認證」為理由要求你匯款或操作網銀。</b>這是刑事局這次特別點名的辨識點。租屋原則仍是：現場看屋、核對身分、簽約後再付款。</div></section>
+
+<section class="card"><h2>3｜把可疑對話貼進來掃：只在你的瀏覽器處理</h2><p class="small">不要貼姓名、手機、地址、銀行帳號或完整身分證件。本工具<strong>不會送出文字、不會打開任何網址</strong>；只在本機找關鍵話術與顯示網址主機名。</p><textarea id="chat" placeholder="可貼對方的訊息，例如：我人在外地，可以用交貨便寄鑰匙給你，先進連結實名認證……"></textarea><div class="actions"><button onclick="scanText(true)">本機掃描</button><button class="ghost" onclick="clearChat()">清除</button></div><div id="scanOut"></div></section>
+
+<section class="card"><h2>4｜安全租屋只做這3步</h2><div class="note ok"><b>① 現場看屋。</b>至少實際確認房屋、門牌／位置與屋況，不用「先付認證費」換看屋資格。</div><div class="note ok"><b>② 核對出租人／代理人的身分與出租權限。</b>若由代理人出租，確認代理關係，不只看社群帳號或聊天暱稱。</div><div class="note ok"><b>③ 確認契約後才付款。</b>不要因「保留房源」「寄鑰匙」「物流實名」「退款保證」先操作網銀。</div><div class="actions"><a class="btn" target="_blank" rel="noopener" href="https://165.npa.gov.tw/" onclick="track('165-site')">165 全民防騙網</a><a class="btn ghost" href="tel:165" onclick="track('call165')">撥165查證</a><a class="btn ghost" href="tel:110">撥110</a></div></section>
+
+<section class="card"><h2>5｜已經點了／輸入了／匯了？現在先做什麼</h2><div class="grid"><div><label>我是否已輸入網銀／信用卡／驗證碼等金融資料？</label><select id="entered"><option value="no">沒有</option><option value="yes">有</option></select></div><div><label>是否已經轉帳／匯款／被扣款？</label><select id="paid"><option value="no">沒有</option><option value="yes">有</option></select></div></div><div id="damageOut"></div><div class="note bad">如果已輸入金融資料或發生款項異動：<strong>不要繼續跟對方周旋</strong>。立刻從銀行官方 App、卡片背面或官網取得客服電話聯絡銀行處理，再撥 165／110。保留聊天與交易紀錄給銀行／警方，但不要把資料貼公開社群。</div></section>
+
+<section class="card"><h2>6｜一鍵複製：不用跟對方辯論的安全回覆</h2><textarea id="reply">謝謝，我的租屋流程只接受：
+1. 現場看屋；
+2. 核對出租人或合法代理人身分與出租權限；
+3. 確認租約後再付款。
+
+我不會透過物流／交貨便連結做實名認證，也不會為寄送鑰匙操作網銀或先匯款。
+
+如果這間房可以正常出租，請提供可現場帶看的時段；否則我就不繼續。</textarea><div class="actions"><button class="ghost" onclick="copyText('reply');track('safe-reply')">複製安全回覆</button></div></section>
+
+<section class="card"><h2>7｜一鍵產生「我現在該不該停」行動卡</h2><textarea id="card"></textarea><div class="actions"><button onclick="buildCard(true)">更新行動卡</button><button class="ghost" onclick="copyText('card')">複製</button></div></section>
+
+<section class="card"><h2>8｜這個工具刻意不做</h2><div class="note"><ul><li>不把任何陌生網址標成「安全」；最多只顯示主機名供你辨識。</li><li>不自動開啟使用者貼上的連結，也不連線檢查它。</li><li>不收真實租屋地址、房東姓名／電話、銀行帳戶、信用卡或身分證。</li><li>不保證沒有命中關鍵字就不是詐騙；詐術會變化。</li><li>不要求你繼續和可疑對方互動來「套證據」。</li></ul></div></section>
+
+<section class="card"><h2>9｜真實使用驗證</h2><p>真正追：<strong>有沒有人因此停止點連結、改約現場看屋、撥165、聯絡銀行或直接放棄可疑物件。</strong></p><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/109">KeyTrap 165 回饋區 #109</a></div></section>
+
+<section class="card"><h2>10｜可直接轉給新生／租屋群</h2><textarea id="share">【開學季新租屋詐騙｜「人在外地，我寄鑰匙給你」先不要點】
+
+刑事局9/6公布最新手法：
+1. 社群刊登低於行情、裝潢漂亮的假租屋
+2. 假房東說人在外地，不能帶看
+3. 說可用超商物流寄鑰匙，讓你自己看房
+4. 傳仿冒物流／交貨便網頁
+5. 用「實名認證」引導你操作網銀、匯款
+已有社會新鮮人因此被騙5萬多元。
+
+警方提醒：
+・租屋要現場看屋
+・核對身分
+・簽約後再付款
+・超商物流不會因「實名認證」要求你匯款或操作網銀
+
+KeyTrap 165 本機掃描工具：
+https://allen3429.github.io/Allentrial20260812.github.io/public-good/keytrap165/
+
+165反詐騙諮詢專線
+
+不要在群組貼銀行資料、租屋地址或完整可點擊的可疑網址。</textarea><div class="actions"><button class="ghost" onclick="copyText('share');track('share-copy')">複製轉貼文</button></div></section>
+
+<section class="card"><h2>11｜官方來源</h2><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://www.pbs.npa.gov.tw/ch/app/data/view?id=18740&module=wg183&serno=99843228-1372-4c45-892a-6358881c0860">警廣／刑事局 9/6 最新詐術</a><a class="btn ghost" target="_blank" rel="noopener" href="https://www.cna.com.tw/news/asoc/202609060095.aspx">中央社 9/6 報導</a></div></section>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+function answers(){return {remote:$('remote').value==='yes',key:$('key').value==='yes',logistics:$('logistics').value==='yes',verify:$('verify').value==='yes',bank:$('bank').value==='yes'};}
+function risk(){const a=answers();let score=0;if(a.remote)score++;if(a.key)score+=2;if(a.logistics)score+=2;if(a.verify)score+=2;if(a.bank)score+=3;let cls='info',title='🔵 目前沒有命中這次警方公布的核心組合',msg='但這不代表物件一定安全。仍要現場看屋、核對身分、簽約後再付款。';if(score>=3){cls='warn';title='🟡 已出現多個租屋詐騙紅旗';msg='先不要點陌生連結、不要先付費。改成要求現場看屋與核對出租權限。';}if((a.key&&a.logistics&&a.verify)||(a.verify&&a.bank)||(a.logistics&&a.bank)||score>=6){cls='bad';title='🔴 高度命中刑事局公布的「寄鑰匙＋物流實名／網銀」新手法';msg='停止操作。不點連結、不輸入金融資料、不匯款。直接撥165查證，並放棄「一定要先認證才能看屋」的流程。';}$('riskOut').innerHTML=`<div class="note ${cls}"><div class="score">${score}</div><div class="big">${title}</div>${msg}</div>`;return {score,cls,title,msg,a};}
+function scanText(countCore){const text=$('chat').value||'';const groups=[['房東不現身',/(人在外地|外縣市|不方便帶看|無法帶看|不能帶看)/],['寄鑰匙',/(寄.*鑰匙|鑰匙.*寄|自行看房|自己看房)/],['超商／物流',/(交貨便|賣貨便|物流|超商|店到店|寄件)/],['實名認證',/(實名|認證|驗證身分|身分驗證)/],['金融操作',/(網銀|網路銀行|匯款|轉帳|atm|銀行app|驗證碼|otp)/i],['退款保證話術',/(退還|退款|會退|認證完.*返還|只是驗證)/]];const hits=groups.filter(g=>g[1].test(text)).map(g=>g[0]);const urls=text.match(/https?:\/\/[^\s<>"']+|www\.[^\s<>"']+/gi)||[];const hosts=[];urls.forEach(raw=>{try{const u=new URL(raw.startsWith('www.')?'https://'+raw:raw);if(!hosts.includes(u.hostname))hosts.push(u.hostname)}catch(e){}});let cls='info',title='未命中固定關鍵話術';if(hits.length>=2){cls='warn';title='出現多個可疑話術';}if((hits.includes('寄鑰匙')&&hits.includes('超商／物流')&&hits.includes('實名認證'))||hits.includes('金融操作')){cls='bad';title='高度接近警方公布的新型租屋釣魚流程';}const box=$('scanOut');box.innerHTML='';const summary=document.createElement('div');summary.className='note '+cls;const b=document.createElement('div');b.className='big';b.textContent=title;summary.appendChild(b);const desc=document.createElement('div');desc.textContent=hits.length?'命中：'+hits.join('、'):'仍請用現場看屋／核對身分／簽約後付款三原則。';summary.appendChild(desc);box.appendChild(summary);if(hosts.length){const h=document.createElement('div');h.className='note warn';const hb=document.createElement('b');hb.textContent='偵測到網址，但工具不會打開。只顯示主機名：';h.appendChild(hb);hosts.forEach(host=>{const d=document.createElement('div');d.className='host';d.textContent='• '+host;h.appendChild(d);});const p=document.createElement('div');p.className='small';p.textContent='主機名看起來像品牌，也不等於安全；不要從可疑對話直接登入或付款。';h.appendChild(p);box.appendChild(h);}if(countCore&&window.PGLabImpact)PGLabImpact.core('local-chat-scan');buildCard(false);return {hits,hosts,title,cls};}
+function damage(){const e=$('entered').value==='yes',p=$('paid').value==='yes';let cls='ok',title='🟢 尚未輸入金融資料／付款：現在停下最容易止損',msg='不要再點連結，改成現場看屋、核對身分。';if(e||p){cls='bad';title='🔴 立即聯絡銀行官方客服＋165／110';msg='從銀行官方App、卡片背面或自行輸入銀行官網取得客服電話。若有交易，告知疑似遭詐並依銀行指示處理。保留證據，不要再付款「解凍／退款」。';}$('damageOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;return {e,p,title,msg};}
+function buildCard(countCore){const r=risk(),d=damage();$('card').value=`【KeyTrap 165｜租屋詐騙行動卡】\n這不是「網址安全認證」，只做詐騙話術防漏。\n\n我的前篩：\n${r.title}\n紅旗分數：${r.score}\n${r.msg}\n\n我現在要做：\n1. 不點對方傳來的物流／實名認證連結。\n2. 不為「寄鑰匙」「保留房源」「驗證身分」操作網銀或先匯款。\n3. 要求現場看屋。\n4. 核對出租人或合法代理人的身分與出租權限。\n5. 確認租約後才付款。\n6. 有疑問撥165；若已輸入金融資料／付款，立刻聯絡銀行官方客服並撥165／110。\n\n金融資料／付款狀態：\n${d.title}\n${d.msg}\n\n官方警方提醒：\n租屋務必「現場看屋、核對身分、簽約後再付款」。\n超商物流業者不會以實名認證為由要求匯款、操作網銀。\n\n165全民防騙：\nhttps://165.npa.gov.tw/\n\n公開回饋不要貼姓名、手機、地址、銀行資料、租約或完整可點擊可疑網址。`;if(countCore&&window.PGLabImpact)PGLabImpact.core('action-card');}
+function clearChat(){$('chat').value='';$('scanOut').innerHTML='';}
+function track(label){if(window.PGLabImpact)PGLabImpact.core(label)}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+['remote','key','logistics','verify','bank','entered','paid'].forEach(id=>$(id).addEventListener('change',()=>buildCard(false)));
+risk();damage();buildCard(false);
+</script>
+<script src="../impact.js" data-project="keytrap165" data-action-text="我已完成租屋詐騙紅旗前篩／本機對話掃描" data-real-text="我已真的停止點連結／改約現場看屋／撥165／聯絡銀行／放棄可疑物件" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/109"></script>
+</body></html>
