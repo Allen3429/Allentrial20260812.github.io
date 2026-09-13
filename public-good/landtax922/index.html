@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="landtax922">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="LandTax 922：115年自用住宅用地地價稅2‰優惠前篩。9/22前申請，逾期116年才適用。新買、繼承、受贈、空戶再遷入特別防漏。">
+<title>LandTax 922｜自用住宅地價稅2‰申請防漏</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#687480;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#a32323;--info:#285c8d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1080px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}h1{font-size:clamp(38px,7vw,64px);line-height:1.03;margin:.15em 0 .25em}
+.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:990px}.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:12px 14px;border-radius:9px;line-height:1.72;margin:10px 0}.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}.info{border-left-color:var(--info)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(225px,1fr));gap:10px}label{display:block;font-weight:800;margin:7px 0 6px}select,input,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}textarea{min-height:255px;resize:vertical}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}
+.big{font-size:clamp(24px,4vw,34px);font-weight:950}.money{font-size:clamp(36px,7vw,58px);font-weight:1000}.small{font-size:13px;color:var(--muted);line-height:1.65}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:9px}.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:22px;margin-top:4px}
+.check{display:flex;gap:8px;align-items:flex-start;margin:8px 0}.check input{width:auto;margin-top:4px}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · 115年地價稅 · 2026/09</div>
+<h1>LandTax 922<br>自住房不是自動2‰。<br>新買、繼承、遷回戶籍都可能要重申請。</h1>
+<p class="lead">115年地價稅自用住宅用地優惠申請到 <strong>9/22</strong>。符合者核准後今年可用 <strong>2‰</strong>；一般用地是 <strong>10‰–55‰</strong>。最容易漏掉的是：買賣、贈與、繼承或信託取得後，舊所有權人的優惠不會自動跟過來；曾因遷出／死亡變成空戶，後來再遷回，也要重新申請。</p>
+
+<section class="card">
+<h2>1｜先判斷：你今年是不是「應該動作」的人</h2>
+<div class="grid">
+<div><label>你是這筆土地的所有權人嗎？</label>
+<select id="landOwner"><option value="yes">是</option><option value="no">不是</option><option value="unknown">不確定</option></select></div>
+
+<div><label>這筆土地今年是否因買賣／贈與／繼承／信託而換所有權人？</label>
+<select id="newOwner"><option value="no">沒有</option><option value="yes">有</option><option value="unknown">不確定</option></select></div>
+
+<div><label>以前是否已核准2‰，而且今年所有權、用途、設籍狀態都完全沒變？</label>
+<select id="approved"><option value="no">沒有／不知道</option><option value="yes">是，全部沒變</option></select></div>
+
+<div><label>是否曾因設籍人全部遷出／死亡成為空戶，之後又遷回？</label>
+<select id="reregister"><option value="no">沒有</option><option value="yes">有</option><option value="unknown">不確定</option></select></div>
+</div>
+<div id="reapplyOut"></div>
+</section>
+
+<section class="card">
+<h2>2｜自用住宅2‰的核心條件</h2>
+<div class="grid">
+<div><label>地上房屋由誰所有？</label>
+<select id="buildingOwner"><option value="family">土地所有權人／配偶／直系親屬</option><option value="other">其他人</option><option value="unknown">不確定</option></select></div>
+
+<div><label>誰已在該住宅辦妥戶籍登記？</label>
+<select id="registered">
+<option value="owner">土地所有權人本人</option>
+<option value="spouse">配偶</option>
+<option value="adultlineal">成年直系親屬</option>
+<option value="minorlineal">未成年受扶養直系親屬</option>
+<option value="none">目前沒有人</option>
+<option value="unknown">不確定</option>
+</select></div>
+
+<div><label>房屋使用狀態</label>
+<select id="use">
+<option value="self">全部自住，沒有出租／營業</option>
+<option value="partial">部分自住、部分出租／營業</option>
+<option value="business">全部出租或供營業</option>
+<option value="unknown">不確定</option>
+</select></div>
+
+<div><label>土地屬於</label>
+<select id="zone"><option value="urban">都市土地</option><option value="nonurban">非都市土地</option><option value="unknown">不確定</option></select></div>
+
+<div><label>土地面積（平方公尺，不知道可留白）</label>
+<input id="area" type="number" min="0" step="0.01" placeholder="例：85"></div>
+
+<div><label>所有權人＋配偶＋未成年受扶養親屬，是否已有另一處享2‰？</label>
+<select id="otherPlace"><option value="no">沒有</option><option value="yes">有</option><option value="unknown">不確定</option></select></div>
+</div>
+<div id="eligOut"></div>
+<div class="note info"><b>面積限制：</b>都市土地最多300㎡、非都市土地最多700㎡適用優惠範圍。超過不等於整筆都沒機會，而是應向地方稅捐機關確認可適用範圍。</div>
+<div class="note info"><b>一處限制有例外情境：</b>官方說明，土地所有權人與配偶及未成年受扶養親屬原則上以1處為限；若是供<strong>成年直系親屬</strong>設籍居住，則不受這個1處限制。115/7/23財政部令釋也已放寬同性配偶的直系親屬設籍，平等適用自用住宅優惠。</div>
+</section>
+
+<section class="card">
+<h2>3｜差多少？先看最保守的10‰ vs 2‰</h2>
+<div class="stats">
+<div class="stat">一般用地基本稅率<b>10‰</b><span class="small">還可能依累進級距更高</span></div>
+<div class="stat">自用住宅優惠<b>2‰</b></div>
+<div class="stat">相同課稅地價下<b>只剩1/5</b><span class="small">和10‰基本稅率相比</span></div>
+<div class="stat">官方示例<b>1萬→2千</b><span class="small">可少8,000元</span></div>
+</div>
+<div class="note warn">本工具不做正式地價稅稅額計算：一般用地採10‰–55‰累進，還會受你在同一直轄市／縣市的地價總額等因素影響。真正稅額以稅捐機關核定為準。</div>
+</section>
+
+<section class="card">
+<h2>4｜9/22前送件防漏</h2>
+<div class="check"><input type="checkbox"><span>確認本人／配偶／直系親屬已在該住宅辦妥戶籍登記</span></div>
+<div class="check"><input type="checkbox"><span>確認房屋沒有全部出租或供營業使用；若部分營業／出租，先問可否按比例適用</span></div>
+<div class="check"><input type="checkbox"><span>確認地上房屋所有權關係符合規定</span></div>
+<div class="check"><input type="checkbox"><span>若今年買入／受贈／繼承／信託取得，已把「重新申請」列入待辦</span></div>
+<div class="check"><input type="checkbox"><span>若曾空戶後遷回，已把「重新申請」列入待辦</span></div>
+<div class="check"><input type="checkbox"><span>準備戶籍／建物相關資料；線上表單已填列可由機關查得的資料時，部分附件可依系統規則免附</span></div>
+<div class="actions">
+<a class="btn" target="_blank" rel="noopener" href="https://www.etax.nat.gov.tw/etwmain/front/ETW109W/OLF013008/0" onclick="track('official-apply')">財政部免用憑證線上申請</a>
+<a class="btn ghost" href="tel:0800000321" onclick="track('call-tax')">0800-000-321</a>
+<button class="ghost" onclick="deadlineIcs();track('deadline-calendar')">加入9/22截止提醒</button>
+</div>
+</section>
+
+<section class="card">
+<h2>5｜一鍵產生「我到底要不要重申請」行動卡</h2>
+<textarea id="card"></textarea>
+<div class="actions"><button onclick="buildCard(true)">更新行動卡</button><button class="ghost" onclick="copyText('card')">複製給家人／代辦者</button></div>
+</section>
+
+<section class="card">
+<h2>6｜這個工具刻意不做</h2>
+<div class="note"><ul>
+<li>不收地址、門牌、地號、建號、身分證、戶口名簿、權狀或稅單。</li>
+<li>不把前篩結果當成稅捐機關正式核准。</li>
+<li>不自行判定部分出租／營業的實際可優惠面積。</li>
+<li>不做正式累進地價稅試算，避免用錯總地價／級距。</li>
+<li>不把「以前有2‰」當成永遠有效；所有權變更或空戶後遷回都可能要重申請。</li>
+</ul></div>
+</section>
+
+<section class="card">
+<h2>7｜真實使用驗證</h2>
+<p>真正追的是：<strong>有沒有從「我以為自住就自動優惠」走到確認戶籍／舊核准狀態、致電稅捐處、或在9/22前真的送出申請。</strong></p>
+<div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/115">LandTax 922 回饋區 #115</a></div>
+</section>
+
+<section class="card">
+<h2>8｜可直接轉給剛買房／繼承房地的家人</h2>
+<textarea id="share">【115年地價稅｜自住房不是自動2‰，9/22前要確認】
+
+今年地價稅：
+・一般用地 10‰–55‰
+・符合自用住宅用地：2‰
+
+9/22前申請，核准後今年就能用；逾期要等116年。
+
+最容易漏：
+1. 今年買房、受贈、繼承或信託取得土地：舊所有權人的2‰不會自動跟著過來，新所有權人要重申請。
+2. 曾因全家遷出／設籍人死亡形成空戶，後來再遷回：要重申請。
+3. 已核准而所有權、用途、設籍都沒變：通常不用每年再申請。
+4. 自用住宅基本條件：本人／配偶／直系親屬設籍、房屋權屬符合、沒有出租或營業。
+5. 都市土地優惠面積上限300㎡，非都市700㎡。
+
+3分鐘前篩：
+https://allen3429.github.io/Allentrial20260812.github.io/public-good/landtax922/
+
+財政部免用憑證線上申請：
+https://www.etax.nat.gov.tw/etwmain/front/ETW109W/OLF013008/0
+
+國地稅免付費：0800-000-321
+
+不要在群組貼地址、地號、權狀、戶籍或稅單。</textarea>
+<div class="actions"><button class="ghost" onclick="copyText('share');track('share-copy')">複製轉貼文</button></div>
+</section>
+
+<section class="card">
+<h2>9｜官方來源</h2>
+<div class="actions">
+<a class="btn ghost" target="_blank" rel="noopener" href="https://www.etax.nat.gov.tw/etwmain/announcement/news/QoJLrp5">9/11最新期限提醒</a>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://www.etax.nat.gov.tw/etwmain/announcement/news/oKlR3Eb">新取得土地＋同性配偶新令釋</a>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://www.etax.nat.gov.tw/etwmain/announcement/news/Dq17r62">空戶後遷回須重申請</a>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://www.gov.tw/News_Content_2_513643">我的E政府申辦說明</a>
+</div>
+</section>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+
+function reapply(){
+ const owner=$('landOwner').value,newOwner=$('newOwner').value,approved=$('approved').value,re=$('reregister').value;
+ let cls='warn',title='🟡 先確認是否曾核准與今年有沒有變更',msg='如果不確定，可打0800-000-321或土地所在地地方稅捐機關查詢。';
+ if(owner==='no'){cls='info';title='🔵 申請人要由土地所有權人提出';msg='如果是協助家人，可把行動卡轉給土地所有權人處理。';}
+ else if(newOwner==='yes'||re==='yes'){cls='bad';title='🔴 今年很可能需要重新申請';msg=newOwner==='yes'?'買賣、贈與、繼承或信託造成所有權人變更，舊優惠不會自動延續。':'曾因遷出／死亡形成空戶，後來再遷入，也要重新提出申請。';}
+ else if(approved==='yes'&&newOwner==='no'&&re==='no'){cls='ok';title='🟢 已核准且條件完全沒變：通常不用每年重申請';msg='仍可在稅單／線上紀錄確認目前課稅別；如果用途或設籍其實有變，請重新評估。';}
+ $('reapplyOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;
+ return {owner,newOwner,approved,re,title,msg};
+}
+
+function eligibility(){
+ const owner=$('landOwner').value;
+ const bo=$('buildingOwner').value,reg=$('registered').value,use=$('use').value,zone=$('zone').value;
+ const other=$('otherPlace').value,area=Number($('area').value);
+ let hardFail=[],warn=[];
+ if(owner==='no')hardFail.push('不是土地所有權人');
+ if(bo==='other')hardFail.push('地上房屋所有權關係不符核心條件');
+ if(reg==='none')hardFail.push('目前沒有本人／配偶／直系親屬設籍');
+ if(use==='business')hardFail.push('房屋全部出租或供營業使用');
+ if(bo==='unknown')warn.push('房屋所有權關係尚未確認');
+ if(reg==='unknown')warn.push('設籍狀態尚未確認');
+ if(use==='unknown')warn.push('是否出租／營業尚未確認');
+ if(use==='partial')warn.push('部分出租／營業：可能只能就符合自用部分申請，請稅捐處確認');
+ if(zone==='unknown')warn.push('都市／非都市土地尚未確認');
+ if(zone==='urban'&&area>300)warn.push('都市土地面積超過300㎡：需確認可適用優惠的範圍');
+ if(zone==='nonurban'&&area>700)warn.push('非都市土地面積超過700㎡：需確認可適用優惠的範圍');
+ if(other==='yes'&&reg!=='adultlineal')warn.push('所有權人＋配偶＋未成年受扶養親屬已有另一處2‰：一處限制需確認');
+ if(other==='yes'&&reg==='adultlineal')warn.push('目前由成年直系親屬設籍，官方說明不受同一個一處限制，但仍建議由稅捐處核認');
+ if(other==='unknown')warn.push('是否已有另一處2‰尚未確認');
+
+ let cls='ok',title='🟢 核心條件前篩看起來接近2‰自用住宅用地',msg='如果今年尚未核准，請在9/22前送件。';
+ if(hardFail.length){cls='info';title='🔵 目前至少有一項核心條件不符合';msg=hardFail.join('；')+'。如果實際情況不同，請修正選項或直接問稅捐機關。';}
+ else if(warn.length){cls='warn';title='🟡 看起來有機會，但還有邊界條件要確認';msg=warn.join('；')+'。';}
+ $('eligOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;
+ return {hardFail,warn,title,msg,bo,reg,use,zone,other,area};
+}
+
+function buildCard(countCore){
+ const r=reapply(),e=eligibility();
+ let action='9/22前確認資格並送出申請。';
+ if(r.approved==='yes'&&r.newOwner==='no'&&r.re==='no'&&!e.hardFail.length) action='先確認目前仍是2‰且條件沒有變；若確實未變，通常不必重複申請。';
+ if(r.newOwner==='yes'||r.re==='yes') action='把「重新申請」當成今年必查項目，9/22前處理。';
+ if(e.hardFail.length) action='先處理／確認不符合的核心條件，不要直接把本工具當成正式駁回。';
+
+ $('card').value=`【LandTax 922｜我的自用住宅地價稅防漏卡】
+截止：2026/9/22。
+
+重申請判斷：
+${r.title}
+${r.msg}
+
+核心資格前篩：
+${e.title}
+${e.msg}
+
+我的下一步：
+${action}
+
+2‰核心條件：
+□ 土地所有權人或配偶、直系親屬在該住宅辦妥戶籍登記
+□ 地上房屋為土地所有權人／配偶／直系親屬所有
+□ 沒有全部出租或供營業；部分使用請確認適用範圍
+□ 都市土地優惠範圍最多300㎡；非都市700㎡
+□ 所有權人＋配偶＋未成年受扶養親屬原則上一處；成年直系親屬設籍有例外說明
+
+今年特別防漏：
+□ 買賣／贈與／繼承／信託取得 → 舊2‰不自動延續
+□ 曾空戶後再遷回 → 要重新申請
+□ 已核准且所有權／用途／設籍都沒變 → 通常不用每年重申請
+□ 115/7/23新令釋：同性配偶之直系親屬設籍平等適用
+
+線上申請：
+https://www.etax.nat.gov.tw/etwmain/front/ETW109W/OLF013008/0
+國地稅免付費：0800-000-321
+
+不要把地址、地號、建號、戶籍、權狀或稅單貼到公開回饋。`;
+ if(countCore&&window.PGLabImpact)PGLabImpact.core('action-card');
+}
+
+function deadlineIcs(){
+ const ics=`BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//LandTax922//TW\r\nBEGIN:VEVENT\r\nDTSTART;VALUE=DATE:20260922\r\nDTEND;VALUE=DATE:20260923\r\nSUMMARY:地價稅自用住宅2‰申請截止\r\nDESCRIPTION:115年自用住宅用地等地價稅特別稅率／減免申請期限。逾期原則上次年才適用。財政部免用憑證申辦：https://www.etax.nat.gov.tw/etwmain/front/ETW109W/OLF013008/0\r\nEND:VEVENT\r\nEND:VCALENDAR`;
+ const b=new Blob([ics],{type:'text/calendar;charset=utf-8'});
+ const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='landtax-922-deadline.ics';a.click();URL.revokeObjectURL(a.href);
+}
+function track(label){if(window.PGLabImpact)PGLabImpact.core(label)}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+['landOwner','newOwner','approved','reregister','buildingOwner','registered','use','zone','otherPlace'].forEach(id=>$(id).addEventListener('change',()=>buildCard(false)));
+$('area').addEventListener('input',()=>buildCard(false));
+buildCard(false);
+</script>
+<script src="../impact.js" data-project="landtax922" data-action-text="我已完成2‰資格＋重申請前篩" data-real-text="我已真的確認戶籍／舊核准狀態／問稅捐處／在9/22前送出申請" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/115"></script>
+</body></html>
