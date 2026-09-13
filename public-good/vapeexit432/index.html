@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="vapeexit432">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="VapeExit 432：電子煙匿名回收防漏。2026/9/8起全臺432處官方回收點，免具名；現行已禁止使用，持有3萬–10萬元仍是修法草案、尚未生效。">
+<title>VapeExit 432｜電子煙匿名回收防漏</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#a32323;--info:#285c8d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1050px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}h1{font-size:clamp(38px,7vw,64px);line-height:1.03;margin:.15em 0 .25em}
+.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:980px}.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:12px 14px;border-radius:9px;line-height:1.72;margin:10px 0}.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}.info{border-left-color:var(--info)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}label{display:block;font-weight:800;margin:7px 0 6px}select,input,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}textarea{min-height:245px;resize:vertical}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}
+.big{font-size:clamp(24px,4vw,34px);font-weight:950}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:9px}.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:22px;margin-top:4px}.small{font-size:13px;color:var(--muted);line-height:1.65}
+.check{display:flex;gap:8px;align-items:flex-start;margin:8px 0}.check input{width:auto;margin-top:4px}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · 電子煙匿名回收 · 2026/09/13</div>
+<h1>VapeExit 432<br>手上還有電子煙？<br>現在有432處可以匿名交回。</h1>
+<p class="lead">國民健康署自 <strong>2026/9/8</strong> 起設置電子煙專用回收點，9/9新增桃園市婦幼衛生所後，全臺共 <strong>432處</strong>。投遞<strong>不用具名、不用留個資</strong>。同時要分清楚：現行法已禁止<strong>使用</strong>電子煙；「單純持有」3萬–10萬元罰鍰目前仍是<strong>修法草案，尚未生效</strong>，未來若新法施行，草案規劃再給1個月緩衝期。</p>
+
+<section class="card">
+<h2>1｜先把「現在的法律」和「正在修的法律」分開</h2>
+<div class="stats">
+<div class="stat">現行：使用電子煙<b>已違法</b><span class="small">可處2,000–10,000元</span></div>
+<div class="stat">持有罰則<b>尚未生效</b><span class="small">3萬–10萬元目前是草案</span></div>
+<div class="stat">官方匿名回收點<b>432處</b></div>
+<div class="stat">個資要求<b>0</b><span class="small">免具名、免留資料</span></div>
+</div>
+<div class="note warn"><b>不要被「現在持有就會罰10萬」的說法嚇到。</b>截至2026/9/13，持有罰則仍在修法程序中；實際施行日期以正式公布為準。但現行法律已禁止使用電子煙，所以最簡單、安全的下一步就是停止使用並利用官方匿名回收。</div>
+</section>
+
+<section class="card">
+<h2>2｜你現在是哪一種情況？</h2>
+<div class="grid">
+<div><label>手上目前有電子煙／煙彈／煙油嗎？</label>
+<select id="have"><option value="yes">有</option><option value="no">沒有</option><option value="unknown">不確定這是不是電子煙</option></select></div>
+<div><label>你目前是否還在使用？</label>
+<select id="using"><option value="no">沒有</option><option value="yes">有</option><option value="prefer">不想回答，只想知道怎麼處理</option></select></div>
+<div><label>你最卡在哪一步？</label>
+<select id="block"><option value="where">不知道去哪裡丟</option><option value="privacy">怕投遞要登記個資</option><option value="legal">搞不清目前到底會不會因持有被罰</option><option value="leak">擔心煙油漏液／攜帶碰撞</option><option value="quit">想停止使用，但怕戒不掉</option></select></div>
+</div>
+<div id="actionOut"></div>
+<div class="actions"><a class="btn" target="_blank" rel="noopener" href="https://www.hpa.gov.tw/Pages/List.aspx?nodeid=5089" onclick="track('official-bins')">查國健署432處官方回收點</a></div>
+</section>
+
+<section class="card">
+<h2>3｜去回收前，只要做3件事</h2>
+<div class="check"><input id="pack" type="checkbox"><span><b>包好機身與煙油。</b>官方提醒要避免煙油外漏或碰撞危險。</span></div>
+<div class="check"><input id="hours" type="checkbox"><span><b>先看據點服務時間。</b>投遞時間依各衛生局／衛生所等回收點的上班服務時間。</span></div>
+<div class="check"><input id="anonymous" type="checkbox"><span><b>記得它是匿名回收。</b>不需姓名、電話、身分證或購買資料。</span></div>
+<div class="note ok">最小流程：<b>停止使用 → 妥善包裝 → 開官方432處據點頁 → 選一個衛生局／衛生所 → 上班時間投遞。</b></div>
+</section>
+
+<section class="card">
+<h2>4｜如果你是「想戒，但怕撐不住」</h2>
+<div class="note info">官方回收只能處理手上的產品，不等於把尼古丁依賴一起處理掉。若你有戒菸需求，可以使用免費戒菸諮詢專線 <b>0800-636363</b>，或到全國合約醫事機構取得專業戒菸服務。</div>
+<div class="actions"><a class="btn" href="tel:0800636363" onclick="track('quitline')">撥0800-636363</a><a class="btn ghost" target="_blank" rel="noopener" href="https://ttc.hpa.gov.tw/" onclick="track('quit-services')">查戒菸服務機構</a></div>
+</section>
+
+<section class="card">
+<h2>5｜一鍵產生「我下一步要做什麼」卡</h2>
+<textarea id="card"></textarea>
+<div class="actions"><button onclick="buildCard(true)">更新行動卡</button><button class="ghost" onclick="copyText('card')">複製到備忘錄</button></div>
+</section>
+
+<section class="card">
+<h2>6｜可直接轉給家人／同學，不用公開問「誰有在抽」</h2>
+<textarea id="share">【手上還有電子煙的人｜現在全台有432處匿名回收，不用留個資】
+
+國健署2026/9/8起設電子煙專用回收點，9/9新增後全台432處。
+
+重點先分清楚：
+・現行法：使用電子煙已違法，可處2,000–10,000元
+・「持有3萬–10萬元」目前仍是修法草案，尚未生效
+・未來若修法正式施行，草案規劃再給1個月緩衝期
+・現在就可以匿名交回：免具名、免姓名電話
+
+投遞前：
+1. 機身／煙油包好，避免漏液與碰撞
+2. 查據點上班服務時間
+3. 直接投官方專用回收點
+
+官方432處：
+https://www.hpa.gov.tw/Pages/List.aspx?nodeid=5089
+
+如果想戒：
+0800-636363 免費戒菸諮詢
+
+不要在群組公開問誰在使用，也不要貼購買管道、賣家帳號或個資。</textarea>
+<div class="actions"><button class="ghost" onclick="copyText('share');track('share-copy')">複製轉貼文</button></div>
+</section>
+
+<section class="card">
+<h2>7｜這個工具刻意不做</h2>
+<div class="note"><ul>
+<li>不收姓名、電話、學校／公司、地址、精確位置、品牌或購買管道。</li>
+<li>不提供「怎麼繼續使用比較安全」的技巧；現行法已禁止使用電子煙。</li>
+<li>不把尚未生效的持有罰則說成現行法律。</li>
+<li>不鼓勵把電子煙丟一般垃圾、拆解電池或自行處理煙油；直接交官方專用回收點。</li>
+<li>不把電子煙和合法核准的指定菸品混成同一件事；若你不確定手上物品類型，直接向衛生局／衛生所確認。</li>
+</ul></div>
+</section>
+
+<section class="card">
+<h2>8｜真實使用驗證</h2>
+<p>真正追：<strong>不是多少人看過修法新聞，而是有沒有人因此停止使用、找到官方回收點、真的匿名投遞，或開始使用戒菸資源。</strong></p>
+<div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/117">VapeExit 432 回饋區 #117</a></div>
+</section>
+
+<section class="card">
+<h2>9｜官方來源</h2>
+<div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://www.hpa.gov.tw/Pages/Detail.aspx?nodeid=5020&pid=20307">國健署：修法＋匿名回收公告</a><a class="btn ghost" target="_blank" rel="noopener" href="https://www.hpa.gov.tw/Pages/List.aspx?nodeid=5089">國健署：全臺432處回收點</a></div>
+</section>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+function assess(){
+ const h=$('have').value,u=$('using').value,b=$('block').value;
+ let cls='info',title='🔵 先確認手上的物品類型',msg='如果你不確定是不是電子煙，不必上網找賣家或品牌資料；直接帶著妥善包裝的物品向衛生局／衛生所詢問最安全。';
+ if(h==='no'){cls='ok';title='🟢 手上沒有電子煙：不用處理回收';msg='如果你只是要幫家人或朋友，可以直接把官方432處回收頁轉給對方，不需要公開詢問誰有使用。';}
+ if(h==='yes'){cls='ok';title='🟢 最簡單下一步：直接匿名交回';msg='不需具名、不留個資。先包好避免漏液，再查一個附近的官方回收點與服務時間。';}
+ if(u==='yes'){cls='warn';title='🟡 現行法律已禁止使用電子煙';msg='停止使用後，把手上的機身／煙彈／煙油妥善包裝並交官方回收點；如果擔心戒不掉，可用0800-636363免費戒菸諮詢。';}
+ if(b==='legal')msg+=' 另外，截至2026/9/13，「單純持有」3萬–10萬元仍是修法草案，不是已生效罰則。';
+ if(b==='privacy')msg+=' 官方回收全程不記名，不要求姓名、電話或身分資料。';
+ if(b==='leak')msg+=' 官方提醒先讓機身與煙油妥善包裝，避免外漏或碰撞。';
+ if(b==='quit')msg+=' 回收產品和戒除依賴是兩件事；可以同步使用免費戒菸資源。';
+ $('actionOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;
+ return {h,u,b,title,msg};
+}
+
+function buildCard(countCore){
+ const a=assess();
+ const done=[['pack','已妥善包裝'],['hours','已查服務時間'],['anonymous','知道匿名免個資']].filter(x=>$(x[0]).checked).map(x=>x[1]);
+ $('card').value=`【VapeExit 432｜我的電子煙退出行動卡】
+日期：2026/09/13
+這不是法律意見或醫療診斷，只整理官方現行資訊。
+
+目前狀況：
+${a.title}
+${a.msg}
+
+現在法律要分清楚：
+・使用電子煙：現行已禁止，違法可處2,000–10,000元。
+・單純持有：3萬–10萬元目前是修法草案，尚未生效。
+・草案規劃：新法正式施行後再提供1個月緩衝期。
+・實際施行日期：以政府正式公布為準。
+
+匿名回收：
+・2026/9/8起啟動；9/9新增後全台432處。
+・免具名、免提供個人資料。
+・投遞時間依據點上班服務時間。
+・機身／煙油要妥善包裝，避免外漏或碰撞。
+
+我的準備：
+${done.length?done.map(x=>'✓ '+x).join('\n'):'□ 包好機身／煙油\n□ 查回收點服務時間\n□ 直接匿名投遞'}
+
+官方432處：
+https://www.hpa.gov.tw/Pages/List.aspx?nodeid=5089
+
+戒菸諮詢：
+0800-636363
+https://ttc.hpa.gov.tw/
+
+公開回饋不要貼姓名、電話、學校／公司、住址、精確位置、購買管道、品牌或賣家帳號。`;
+ if(countCore&&window.PGLabImpact)PGLabImpact.core('action-card');
+}
+
+function track(label){if(window.PGLabImpact)PGLabImpact.core(label)}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+['have','using','block','pack','hours','anonymous'].forEach(id=>$(id).addEventListener('change',()=>buildCard(false)));
+buildCard(false);
+</script>
+<script src="../impact.js" data-project="vapeexit432" data-action-text="我已完成法律狀態＋匿名回收前篩／行動卡" data-real-text="我已真的停止使用／到官方回收點匿名投遞／使用戒菸資源" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/117"></script>
+</body></html>
