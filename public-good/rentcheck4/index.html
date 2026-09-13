@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="rentcheck4">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="RentCheck 4：開學季租屋防詐＋契約電費防漏。先停、再看、再查、最後簽。">
+<title>RentCheck 4｜租屋先停看查簽</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#a32323;--info:#285c8d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1080px;margin:auto;padding:24px 14px 72px}h1{font-size:clamp(40px,7vw,66px);line-height:1.02;margin:.15em 0 .25em}
+.kicker,.small{color:var(--muted)}.lead{font-size:18px;line-height:1.75;max-width:980px;color:var(--muted)}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:12px 14px;border-radius:9px;line-height:1.72;margin:10px 0}
+.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}.info{border-left-color:var(--info)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:10px}
+label{display:block;font-weight:800;margin:8px 0 6px}select,input,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}
+textarea{min-height:250px;resize:vertical}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}
+button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}
+.ghost{background:#edf1f5;color:#17212b}.big{font-size:clamp(24px,4vw,34px);font-weight:950}
+.check{display:flex;gap:8px;align-items:flex-start;margin:8px 0}.check input{width:auto;margin-top:4px}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · 開學季租屋防詐 · 2026/09/14</div>
+<h1>RentCheck 4<br>先停、再看、再查、最後簽。</h1>
+<p class="lead">9月開學租屋季，近期警方示警出現「假房東寄鑰匙」新手法：假房東稱人在外地，寄鑰匙讓你自行看房，再丟仿冒超商物流頁面，用「實名認證」等理由誘導操作網銀。這頁把付款前最重要的四步做成 3 分鐘流程；不收地址、房東證件、銀行資料或完整契約。</p>
+
+<section class="card">
+<h2>1｜停：還沒完成查證前，不要先匯錢</h2>
+<div class="grid">
+<div><label>對方有沒有要求「先付訂金／押金才看房」？</label><select id="prepay"><option value="no">沒有</option><option value="yes">有</option></select></div>
+<div><label>對方是否說「人在外地，先寄鑰匙給你」？</label><select id="key"><option value="no">沒有</option><option value="yes">有</option></select></div>
+<div><label>是否傳外部連結要求「實名認證／驗證帳戶／操作網銀」？</label><select id="bank"><option value="no">沒有</option><option value="yes">有</option></select></div>
+<div><label>租金是否明顯低於附近同類物件？</label><select id="cheap"><option value="unknown">還沒比價</option><option value="no">大致合理</option><option value="yes">明顯低很多</option></select></div>
+</div>
+<div id="stopOut"></div>
+<div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://165.npa.gov.tw/" onclick="track('165')">165 全民防騙</a><a class="btn ghost" target="_blank" rel="noopener" href="https://lvr.land.moi.gov.tw/R11/jsp/index.jsp" onclick="track('rent-market')">內政部實價租金查詢</a></div>
+</section>
+
+<section class="card">
+<h2>2｜看：現場看屋，不只看照片</h2>
+<div class="check"><input id="seen" type="checkbox"><span>我已實際到現場，看過房間、公共區域與出入口。</span></div>
+<div class="check"><input id="meters" type="checkbox"><span>我已確認電表／水表／公共電費怎麼計。</span></div>
+<div class="check"><input id="condition" type="checkbox"><span>我已拍下入住前屋況與設備狀態，日後可點交。</span></div>
+<div class="check"><input id="safety" type="checkbox"><span>我已看過逃生動線、門鎖、窗戶、消防設備等基本居住安全。</span></div>
+<div id="lookOut"></div>
+</section>
+
+<section class="card">
+<h2>3｜查：確認「這個人有權出租這間房」</h2>
+<div class="grid">
+<div><label>出租人身分</label><select id="lessor"><option value="owner">本人是所有權人</option><option value="agent">代理人</option><option value="sublet">二房東／包租轉租</option><option value="unknown">不確定</option></select></div>
+<div><label>有沒有看過「有權出租」的證明？</label><select id="right"><option value="no">還沒有</option><option value="yes">有</option><option value="refuse">對方拒絕提供</option></select></div>
+</div>
+<div id="verifyOut"></div>
+<div class="note info"><b>做法：</b>本人出租時，現場核對身分與所有權／地籍證明；代理人要再看授權；轉租要看合法轉租依據。不要把對方證件照片貼到公開群組或本工具。</div>
+<div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://epaper.moi.gov.tw/" onclick="track('epaper')">全國地政電子謄本</a><a class="btn ghost" target="_blank" rel="noopener" href="https://pip.moi.gov.tw/Publicize/Info/G1020" onclick="track('contract-template')">內政部最新版租賃契約</a></div>
+</section>
+
+<section class="card">
+<h2>4｜簽：契約與電費，不要到入住後才發現</h2>
+<div class="grid">
+<div><label>契約版本</label><select id="contract"><option value="latest">採內政部最新版住宅租賃契約／逐條核對</option><option value="unknown">房東自製，我還沒核對</option></select></div>
+<div><label>電費怎麼收？</label><select id="electricType"><option value="bill">依台電帳單／實際分攤</option><option value="kwh">按每度固定金額</option><option value="fixed">每期固定金額</option><option value="unknown">沒寫清楚</option></select></div>
+<div><label>若按度計費：契約每度多少元？</label><input id="contractRate" type="number" step="0.01" min="0" placeholder="例如 5.5"></div>
+<div><label>電費單「當期每度平均電價」？</label><input id="billRate" type="number" step="0.01" min="0" placeholder="由房東提供電費資訊後填"></div>
+</div>
+<div id="signOut"></div>
+<div class="note info">自 2024/7/15 起，新簽住宅租約若按「用電度數」計費，每度不得超過該租賃標的電費單的「當期每度平均電價」；若非按度計費，房東收取的每期電費不得超過該電費單每期總額。房東有提供電費資訊義務。</div>
+<div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://www.moi.gov.tw/News_Content.aspx?n=4&s=317872" onclick="track('electric-rule')">內政部租屋電費新制</a></div>
+</section>
+
+<section class="card">
+<h2>5｜一鍵產生「付款前檢查卡」</h2>
+<textarea id="card"></textarea>
+<div class="actions"><button onclick="buildCard(true)">更新檢查卡</button><button class="ghost" onclick="copyText('card')">複製到私人備忘錄</button></div>
+<div class="note warn"><b>公開回饋不要貼：</b>租屋地址、門牌、地號、房東姓名／證件、銀行帳號、完整契約或支付憑證。</div>
+</section>
+
+<section class="card">
+<h2>6｜這個工具刻意不做</h2>
+<div class="note"><ul>
+<li>不因為「有鑰匙」就判定對方是真房東。</li>
+<li>不收或保存租屋地址、房東證件、銀行資料與完整契約。</li>
+<li>不替地政機關做所有權認證；疑義時仍以正式地籍資料與所在地地政機關為準。</li>
+<li>不把租金顯著偏低單獨視為詐騙，但會把它和催付、拒絕核身等訊號一起視為高風險。</li>
+<li>不把「房東說每度 X 元」當合法；按度計費要和當期每度平均電價比。</li>
+</ul></div>
+</section>
+
+<section class="card">
+<h2>7｜真實使用驗證</h2>
+<p>這輪真正追的是：<strong>有人是否在付款前實際核對出租權源、使用官方契約／電費規則，並因此避免匯款或要求改約。</strong></p>
+<div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/135">RentCheck 4 回饋區 #135</a></div>
+</section>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+function stop(){
+ const red=['prepay','key','bank'].filter(id=>$(id).value==='yes').length;
+ const cheap=$('cheap').value;
+ let cls='ok',title='🟢 目前沒有典型「先付款／假物流認證」訊號',msg='仍要完成現場看屋、出租權源與契約查核。';
+ if(red>0){cls='bad';title='🔴 先停止付款';msg='你勾到近期租屋詐騙常見流程：先付款、寄鑰匙或外部實名認證／操作網銀。先不要匯款，改走現場看屋＋核對出租權源＋165查證。';}
+ else if(cheap==='yes'){cls='warn';title='🟡 價格明顯偏低，先用官方租金資料比價';msg='低價本身不是詐騙證明，但若再加上催付款、拒絕看屋或拒絕核身，風險會快速升高。';}
+ $('stopOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;
+ return {red,cheap,title,msg};
+}
+function look(){
+ const ids=['seen','meters','condition','safety'],n=ids.filter(id=>$(id).checked).length;
+ $('lookOut').innerHTML=`<div class="note ${n===4?'ok':'warn'}">${n===4?'✓ 現場四項已確認。':`現場還缺 ${4-n} 項。沒有完成現場看屋前，不建議付款。`}</div>`;return n;
+}
+function verify(){
+ const l=$('lessor').value,r=$('right').value;
+ let cls='warn',title='🟡 還沒完成出租權源核對',msg='先看對方有權出租的證明，再進付款／簽約。';
+ if(r==='refuse'){cls='bad';title='🔴 對方拒絕提供權源：不要付款';msg='能出租這間房，是交易最基本的前提。拒絕查證時先停止交易。';}
+ else if(r==='yes'){cls='ok';title='🟢 已看過出租權源';msg=l==='agent'?'代理出租還要確認授權範圍。':l==='sublet'?'轉租還要確認合法轉租依據與期間。':'仍要確認證明與現場物件一致。';}
+ $('verifyOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;
+ return {l,r,title,msg};
+}
+function sign(){
+ const c=$('contract').value,t=$('electricType').value,cr=Number($('contractRate').value)||0,br=Number($('billRate').value)||0;
+ let issues=[];
+ if(c!=='latest')issues.push('契約尚未和內政部最新版核對');
+ if(t==='unknown')issues.push('電費算法未寫清楚');
+ if(t==='kwh'&&cr&&br&&cr>br)issues.push(`契約每度 ${cr} 元，高於當期每度平均電價 ${br} 元`);
+ if(t==='kwh'&&(!br||!cr))issues.push('按度計費，但還缺契約單價或當期每度平均電價');
+ const cls=issues.length?'warn':'ok';
+ $('signOut').innerHTML=`<div class="note ${cls}">${issues.length?'<b>簽約前還要處理：</b>'+issues.map(x=>' '+x).join('；'):'✓ 目前沒有在契約版本／電費欄位抓到明顯缺口。'}</div>`;
+ return issues;
+}
+function buildCard(countCore){
+ const s=stop(),l=look(),v=verify(),sg=sign();
+ $('card').value=`【RentCheck 4｜付款前租屋檢查卡】
+日期：2026/09/14
+
+停：
+${s.title}
+${s.msg}
+
+看：
+${l===4?'✓ 已完成現場四項確認':`□ 現場確認完成 ${l}/4`}
+
+查：
+${v.title}
+${v.msg}
+
+簽：
+${sg.length?sg.map(x=>'□ '+x).join('\n'):'✓ 契約／電費目前無明顯缺口'}
+
+我付款前至少要做到：
+□ 實際現場看屋
+□ 核對出租人身分＋有權出租證明
+□ 代理／轉租時核對授權或合法轉租依據
+□ 用內政部最新版住宅租賃契約核對
+□ 電費算法寫清楚；按度計費不超過當期每度平均電價
+□ 不因「寄鑰匙／實名認證」操作網銀
+□ 有疑慮先165，不急著匯款
+
+官方工具：
+實價租金：https://lvr.land.moi.gov.tw/R11/jsp/index.jsp
+電子謄本：https://epaper.moi.gov.tw/
+租賃契約：https://pip.moi.gov.tw/Publicize/Info/G1020
+165：https://165.npa.gov.tw/
+
+不要在公開回饋貼地址、門牌、房東證件、銀行帳號或完整契約。`;
+ if(countCore&&window.PGLabImpact)PGLabImpact.core(s.red?'stopped-payment':(v.r==='yes'?'verified-right':'check-card'));
+}
+function track(label){if(window.PGLabImpact)PGLabImpact.core(label)}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+['prepay','key','bank','cheap','seen','meters','condition','safety','lessor','right','contract','electricType'].forEach(id=>$(id).addEventListener('change',()=>buildCard(false)));
+['contractRate','billRate'].forEach(id=>$(id).addEventListener('input',()=>buildCard(false)));
+buildCard(false);
+</script>
+<script src="../impact.js" data-project="rentcheck4" data-action-text="我已完成租屋付款前四步檢查" data-real-text="我已真的核對出租權源／避免付款／要求改約" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/135"></script>
+</body></html>
