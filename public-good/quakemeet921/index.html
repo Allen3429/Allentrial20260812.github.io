@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="quakemeet921">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="QuakeMeet 921：家庭地震失聯／會合計畫。9/21 09:21演練前，把兩個會合點、外地聯絡人、7天居家飲水與避難包一次做完。">
+<title>QuakeMeet 921｜地震後，家人去哪裡找你？</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#a32323;--info:#285c8d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1100px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}h1{font-size:clamp(40px,7vw,68px);line-height:1.02;margin:.15em 0 .25em}
+.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:1000px}.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:12px 14px;border-radius:9px;line-height:1.72;margin:10px 0}.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}.info{border-left-color:var(--info)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:10px}label{display:block;font-weight:800;margin:8px 0 6px}select,input,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}textarea{min-height:280px;resize:vertical}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}
+.big{font-size:clamp(24px,4vw,34px);font-weight:950}.money{font-size:clamp(34px,7vw,56px);font-weight:1000}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:9px}.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:22px;margin-top:4px}.small{font-size:13px;color:var(--muted);line-height:1.65}
+.check{display:flex;gap:8px;align-items:flex-start;margin:8px 0}.check input{width:auto;margin-top:4px}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · 國家防災日前的家庭失聯防漏 · 2026/09/14</div>
+<h1>QuakeMeet 921<br>地震後手機沒訊號，<br>家人去哪裡找你？</h1>
+<p class="lead">115年國家防災日將於 <strong>9/21 09:21</strong> 發送地震速報演練訊息。近期大規模演練刻意模擬道路、交通與基礎設施受損，代表真正的家庭問題不只是「會不會趴下、掩護、穩住」，而是<strong>家人分散在學校／公司時，若回不了家、電話打不通，有沒有事先約好的會合規則</strong>。本頁所有家庭資訊都只在你的瀏覽器本機處理，不上傳。</p>
+
+<section class="card">
+<h2>1｜9/21先真的練一次</h2>
+<div class="stats">
+<div class="stat">地震速報演練<b>9/21 09:21</b></div>
+<div class="stat">第一動作<b>趴下</b></div>
+<div class="stat">第二動作<b>掩護</b></div>
+<div class="stat">第三動作<b>穩住</b></div>
+</div>
+<div class="note info">室內演練時優先保護頭頸，不要在搖晃中急著衝出室外或搭電梯。警報過後，再檢查家人的會合與聯絡計畫。</div>
+<div class="actions"><a class="btn" target="_blank" rel="noopener" href="https://www.swcoast-nsa.gov.tw/zh-tw/news/details/2595">看115年地震速報演練公告</a><button class="ghost" onclick="makeDrillReminder()">加入9/21 09:21演練提醒</button></div>
+</section>
+
+<section class="card">
+<h2>2｜先約兩個會合點：一近、一遠</h2>
+<div class="grid">
+<div><label>第一會合點：住家附近、步行可到 *</label><input id="meet1" placeholder="不要填完整門牌；例：○○公園入口"></div>
+<div><label>第二會合點：若住家周邊無法進入 *</label><input id="meet2" placeholder="例：親友家附近的公共場所"></div>
+<div><label>外地聯絡人稱呼</label><input id="contactName" placeholder="例：台南阿姨"></div>
+<div><label>外地聯絡方式</label><input id="contactMethod" placeholder="建議私下保存電話＋其他方式"></div>
+</div>
+<div class="note warn"><b>為什麼要兩個？</b>大地震可能造成道路封閉、建築物警戒或交通中斷；只約「回家」不算完整計畫。第一點是住家附近會合，第二點是在住家周邊進不去時的替代點。</div>
+</section>
+
+<section class="card">
+<h2>3｜家人失聯時，先約一套共同規則</h2>
+<div class="grid">
+<div><label>地震後第一優先</label><select id="priority"><option value="safe">各自先確保安全，不冒險趕路</option><option value="home">立刻想辦法回家</option></select></div>
+<div><label>通訊不通時</label><select id="comm"><option value="meet">依約定時間／條件前往會合點</option><option value="retry">一直打電話直到接通</option></select></div>
+<div><label>誰需要額外協助？</label><select id="support"><option value="none">目前沒有</option><option value="child">家中有兒童</option><option value="elder">家中有長者／行動不便者</option><option value="pet">有寵物</option><option value="multiple">以上不只一項</option></select></div>
+<div><label>平日最常分散的場景</label><select id="scenario"><option value="schoolwork">有人在學校／公司</option><option value="home">大多在家</option><option value="mixed">工作、學校、外勤分散</option></select></div>
+</div>
+<div id="ruleOut"></div>
+</section>
+
+<section class="card">
+<h2>4｜7天居家飲水先算出量級</h2>
+<div class="grid">
+<div><label>家中人數</label><input id="people" type="number" min="1" step="1" value="1"></div>
+<div><label>你家目前大約有多少公升可安全飲用的儲水？</label><input id="waterNow" type="number" min="0" step="0.5" value="0"></div>
+</div>
+<div id="waterOut"></div>
+<div class="note info">目前《臺灣全民安全指引》建議居家儲備以家庭為單位準備至少7天，每人每日飲用水至少3公升。這是居家儲備，不是要求把全部水背進避難包；個人緊急避難包則建議依負重能力準備約1–3天。</div>
+<div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://prepare.mnd.gov.tw/emergency-supplies/househeld">官方7天居家儲備</a><a class="btn ghost" target="_blank" rel="noopener" href="https://prepare.mnd.gov.tw/emergency-supplies/personal">官方1–3天緊急避難包</a></div>
+</section>
+
+<section class="card">
+<h2>5｜六個最容易「知道但沒做」的缺口</h2>
+<div class="check"><input id="furniture" type="checkbox"><span>大型家具／家電已檢查防倒固定，床與常坐位置不在高櫃倒落路徑。</span></div>
+<div class="check"><input id="bag" type="checkbox"><span>至少一個個人緊急避難包已裝好，放在能快速拿到的位置。</span></div>
+<div class="check"><input id="paper" type="checkbox"><span>會合點與重要聯絡方式有一份紙本，不只存在手機。</span></div>
+<div class="check"><input id="emap" type="checkbox"><span>已用消防防災 e 點通查過附近避難收容處所。</span></div>
+<div class="check"><input id="bedside" type="checkbox"><span>床邊／手邊有鞋、照明工具，避免震後赤腳踩碎玻璃。</span></div>
+<div class="check"><input id="familyTalk" type="checkbox"><span>至少跟一位家人真的講過「第一會合點、第二會合點、外地聯絡人」。</span></div>
+<div id="gapOut"></div>
+<div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://bear.emic.gov.tw/MY2/home">消防防災 e 點通：查避難處所</a><a class="btn ghost" target="_blank" rel="noopener" href="https://prepare.nfa.gov.tw/">消防署：關鍵3天防災計畫</a></div>
+</section>
+
+<section class="card">
+<h2>6｜一鍵產生家庭地震會合卡</h2>
+<textarea id="card"></textarea>
+<div class="actions"><button onclick="buildCard(true)">更新家庭卡</button><button class="ghost" onclick="copyText('card')">複製卡片</button><button class="ghost" onclick="downloadText()">下載文字卡</button></div>
+<div class="note info"><b>隱私：</b>如果你填了電話或精確集合資訊，只私下傳給家人。不要把住址、電話、學校／公司精確位置貼到公開回饋區。</div>
+</section>
+
+<section class="card">
+<h2>7｜這個工具刻意不做</h2>
+<div class="note"><ul>
+<li>不預測地震何時發生，也不宣稱某棟建物「一定安全」。</li>
+<li>不把「立刻回家」設成預設規則；道路或建物受損時，冒險移動可能更危險。</li>
+<li>不收姓名、住址、電話、集合點、學校／公司位置、健康資料或家中設備資訊。</li>
+<li>不把避難收容處所寫死在頁面，避免資料過期；請用消防防災 e 點通查最新位置。</li>
+<li>不把避難包和居家儲備混為一談：家中可備7天，帶走的包要以背得動為原則。</li>
+</ul></div>
+</section>
+
+<section class="card">
+<h2>8｜真實使用驗證</h2>
+<p>這輪真正追的是：<strong>有沒有家庭真的講過兩個會合點、把聯絡方式留成紙本，並依試算補上一項原本沒有的水／避難包／家具固定。</strong></p>
+<div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/136">QuakeMeet 921 回饋區 #136</a></div>
+</section>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+const safe=s=>(s||'').trim()||'尚未填';
+
+function rules(){
+ const p=$('priority').value,c=$('comm').value,s=$('support').value;
+ let cls='ok',title='🟢 共同規則方向正確',msg='先保護自己，再按約定條件會合；通訊失效時不必一直耗電重撥。';
+ if(p==='home'){cls='warn';title='🟡 不建議把「立刻回家」當成唯一規則';msg='大地震後道路、建物與交通可能受損。較穩健的共同規則是：各自先確保安全，再依會合點與官方疏散指示行動。';}
+ if(c==='retry'){cls='warn';title='🟡 通訊不通時不要只剩「一直重撥」';msg='把紙本聯絡方式與會合點先約好；網路／基地台受影響時，家庭仍有下一步。';}
+ if(s!=='none')msg+=' 家中有需要額外協助的成員，請把「誰負責接應」也在家庭討論中說清楚。';
+ $('ruleOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;
+ return {p,c,s,title,msg};
+}
+
+function water(){
+ const people=Math.max(1,Math.floor(Number($('people').value)||1));
+ const have=Math.max(0,Number($('waterNow').value)||0);
+ const need=people*3*7, gap=Math.max(0,need-have);
+ $('waterOut').innerHTML=`<div class="note ${gap===0?'ok':'info'}"><div class="money">${need} 公升／7天</div>${people}人 × 3公升 × 7天。你目前填的可飲用儲水約 ${have} 公升，${gap?`還差約 <b>${gap} 公升</b> 才到這個官方建議量級。`:'已達這個量級；仍要定期輪替與確認保存狀況。'}</div>`;
+ return {people,have,need,gap};
+}
+
+function gaps(){
+ const ids=['furniture','bag','paper','emap','bedside','familyTalk'];
+ const labels={furniture:'家具防倒',bag:'緊急避難包',paper:'紙本聯絡卡',emap:'查避難處所',bedside:'床邊鞋／照明',familyTalk:'真的和家人講過會合規則'};
+ const missing=ids.filter(id=>!$(id).checked);
+ $('gapOut').innerHTML=`<div class="note ${missing.length===0?'ok':'warn'}">${missing.length===0?'✓ 六項都完成。':`目前還缺 ${missing.length} 項：${missing.map(x=>labels[x]).join('、')}。先補一項就比只看宣導更有價值。`}</div>`;
+ return {missing,labels};
+}
+
+function buildCard(countCore){
+ const r=rules(),w=water(),g=gaps();
+ $('card').value=`【QuakeMeet 921｜家庭地震會合卡】
+請只私下傳給家人，不要公開貼精確位置或電話。
+
+9/21 09:21演練：
+收到地震速報 → 趴下、掩護、穩住。
+搖晃時不急著衝出室外、不搭電梯。
+
+家庭會合：
+・第一會合點（住家附近）：${safe($('meet1').value)}
+・第二會合點（住家周邊無法進入時）：${safe($('meet2').value)}
+・外地聯絡人：${safe($('contactName').value)}
+・外地聯絡方式：${safe($('contactMethod').value)}
+
+共同規則：
+・各自先確保安全，不冒險硬闖受損道路／建物。
+・通訊不通時，依事先約定的會合點與條件行動。
+・需要額外協助：${$('support').options[$('support').selectedIndex].text}
+・平日分散情境：${$('scenario').options[$('scenario').selectedIndex].text}
+
+居家儲備：
+・家中人數：${w.people}
+・7天飲用水官方建議量級：約 ${w.need} 公升
+・目前填寫：約 ${w.have} 公升
+・尚缺：約 ${w.gap} 公升
+
+防漏：
+${$('furniture').checked?'✓':'□'} 家具／家電防倒
+${$('bag').checked?'✓':'□'} 緊急避難包已裝好
+${$('paper').checked?'✓':'□'} 紙本會合／聯絡卡
+${$('emap').checked?'✓':'□'} 已查避難收容處所
+${$('bedside').checked?'✓':'□'} 床邊鞋＋照明
+${$('familyTalk').checked?'✓':'□'} 已真的和家人確認兩個會合點
+
+官方：
+全民安全指引：https://prepare.mnd.gov.tw/
+消防防災 e 點通：https://bear.emic.gov.tw/MY2/home
+
+這張卡是家庭事前約定，不取代災時官方疏散與救援指示。`;
+ if(countCore&&window.PGLabImpact)PGLabImpact.core(g.missing.length===0&&$('meet1').value&&$('meet2').value?'complete-family-plan':'draft-family-plan');
+}
+
+function makeDrillReminder(){
+ const ics=`BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//QuakeMeet921//TW\r\nBEGIN:VEVENT\r\nDTSTART:20260921T092100\r\nDTEND:20260921T092600\r\nSUMMARY:國家防災日：趴下、掩護、穩住＋家庭會合計畫\r\nDESCRIPTION:收到地震速報演練訊息時就地做趴下、掩護、穩住；演練後和家人確認第一／第二會合點、外地聯絡人與避難包。\r\nEND:VEVENT\r\nEND:VCALENDAR`;
+ downloadBlob(ics,'quakemeet921-drill.ics','text/calendar;charset=utf-8');
+ if(window.PGLabImpact)PGLabImpact.core('drill-reminder');
+}
+function downloadText(){buildCard(false);downloadBlob($('card').value,'quakemeet921-family-card.txt','text/plain;charset=utf-8');if(window.PGLabImpact)PGLabImpact.core('card-download');}
+function downloadBlob(content,name,type){const b=new Blob([content],{type}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500);}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+['meet1','meet2','contactName','contactMethod','people','waterNow'].forEach(id=>$(id).addEventListener('input',()=>buildCard(false)));
+['priority','comm','support','scenario','furniture','bag','paper','emap','bedside','familyTalk'].forEach(id=>$(id).addEventListener('change',()=>buildCard(false)));
+buildCard(false);
+</script>
+<script src="../impact.js" data-project="quakemeet921" data-action-text="我已完成家庭地震會合卡／儲備試算" data-real-text="我已真的和家人確認兩個會合點／補足至少一項防災缺口" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/136"></script>
+</body></html>
