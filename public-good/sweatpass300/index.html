@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="sweatpass300">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="SweatPass 300：運動部揮汗有禮送出前檢查。檢查日期、達標數值、完整原始截圖與當週期限，避免一送出就不能改而白白退件。">
+<title>SweatPass 300｜揮汗有禮送出前檢查</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#a32323;--info:#285c8d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1080px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}h1{font-size:clamp(38px,7vw,64px);line-height:1.03;margin:.15em 0 .25em}
+.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:990px}.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:12px 14px;border-radius:9px;line-height:1.72;margin:10px 0}.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}.info{border-left-color:var(--info)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}label{display:block;font-weight:800;margin:7px 0 6px}select,input,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}textarea{min-height:245px;resize:vertical}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}
+.big{font-size:clamp(24px,4vw,34px);font-weight:950}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:9px}.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:22px;margin-top:4px}.small{font-size:13px;color:var(--muted);line-height:1.65}
+.check{display:flex;gap:8px;align-items:flex-start;margin:8px 0}.check input{width:auto;margin-top:4px}
+.preview{display:none;max-width:min(100%,430px);max-height:650px;object-fit:contain;border:1px solid var(--line);border-radius:12px;background:#eee}
+code{background:#eef2f5;padding:2px 5px;border-radius:6px} .count{font-size:18px;font-weight:850}
+@media print{button,.actions,.pglab-impact,#screenFile{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · 揮汗有禮退件防漏 · 2026/09</div>
+<h1>SweatPass 300<br>這張截圖送出去前，<br>先花30秒檢查。</h1>
+<p class="lead">運動部「揮汗有禮」已把加碼券總量提高到<strong>300萬份</strong>。但官方規則有一個很硬的限制：運動紀錄<strong>一經送出不能修改、更換或自行補件</strong>，而且每週只受理當週產生的紀錄。活動首週就有不少人因截圖問題退件。這個工具只在你的瀏覽器做送出前檢查，不會上傳你的截圖。</p>
+
+<section class="card">
+<h2>1｜本週還來得及嗎？</h2>
+<div id="weekOut"></div>
+<div class="stats">
+<div class="stat">活動期間<b>9/1–11/30</b></div>
+<div class="stat">每週區間<b>週一–週日</b></div>
+<div class="stat">審核時間<b>原則5工作日</b></div>
+<div class="stat">總量<b>300萬份</b><span class="small">額滿停止受理</span></div>
+</div>
+</section>
+
+<section class="card">
+<h2>2｜你要用哪一種任務？</h2>
+<div class="grid">
+<div><label>任務類型</label>
+<select id="task">
+<option value="steps">單日8,000步</option>
+<option value="time">單次運動30分鐘</option>
+<option value="run">單次健走／跑步5公里</option>
+<option value="bike">單次自行車15公里</option>
+</select></div>
+<div><label>截圖上顯示的日期</label><input id="date" type="date"></div>
+<div><label id="valueLabel">截圖上顯示的步數</label><input id="value" type="number" min="0" step="0.01" placeholder="例如 9234"></div>
+</div>
+<div id="metricOut"></div>
+</section>
+
+<section class="card">
+<h2>3｜把截圖放進來「自己看」：檔案不離開這台裝置</h2>
+<input id="screenFile" type="file" accept="image/*">
+<p class="small">此頁只用瀏覽器本機預覽，不會將圖片傳到伺服器，也不會用AI幫你生成或修改申請用截圖。官方明定，竄改、拼貼、AI生成或其他無法合理證明實際運動的資料不得使用。</p>
+<img id="preview" class="preview" alt="本機截圖預覽">
+<div id="imgMeta" class="small"></div>
+
+<div class="check"><input id="full" type="checkbox"><span><b>完整螢幕截圖、沒有裁切／拼貼。</b>不是只截數字那一小塊。</span></div>
+<div class="check"><input id="original" type="checkbox"><span><b>是運動 App 的原始紀錄畫面，或正式完賽證明。</b>不是健身房／運動中心進出紀錄。</span></div>
+<div class="check"><input id="explicitDate" type="checkbox"><span><b>畫面能清楚辨識實際日期（月、日）。</b>如果只有「今天」而沒有可辨識日期，風險高。</span></div>
+<div class="check"><input id="visibleMetric" type="checkbox"><span><b>畫面清楚看得到達標數值。</b>例如步數、時間、距離。</span></div>
+<div class="check"><input id="notEdited" type="checkbox"><span><b>沒有修圖、拼貼、AI生成或變造。</b></span></div>
+<div id="screenOut"></div>
+</section>
+
+<section class="card">
+<h2>4｜官方目前最容易踩的4個坑</h2>
+<div class="note bad"><b>NG 1：</b>不是完整手機螢幕截圖，畫面或運動數據被裁掉。</div>
+<div class="note bad"><b>NG 2：</b>不是運動 App 原始紀錄截圖。</div>
+<div class="note bad"><b>NG 3：</b>紀錄日期不在當週任務區間。</div>
+<div class="note bad"><b>NG 4：</b>只上傳健身房／運動中心等場館的進出紀錄，沒有實際運動數據。</div>
+<div class="note warn"><b>更重要：</b>官方活動規則寫明，送出後不能修改、更換或自行補件；不同筆運動紀錄也不能合併湊門檻。每週的紀錄也不能下一週補傳。</div>
+</section>
+
+<section class="card">
+<h2>5｜送出前總檢查</h2>
+<div id="finalOut"></div>
+<div class="actions">
+<button onclick="runFinal(true)">重新檢查</button>
+<a class="btn" target="_blank" rel="noopener" href="https://500.gov.tw/registrant/" onclick="track('official-upload')">通過自查後，去官方網站上傳</a>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://500.gov.tw/registrant/activity-rules" onclick="track('official-rules')">查看官方完整規則</a>
+</div>
+<div class="note info">本工具只能做「送出前防呆」，最後是否通過仍以運動部審核為準。若你目前的截圖不符合，最安全的做法不是修圖，而是回到運動 App 重新開啟一個能顯示日期與數值的原始紀錄畫面，再重新截完整螢幕。</div>
+</section>
+
+<section class="card">
+<h2>6｜一鍵產生自己的本週上傳檢查卡</h2>
+<textarea id="card"></textarea>
+<div class="actions"><button onclick="buildCard(true)">更新檢查卡</button><button class="ghost" onclick="copyText('card')">複製到備忘錄</button></div>
+</section>
+
+<section class="card">
+<h2>7｜這個工具刻意不做</h2>
+<div class="note"><ul>
+<li>不收身分證、健保卡、手機、Email或活動帳號。</li>
+<li>不把使用者的運動截圖傳到任何伺服器。</li>
+<li>不幫忙修圖、補日期、改數字或生成新的申請截圖。</li>
+<li>不保證「自查通過＝官方一定通過」，最終以運動部審核為準。</li>
+<li>不鼓勵為了50元超出自身體能；官方也要求依健康與體能狀況選擇活動。</li>
+</ul></div>
+</section>
+
+<section class="card">
+<h2>8｜真實使用驗證</h2>
+<p>真正追：<strong>有沒有人在正式送出前發現截圖缺日期／被裁切／不是原始紀錄，重新取得正確畫面，因此避免當週退件。</strong></p>
+<div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/118">SweatPass 300 回饋區</a></div>
+</section>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+const campaignStart=new Date('2026-09-01T00:00:00+08:00');
+const campaignEnd=new Date('2026-11-30T23:59:59+08:00');
+
+function fmt(d){return `${d.getMonth()+1}/${d.getDate()}`}
+function weekRange(now=new Date()){
+  const d=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+  const day=d.getDay();
+  const offset=(day===0?-6:1-day);
+  const mon=new Date(d);mon.setDate(d.getDate()+offset);mon.setHours(0,0,0,0);
+  const sun=new Date(mon);sun.setDate(mon.getDate()+6);sun.setHours(23,59,59,999);
+  return [mon,sun];
+}
+function updateWeek(){
+ const now=new Date(),[mon,sun]=weekRange(now);
+ const active=now>=campaignStart&&now<=campaignEnd;
+ const sunday=now.getDay()===0;
+ let cls=active?'info':'warn',msg='';
+ if(active){
+   msg=`本週任務區間：<b>${fmt(mon)}（一）– ${fmt(sun)}（日）24:00</b>。運動紀錄必須在本週產生，並於本週上傳。`;
+   if(sunday){cls='bad';msg+=` <b>今天是週日，是本週最後上傳日。</b>`}
+ } else {
+   msg=now<campaignStart?'活動尚未開始。':'活動已在11/30結束。';
+ }
+ $('weekOut').innerHTML=`<div class="note ${cls}">${msg}</div>`;
+ return {now,mon,sun,active,sunday};
+}
+
+function taskCfg(){
+ const t=$('task').value;
+ const cfg={
+  steps:{label:'截圖上顯示的步數',unit:'步',min:8000},
+  time:{label:'截圖上顯示的單次運動分鐘',unit:'分鐘',min:30},
+  run:{label:'截圖上顯示的單次距離（公里）',unit:'公里',min:5},
+  bike:{label:'截圖上顯示的單次距離（公里）',unit:'公里',min:15}
+ }[t];
+ $('valueLabel').textContent=cfg.label;
+ $('value').step=(t==='steps'||t==='time')?'1':'0.01';
+ return cfg;
+}
+
+function metricCheck(){
+ const w=updateWeek(),cfg=taskCfg();
+ const v=Number($('value').value),raw=$('date').value;
+ let dateOk=false;
+ if(raw){
+   const d=new Date(raw+'T12:00:00');
+   dateOk=d>=w.mon&&d<=w.sun;
+ }
+ const valOk=Number.isFinite(v)&&$('value').value!==''&&v>=cfg.min;
+ let cls=(dateOk&&valOk)?'ok':'warn';
+ let bits=[];
+ bits.push(dateOk?'✓ 日期在本週':'✗ 日期不是本週／尚未填');
+ bits.push(valOk?`✓ ${v} ${cfg.unit}達標`:`✗ 需要至少 ${cfg.min} ${cfg.unit}`);
+ $('metricOut').innerHTML=`<div class="note ${cls}">${bits.join('<br>')}</div>`;
+ return {dateOk,valOk,v,cfg,raw,w};
+}
+
+function screenCheck(){
+ const ids=['full','original','explicitDate','visibleMetric','notEdited'];
+ const ok=ids.every(id=>$(id).checked);
+ const missing=ids.filter(id=>!$(id).checked).length;
+ $('screenOut').innerHTML=`<div class="note ${ok?'ok':'warn'}">${ok?'✓ 截圖五項自查完成。':`還有 <b>${missing}</b> 項沒有確認；正式送出前先不要按官方的確認送出。`}</div>`;
+ return {ok,missing};
+}
+
+function runFinal(countCore){
+ const m=metricCheck(),s=screenCheck();
+ const all=m.w.active&&m.dateOk&&m.valOk&&s.ok;
+ $('finalOut').innerHTML=`<div class="note ${all?'ok':'bad'}"><div class="big">${all?'🟢 送出前自查通過':'🔴 先不要正式送出'}</div>${
+   all?'日期、數值與截圖五項已完成自查。仍請在官方預覽頁再看一次，因為正式送出後不能改。':
+   '至少還有一項不符或未確認。回到原始運動App取得正確畫面，不要用修圖補救。'
+ }</div>`;
+ buildCard(false);
+ if(countCore&&window.PGLabImpact)PGLabImpact.core(all?'precheck-pass':'precheck-found-problem');
+ return all;
+}
+
+function buildCard(countCore){
+ const m=metricCheck(),s=screenCheck();
+ const all=m.w.active&&m.dateOk&&m.valOk&&s.ok;
+ $('card').value=`【SweatPass 300｜揮汗有禮送出前檢查卡】
+本週：${fmt(m.w.mon)}–${fmt(m.w.sun)} 24:00
+
+我的任務：
+・門檻：${m.cfg.min} ${m.cfg.unit}
+・截圖數值：${$('value').value||'尚未填'} ${m.cfg.unit}
+・截圖日期：${m.raw||'尚未填'}
+・日期在本週：${m.dateOk?'是':'否／未確認'}
+・數值達標：${m.valOk?'是':'否'}
+
+截圖五項：
+${$('full').checked?'✓':'□'} 完整螢幕，沒有裁切／拼貼
+${$('original').checked?'✓':'□'} 運動App原始紀錄／正式完賽證明
+${$('explicitDate').checked?'✓':'□'} 清楚可辨識實際日期（月、日）
+${$('visibleMetric').checked?'✓':'□'} 清楚看到達標數值
+${$('notEdited').checked?'✓':'□'} 沒有修圖、變造或AI生成
+
+結論：
+${all?'自查通過；正式上傳前仍請用官方預覽再確認一次。':'先不要送出；正式送出後不能修改、更換或自行補件。'}
+
+官方規則：
+https://500.gov.tw/registrant/activity-rules
+官方上傳：
+https://500.gov.tw/registrant/
+
+注意：
+・每週只受理當週運動紀錄，不能下週補傳。
+・每人每週限取得1次加碼券。
+・不同筆紀錄不能拼接／合併來湊門檻。
+・最終是否通過以運動部審核為準。`;
+ if(countCore&&window.PGLabImpact)PGLabImpact.core('check-card');
+}
+
+function track(label){if(window.PGLabImpact)PGLabImpact.core(label)}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+
+$('screenFile').addEventListener('change',e=>{
+ const f=e.target.files&&e.target.files[0];if(!f)return;
+ const img=$('preview');img.src=URL.createObjectURL(f);img.style.display='block';
+ img.onload=()=>{
+   $('imgMeta').textContent=`本機預覽：${img.naturalWidth} × ${img.naturalHeight} px，${(f.size/1024/1024).toFixed(2)} MB。圖片沒有上傳。`;
+ };
+});
+['task','date'].forEach(id=>$(id).addEventListener('change',()=>runFinal(false)));
+$('value').addEventListener('input',()=>runFinal(false));
+['full','original','explicitDate','visibleMetric','notEdited'].forEach(id=>$(id).addEventListener('change',()=>runFinal(false)));
+
+const w=weekRange(new Date());
+const today=new Date();
+if(today>=w[0]&&today<=w[1]) $('date').value=today.toISOString().slice(0,10);
+updateWeek();runFinal(false);
+</script>
+<script src="../impact.js" data-project="sweatpass300" data-action-text="我已完成揮汗有禮送出前截圖自查" data-real-text="我已因自查重新取得正確截圖／成功送出並避免退件" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/118"></script>
+</body></html>
