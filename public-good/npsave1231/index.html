@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="npsave1231">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="NPSave 1231：115年國民年金所得未達一定標準保費補助前篩。一般每月1329元，符合者可能降至997或665元；嘉義市西區總清查12/31前補件防漏。">
+<title>NPSave 1231｜國民年金保費補助前篩</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#a32323;--info:#285c8d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1080px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}h1{font-size:clamp(38px,7vw,62px);line-height:1.04;margin:.15em 0 .25em}
+.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:980px}.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:12px 14px;border-radius:9px;line-height:1.72;margin:10px 0}.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}.info{border-left-color:var(--info)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}label{display:block;font-weight:800;margin:7px 0 6px}select,input,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}textarea{min-height:260px;resize:vertical}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}
+.big{font-size:clamp(24px,4vw,34px);font-weight:950}.money{font-size:clamp(34px,7vw,56px);font-weight:1000}.small{font-size:13px;color:var(--muted);line-height:1.65}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:9px}.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:22px;margin-top:4px}
+table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:9px;border-bottom:1px solid var(--line)}.check{display:flex;gap:8px;align-items:flex-start;margin:8px 0}.check input{width:auto;margin-top:4px}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · 國民年金保費減免防漏 · 2026/09/13</div>
+<h1>NPSave 1231<br>國保每月1,329元，<br>你可能不用自己付這麼多。</h1>
+<p class="lead">115年國民年金一般被保險人每月自付 <strong>1,329元</strong>；家庭所得符合「所得未達一定標準」者，可能降到 <strong>997元</strong> 或 <strong>665元</strong>。嘉義市西區 9/12 更公告：既有符合者的總清查通知將自9月下旬分批寄出，收到通知後應在 <strong>12/31前補件</strong>，逾期會影響補助接續。</p>
+<section class="card"><h2>1｜先估你可能落在哪一級</h2><div class="grid"><div><label>戶籍地區</label><select id="region"><option value="taipei">臺北市</option><option value="newtaipei">新北市</option><option value="taoyuan">桃園市</option><option value="taichung">臺中市</option><option value="tainan">臺南市</option><option value="kaohsiung">高雄市</option><option value="province" selected>其餘臺灣省縣市</option><option value="kinma">金門縣／連江縣</option></select></div><div><label>你估計的「家庭總收入 ÷ 全家人口 ÷ 12」每人每月約多少？</label><input id="income" type="number" min="0" step="100" placeholder="例如 23000"></div><div><label>目前是國民年金被保險人嗎？</label><select id="insured"><option value="yes">是／收到國保繳款單</option><option value="unknown">不確定</option><option value="no">不是</option></select></div></div><div id="result"></div><div class="note warn"><b>這只是前篩，不是正式資格認定。</b>政府計算的「家庭總收入」與「全家人口」有法定定義；你自行輸入的平均收入只能幫你判斷「值不值得去申請」。正式結果由戶籍所在地縣市政府／公所審查。</div></section>
+<section class="card"><h2>2｜115年每月保費差多少？</h2><div class="stats"><div class="stat">一般自付60%<b>1,329元</b></div><div class="stat">政府補助55%<b>自付997元</b><span class="small">每月少332元</span></div><div class="stat">政府補助70%<b>自付665元</b><span class="small">每月少664元</span></div><div class="stat">一年最多可少付<b>7,968元</b><span class="small">若全年皆為70%補助級距</span></div></div><div class="note info">所得未達一定標準資格自<strong>提出申請當月</strong>開始補助，所以如果現在收入偏低但從沒申請，不必等到年底清查才問；可直接向戶籍所在地政府／公所申請認定。</div></section>
+<section class="card"><h2>3｜115年各地前篩門檻</h2><table><thead><tr><th>地區</th><th>政府補助70%</th><th>政府補助55%</th></tr></thead><tbody><tr><td>臺北市</td><td>每人每月 &lt; 26,640</td><td>26,640～未滿39,960</td></tr><tr><td>新北市</td><td>&lt; 26,625</td><td>26,625～未滿35,500</td></tr><tr><td>桃園市</td><td>&lt; 25,779</td><td>25,779～未滿34,372</td></tr><tr><td>臺中市</td><td>&lt; 24,647</td><td>24,647～未滿32,862</td></tr><tr><td>臺南市</td><td>&lt; 23,273</td><td>23,273～未滿31,030</td></tr><tr><td>高雄市</td><td>&lt; 25,455</td><td>25,455～未滿33,940</td></tr><tr><td>其餘臺灣省縣市</td><td>&lt; 23,273</td><td>23,273～未滿31,030</td></tr><tr><td>金門／連江</td><td>&lt; 22,760</td><td>22,760～未滿30,346</td></tr></tbody></table><div class="small">門檻依衛福部115年國民年金「所得未達一定標準」審核標準參考資料；70%級距另受臺灣地區平均每人每月消費支出1倍上限、55%級距受1.5倍上限影響，表中已套用該上限。</div></section>
+<section class="card"><h2>4｜嘉義市西區：收到「總清查」通知，不要擱到明年</h2><div class="grid"><div><label>你是否設籍嘉義市西區？</label><select id="chiayi"><option value="no">不是</option><option value="yes">是</option></select></div><div><label>是否曾經通過「所得未達一定標準」保費減免？</label><select id="previous"><option value="unknown">不確定</option><option value="yes">曾通過</option><option value="no">沒有／未申請</option></select></div><div><label>是否已收到115年總清查通知？</label><select id="notice"><option value="no">還沒收到</option><option value="yes">已收到</option></select></div></div><div id="chiayiOut"></div><div class="note info">西區公所公告：9月下旬起分批寄通知。收到者補件期限到 <strong>2026/12/31</strong>。財稅資料由公所查核，申請時不用自己附財稅資料。</div></section>
+<section class="card"><h2>5｜嘉義西區收到通知後：文件只準備「和你家情況有關的」</h2><div class="check"><input type="checkbox"><span>申請人身分證、印章</span></div><div class="check"><input type="checkbox"><span>若委託代辦：代辦人身分證、印章</span></div><div class="check"><input type="checkbox"><span>有學生：在學證明或繳費註冊單</span></div><div class="check"><input type="checkbox"><span>有相關身分：身心障礙／重大傷病證明</span></div><div class="check"><input type="checkbox"><span>有外籍／陸籍家人：身分證明文件</span></div><div class="check"><input type="checkbox"><span>有服役、服刑／羈押、失蹤滿6個月等特殊情形：對應證明</span></div><div class="note warn">西區公所公告列入「全家人口」的範圍包括申請人、父母、子女、配偶、納稅義務人，以及同一戶籍的其他直系血親。若你不確定某位家人要不要算，不要自己猜，直接問承辦。</div><div class="actions"><a class="btn" href="tel:052840850">嘉義西區公所 05-2840850#68</a><a class="btn ghost" target="_blank" rel="noopener" href="https://www.chiayi.gov.tw/News_Content.aspx?n=455&s=952254" onclick="track('chiayi-notice')">9/12官方總清查公告</a></div></section>
+<section class="card"><h2>6｜不是嘉義西區？直接找你戶籍地的官方窗口</h2><div id="phoneOut" class="note info"></div><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://www.bli.gov.tw/0019854.html" onclick="track('all-phones')">勞保局：全國各縣市諮詢專線</a><a class="btn ghost" target="_blank" rel="noopener" href="https://www.bli.gov.tw/0013596.html" onclick="track('bli-amounts')">勞保局：115年保費金額</a></div></section>
+<section class="card"><h2>7｜一鍵產生「我下一步要做什麼」卡</h2><textarea id="card"></textarea><div class="actions"><button onclick="buildCard(true)">更新行動卡</button><button class="ghost" onclick="copyText('card')">複製給自己／家人</button></div></section>
+<section class="card"><h2>8｜這個工具刻意不做</h2><div class="note"><ul><li>不收姓名、身分證、戶籍謄本、財稅資料、完整收入明細。</li><li>不替政府認定「全家人口」或家庭總收入。</li><li>不把自己輸入的估算收入當成正式資格。</li><li>不把嘉義市西區的12/31總清查期限錯套到所有縣市。</li><li>如果你是低收入戶、中低收入戶或身障者，可能另有不同且更高的國保補助身分，請直接以官方認定為準。</li></ul></div></section>
+<section class="card"><h2>9｜真實使用驗證</h2><p>真正追的是：<strong>原本每月付1,329元的人，有沒有因此發現可能符合、真的去申請；嘉義西區收到清查通知的人，有沒有在12/31前完成補件。</strong></p><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/114">NPSave 1231 回饋區 #114</a></div></section>
+<section class="card"><h2>10｜可直接轉給家人／里鄰群</h2><textarea id="share">【國民年金每月1,329元？家庭收入較低的人可能只要665或997元】
+
+115年國保一般自付：每月1,329元。
+如果符合「所得未達一定標準」：
+・政府補助70% → 自付665元
+・政府補助55% → 自付997元
+
+70%級距比一般身分每月少664元，全年最多可少付7,968元。
+
+資格由戶籍所在地縣市政府／公所認定，不是只看你個人的薪水，而是按法定「家庭總收入／全家人口」審查。
+
+另外，嘉義市西區9/12公告：
+以前已通過這項減免的人，9月下旬起會陸續收到115年總清查通知；收到後請在12/31前補件，逾期會影響補助接續。
+
+3分鐘前篩：
+https://allen3429.github.io/Allentrial20260812.github.io/public-good/npsave1231/
+
+全國官方諮詢電話：
+https://www.bli.gov.tw/0019854.html
+
+不要在群組貼身分證、戶籍、所得、身障／重大傷病證明或財稅資料。</textarea><div class="actions"><button class="ghost" onclick="copyText('share');track('share-copy')">複製轉貼文</button></div></section>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const rules={taipei:[26640,39960,'臺北市','1999轉2323／02-27208889轉2323'],newtaipei:[26625,35500,'新北市','02-29603456轉5639、5640、5674、3936'],taoyuan:[25779,34372,'桃園市','03-3322101轉6403'],taichung:[24647,32862,'臺中市','04-22289111轉37218、37221、37236、37237'],tainan:[23273,31030,'臺南市','06-2984977／06-2981854'],kaohsiung:[25455,33940,'高雄市','07-3308580／07-3368333轉2443'],province:[23273,31030,'其餘臺灣省縣市','請用下方勞保局全國專線表找你的縣市'],kinma:[22760,30346,'金門／連江','金門082-330192；連江0836-25022轉312']};
+function assess(){const r=rules[$('region').value], income=Number($('income').value), insured=$('insured').value;let level='unknown',self=1329,save=0,cls='info',title='輸入估計的家庭平均每人月收入即可前篩';if(insured==='no'){title='目前不是國民年金被保險人：這個保費減免工具不適用';cls='info';}else if(Number.isFinite(income)&&income>=0&&$('income').value!==''){if(income<r[0]){level='70';self=665;save=664;cls='ok';title='🟢 可能落在政府補助70%級距';}else if(income<r[1]){level='55';self=997;save=332;cls='ok';title='🟢 可能落在政府補助55%級距';}else{level='general';self=1329;save=0;cls='info';title='🔵 依你輸入的粗估收入，目前不像「所得未達一定標準」級距';}}$('result').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${level==='70'||level==='55'?`前篩自付約 <span class="money">${self.toLocaleString()}</span> 元／月；比一般身分每月少約 ${save} 元，一年最多約少付 ${(save*12).toLocaleString()} 元。`:level==='general'?`你輸入的每人月收入約 ${income.toLocaleString()} 元；${r[2]}115年前篩門檻為70%補助低於 ${r[0].toLocaleString()} 元，55%補助低於 ${r[1].toLocaleString()} 元。`:'正式資格仍要由戶籍地政府／公所依全家人口與家庭總收入認定。'}</div>`;$('phoneOut').innerHTML=`<b>${r[2]}：</b>${r[3]}`;return {r,income,insured,level,self,save,title};}
+function chiayiCheck(){const c=$('chiayi').value,p=$('previous').value,n=$('notice').value;let cls='info',msg='這一區只套用嘉義市西區9/12公告；其他縣市請看自己的地方通知。';if(c==='yes'&&p==='yes'&&n==='yes'){cls='bad';msg='🔴 你就是這次總清查的核心防漏對象：把通知單列的必要資料在2026/12/31前送西區公所。逾期後續會以重新提出申請的日期開始補助。';}else if(c==='yes'&&p==='yes'&&n==='no'){cls='warn';msg='🟡 西區公所公告9月下旬起分批寄通知。先留意信件；若地址／資格有疑問，可直接打05-2840850#68確認。';}else if(c==='yes'&&p==='no'){cls='info';msg='你如果目前收入降低，也不必等總清查通知；新的「所得未達一定標準」申請可向戶籍所在地政府／公所提出，符合後自申請當月開始補助。';}$('chiayiOut').innerHTML=`<div class="note ${cls}">${msg}</div>`;return {c,p,n,msg};}
+function buildCard(countCore){const a=assess(),c=chiayiCheck();let next='先向戶籍所在地縣市政府／公所確認「所得未達一定標準」申請資格與全家人口計算。';if(a.level==='70'||a.level==='55') next=`你的粗估落在政府補助${a.level}%級距，值得正式申請確認。不要等繳款單自己變便宜；新申請要向戶籍地政府／公所提出。`;if(c.c==='yes'&&c.p==='yes'&&c.n==='yes') next='你已收到嘉義市西區總清查通知：優先在12/31前完成補件，避免補助接續受影響。';$('card').value=`【NPSave 1231｜國民年金保費補助行動卡】\n這是前篩，不是正式資格認定。\n\n戶籍地區：${a.r[2]}\n估計家庭平均每人月收入：${$('income').value?Number($('income').value).toLocaleString()+'元':'尚未填'}\n前篩結果：${a.title}\n${a.level==='70'||a.level==='55'?`可能自付：${a.self}元／月；相較一般1,329元，每月約少${a.save}元。`:''}\n\n我下一步：\n${next}\n\n官方提醒：\n・115年一般國保自付1,329元／月。\n・所得未達一定標準可能自付997元或665元。\n・新申請符合後，自提出申請當月開始補助。\n・正式的「家庭總收入」與「全家人口」由地方政府依法審查。\n\n嘉義西區（若適用）：\n${c.msg}\n\n官方窗口：\n${a.r[3]}\n全國專線表：https://www.bli.gov.tw/0019854.html\n\n不要把身分證、戶籍、所得、財稅、身障或重大傷病資料貼到公開回饋。`;if(countCore&&window.PGLabImpact)PGLabImpact.core('action-card');}
+function track(label){if(window.PGLabImpact)PGLabImpact.core(label)}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+['region','insured','chiayi','previous','notice'].forEach(id=>$(id).addEventListener('change',()=>buildCard(false)));$('income').addEventListener('input',()=>buildCard(false));buildCard(false);
+</script>
+<script src="../impact.js" data-project="npsave1231" data-action-text="我已完成國保所得未達一定標準前篩／總清查防漏" data-real-text="我已真的向公所確認／提出申請／完成總清查補件／確認全家人口與文件" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/114"></script>
+</body></html>
