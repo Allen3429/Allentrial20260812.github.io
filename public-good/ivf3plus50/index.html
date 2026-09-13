@@ -1,0 +1,68 @@
+<!doctype html><html lang="zh-Hant" data-project="ivf3plus50"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>IVF3+50｜9/1後第2、3次試管補助多5萬</title>
+<style>
+body{font-family:system-ui,-apple-system,"Noto Sans TC",sans-serif;max-width:980px;margin:auto;padding:22px;background:#f6f7f9;color:#17212b}
+section{background:#fff;border:1px solid #dde4ea;border-radius:16px;padding:18px;margin:14px 0}h1{font-size:clamp(38px,7vw,62px);line-height:1.03}
+label{display:block;font-weight:800;margin:10px 0 5px}select,textarea{width:100%;box-sizing:border-box;padding:10px;border:1px solid #cbd5df;border-radius:10px;font:inherit}
+textarea{min-height:240px}button,a.btn{display:inline-block;background:#17212b;color:#fff;border:0;border-radius:10px;padding:10px 13px;text-decoration:none;font-weight:800;margin:4px;cursor:pointer}
+.ghost{background:#edf1f5!important;color:#17212b!important}.note{border-left:5px solid #285c8d;background:#fafbfd;padding:12px;border-radius:8px;margin:10px 0;line-height:1.7}
+.warn{border-left-color:#946200}.bad{border-left-color:#a32323}.ok{border-left-color:#176b45}.big{font-size:30px;font-weight:950}.small{font-size:13px;color:#66727f;line-height:1.6}
+</style></head><body>
+<h1>IVF3+50<br>第2、3次療程，9/1後最高多5萬元。</h1>
+<p>2026/9/1起提出申請者，試管嬰兒補助3.0再次加碼。這頁只做「政策版本＋補助上限」前篩，不收姓名、診斷、病歷、胚胎資料或帳戶。</p>
+
+<section><h2>1｜先抓這次真正改了什麼</h2>
+<div class="note ok"><b>一般戶、受術妻未滿40歲：</b>各胎第2、3次「取卵→形成胚胎→植入」療程，每次最高由10萬元提高到<strong>15萬元</strong>。</div>
+<div class="note ok"><b>一般戶、40歲至未滿45歲：</b>各胎第2、3次同類完整療程，每次最高由8萬元提高到<strong>13萬元</strong>。</div>
+<div class="note"><b>兩組都是每次最高＋5萬元。</b>而且「各胎」會重新起算補助次數與額度。</div></section>
+
+<section><h2>2｜60秒版本前篩</h2>
+<label>這次補助申請日期</label><select id="date"><option value="new">2026/9/1起</option><option value="old">2026/8/31以前</option><option value="unknown">不確定</option></select>
+<label>受術妻年齡區間</label><select id="age"><option value="u40">未滿40歲</option><option value="40to44">40歲至未滿45歲</option><option value="45">45歲以上</option></select>
+<label>這是「這一胎」的第幾次補助療程？</label><select id="try"><option value="1">第1次</option><option value="2">第2次</option><option value="3">第3次</option><option value="4">第4次以上</option><option value="unknown">不確定／之前生過一胎，不知道是否重算</option></select>
+<label>這次是否為「取卵→形成胚胎→植入」完整療程？</label><select id="full"><option value="yes">是</option><option value="no">不是／只有取卵或只有植入</option><option value="unknown">不確定</option></select>
+<div id="out"></div></section>
+
+<section><h2>3｜最容易漏的規則：下一胎可重新起算</h2>
+<div class="note warn">國健署明確說明：如有意願再生育下一胎，<b>補助次數及額度可重新起算</b>。所以「以前已做過2、3次」不等於下一胎只能接著算第4次。</div></section>
+
+<section><h2>4｜申請流程不要自己扛</h2>
+<div class="note">符合資格者是到國健署特約人工生殖機構檢查評估，由機構協助線上申請補助資格與療程後費用補助。夫妻一方具我國國籍、受術妻未滿45歲，並由醫師診斷需進行試管嬰兒療程，是目前公開的主要資格骨架；正式資格仍由特約機構與國健署審查。</div>
+<a class="btn" target="_blank" href="https://www.mohw.gov.tw/cp-2704-87663-1.html">9/1加碼官方公告</a><a class="btn ghost" target="_blank" href="https://www.gov.tw/News_Content_26_853077">我的E政府完整流程</a><a class="btn ghost" target="_blank" href="https://www.hpa.gov.tw/500/14149/n">國健署試管嬰兒專區</a><a class="btn ghost" href="tel:0225580900">諮詢 02-2558-0900</a></section>
+
+<section><h2>5｜產生「拿去問特約機構」的差額卡</h2><textarea id="card"></textarea>
+<button onclick="build(true)">更新差額卡</button><button class="ghost" onclick="navigator.clipboard.writeText(card.value)">複製</button>
+<p class="small">不要把診斷、病歷、胚胎／檢驗資訊、身分證或帳戶貼到公開回饋區。</p></section>
+
+<section><h2>6｜這個工具刻意不做</h2><div class="note"><ul>
+<li>不判斷是否「應該」做試管，也不提供醫療成功率個人化預測。</li>
+<li>不收病歷、診斷、AMH、胚胎或其他健康資料。</li>
+<li>不把「最高補助」當實領金額；實際金額未達上限時以實支補助，正式以國健署審查為準。</li>
+<li>若不是完整「取卵至形成胚胎並植入」療程，本輪9/1新聞稿不能直接套用＋5萬元，請查最新版方案或問特約機構。</li>
+</ul></div></section>
+
+<section><h2>7｜真實使用驗證</h2><p>追的是：原本仍拿舊的第2、3次額度做決策的人，有沒有真的帶新制資訊去特約機構確認；以及原本不知道「下一胎重新起算」的人，有沒有重新評估可用補助。</p><a class="btn ghost" target="_blank" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/138">IVF3+50 回饋區 #138</a></section>
+
+<script>
+const $=x=>document.getElementById(x);
+function build(count=false){
+ let d=$('date').value,a=$('age').value,t=$('try').value,f=$('full').value;
+ let title='🟡 需要再確認最新版方案',msg='',oldCap='',newCap='',delta='';
+ if(a==='45'){title='🔴 依目前公開一般資格，受術妻須未滿45歲';msg='請直接向國健署或特約人工生殖機構確認是否有其他適用情形。';}
+ else if(d==='new'&&(t==='2'||t==='3')&&f==='yes'){
+   if(a==='u40'){oldCap='100,000';newCap='150,000';delta='50,000';}
+   else{oldCap='80,000';newCap='130,000';delta='50,000';}
+   title='🟢 這正是9/1加碼的核心情境';msg=`舊上限 NT$${oldCap} → 新上限 NT$${newCap}，最高增加 NT$${delta}。`;
+ } else if(t==='unknown'){title='🟡 先確認「這一胎」是第幾次';msg='如果是生下一胎，補助次數與額度可以重新起算，不一定延續上一胎的次數。';}
+ else if(d==='old'){title='🔵 這次申請日期在9/1以前';msg='9/1公布的第2、3次加碼是針對9/1起提出申請者；請用申請當時版本確認。';}
+ else if(f!=='yes'){title='🟡 本輪新聞稿的＋5萬元不能直接套';msg='若只有取卵、只有胚胎植入或療程型態不確定，請查看最新版方案表或直接問特約機構。';}
+ else{title='🔵 這不是本次「第2、3次＋5萬元」的主要變更情境';msg='仍可能有原本3.0補助，請用官方完整方案確認。';}
+ $('out').innerHTML=`<div class="note"><div class="big">${title}</div>${msg}</div>`;
+ $('card').value=`【IVF3+50｜9/1試管補助差額卡】\n${title}\n${msg}\n\n要問特約機構：\n1. 我的申請日是否適用2026/9/1新額度？\n2. 這是「這一胎」的第幾次補助療程？\n3. 是否屬取卵→形成胚胎→植入的完整療程？\n4. 若是下一胎，補助次數與額度是否已重新起算？\n5. 實際可申請上限與自付額是多少？\n\n官方公告：https://www.mohw.gov.tw/cp-2704-87663-1.html\n諮詢：02-2558-0900\n\n不要在公開回饋貼病歷、診斷、胚胎／檢驗資訊或帳戶。`;
+ if(count&&window.PGLabImpact)PGLabImpact.core((d==='new'&&(t==='2'||t==='3')&&f==='yes')?'new-plus50':'policy-check');
+}
+['date','age','try','full'].forEach(id=>$(id).onchange=()=>build(false));build(false);
+</script>
+<script src="../impact.js" data-project="ivf3plus50" data-action-text="我已完成9/1試管補助版本／差額前篩" data-real-text="我已真的向特約人工生殖機構確認新額度／下一胎重新起算" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/138"></script>
+</body></html>
