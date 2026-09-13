@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="carestay914">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="CareStay 914：2026住宿式長照／身障住民補助新制前篩。每月最高1.5萬、全年最高18萬，9/14開始申請；自動處理按月認列與115年過渡保障。">
+<title>CareStay 914｜住宿式機構補助新制前篩</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#a32323;--info:#285c8d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1100px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}h1{font-size:clamp(38px,7vw,64px);line-height:1.03;margin:.15em 0 .25em}
+.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:1000px}.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:12px 14px;border-radius:9px;line-height:1.72;margin:10px 0}.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}.info{border-left-color:var(--info)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}label{display:block;font-weight:800;margin:7px 0 6px}select,input,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}
+textarea{min-height:270px;resize:vertical}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}
+.big{font-size:clamp(24px,4vw,34px);font-weight:950}.money{font-size:clamp(34px,7vw,56px);font-weight:1000}.small{font-size:13px;color:var(--muted);line-height:1.65}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:9px}.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:22px;margin-top:4px}
+.months{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:8px}.month{border:1px solid var(--line);border-radius:12px;padding:10px}.month select{margin-top:6px}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · 長照3.0住宿式補助新制 · 2026/09/13</div>
+<h1>CareStay 914<br>今年不是再等「住滿180天」。<br>9/14起，按月算。</h1>
+<p class="lead">衛福部 9/10 公布住宿式服務機構補助新制：符合條件的中、重度失能住民，每月最高由1萬元提高到<strong>1萬5,000元</strong>、全年最高<strong>18萬元</strong>，並追溯自2026/1/1；認列方式也從全年累積180天改成<strong>按月認列</strong>。另外，中度以上身障者若已領住宿式照顧費用補助，可保留原制度並另申請<strong>每月5,000元加碼</strong>。申請自<strong>2026/9/14</strong>開始。</p>
+
+<section class="card">
+<h2>1｜先分清楚你走哪一條，不要把三種補助混在一起</h2>
+<div class="grid">
+<div><label>住民目前是否住在依法設立的住宿式機構？</label>
+<select id="institution"><option value="yes">是</option><option value="unknown">不確定機構類型</option><option value="no">不是</option></select></div>
+<div><label>長照需要等級是否4級以上？</label>
+<select id="ltc4"><option value="unknown">不確定／尚未評估</option><option value="yes">是</option><option value="no">不是</option></select></div>
+<div><label>是否持有中度以上身心障礙證明？</label>
+<select id="disability"><option value="no">否／不確定</option><option value="yes">是</option></select></div>
+<div><label>是否已依「身障日間／住宿式照顧費用補助」領取住宿補助？</label>
+<select id="disabilityBase"><option value="no">沒有／不確定</option><option value="yes">有</option></select></div>
+<div><label>是否在2023/1/1以前已入住，並持續入住到補助計算期間？</label>
+<select id="oldResident"><option value="no">否／不確定</option><option value="yes">是</option></select></div>
+</div>
+<div id="routeOut"></div>
+</section>
+
+<section class="card">
+<h2>2｜三條路的金額差在哪？</h2>
+<div class="stats">
+<div class="stat">長照4級以上／中度以上身障<b>最高15,000元／月</b></div>
+<div class="stat">2023年前既有住民、未達主資格<b>最高5,000元／月</b></div>
+<div class="stat">已領身障住宿補助＋中度以上身障<b>另加5,000元／月</b></div>
+<div class="stat">主方案全年<b>最高180,000元</b></div>
+</div>
+<div class="note warn"><b>同一月份不能把同性質住宿式補助重複疊加。</b>如果本來已領「身心障礙者住宿式照顧費用補助」，官方設計是保留原制度，再走每月5,000元的「身障住宿費用加碼」；不要自行把原補助和主方案15,000元一起相加。</div>
+<div class="note info">主方案實領金額還受「實際支付的住宿費用自付額」限制。如果每月自付低於15,000元，實際補助不會超過自付額。</div>
+</section>
+
+<section class="card">
+<h2>3｜2026按月認列：每個月只問「有沒有達到半月」</h2>
+<p class="small">31天的月份至少16天、30天至少15天、2026年2月至少14天。若住院且機構保留床位，官方原則上可視為持續入住；但住院日數若達當月一半以上，該月不認列。遇到住院／轉機構等特殊情況，請向地方政府確認。</p>
+<div class="months" id="months"></div>
+<div class="grid">
+<div><label>一般每月實際自付住宿費約多少？（不知道填0）</label><input id="selfPay" type="number" min="0" step="1000" value="0"></div>
+<div><label>2025年是否曾核定領取本方案12萬元？</label><select id="lastYear120"><option value="no">否／不確定</option><option value="yes">是</option></select></div>
+<div><label>若上題是「是」，2026/1/1–8/31實際入住總日數</label><input id="janAugDays" type="number" min="0" max="243" step="1" value="0"></div>
+</div>
+<div id="calcOut"></div>
+</section>
+
+<section class="card">
+<h2>4｜今年特別的「過渡保障」最容易算錯</h2>
+<div class="note ok">如果<strong>2025年（114年度）曾核定領12萬元</strong>，而且2026年1–8月實際入住累計達<strong>180日</strong>，那麼1–8月這一段直接保障核給<strong>12萬元</strong>；9月起才改成新制按月認列。</div>
+<div class="note info">若去年沒有領12萬元，或今年1–8月未達180日，則2026年原則上直接按新制逐月認列。這也是為什麼不能再用「全年一定要住滿180天」的舊印象來判斷。</div>
+</section>
+
+<section class="card">
+<h2>5｜申請時間與送去哪裡</h2>
+<div class="stats">
+<div class="stat">開始受理<b>9/14</b></div>
+<div class="stat">第一階段<b>9/14–10/31</b></div>
+<div class="stat">第二階段<b>11/1–12/16</b></div>
+<div class="stat">長照諮詢<b>1966</b></div>
+</div>
+<div class="note info"><b>主方案：</b>寄到「2026年度最近一次入住機構所在地」的直轄市／縣市政府。<br><b>身障住宿費用加碼：</b>向原本核定身障住宿式照顧費用補助的直轄市／縣市政府申請。</div>
+<div class="actions">
+<a class="btn" target="_blank" rel="noopener" href="https://1966.gov.tw/LTC/cp-6457-69925-207.html" onclick="track('official-ltc')">衛福部住宿式補助專區＋各縣市窗口</a>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://www.mohw.gov.tw/cp-16-87895-1.html" onclick="track('mohw-news')">衛福部9/10新制說明</a>
+<a class="btn ghost" href="tel:1966" onclick="track('1966')">撥1966</a>
+<button class="ghost" onclick="downloadICS('2026-09-14','CareStay 914 住宿式補助開始申請')">加9/14提醒</button>
+<button class="ghost" onclick="downloadICS('2026-10-31','CareStay 914 第一階段申請截止')">加10/31提醒</button>
+</div>
+</section>
+
+<section class="card">
+<h2>6｜文件防漏：不用把整份機構契約都影印</h2>
+<div class="note">
+□ 使用機構者身分證<br>
+□ 申請人身分證<br>
+□ 入住機構契約「可確認機構、住民、簽約人、入住期間、簽約日期」的必要頁即可，不必整份<br>
+□ 申請人或使用機構者本人存摺<br>
+□ 長照需要等級核定函／身心障礙證明（二擇一，依資格路徑）<br>
+□ 若住民已逝世：死亡證明或除戶證明（二擇一）
+</div>
+<div class="note warn">這些文件只交給正式受理政府機關；不要上傳到本工具，也不要貼到公開Issue。</div>
+</section>
+
+<section class="card">
+<h2>7｜一鍵產生「家屬下一步」申請卡</h2>
+<textarea id="card"></textarea>
+<div class="actions"><button onclick="buildCard(true)">更新申請卡</button><button class="ghost" onclick="copyText('card')">複製給家人／機構社工</button></div>
+</section>
+
+<section class="card">
+<h2>8｜這個工具刻意不做</h2>
+<div class="note"><ul>
+<li>不收住民姓名、身分證、機構名稱／地址、障礙類別、病歷、長照評估內容、契約或存摺。</li>
+<li>不判定醫療失能程度；長照等級以地方照管中心有效評估為準。</li>
+<li>不把概算金額當正式核定；實際自付額、重複補助與特殊入住情形仍由地方政府審查。</li>
+<li>不建議為了拿主方案而自行放棄既有身障住宿補助；先向原核定縣市確認哪條制度適合。</li>
+</ul></div>
+</section>
+
+<section class="card">
+<h2>9｜真實使用驗證</h2>
+<p>真正追：<strong>家屬有沒有從「還在等住滿180天」變成算對按月資格、備齊文件、找到正確受理縣市，並真的送件。</strong></p>
+<div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/113">CareStay 914 回饋區 #113</a></div>
+</section>
+
+<section class="card">
+<h2>10｜可直接轉給照顧者／機構社工</h2>
+<textarea id="share">【住宿式機構補助新制｜9/14開始申請，不是再等全年住滿180天】
+
+衛福部9/10公布：
+・長照需要4級以上，或中度以上身障證明的住宿式機構住民
+→ 每月最高15,000元，全年最高180,000元
+→ 追溯自2026/1/1
+
+今年改成「按月認列」：
+・31天月份住滿16天算1個月
+・30天月份15天
+・2026年2月14天
+
+另外：
+・2023/1/1以前已入住且持續入住的既有住民，未評估或未達長照4級者，仍可走每月最高5,000元
+・已領身障住宿式照顧費用補助＋中度以上身障者，可保留原制度，另申請每月5,000元加碼
+・2025年曾核定領12萬元，且2026年1–8月實際入住達180日：1–8月保障12萬元；9月起按月算
+
+申請自2026/9/14開始。
+CareStay 914前篩：
+https://allen3429.github.io/Allentrial20260812.github.io/public-good/carestay914/
+
+衛福部官方：
+https://1966.gov.tw/LTC/cp-6457-69925-207.html
+長照專線：1966
+
+公開回饋不要貼身分證、機構名稱、長照評估、身障證明、契約或存摺。</textarea>
+<div class="actions"><button class="ghost" onclick="copyText('share');track('share-copy')">複製轉貼文</button></div>
+</section>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+const monthNames=['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+const monthDays=[31,28,31,30,31,30,31,31,30,31,30,31];
+
+function renderMonths(){
+ const box=$('months');box.innerHTML='';
+ monthNames.forEach((name,i)=>{
+   const threshold=Math.ceil(monthDays[i]/2);
+   const d=document.createElement('div');d.className='month';
+   d.innerHTML=`<b>${name}</b><div class="small">門檻 ${threshold} 天</div>
+   <select class="mstatus" data-month="${i}">
+    <option value="unknown">未知／尚未發生</option>
+    <option value="yes">已達半月門檻</option>
+    <option value="no">未達半月門檻</option>
+   </select>`;
+   box.appendChild(d);
+ });
+ document.querySelectorAll('.mstatus').forEach(x=>x.addEventListener('change',()=>{calculate();buildCard(false)}));
+}
+
+function route(){
+ const inst=$('institution').value, ltc=$('ltc4').value==='yes', dis=$('disability').value==='yes',
+       base=$('disabilityBase').value==='yes', old=$('oldResident').value==='yes';
+ let code='unknown', rate=0, cls='warn', title='🟡 先確認資格路徑', msg='';
+
+ if(inst==='no'){
+   cls='info';title='🔵 目前不是住宿式機構住民';msg='本工具只處理依法設立的住宿式服務機構使用者補助。';code='none';
+ } else if(base && dis){
+   cls='ok';title='🟢 優先檢查「身障住宿費用加碼」';msg='既有身障住宿式照顧費用補助維持不變，另可申請每月5,000元加碼；不要自行把主方案15,000元再疊上去。';code='disability_addon';rate=5000;
+ } else if(ltc || dis){
+   cls='ok';title='🟢 主方案前篩：每月最高15,000元';msg='符合長照需要4級以上或中度以上身障證明其中一項，並符合機構與其他規定時，可走住宿式服務機構使用者補助。';code='main';rate=15000;
+ } else if(old){
+   cls='ok';title='🟢 既有住民路徑：每月最高5,000元';msg='2023/1/1以前已實際入住並持續入住的既有住民，若未經評估或評估未達長照4級，仍有既有住民補助路徑。';code='legacy';rate=5000;
+ } else {
+   msg='如果長照等級尚未確認，先向地方照管中心／1966確認有效評估；若機構類型不確定，直接問機構社工或所在地政府。';
+ }
+ $('routeOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;
+ return {code,rate,title,msg,inst,ltc,dis,base,old};
+}
+
+function selectedMonths(){
+ return [...document.querySelectorAll('.mstatus')].map(x=>x.value);
+}
+
+function calculate(){
+ const r=route(), statuses=selectedMonths(), selfPay=Math.max(0,Number($('selfPay').value)||0),
+       last=$('lastYear120').value==='yes', janAug=Math.max(0,Number($('janAugDays').value)||0);
+ const counted=statuses.map(v=>v==='yes');
+ const known=counted.filter(Boolean).length;
+ const perMonth=(r.code==='main'&&selfPay>0)?Math.min(15000,selfPay):r.rate;
+ let amount=0, detail='';
+
+ if(r.code==='none'||r.code==='unknown'){
+   detail='先確認資格路徑，再試算金額。';
+ } else if(r.code==='disability_addon'){
+   amount=counted.filter(Boolean).length*5000;
+   detail=`目前勾選 ${known} 個認列月份 × 5,000元加碼。實際以原身障住宿補助核定月份與地方政府審查為準。`;
+ } else if(last && janAug>=180 && r.code==='main'){
+   const sepDec=counted.slice(8).filter(Boolean).length;
+   amount=120000 + sepDec*perMonth;
+   detail=`符合115年度過渡保障前篩：1–8月先以120,000元計；9–12月目前有 ${sepDec} 個月份達門檻，再按每月最高 ${perMonth.toLocaleString()} 元計。`;
+ } else {
+   amount=counted.filter(Boolean).length*perMonth;
+   detail=`目前勾選 ${known} 個月份達半月門檻 × 每月最高 ${perMonth.toLocaleString()} 元。${last&&janAug<180?'你勾選去年曾領12萬元，但今年1–8月未達180日，因此不套用1–8月12萬元過渡保障。':''}`;
+ }
+ $('calcOut').innerHTML=`<div class="note ${amount?'ok':'info'}"><div class="money">目前可認列前篩：約 NT$${amount.toLocaleString()}</div>${detail}
+ <div class="small">未知／尚未發生月份不計入；這是規則概算，不是核定額。主方案還受實際自付住宿費、重複補助及特殊入住情形限制。</div></div>`;
+ return {r,statuses,counted,known,selfPay,last,janAug,perMonth,amount,detail};
+}
+
+function buildCard(countCore){
+ const c=calculate(), r=c.r;
+ let receive='最近一次入住機構所在地的直轄市／縣市政府';
+ if(r.code==='disability_addon')receive='原本核定身心障礙者住宿式照顧費用補助的直轄市／縣市政府';
+ $('card').value=`【CareStay 914｜家屬申請防漏卡】
+
+資格路徑：
+${r.title}
+${r.msg}
+
+目前試算：
+・已達半月門檻月份：${c.known}個
+・目前可認列補助前篩：約 NT$${c.amount.toLocaleString()}
+${c.last?`・2025年曾領12萬元：是；2026年1–8月填入實際入住總日數 ${c.janAug} 日。`:'・未套用去年12萬元過渡保障。'}
+
+今年最重要的新規則：
+1. 不再只看全年180天，改成按月認列。
+2. 31天月份至少16天、30天15天、2026年2月14天。
+3. 2025年曾核定12萬元＋2026年1–8月實際入住達180日者，1–8月保障12萬元；9月起按月算。
+4. 同一月份不得重複領同性質住宿式補助。
+5. 主方案實領不超過實際住宿自付額。
+
+申請時間：
+・2026/9/14開始
+・第一階段 9/14–10/31
+・第二階段 11/1–12/16
+
+受理原則：
+${receive}
+
+文件：
+□ 使用機構者身分證
+□ 申請人身分證
+□ 機構契約必要頁（能看出機構、住民、簽約人、入住期間、簽約日期即可）
+□ 申請人或住民本人存摺
+□ 長照需要等級核定函／身心障礙證明（依路徑）
+□ 如住民已逝世：死亡證明或除戶證明
+
+官方：
+https://1966.gov.tw/LTC/cp-6457-69925-207.html
+1966
+
+不要把住民姓名、身分證、機構名稱、長照評估、身障證明、契約或存摺貼到公開回饋。`;
+ if(countCore&&window.PGLabImpact)PGLabImpact.core('application-card');
+}
+
+function downloadICS(date,title){
+ const d=date.replaceAll('-','');
+ const ics=`BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//CareStay914//TW\r\nBEGIN:VEVENT\r\nDTSTART;VALUE=DATE:${d}\r\nDTEND;VALUE=DATE:${d}\r\nSUMMARY:${title}\r\nDESCRIPTION:住宿式服務機構使用者補助新制。官方專區：https://1966.gov.tw/LTC/cp-6457-69925-207.html；長照1966。\r\nEND:VEVENT\r\nEND:VCALENDAR`;
+ const blob=new Blob([ics],{type:'text/calendar;charset=utf-8'});
+ const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='carestay-'+date+'.ics';a.click();URL.revokeObjectURL(a.href);track('calendar');
+}
+function track(label){if(window.PGLabImpact)PGLabImpact.core(label)}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+['institution','ltc4','disability','disabilityBase','oldResident','lastYear120'].forEach(id=>$(id).addEventListener('change',()=>buildCard(false)));
+['selfPay','janAugDays'].forEach(id=>$(id).addEventListener('input',()=>buildCard(false)));
+renderMonths();buildCard(false);
+</script>
+<script src="../impact.js" data-project="carestay914" data-action-text="我已完成補助路徑＋按月認列＋過渡保障前篩" data-real-text="我已真的確認資格／備齊文件／聯絡1966或地方政府／寄出住宿式補助申請" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/113"></script>
+</body></html>
