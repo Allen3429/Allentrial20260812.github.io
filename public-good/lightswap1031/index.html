@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="lightswap1031">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="LightSwap 1031：115年照明亮久久家庭燈具盤點＋安全回收防漏。9/9–10/31活動，老舊螢光燈／省電燈泡換LED，舊燈妥善包裝回收。">
+<title>LightSwap 1031｜老燈別丟垃圾車</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#a32323;--info:#285c8d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1060px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}h1{font-size:clamp(38px,7vw,64px);line-height:1.03;margin:.15em 0 .25em}
+.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:980px}.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:12px 14px;border-radius:9px;line-height:1.72;margin:10px 0}.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}.info{border-left-color:var(--info)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}label{display:block;font-weight:800;margin:7px 0 6px}input,select,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}textarea{min-height:260px;resize:vertical}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}
+.big{font-size:clamp(24px,4vw,34px);font-weight:950}.money{font-size:clamp(34px,7vw,56px);font-weight:1000}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:9px}.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:22px;margin-top:4px}.small{font-size:13px;color:var(--muted);line-height:1.65}
+.check{display:flex;gap:8px;align-items:flex-start;margin:8px 0}.check input{width:auto;margin-top:4px}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · 照明亮久久 · 2026/09/13</div>
+<h1>LightSwap 1031<br>老燈別丟垃圾車。<br>先盤點，再換LED，再安全回收。</h1>
+<p class="lead">環境部115年「照明亮久久 減廢新生活」已在 <strong>9/9–10/31</strong> 進行。這個工具幫你把家裡還在用的省電燈泡、螢光燈管盤點出來，估算其中「23W省電燈泡→16W LED」的官方示例省電效益，最後產生一張不漏掉安全包裝與回收管道的行動卡。</p>
+
+<section class="card">
+<h2>1｜家裡還有幾顆／支老光源？</h2>
+<div class="grid">
+<div><label>螺旋／U型省電燈泡（CFL）</label><input id="cfl" type="number" min="0" step="1" value="0"></div>
+<div><label>直管／環管螢光燈</label><input id="fluor" type="number" min="0" step="1" value="0"></div>
+<div><label>白熾燈泡</label><input id="incan" type="number" min="0" step="1" value="0"></div>
+<div><label>壞掉／待回收的LED燈管或燈泡</label><input id="ledwaste" type="number" min="0" step="1" value="0"></div>
+</div>
+<div id="auditOut"></div>
+<div class="note info">如果分不清：螺旋狀、U型小燈管通常是「省電燈泡」；長直管或圓環通常是螢光燈。LED也屬應回收照明光源，不要丟一般垃圾。</div>
+</section>
+
+<section class="card">
+<h2>2｜這次能省多少？只算官方有明確示例的部分</h2>
+<div id="savingOut"></div>
+<div class="note info">環境部官方示例：以 <b>16W LED</b> 取代 <b>23W省電燈泡</b>，每顆一年約省 <b>100元電費</b>、減少 <b>10公斤碳排</b>。本工具只把你填的「省電燈泡」套用這個示例；螢光燈管與白熾燈因規格差異大，不硬算金額。</div>
+</section>
+
+<section class="card">
+<h2>3｜回收前最重要：不要讓燈管在清運時破掉</h2>
+<div class="check"><input id="box" type="checkbox"><span>保留新燈的紙盒／紙套，或準備堅固紙箱。</span></div>
+<div class="check"><input id="pack" type="checkbox"><span>每支／每顆廢照明光源妥善包裝，避免互相碰撞。</span></div>
+<div class="check"><input id="nogarbage" type="checkbox"><span>確認不混入一般垃圾。</span></div>
+<div class="check"><input id="channel" type="checkbox"><span>決定回收管道：販賣照明光源的通路、清潔隊資源回收車，或合法回收機構。</span></div>
+<div class="check"><input id="broken" type="checkbox"><span>若已破損：用厚紙等保護碎片，再妥善包裝後交回收；避免徒手接觸碎玻璃。</span></div>
+<div id="recycleOut"></div>
+<div class="actions"><a class="btn" target="_blank" rel="noopener" href="https://recycle2.moenv.gov.tw/people/lightreca.html" onclick="track('activity-page')">看115年12家合作業者優惠</a><a class="btn ghost" target="_blank" rel="noopener" href="https://recycle.moenv.gov.tw/" onclick="track('recycle-site')">資源回收網</a><a class="btn ghost" href="tel:0800085717" onclick="track('hotline')">0800-085-717</a></div>
+</section>
+
+<section class="card">
+<h2>4｜今年活動有哪些合作管道？</h2>
+<div class="note">
+<b>連鎖實體通路：</b>光南大批發、振宇五金、特力屋、愛買。<br>
+<b>照明品牌：</b>舞光、東亞照明、亮博士、樂亮LED、飛利浦。<br>
+<b>網路電商：</b>PChome、momo、東森購物。<br><br>
+各家是抽獎、折扣、回收折價或滿額回饋等不同方案，實際條件以環境部活動頁與各業者當期公告為準。
+</div>
+</section>
+
+<section class="card">
+<h2>5｜一鍵產生「這週真的做掉」的清單</h2>
+<textarea id="card"></textarea>
+<div class="actions"><button onclick="buildCard(true)">更新行動卡</button><button class="ghost" onclick="copyText('card')">複製到備忘錄</button><button class="ghost" onclick="makeReminder()">加一週後提醒</button></div>
+</section>
+
+<section class="card">
+<h2>6｜這個工具刻意不做</h2>
+<div class="note"><ul>
+<li>不收地址、電號、電費帳單或精確位置。</li>
+<li>不把不同瓦數的燈管硬套成一個假精準省電金額。</li>
+<li>不要求你為了優惠把仍正常、低耗能的LED提前丟掉。</li>
+<li>不鼓勵自行拆解燈管／燈泡回收材料。</li>
+<li>破損照明光源若不知道怎麼處理，直接打0800-085-717詢問當地回收方式。</li>
+</ul></div>
+</section>
+
+<section class="card">
+<h2>7｜真實使用驗證</h2>
+<p>真正追的是：<strong>有沒有人完成家中盤點、真的換掉至少1顆老舊光源，並把舊燈妥善包裝交回收，而不是丟一般垃圾。</strong></p>
+<div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/121">LightSwap 1031 回饋區 #121</a></div>
+</section>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+const n=id=>Math.max(0,Math.floor(Number($(id).value)||0));
+
+function audit(){
+ const cfl=n('cfl'),fluor=n('fluor'),incan=n('incan'),led=n('ledwaste');
+ const old=cfl+fluor+incan,totalWaste=old+led;
+ let cls=old?'warn':'ok',title=old?`🟡 找到 ${old} 個傳統／老舊照明光源`:'🟢 目前沒有填到傳統老舊光源';
+ let msg=old?'先從每天開最久、最常使用的空間開始換，不必一次把全部正常LED換掉。':'如果只是有壞掉LED，仍請走資源回收，不要丟一般垃圾。';
+ $('auditOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}<br>目前待汰換／回收盤點總數：<b>${totalWaste}</b>。</div>`;
+ return {cfl,fluor,incan,led,old,totalWaste};
+}
+
+function saving(){
+ const a=audit();
+ const money=a.cfl*100,co2=a.cfl*10;
+ $('savingOut').innerHTML=`<div class="note ${a.cfl?'ok':'info'}"><div class="money">${a.cfl?`約 NT$${money.toLocaleString()}／年`:'先填省電燈泡數量'}</div>${a.cfl?`依環境部23W省電燈泡→16W LED示例，${a.cfl}顆約可減少 <b>${co2.toLocaleString()} kg CO₂／年</b>。`:'這裡只計算官方有明確示例的23W省電燈泡換16W LED。'}</div>`;
+ return {...a,money,co2};
+}
+
+function recycleCheck(){
+ const ids=['box','pack','nogarbage','channel'];
+ const done=ids.filter(id=>$(id).checked).length;
+ const all=done===ids.length;
+ $('recycleOut').innerHTML=`<div class="note ${all?'ok':'warn'}">${all?'✓ 基本安全回收四步已確認。':`還有 <b>${ids.length-done}</b> 個基本回收步驟沒確認。`}</div>`;
+ return {done,all,broken:$('broken').checked};
+}
+
+function buildCard(countCore){
+ const a=saving(),r=recycleCheck();
+ $('card').value=`【LightSwap 1031｜家庭老燈汰換＋回收卡】
+活動：環境部115年「照明亮久久」2026/9/9–10/31
+
+家中盤點：
+・省電燈泡（CFL）：${a.cfl} 顆
+・螢光燈管：${a.fluor} 支
+・白熾燈泡：${a.incan} 顆
+・壞掉／待回收LED：${a.led} 顆／支
+・傳統老舊光源合計：${a.old}
+
+官方示例省電估算：
+・只計23W省電燈泡→16W LED
+・約省 NT$${a.money.toLocaleString()}／年
+・約減少 ${a.co2.toLocaleString()} kg CO₂／年
+（螢光燈管與白熾燈規格差異大，本卡不硬算）
+
+我要做：
+${$('box').checked?'✓':'□'} 準備新品紙盒／紙套或堅固紙箱
+${$('pack').checked?'✓':'□'} 妥善包裝，避免碰撞破損
+${$('nogarbage').checked?'✓':'□'} 不丟一般垃圾
+${$('channel').checked?'✓':'□'} 交販賣通路／清潔隊資源回收車／合法回收機構
+${$('broken').checked?'✓':'□'} 若有破損，厚紙保護碎片並妥善包裝，避免徒手接觸
+
+活動合作業者：
+光南、振宇五金、特力屋、愛買；舞光、東亞、亮博士、樂亮LED、飛利浦；PChome、momo、東森購物。
+實際優惠以官方活動頁為準：
+https://recycle2.moenv.gov.tw/people/lightreca.html
+
+資源回收專線：0800-085-717
+
+不要把地址、電號、帳單或精確位置貼到公開回饋區。`;
+ if(countCore&&window.PGLabImpact)PGLabImpact.core('swap-recycle-card');
+}
+
+function makeReminder(){
+ const d=new Date();d.setDate(d.getDate()+7);
+ const y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,'0'),day=String(d.getDate()).padStart(2,'0'),ds=`${y}${m}${day}`;
+ const next=new Date(d);next.setDate(next.getDate()+1);
+ const de=`${next.getFullYear()}${String(next.getMonth()+1).padStart(2,'0')}${String(next.getDate()).padStart(2,'0')}`;
+ const ics=`BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//LightSwap1031//TW\r\nBEGIN:VEVENT\r\nDTSTART;VALUE=DATE:${ds}\r\nDTEND;VALUE=DATE:${de}\r\nSUMMARY:把老舊燈管／燈泡換掉並回收\r\nDESCRIPTION:檢查LightSwap 1031盤點，完成LED汰換；舊燈用紙盒／紙套妥善包裝，交販賣通路或資源回收車，不要丟一般垃圾。\r\nEND:VEVENT\r\nEND:VCALENDAR`;
+ const b=new Blob([ics],{type:'text/calendar;charset=utf-8'}),a=document.createElement('a');
+ a.href=URL.createObjectURL(b);a.download='lightswap1031-reminder.ics';a.click();URL.revokeObjectURL(a.href);
+ if(window.PGLabImpact)PGLabImpact.core('one-week-reminder');
+}
+
+function track(label){if(window.PGLabImpact)PGLabImpact.core(label)}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+['cfl','fluor','incan','ledwaste'].forEach(id=>$(id).addEventListener('input',()=>buildCard(false)));
+['box','pack','nogarbage','channel','broken'].forEach(id=>$(id).addEventListener('change',()=>buildCard(false)));
+buildCard(false);
+</script>
+<script src="../impact.js" data-project="lightswap1031" data-action-text="我已完成家庭老燈盤點＋安全回收卡" data-real-text="我已真的換掉至少1顆老舊光源並妥善回收舊燈" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/121"></script>
+</body></html>
