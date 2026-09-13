@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="bloodready4d">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="BloodReady 4D：第一次捐血的準備度前篩、官方捐血點入口與捐後安全提醒。">
+<title>BloodReady 4D｜首捐族把「想捐」變成真的完成</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#68737f;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#a32323;--info:#285c8d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1080px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}h1{font-size:clamp(38px,7vw,64px);line-height:1.03;margin:.15em 0 .25em}
+.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:980px}.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:12px 14px;border-radius:9px;line-height:1.72;margin:10px 0}.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}.info{border-left-color:var(--info)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}label{display:block;font-weight:800;margin:7px 0 6px}select,input,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}textarea{min-height:270px;resize:vertical}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}
+.big{font-size:clamp(24px,4vw,34px);font-weight:950}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:9px}.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:22px;margin-top:4px}.small{font-size:13px;color:var(--muted);line-height:1.65}
+.check{display:flex;gap:8px;align-items:flex-start;margin:8px 0}.check input{width:auto;margin-top:4px}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · 首次捐血行動轉化 · 2026/09/14</div>
+<h1>BloodReady 4D<br>血庫不是只缺「知道的人」，<br>而是缺真的走進捐血點的人。</h1>
+<p class="lead">最新官方庫存（9/13 07:31）顯示：台北 A/O/AB 偏低；台中 A/B/O 偏低；高雄 A/B/O 偏低。血液基金會把 4–7 日庫存定義為「偏低」、4 日以下為「急缺」。同時，近10年首次捐血率持續下降，20歲以下族群在2025年只占約8%。這頁不替現場醫護判定「一定能捐」，而是把第一次捐血前最常卡住的準備工作一次做完。</p>
+
+<section class="card">
+<h2>1｜先看今天是否值得行動</h2>
+<div class="stats">
+<div class="stat">台北<b>A/O/AB偏低</b></div>
+<div class="stat">台中<b>A/B/O偏低</b></div>
+<div class="stat">高雄<b>A/B/O偏低</b></div>
+<div class="stat">首捐年齡<b>16歲起</b><span class="small">16–17歲宜帶法定代理人同意書</span></div>
+</div>
+<div class="note info">庫存會每天更新。上面只顯示 2026/9/13 的官方快照；真正出門前，請點下面的血液基金會首頁看最新燈號。</div>
+<div class="actions">
+<a class="btn" target="_blank" rel="noopener" href="https://www.blood.org.tw/" onclick="track('latest-inventory')">看最新官方血液庫存</a>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://www.blood.org.tw/xcevent" onclick="track('location-search')">找今天可捐血的地點</a>
+</div>
+</section>
+
+<section class="card">
+<h2>2｜60秒首捐「準備度」前篩</h2>
+<div class="grid">
+<div><label>年齡</label>
+<select id="age">
+<option value="adult">18–65歲</option>
+<option value="teen">16–17歲</option>
+<option value="under">未滿16歲</option>
+<option value="senior">超過65歲</option>
+</select></div>
+
+<div><label>體重（全血捐血基本門檻）</label>
+<select id="weight">
+<option value="ok">45公斤以上</option>
+<option value="low">未滿45公斤</option>
+<option value="unknown">不確定</option>
+</select></div>
+
+<div><label>今天身體狀況</label>
+<select id="well">
+<option value="well">精神與身體狀況正常</option>
+<option value="unwell">發燒、不舒服、正在急性生病</option>
+<option value="unknown">有特殊健康情況／不確定</option>
+</select></div>
+
+<div><label>近期是否有「可能暫緩捐血」的情況？</label>
+<select id="deferral">
+<option value="no">沒有我知道的暫緩因素</option>
+<option value="yes">有旅遊、牙科、藥物、手術、刺青／穿洞、感染等情況</option>
+<option value="unknown">不確定</option>
+</select></div>
+
+<div><label>今天有帶可供現場驗證的身分證件嗎？</label>
+<select id="idcard"><option value="yes">有</option><option value="no">沒有</option></select></div>
+
+<div><label>捐血前的水分／飲食</label>
+<select id="prep"><option value="ready">已正常吃東西，也有補充水分</option><option value="empty">今天幾乎沒吃／水喝很少</option><option value="later">還沒準備，等等會先吃與喝水</option></select></div>
+</div>
+<div id="routeOut"></div>
+<div class="small">這不是正式資格判定。現場仍會量體重、體溫、血壓、脈搏與血紅素，並由工作人員面談確認。</div>
+</section>
+
+<section class="card">
+<h2>3｜如果你是16–17歲</h2>
+<div class="note warn"><b>新版規則已把首次捐血年齡下修到16歲。</b>血液基金會2025年修法Q&A指出，16–17歲捐血者「宜出示法定代理人同意書」。因此不要到了現場才發現缺文件；出門前先看官方最新說明或向捐血中心確認。</div>
+<div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://www.blood.org.tw/files/file_pool/1/0P184419805931339458/%E5%9B%A0%E6%87%89%E6%8D%90%E8%A1%80%E8%80%85%E5%81%A5%E5%BA%B7%E6%A8%99%E6%BA%96%E4%BF%AE%E6%AD%A3%E5%95%8F%E8%88%87%E7%AD%94_vF_1140703.pdf">看新版捐血健康標準Q&A</a></div>
+</section>
+
+<section class="card">
+<h2>4｜今天出門前的5件事</h2>
+<div class="check"><input id="c1" type="checkbox"><span>帶身分證件。</span></div>
+<div class="check"><input id="c2" type="checkbox"><span>正常進食，不空腹；捐血前補充水分。</span></div>
+<div class="check"><input id="c3" type="checkbox"><span>如果最近有旅遊、牙科治療、藥物、手術、感染、刺青／穿洞等情況，先開官方「暫緩捐血資訊」確認，不自行猜。</span></div>
+<div class="check"><input id="c4" type="checkbox"><span>已選好今天的捐血點與營業／活動時間。</span></div>
+<div class="check"><input id="c5" type="checkbox"><span>捐血後 6–8 小時先不安排劇烈運動、健身、長時間站立、泡湯／蒸氣浴或酒精。</span></div>
+<div id="prepOut"></div>
+<div class="actions">
+<a class="btn ghost" target="_blank" rel="noopener" href="https://www.blood.org.tw/deferral/" onclick="track('deferral-check')">官方暫緩捐血資訊</a>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://www.blood.org.tw/xmdoc/cont?xsmsid=0P063425238709222204" onclick="track('official-flow')">官方捐血五部曲</a>
+</div>
+</section>
+
+<section class="card">
+<h2>5｜你到現場後會發生什麼？</h2>
+<div class="note info">血液基金會目前流程是：驗證／登錄 → 填捐血登記表 → 面談與體檢 → 捐血 → 休息補充體力。全血捐血本身約10分鐘；捐血後至少休息10–15分鐘，補充約500毫升水與小餅乾，確認沒有不舒服再離開。</div>
+<div class="note warn"><b>別把「想趕時間」變成不舒服。</b>官方衛教提醒，捐血後6–8小時內避免劇烈運動、騎車／開車、長時間站立、過熱環境與酒精。若現場或返家後不適，應立即告知捐血中心工作人員或聯絡所屬捐血中心。</div>
+</section>
+
+<section class="card">
+<h2>6｜一鍵產生「今天真的去」準備卡</h2>
+<textarea id="card"></textarea>
+<div class="actions">
+<button onclick="buildCard(true)">更新準備卡</button>
+<button class="ghost" onclick="copyText('card')">複製到備忘錄</button>
+<button class="ghost" onclick="makeReminder()">加今天中午提醒</button>
+</div>
+</section>
+
+<section class="card">
+<h2>7｜這個工具刻意不做</h2>
+<div class="note"><ul>
+<li>不收姓名、身分證、電話、地址、病史、藥物、性行為、旅遊細節或檢驗結果。</li>
+<li>不替現場工作人員判定「你一定可以捐」。</li>
+<li>不把血型「缺」解讀成只有那個血型值得捐；各中心會依庫存與臨床需求調度。</li>
+<li>不鼓勵身體不舒服、暫緩期未滿或不符合健康標準的人勉強捐血。</li>
+<li>不把捐血當健康檢查或感染篩檢替代品。</li>
+</ul></div>
+</section>
+
+<section class="card">
+<h2>8｜真實使用驗證</h2>
+<p>這輪真正追的不是「看完覺得不錯」，而是：<strong>第一次捐血的人，有沒有完成官方地點查詢、準備好證件與水分、真的走進捐血點接受評估，最後完成首次捐血。</strong></p>
+<div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/131">BloodReady 4D 回饋區 #131</a></div>
+</section>
+
+<section class="card">
+<h2>9｜官方來源</h2>
+<div class="actions">
+<a class="btn ghost" target="_blank" rel="noopener" href="https://www.blood.org.tw/">台灣血液基金會</a>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://www.blood.org.tw/xcevent">捐血地點查詢</a>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://www.blood.org.tw/deferral/">暫緩捐血資訊</a>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://www.fda.gov.tw/eng/lawContent.aspx?cid=5060&id=3039">捐血者健康標準</a>
+</div>
+</section>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+
+function route(){
+ const age=$('age').value,weight=$('weight').value,well=$('well').value,d=$('deferral').value,id=$('idcard').value,prep=$('prep').value;
+ let level='ready',cls='ok',title='🟢 準備度看起來可以進下一步',msg='先用官方捐血地點查詢選一個今天可去的點；最終能否捐血由現場面談與體檢決定。';
+
+ if(age==='under'||weight==='low'){
+   level='stop';cls='bad';title='🔴 依目前基本門檻，不適合今天直接去捐全血';
+   msg=age==='under'?'目前首次捐血年齡下限為16歲。':'全血捐血體重門檻目前為45公斤以上。';
+ } else if(well==='unwell'){
+   level='stop';cls='bad';title='🔴 今天先不要勉強捐血';
+   msg='你目前有不舒服／急性生病情況。等身體恢復，再依官方標準確認。';
+ } else if(age==='senior'){
+   level='check';cls='warn';title='🟡 65歲以上需要額外條件確認';
+   msg='逾65歲捐血者需有2年內捐血紀錄並經評估；逾70歲另需醫師同意。請先向捐血中心確認。';
+ } else if(d==='yes'||d==='unknown'||well==='unknown'){
+   level='check';cls='warn';title='🟡 先查「暫緩捐血資訊」，不要靠猜';
+   msg='近期旅遊、牙科、藥物、手術、感染、刺青／穿洞等都可能影響暫緩期；先開官方頁面，再由現場面談確認。';
+ } else if(id==='no'){
+   level='fix';cls='warn';title='🟡 差一個很容易補的東西：身分證件';
+   msg='官方流程第一步要驗證身分。今天如果能把證件帶上，再出發。';
+ } else if(prep==='empty'){
+   level='fix';cls='warn';title='🟡 先吃東西、補水，再去';
+   msg='血液基金會提醒捐血前多喝水；不要空腹趕去。';
+ } else if(age==='teen'){
+   level='check';cls='warn';title='🟡 16–17歲：基本年齡符合，但先處理同意文件';
+   msg='血液基金會新版Q&A建議16–17歲出示法定代理人同意書。出發前先看官方最新說明。';
+ }
+
+ $('routeOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;
+ return {age,weight,well,d,id,prep,level,title,msg};
+}
+
+function prepCheck(){
+ const ids=['c1','c2','c3','c4','c5'];
+ const done=ids.filter(id=>$(id).checked).length;
+ $('prepOut').innerHTML=`<div class="note ${done===5?'ok':'info'}">${done===5?'✓ 五個首捐防漏點都確認了。':`目前完成 ${done}／5；下一個最實際的動作是選好捐血點。`}</div>`;
+ return done;
+}
+
+function buildCard(countCore){
+ const r=route(),p=prepCheck();
+ let next='先開官方捐血地點查詢，選一個今天可去的點。';
+ if(r.level==='stop') next='今天先不要勉強捐；等基本門檻／身體狀況符合後再做。';
+ if(r.level==='check') next='先開官方暫緩資訊或向捐血中心確認，再決定今天是否出發。';
+ if(r.level==='fix'&&r.id==='no') next='把身分證件帶上，再查捐血點。';
+ if(r.level==='fix'&&r.prep==='empty') next='先正常吃東西並補水，再查捐血點。';
+
+ $('card').value=`【BloodReady 4D｜我的首次捐血準備卡】
+日期：2026/09/14
+
+準備度：
+${r.title}
+${r.msg}
+
+我現在先做：
+${next}
+
+官方基本門檻：
+・首次捐血年齡：16歲起
+・16–17歲：官方Q&A建議帶法定代理人同意書
+・全血捐血體重：45公斤以上
+・現場還會量體溫、血壓、脈搏、血紅素並面談
+
+出門前：
+${$('c1').checked?'✓':'□'} 身分證件
+${$('c2').checked?'✓':'□'} 正常進食＋補水
+${$('c3').checked?'✓':'□'} 有特殊情況時已查暫緩捐血資訊
+${$('c4').checked?'✓':'□'} 已選好今天捐血點與時間
+${$('c5').checked?'✓':'□'} 捐後6–8小時不排劇烈運動／泡湯／酒精
+
+捐後：
+・至少休息10–15分鐘
+・補充約500毫升水＋小餅乾
+・沒有不舒服再離開
+
+找捐血點：
+https://www.blood.org.tw/xcevent
+最新庫存：
+https://www.blood.org.tw/
+
+隱私：不要把病史、藥物、旅遊細節、性行為、身分證或捐血登記表內容貼到公開回饋區。`;
+
+ if(countCore&&window.PGLabImpact)PGLabImpact.core(r.level==='ready'?'ready-card':'precheck-card');
+}
+
+function makeReminder(){
+ const ics=`BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//BloodReady4D//TW\r\nBEGIN:VEVENT\r\nDTSTART:20260914T120000\r\nDTEND:20260914T123000\r\nSUMMARY:第一次捐血：帶證件、吃東西、補水、查捐血點\r\nDESCRIPTION:先看血液基金會最新庫存與今日捐血地點。若有暫緩因素或身體不適，先查官方規則／向捐血中心確認。\r\nEND:VEVENT\r\nEND:VCALENDAR`;
+ const b=new Blob([ics],{type:'text/calendar;charset=utf-8'}),a=document.createElement('a');
+ a.href=URL.createObjectURL(b);a.download='bloodready4d-2026-09-14.ics';a.click();URL.revokeObjectURL(a.href);
+ if(window.PGLabImpact)PGLabImpact.core('same-day-reminder');
+}
+function track(label){if(window.PGLabImpact)PGLabImpact.core(label)}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+['age','weight','well','deferral','idcard','prep','c1','c2','c3','c4','c5'].forEach(id=>$(id).addEventListener('change',()=>buildCard(false)));
+buildCard(false);
+</script>
+<script src="../impact.js" data-project="bloodready4d" data-action-text="我已完成首次捐血準備前篩／行動卡" data-real-text="我已真的到捐血點完成現場評估／首次捐血" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/131"></script>
+</body></html>
