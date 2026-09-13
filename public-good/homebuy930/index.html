@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="homebuy930">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="HomeBuy 930：臺中115年度青年首次購屋優惠利息補貼前篩。9/30 17:00截止，市府青年首購補貼必須與中央自購住宅貸款利息補貼併同申請。">
+<title>HomeBuy 930｜臺中青年首購雙補貼防漏</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#a32323;--info:#285c8d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1080px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}h1{font-size:clamp(38px,7vw,64px);line-height:1.03;margin:.15em 0 .25em}
+.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:980px}.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:12px 14px;border-radius:9px;line-height:1.72;margin:10px 0}.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}.info{border-left-color:var(--info)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}label{display:block;font-weight:800;margin:7px 0 6px}select,input,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}textarea{min-height:265px;resize:vertical}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}
+.big{font-size:clamp(24px,4vw,34px);font-weight:950}.money{font-size:clamp(34px,7vw,56px);font-weight:1000}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:9px}.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:22px;margin-top:4px}.small{font-size:13px;color:var(--muted);line-height:1.65}.check{display:flex;gap:8px;align-items:flex-start;margin:8px 0}.check input{width:auto;margin-top:4px}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · 臺中青年首購 · 2026/09/13</div>
+<h1>HomeBuy 930<br>不是「多申請一筆」；<br>是兩個補貼要一起送。</h1>
+<p class="lead">臺中市115年度「青年首次購屋優惠利息補貼」受理到 <strong>9/30 17:00</strong>，本年度600戶。最容易漏掉的是：這筆臺中市加碼<strong>必須與當年度中央「自購住宅貸款利息補貼」併同申請</strong>。市府青年補貼依3個月內貸款餘額核計，餘額300萬元以上最高6萬元，不足300萬元按比例核計。</p>
+<section class="card"><h2>1｜先看期限與最關鍵流程</h2><div id="deadlineOut"></div><div class="stats"><div class="stat">截止<b>9/30 17:00</b></div><div class="stat">計畫戶數<b>600戶</b></div><div class="stat">最高補貼<b>NT$60,000</b></div><div class="stat">關鍵<b>雙方案併申請</b><span class="small">中央自購＋臺中青年首購</span></div></div><div class="note bad"><b>最重要：</b>官方資格明列「取得當年度自購住宅貸款利息補貼證明」，並註記「兩種利息補貼需同時申請」。所以不要只找臺中市這一筆。</div></section>
+<section class="card"><h2>2｜60秒臺中青年加碼前篩</h2><div class="grid">
+<div><label>申請人身分</label><select id="national"><option value="yes">中華民國國民</option><option value="no">不是</option><option value="unknown">不確定</option></select></div>
+<div><label>年齡</label><select id="age"><option value="eligible">已成年、未滿46歲</option><option value="older">46歲以上</option><option value="minor">未成年</option><option value="special">安置教養／寄養家庭結束安置且無法返家</option></select></div>
+<div><label>住宅所在地</label><select id="city"><option value="taichung">臺中市</option><option value="other">不是臺中市</option></select></div>
+<div><label>購屋時間</label><select id="purchase"><option value="2y">申請日前2年內自購</option><option value="older">超過2年</option><option value="unknown">不確定</option></select></div>
+<div><label>房屋目前已辦理貸款嗎？</label><select id="loan"><option value="yes">有</option><option value="no">沒有</option></select></div>
+<div><label>申請人、借款人、房屋所有權人是否為同一人？</label><select id="same"><option value="yes">是</option><option value="no">不是</option><option value="unknown">不確定</option></select></div>
+<div><label>房屋持有方式</label><select id="ownership"><option value="self">申請人單獨持有</option><option value="family">與配偶／同戶籍直系親屬共同持有</option><option value="other">其他持有方式</option></select></div>
+<div><label>中央「自購住宅貸款利息補貼」</label><select id="central"><option value="together">我會在本次一起申請</option><option value="already">已在本年度申請／取得證明</option><option value="no">沒有打算申請</option><option value="unknown">原本不知道要一起申請</option></select></div>
+</div><div id="eligOut"></div><div class="small">這裡只做「臺中青年加碼」前篩；中央自購住宅貸款利息補貼本身另有家庭所得、住宅持有等條件，仍需以中央正式審查為準。</div></section>
+<section class="card"><h2>3｜市府青年補貼金額粗估</h2><label>申請日前3個月內的貸款餘額（元）</label><input id="balance" type="number" min="0" step="1000" placeholder="例如 2800000"><div id="amountOut"></div><div class="note info">官方規則：貸款餘額300萬元以上（含）補貼6萬元；不足300萬元按比例核計。此處以 <code>60,000 × 貸款餘額 ÷ 3,000,000</code> 做粗估，正式核定與金額以臺中市政府為準。</div></section>
+<section class="card"><h2>4｜文件防漏：最容易卡的是「3個月內貸款餘額證明」</h2><div class="check"><input id="docForm" type="checkbox"><span>申請書。</span></div><div class="check"><input id="docPost" type="checkbox"><span>申請人郵局存簿封面影本。</span></div><div class="check"><input id="docLoan" type="checkbox"><span><b>3個月內貸款餘額證明</b>。</span></div><div class="check"><input id="docCentral" type="checkbox"><span>中央「自購住宅貸款利息補貼」所需文件已一起準備。</span></div><div class="check"><input id="docSend" type="checkbox"><span>線上申請要確認「案件已完成送出」；不是只上傳到一半或存草稿。</span></div><div id="docsOut"></div></section>
+<section class="card"><h2>5｜現在最短路徑：直接進同一個中央線上系統</h2><div class="note ok">臺中市公告指出，線上申請直接到內政部國土管理署住宅補貼線上申請專區，<b>與「自購住宅貸款利息補貼」併同提出</b>。申請日以「完成案件送出」為準。</div><div class="actions"><a class="btn" target="_blank" rel="noopener" href="https://has.nlma.gov.tw/subsidyOnline/" onclick="track('official-apply')">內政部國土管理署線上申請</a><a class="btn ghost" target="_blank" rel="noopener" href="https://thd.taichung.gov.tw/981499/981508/981524/981528/4041937/post" onclick="track('city-rules')">臺中市青年首購官方規則</a><a class="btn ghost" href="tel:0422936001" onclick="track('housing-phone')">住宅服務科 04-2293-6001</a></div></section>
+<section class="card"><h2>6｜一鍵產生「9/30前送掉」申請卡</h2><textarea id="card"></textarea><div class="actions"><button onclick="buildCard(true)">更新申請卡</button><button class="ghost" onclick="copyText('card')">複製到私人備忘錄</button><button class="ghost" onclick="makeReminder()">加9/24準備提醒</button></div></section>
+<section class="card"><h2>7｜這個工具刻意不做</h2><div class="note"><ul><li>不收姓名、身分證、住址、貸款帳號、銀行／郵局帳號、房屋權狀或貸款證明。</li><li>不替中央自購住宅貸款利息補貼做完整資格審查；那一方案另有正式條件。</li><li>不把粗估補貼金額當成核定結果。</li><li>不叫使用者把貸款餘額證明貼到公開回饋區。</li><li>不把「填到一半」算完成申請；官方以完成案件送出為申請日。</li></ul></div></section>
+<section class="card"><h2>8｜真實使用驗證</h2><p>真正追的是：<strong>有沒有人原本只想申請臺中市加碼，最後發現要與中央自購住宅貸款利息補貼一起送，並在9/30前真正完成雙方案申請。</strong></p><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/130">HomeBuy 930 回饋區 #130</a></div></section>
+<section class="card"><h2>9｜官方來源</h2><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://thd.taichung.gov.tw/981499/981508/981524/981528/4041937/post">臺中市青年首次購屋補貼</a><a class="btn ghost" target="_blank" rel="noopener" href="https://thd.taichung.gov.tw/981499/981500/981503/4041897">115年度自購／修繕住宅貸款利息補貼</a></div></section>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+function deadline(){const now=new Date();const end=new Date('2026-09-30T17:00:00+08:00');const hours=Math.max(0,Math.ceil((end-now)/(1000*60*60)));const days=Math.floor(hours/24),rem=hours%24,expired=now>end;$('deadlineOut').innerHTML=`<div class="note ${expired?'bad':days<=3?'bad':days<=7?'warn':'info'}"><div class="big">${expired?'本年度受理已截止':`距9/30 17:00約剩 ${days}天 ${rem}小時`}</div>${expired?'請查看臺中市住宅處是否有後續公告。':'3個月內貸款餘額證明通常需要向貸款銀行取得，不要拖到最後一天才準備。'}</div>`;return {days,rem,expired}}
+function eligibility(){const vals={national:$('national').value,age:$('age').value,city:$('city').value,purchase:$('purchase').value,loan:$('loan').value,same:$('same').value,ownership:$('ownership').value,central:$('central').value};let status='uncertain',cls='warn',title='🟡 還有條件需要確認',msg='把不確定項目確認完，再進正式申請。';const hardFail=(vals.national==='no'||vals.age==='older'||vals.age==='minor'||vals.city==='other'||vals.purchase==='older'||vals.loan==='no'||vals.same==='no'||vals.ownership==='other'||vals.central==='no');if(hardFail){status='unlikely';cls='bad';title='🔴 依目前選項，至少有一項臺中青年加碼公開條件不符';msg='先回官方規則確認是否選錯；特別注意：中央自購住宅貸款利息補貼必須併同申請。'}else if(vals.national==='yes'&&(vals.age==='eligible'||vals.age==='special')&&vals.city==='taichung'&&vals.purchase==='2y'&&vals.loan==='yes'&&vals.same==='yes'&&(vals.ownership==='self'||vals.ownership==='family')&&(vals.central==='together'||vals.central==='already')){status='likely';cls='ok';title='🟢 臺中青年加碼前篩看起來值得直接送件';msg='下一步不是只送市府加碼，而是確認中央自購住宅貸款利息補貼也在同一輪申請中。'}else if(vals.central==='unknown'){status='fixable';cls='warn';title='🟡 你抓到這輪最容易漏的點：要「雙方案併申請」';msg='不要只填臺中市青年補貼；進中央住宅補貼線上系統，同步處理自購住宅貸款利息補貼。'}$('eligOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;return {...vals,status,title,msg}}
+function amount(){const b=Math.max(0,Number($('balance').value)||0);if(!b){$('amountOut').innerHTML='<div class="note info">填入3個月內貸款餘額，就能看到市府青年加碼粗估。</div>';return {b,est:0}}const est=Math.round(Math.min(60000,60000*b/3000000));$('amountOut').innerHTML=`<div class="note ok"><div class="money">粗估 NT$${est.toLocaleString()}</div>${b>=3000000?'貸款餘額達300萬元以上，依公告最高6萬元。':`貸款餘額約 NT$${b.toLocaleString()}，依「不足300萬元按比例核計」做線性粗估。`}</div>`;return {b,est}}
+function docs(){const ids=['docForm','docPost','docLoan','docCentral','docSend'];const done=ids.filter(id=>$(id).checked).length;$('docsOut').innerHTML=`<div class="note ${done===5?'ok':'info'}">${done===5?'✓ 五個送件防漏點都確認了。':`目前完成 ${done}／5；優先先拿「3個月內貸款餘額證明」。`}</div>`;return done}
+function buildCard(countCore){const d=deadline(),e=eligibility(),a=amount(),dc=docs();let next='先把不確定條件與中央自購方案資格確認完，再送件。';if(e.status==='likely')next='直接進國土管理署線上系統，確認「中央自購住宅貸款利息補貼＋臺中青年首次購屋優惠利息補貼」同時申請，並完成案件送出。';if(e.status==='fixable')next='先別只填臺中市加碼；改從國土管理署住宅補貼線上系統處理雙方案併申請。';if(e.status==='unlikely')next='先回臺中市官方規則確認不符合項目；若選項無誤，本次青年加碼可能不適用。';$('card').value=`【HomeBuy 930｜臺中115青年首購雙補貼申請卡】
+截止：2026/9/30 17:00（約剩${d.days}天${d.rem}小時）
+
+前篩：
+${e.title}
+${e.msg}
+
+市府青年加碼粗估：
+${a.b?`貸款餘額約 NT$${a.b.toLocaleString()} → 粗估補貼 NT$${a.est.toLocaleString()}`:'尚未填貸款餘額'}
+
+最重要：
+・臺中青年首次購屋優惠利息補貼，必須與當年度中央「自購住宅貸款利息補貼」併同申請。
+・住宅位於臺中市。
+・申請日前2年內自購並已辦貸款。
+・申請人、借款人、房屋所有權人須為同一人。
+・本年度計畫600戶。
+・300萬元以上貸款餘額最高6萬元；不足按比例核計。
+
+文件：
+${$('docForm').checked?'✓':'□'} 申請書
+${$('docPost').checked?'✓':'□'} 郵局存簿封面影本
+${$('docLoan').checked?'✓':'□'} 3個月內貸款餘額證明
+${$('docCentral').checked?'✓':'□'} 中央自購住宅貸款利息補貼文件
+${$('docSend').checked?'✓':'□'} 已確認線上案件「完成送出」
+
+下一步：
+${next}
+
+官方線上申請：
+https://has.nlma.gov.tw/subsidyOnline/
+臺中住宅服務科：04-2293-6001
+
+公開回饋不要貼姓名、地址、身分證、銀行／郵局帳號、貸款帳號、貸款餘額證明、權狀或申請文件照片。`;if(countCore&&window.PGLabImpact)PGLabImpact.core(e.central==='unknown'?'found-double-application':'eligibility-card')}
+function makeReminder(){const ics=`BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//HomeBuy930//TW\r\nBEGIN:VEVENT\r\nDTSTART;VALUE=DATE:20260924\r\nDTEND;VALUE=DATE:20260925\r\nSUMMARY:準備臺中青年首購雙補貼申請\r\nDESCRIPTION:9/30 17:00截止。確認中央自購住宅貸款利息補貼與臺中青年首次購屋優惠利息補貼併同申請，並先取得3個月內貸款餘額證明。\r\nEND:VEVENT\r\nEND:VCALENDAR`;const b=new Blob([ics],{type:'text/calendar;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='homebuy930-reminder.ics';a.click();URL.revokeObjectURL(a.href);if(window.PGLabImpact)PGLabImpact.core('deadline-reminder')}
+function track(label){if(window.PGLabImpact)PGLabImpact.core(label)}async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(err){$(id).select();document.execCommand('copy')}}['national','age','city','purchase','loan','same','ownership','central','docForm','docPost','docLoan','docCentral','docSend'].forEach(id=>$(id).addEventListener('change',()=>buildCard(false)));$('balance').addEventListener('input',()=>buildCard(false));buildCard(false);
+</script>
+<script src="../impact.js" data-project="homebuy930" data-action-text="我已完成臺中青年首購雙補貼資格前篩／申請卡" data-real-text="我已真的進官方系統／完成中央自購＋臺中青年首購申請" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/130"></script>
+</body></html>
