@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="mountainbuddy119">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="MountainBuddy 119：登山前3分鐘產生留守人卡、失聯啟動條件、裝備缺口與留守提醒。所有行程資料只在瀏覽器本機處理。">
+<title>MountainBuddy 119｜先留守，再上山</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#65717e;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#a32323;--info:#285c8d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1120px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}h1{font-size:clamp(40px,7vw,68px);line-height:1.02;margin:.15em 0 .25em}
+.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:1000px}.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:12px 14px;border-radius:9px;line-height:1.72;margin:10px 0}.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}.info{border-left-color:var(--info)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:10px}label{display:block;font-weight:800;margin:7px 0 6px}select,input,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}textarea{min-height:260px;resize:vertical}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}
+.big{font-size:clamp(24px,4vw,34px);font-weight:950}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:9px}.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:22px;margin-top:4px}.small{font-size:13px;color:var(--muted);line-height:1.65}
+.check{display:flex;gap:8px;align-items:flex-start;margin:8px 0}.check input{width:auto;margin-top:4px}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:#edf1f5;padding:2px 5px;border-radius:5px}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · 登山留守制度 · 2026/09/14</div>
+<h1>MountainBuddy 119<br>不要只準備「走得出去」。<br>也準備「找得到你」。</h1>
+<p class="lead">雪霸國家公園近期再次提醒：意外發生時，登山者可能失去意識、無法操作手機或衛星通訊；真正的備援是<strong>出發前把路線、撤退點、入出山時間、回報時間與定位方式交給山下留守人</strong>。這個工具把那件常被省略的小事做成3分鐘流程。你輸入的行程、聯絡與定位資訊只在這個瀏覽器頁面處理，不上傳。</p>
+
+<section class="card">
+<h2>1｜先看為什麼不是只有「高山才需要」</h2>
+<div class="stats">
+<div class="stat">臺中114年山域救援<b>60件</b></div>
+<div class="stat">發生在中級山<b>45件</b><span class="small">占75%</span></div>
+<div class="stat">谷關七雄<b>32件</b><span class="small">事故最密集熱點</span></div>
+<div class="stat">官方常見缺口<b>離線地圖／頭燈／時間</b></div>
+</div>
+<div class="note info">臺中消防局指出，多數案件與未先下載離線地圖、沒帶頭燈、錯估單日往返時間、未評估體能高度相關；並建議把登山計畫告知親友、設定撤退點與時間、使用定位／軌跡工具。</div>
+<div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://hike.taiwan.gov.tw/MountainDashboard.aspx" onclick="track('accident-dashboard')">看官方山域事故儀表板</a><a class="btn ghost" target="_blank" rel="noopener" href="https://www.spnp.gov.tw/ch/specialreport/latest-news/3732" onclick="track('official-leave-behind')">雪霸：獨攀與留守機制</a></div>
+</section>
+
+<section class="card">
+<h2>2｜填一張真正能用的「留守人卡」</h2>
+<div class="grid">
+<div><label>路線／山名 *</label><input id="route" placeholder="例如：谷關七雄－馬崙山原路來回"></div>
+<div><label>隊伍形式</label><select id="partyType"><option value="group">結伴</option><option value="solo">獨攀</option></select></div>
+<div><label>隊伍人數 *</label><input id="partyCount" type="number" min="1" step="1" value="1"></div>
+<div><label>登山口／起點 *</label><input id="trailhead" placeholder="例如：斯可巴步道登山口"></div>
+
+<div><label>起登時間 *</label><input id="start" type="datetime-local"></div>
+<div><label>最晚「回頭」時間 *</label><input id="turnaround" type="datetime-local"></div>
+<div><label>預定下山／回到可通訊處 *</label><input id="returnTime" type="datetime-local"></div>
+<div><label>逾時多久開始升級處理？ *</label>
+<select id="grace"><option value="30">30分鐘</option><option value="60" selected>60分鐘</option><option value="90">90分鐘</option><option value="120">2小時</option></select></div>
+
+<div><label>主要路線摘要 *</label><input id="routePlan" placeholder="登山口 → A點 → 山頂 → 原路下山"></div>
+<div><label>撤退點／撤退條件 *</label><input id="retreat" placeholder="例：12:00未到山頂就原路撤退"></div>
+<div><label>定位／軌跡分享方式</label><input id="tracking" placeholder="例：Garmin MapShare私下連結／手機定位分享"></div>
+<div><label>留守人稱呼（可不填）</label><input id="keeper" placeholder="例如：室友／家人"></div>
+</div>
+<div id="timeOut"></div>
+</section>
+
+<section class="card">
+<h2>3｜行前5個高價值缺口</h2>
+<div class="check"><input id="offline" type="checkbox"><span><b>離線地圖已下載，而且會看目前座標。</b></span></div>
+<div class="check"><input id="headlamp" type="checkbox"><span><b>頭燈＋備用電力。</b>就算預計白天下山也帶。</span></div>
+<div class="check"><input id="power" type="checkbox"><span><b>手機／定位設備電力備援。</b>包含充電線。</span></div>
+<div class="check"><input id="weather" type="checkbox"><span><b>出發前重新看路線開放狀態與山區天候。</b></span></div>
+<div class="check"><input id="warm" type="checkbox"><span><b>雨具、保暖層、行動糧、水、哨子。</b></span></div>
+<div class="check"><input id="share" type="checkbox"><span><b>留守人已經真的收到這張卡。</b>不是只存在自己手機。</span></div>
+<div id="gearOut"></div>
+<div class="actions"><a class="btn" target="_blank" rel="noopener" href="https://hike.taiwan.gov.tw/open.aspx" onclick="track('route-open-status')">官方路線開放狀態</a><a class="btn ghost" target="_blank" rel="noopener" href="https://www.cwa.gov.tw/" onclick="track('weather')">中央氣象署</a><a class="btn ghost" target="_blank" rel="noopener" href="https://hike.taiwan.gov.tw/" onclick="track('hike-one-stop')">登山申請一站式</a></div>
+</section>
+
+<section class="card">
+<h2>4｜留守人收到後，最重要的是「何時開始行動」</h2>
+<div class="note ok"><b>正常：</b>登山者在約定回報／下山時間前主動說「已安全下山」，本次留守結束。</div>
+<div class="note warn"><b>逾時但沒有已知緊急訊號：</b>先電話／訊息聯絡，查看事先共享的定位或軌跡；把「最後一次已知位置、最後聯絡時間、原定路線、撤退點、裝備／通訊方式」整理好。</div>
+<div class="note bad"><b>需要升級：</b>若收到明確求救、看到異常停止移動、已超過你們約定的升級時間且持續聯絡不上，或有其他合理理由懷疑發生山域事故，應撥 <b>119／112</b> 說明情況。<strong>留守人不要自行入山搜救。</strong></div>
+<div class="small">固定「寬限時間」不是政府的醫療／救援門檻；它只是你和留守人事先約定的行動觸發器。若已有明確危險訊號，不必等倒數跑完。</div>
+</section>
+
+<section class="card">
+<h2>5｜一鍵產生可私下傳送的留守人卡</h2>
+<textarea id="card"></textarea>
+<div class="actions"><button onclick="buildCard(true)">更新留守人卡</button><button class="ghost" onclick="copyText('card');track('card-copy')">複製卡片</button><button class="ghost" onclick="downloadText();track('card-download')">下載文字卡</button><button class="ghost" onclick="makeReminder();track('keeper-reminder')">下載留守人提醒 .ics</button></div>
+<div class="note info"><b>隱私：</b>如果你填了定位分享連結、車牌、聯絡資訊等，只應私下傳給可信任留守人；不要貼到本專案公開 Issue。此頁不會把欄位內容送到 Public Good Lab 的匿名計數器。</div>
+</section>
+
+<section class="card">
+<h2>6｜留守人報案時可直接照這個順序講</h2>
+<textarea id="report">119／112您好，我是登山者的山下留守人。
+登山者原定走【路線】；【起登時間】起登，預定【下山時間】回報。
+目前已超過我們約定的回報／升級時間，持續聯絡不上。
+最後一次已知位置／聯絡時間是：【填寫】。
+原定路線與撤退點是：【填寫】。
+隊伍共【人數】人，已知攜帶的定位／通訊方式是：【填寫】。
+我可以提供完整登山計畫、定位分享／軌跡與其他需要的資料。
+請問下一步需要我提供什麼？</textarea>
+<div class="actions"><button class="ghost" onclick="copyText('report');track('report-script')">複製報案腳本</button></div>
+</section>
+
+<section class="card">
+<h2>7｜這個工具刻意不做</h2>
+<div class="note"><ul>
+<li>不判定某條山徑「安全」，也不取代路線開放與天候公告。</li>
+<li>不收或保存姓名、電話、身分證、住址、車牌、健康資料或即時定位。</li>
+<li>不把「有inReach／PLB」等同一定能被救援；若本人失去意識，主動SOS可能無法啟動。</li>
+<li>不鼓勵獨攀；若選擇獨攀，更需要多層備援。</li>
+<li>不叫留守人自行進山找人。疑似事故應把已知資料交給119／112與專業搜救單位。</li>
+</ul></div>
+</section>
+
+<section class="card">
+<h2>8｜真實使用驗證</h2>
+<p>這輪真正追的是：<strong>有沒有登山者真的把卡交給山下留守人、設好逾時觸發時間，並補上原本漏掉的離線地圖／頭燈／電力／撤退點／定位分享。</strong></p>
+<div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/132">MountainBuddy 119 回饋區 #132</a></div>
+</section>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+const pad=n=>String(n).padStart(2,'0');
+const fmt=v=>{
+ if(!v)return '未填';
+ const d=new Date(v);
+ if(Number.isNaN(d.getTime()))return v;
+ return `${d.getFullYear()}/${pad(d.getMonth()+1)}/${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+};
+const esc=s=>(s||'').trim()||'未填';
+
+function triggerTime(){
+ const v=$('returnTime').value;
+ if(!v)return null;
+ const d=new Date(v);
+ d.setMinutes(d.getMinutes()+Number($('grace').value||60));
+ return d;
+}
+
+function validateTimes(){
+ const s=$('start').value?new Date($('start').value):null;
+ const t=$('turnaround').value?new Date($('turnaround').value):null;
+ const r=$('returnTime').value?new Date($('returnTime').value):null;
+ let cls='info', title='🔵 填完3個時間點，就能建立真正可執行的留守觸發器', msg='至少要有起登、最晚回頭、預定下山時間。';
+ if(s&&t&&r){
+   if(!(s<t&&t<r)){cls='bad';title='🔴 時間順序有問題';msg='應該是「起登 < 最晚回頭 < 預定下山」。請先修正。';}
+   else{const trg=triggerTime();cls='ok';title=`🟢 留守人升級檢查時間：${fmt(trg.toISOString())}`;msg=`預定 ${fmt($('returnTime').value)} 下山；若逾時 ${$('grace').value} 分鐘仍無回報，留守人開始升級處理。若已有明確求救／危險訊號，不必等到這個時間。`;}
+ }
+ $('timeOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;
+ return {s,t,r,valid:!!(s&&t&&r&&s<t&&t<r)};
+}
+
+function gear(){
+ const ids=['offline','headlamp','power','weather','warm','share'];
+ const missing=ids.filter(id=>!$(id).checked);
+ const labels={
+  offline:'離線地圖',headlamp:'頭燈＋備援',power:'電力備援',weather:'路況／天候確認',warm:'雨具保暖與基本物資',share:'真正交給留守人'
+ };
+ const risky=$('partyType').value==='solo'&&missing.length>0;
+ let cls=missing.length===0?'ok':risky?'bad':'warn';
+ let msg=missing.length===0?'✓ 六項都已確認；出發前仍要看最新路況與天候。':`還缺 ${missing.length} 項：${missing.map(x=>labels[x]).join('、')}。`;
+ if(risky)msg+=' 你選的是獨攀，單一裝備失效時沒有隊友備援，建議先補齊再出發。';
+ $('gearOut').innerHTML=`<div class="note ${cls}">${msg}</div>`;
+ return {missing,labels};
+}
+
+function buildCard(countCore){
+ const tm=validateTimes(),g=gear(),trg=triggerTime();
+ const count=Math.max(1,Number($('partyCount').value)||1);
+ const keeper=esc($('keeper').value);
+ $('card').value=`【MountainBuddy 119｜登山留守人卡】
+請只私下傳給可信任留守人。
+
+路線：${esc($('route').value)}
+形式：${$('partyType').value==='solo'?'獨攀':'結伴'}；共 ${count} 人
+登山口／起點：${esc($('trailhead').value)}
+
+時間：
+・起登：${fmt($('start').value)}
+・最晚回頭：${fmt($('turnaround').value)}
+・預定下山／回到可通訊處：${fmt($('returnTime').value)}
+・留守人升級處理：約 ${trg?fmt(trg.toISOString()):'未填'}（預定下山後＋${$('grace').value}分鐘）
+※若已有明確求救／危險訊號，不必等到升級時間。
+
+路線計畫：
+${esc($('routePlan').value)}
+
+撤退點／撤退條件：
+${esc($('retreat').value)}
+
+定位／軌跡分享：
+${esc($('tracking').value)}
+
+留守人：
+${keeper}
+
+出發前確認：
+${$('offline').checked?'✓':'□'} 離線地圖＋會看座標
+${$('headlamp').checked?'✓':'□'} 頭燈＋備用電力
+${$('power').checked?'✓':'□'} 手機／定位設備電力備援
+${$('weather').checked?'✓':'□'} 最新路線開放＋天候
+${$('warm').checked?'✓':'□'} 雨具／保暖／水／糧／哨子
+${$('share').checked?'✓':'□'} 留守人已真正收到本卡
+
+給留守人的處置：
+1. 到預定回報時間仍沒消息：先電話／訊息聯絡，查事先共享的定位／軌跡。
+2. 整理最後已知位置、最後聯絡時間、原定路線、撤退點與通訊方式。
+3. 若有明確求救、異常停止移動，或超過約定升級時間仍聯絡不上且合理懷疑事故：撥119／112。
+4. 不要自行入山搜救。
+
+官方行前查詢：
+路線開放：https://hike.taiwan.gov.tw/open.aspx
+登山一站式：https://hike.taiwan.gov.tw/
+中央氣象署：https://www.cwa.gov.tw/
+
+本卡是留守資訊，不是安全保證。`;
+ if(countCore&&window.PGLabImpact){
+   PGLabImpact.core(tm.valid&&g.missing.length===0?'complete-leave-card':'draft-leave-card');
+ }
+ return tm;
+}
+
+function escapeICS(s){return String(s||'').replace(/\\/g,'\\\\').replace(/\n/g,'\\n').replace(/,/g,'\\,').replace(/;/g,'\\;');}
+function icsDate(d){
+ return `${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}T${pad(d.getHours())}${pad(d.getMinutes())}00`;
+}
+function makeReminder(){
+ const trg=triggerTime();
+ if(!trg){alert('請先填預定下山時間。');return;}
+ const end=new Date(trg.getTime()+30*60000);
+ const summary=`檢查登山者是否安全下山：${esc($('route').value)}`;
+ const desc=`已超過事先約定的留守升級時間。先聯絡登山者並查看共享定位／軌跡；若有明確危險訊號或持續失聯且合理懷疑事故，撥119／112。不要自行入山搜救。`;
+ const ics=`BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//MountainBuddy119//TW\r\nBEGIN:VEVENT\r\nDTSTART:${icsDate(trg)}\r\nDTEND:${icsDate(end)}\r\nSUMMARY:${escapeICS(summary)}\r\nDESCRIPTION:${escapeICS(desc)}\r\nEND:VEVENT\r\nEND:VCALENDAR`;
+ downloadBlob(ics,'mountainbuddy119-keeper-reminder.ics','text/calendar;charset=utf-8');
+}
+
+function downloadText(){
+ buildCard(false);
+ downloadBlob($('card').value,'mountainbuddy119-leave-card.txt','text/plain;charset=utf-8');
+}
+
+function downloadBlob(content,name,type){
+ const b=new Blob([content],{type}),a=document.createElement('a');
+ a.href=URL.createObjectURL(b);a.download=name;a.click();
+ setTimeout(()=>URL.revokeObjectURL(a.href),500);
+}
+
+function track(label){if(window.PGLabImpact)PGLabImpact.core(label)}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+
+['route','partyType','partyCount','trailhead','start','turnaround','returnTime','grace','routePlan','retreat','tracking','keeper',
+'offline','headlamp','power','weather','warm','share'].forEach(id=>{
+ const el=$(id);el.addEventListener(el.tagName==='INPUT'&&el.type!=='checkbox'?'input':'change',()=>buildCard(false));
+});
+buildCard(false);
+</script>
+<script src="../impact.js" data-project="mountainbuddy119" data-action-text="我已完成登山留守人卡／失聯觸發設定" data-real-text="我已真的把留守卡交給山下留守人並設定回報時間" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/132"></script>
+</body></html>
