@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="petid930">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="PetID 930：家貓強制登記、寵物資料更新、線上預申辦流程防漏。9/30前可同步參加毛孩登入計畫。">
+<title>PetID 930｜有晶片，不代表資料現在還有用</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#a32323;--info:#285c8d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1080px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}h1{font-size:clamp(40px,7vw,66px);line-height:1.03;margin:.15em 0 .25em}
+.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:980px}.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:12px 14px;border-radius:9px;line-height:1.72;margin:10px 0}.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}.info{border-left-color:var(--info)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:10px}label{display:block;font-weight:800;margin:8px 0 6px}select,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}textarea{min-height:260px;resize:vertical}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}
+.big{font-size:clamp(24px,4vw,34px);font-weight:950}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:9px}.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:22px;margin-top:4px}.small{font-size:13px;color:var(--muted);line-height:1.65}
+.check{display:flex;gap:8px;align-items:flex-start;margin:8px 0}.check input{width:auto;margin-top:4px}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · 寵物登記與聯絡資料防漏 · 2026/09/14</div>
+<h1>PetID 930<br>有晶片，<br>不代表資料現在還有用。</h1>
+<p class="lead">家貓已從 2025/1/1 納入強制寵物登記，1 年緩衝期結束後，2026/1/1 起未替犬、貓完成寵物登記與晶片，可處 3,000–15,000 元罰鍰。真正容易漏掉的，不只是「沒登記」，還包括：做了線上預申辦卻沒去登記站完成、電話／Email 已換掉、寵物走失後沒有申報。這頁不收姓名、身分證、晶片號碼、電話或地址。</p>
+
+<section class="card">
+<h2>1｜為什麼現在值得處理？</h2>
+<div class="stats">
+<div class="stat">全國家貓推估<b>174萬隻</b><span class="small">114年調查</span></div>
+<div class="stat">較前次調查<b>+32.8%</b></div>
+<div class="stat">犬貓未登記<b>3,000–15,000元</b></div>
+<div class="stat">9月活動截止<b>9/30</b></div>
+</div>
+<div class="note info">農業部 9/1–9/30「毛孩登入計畫」要求飼主登入飼主專區確認／更新資料後再完成活動登記；原本已完成寵物登記的人也能參加。這正好是把「資料是否還有效」重新檢查一次的機會。</div>
+</section>
+
+<section class="card">
+<h2>2｜60秒狀態前篩</h2>
+<div class="grid">
+<div><label>寵物種類</label>
+<select id="species"><option value="cat">貓</option><option value="dog">狗</option></select></div>
+
+<div><label>目前寵物登記狀態</label>
+<select id="reg"><option value="unknown">不確定</option><option value="yes">確定已完成寵物登記</option><option value="pre">只有做過線上預申辦</option><option value="no">尚未登記</option></select></div>
+
+<div><label>登記中的手機／Email現在還是本人可用的嗎？</label>
+<select id="contact"><option value="unknown">不確定</option><option value="yes">是，最近確認過</option><option value="no">不是／已換過</option></select></div>
+
+<div><label>寵物目前狀態</label>
+<select id="status"><option value="normal">正常在養</option><option value="lost">遺失</option><option value="dead">已離世</option><option value="transfer">已轉讓／換飼主</option></select></div>
+</div>
+<div id="routeOut"></div>
+</section>
+
+<section class="card">
+<h2>3｜最容易誤會：線上「預申辦」不是完成登記</h2>
+<div class="note warn"><b>官方流程寫得很明確：</b>線上預先填資料後，還要在 <strong>一週內</strong> 到寵物登記站完成手續。飼主本人要帶紙本預登記表／序號、身分證件與寵物；由登記站確認資料並植入晶片後，才算完成。</div>
+<div class="actions"><a class="btn" target="_blank" rel="noopener" href="https://www.pet.gov.tw/Web/O202.aspx" onclick="track('preapply')">官方寵物登記預申辦</a><a class="btn ghost" target="_blank" rel="noopener" href="https://www.pet.gov.tw/Web/O301.aspx" onclick="track('station-search')">查寵物登記站</a></div>
+</section>
+
+<section class="card">
+<h2>4｜已登記的人，真正要問的是「找得到我嗎？」</h2>
+<div class="check"><input id="c1" type="checkbox"><span>我已登入飼主專區，確認手機號碼與 Email 仍正確。</span></div>
+<div class="check"><input id="c2" type="checkbox"><span>寵物姓名、照片、狀態等資料已檢視；有變更就更新。</span></div>
+<div class="check"><input id="c3" type="checkbox"><span>如果寵物已遺失，我知道應在 5 日內於網站自行申報，或請寵登站協助。</span></div>
+<div class="check"><input id="c4" type="checkbox"><span>如果寵物已離世／轉讓，我會處理除戶或飼主資料異動，不讓資料庫一直停在舊狀態。</span></div>
+<div id="checkOut"></div>
+<div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://www.pet.gov.tw/" onclick="track('owner-zone')">寵物登記管理資訊網／飼主專區</a></div>
+</section>
+
+<section class="card">
+<h2>5｜9/30前：已登記也能參加「毛孩登入計畫」</h2>
+<div class="note ok">活動對象是犬、貓的自然人飼主；新完成或原已完成寵物登記者都能參加。活動期間登入飼主專區、確認寵物與飼主資料、選 1 隻犬或貓完成活動登記，就可取得 300 元寵物券抽獎資格；另有 100 份價值 3,000 元的健檢醫療好禮包。每位飼主最多登記 1 隻犬貓參加。</div>
+<div class="note info">重點不是抽獎本身，而是它提供一個期限明確的理由，讓飼主現在就把資料校正好。寵物走失時，晶片要能連到最新聯絡方式才真正有用。</div>
+<div class="actions"><a class="btn" target="_blank" rel="noopener" href="https://www.pet.gov.tw/Web2/ExclusiveEvents.html" onclick="track('event')">9/30前完成毛孩登入計畫</a></div>
+</section>
+
+<section class="card">
+<h2>6｜一鍵產生「我現在該做什麼」卡</h2>
+<textarea id="card"></textarea>
+<div class="actions"><button onclick="buildCard(true)">更新行動卡</button><button class="ghost" onclick="copyText('card')">複製到私人備忘錄</button></div>
+<div class="note info"><b>隱私：</b>真正申辦時再到農業部官方系統輸入身分資料。本工具完全不需要晶片號碼、身分證、手機、Email 或地址。</div>
+</section>
+
+<section class="card">
+<h2>7｜這個工具刻意不做</h2>
+<div class="note"><ul>
+<li>不查詢或保存晶片號碼、飼主姓名、身分證、地址、電話、Email。</li>
+<li>不把「有晶片」直接當成「已完成登記」；正式狀態以寵物登記管理資訊網為準。</li>
+<li>不把線上預申辦當完成；仍要在一週內到登記站完成。</li>
+<li>不處理狂犬病疫苗個別適用與獸醫判斷；這是另一套防疫義務。</li>
+<li>不把抽獎宣傳當核心成效；真正驗證是完成登記或把聯絡資料更新成可用。</li>
+</ul></div>
+</section>
+
+<section class="card">
+<h2>8｜真實使用驗證</h2>
+<p>真正追的是：<strong>有沒有飼主因此確認登記狀態、補完「預申辦但未完成」流程，或把已過時的聯絡資料更新。</strong></p>
+<div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/139">PetID 930 回饋區 #139</a></div>
+</section>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+function route(){
+ const s=$('species').value,r=$('reg').value,c=$('contact').value,st=$('status').value;
+ let cls='info',title='🔵 先查正式登記狀態',msg='不確定時不要猜；直接進官方飼主專區或問寵物登記站。';
+ if(r==='pre'){cls='bad';title='🔴 只有線上預申辦，還不算完成';msg='官方要求預申辦後一週內到登記站完成身分確認與晶片／登記手續。';}
+ else if(r==='no'){cls='bad';title=s==='cat'?'🔴 家貓已進入強制登記裁罰階段':'🔴 犬隻也應完成寵物登記';msg='先找寵物登記站完成晶片與寵物登記；未登記犬貓依法可能被處3,000–15,000元罰鍰。';}
+ else if(r==='yes'&&c==='no'){cls='warn';title='🟡 有登記，但聯絡資料已失效';msg='晶片最大的實用價值之一是走失後能聯絡到飼主；今天就進飼主專區更新手機／Email。';}
+ else if(r==='yes'&&c==='unknown'){cls='warn';title='🟡 已登記，但你其實不知道資料還對不對';msg='9/30前登入飼主專區檢視更新，順手把這個不確定消掉。';}
+ else if(r==='yes'&&c==='yes'){cls='ok';title='🟢 登記＋聯絡資料目前看起來完整';msg='如果寵物狀態也正確，可在9/30前順手完成毛孩登入計畫活動登記。';}
+ if(st==='lost'){cls='bad';title='🔴 寵物遺失：先處理遺失申報';msg='官方網站說明，寵物遺失時飼主或寄養者應於5日內自行上網申報，或請寵登站協助。';}
+ if(st==='dead'){cls='warn';title='🟡 寵物已離世：記得辦理除戶／狀態更新';msg='不要讓資料庫永久停在舊狀態；可從飼主專區或寵物登記站處理。';}
+ if(st==='transfer'){cls='warn';title='🟡 已轉讓：需要辦理飼主資料異動';msg='有晶片但飼主仍是舊資料，走失時仍可能聯絡錯人。請用正式系統／登記站完成異動。';}
+ $('routeOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;
+ return {s,r,c,st,title,msg,cls};
+}
+function checks(){
+ const ids=['c1','c2','c3','c4'],done=ids.filter(id=>$(id).checked).length;
+ $('checkOut').innerHTML=`<div class="note ${done===4?'ok':'info'}">${done===4?'✓ 登記資料的四個可用性檢查都完成。':`目前完成 ${done}／4；至少先確認手機與 Email。`}</div>`;
+ return done;
+}
+function buildCard(countCore){
+ const r=route(),done=checks();
+ let next='進官方寵物登記管理資訊網確認正式狀態。';
+ if(r.r==='pre')next='今天找寵物登記站，把線上預申辦補成正式登記。';
+ else if(r.r==='no')next='先找登記站完成晶片＋寵物登記。';
+ else if(r.r==='yes'&&r.c!=='yes')next='登入飼主專區，把手機／Email更新成現在真的收得到的資料。';
+ else if(r.st==='lost')next='先在5日內完成寵物遺失申報，再同步聯絡附近動保／收容資源。';
+ else if(r.st==='dead')next='辦理寵物死亡除戶／狀態更新。';
+ else if(r.st==='transfer')next='辦理飼主異動，確認新飼主資料已正確。';
+ else if(r.r==='yes'&&r.c==='yes')next='9/30前登入檢視資料並完成毛孩登入計畫活動登記。';
+
+ $('card').value=`【PetID 930｜犬貓登記資料行動卡】
+日期：2026/09/14
+
+目前判斷：
+${r.title}
+${r.msg}
+
+我的下一步：
+${next}
+
+重要防漏：
+・家貓已納入強制寵物登記；2026/1/1起緩衝期結束。
+・犬貓未完成寵物登記與晶片，依法可能處3,000–15,000元罰鍰。
+・線上「預申辦」不是完成；要在一週內到登記站完成。
+・已登記也要確認手機／Email是否還有效。
+・寵物遺失後應在5日內申報。
+・9/1–9/30「毛孩登入計畫」：已登記與新登記犬貓飼主都可在飼主專區確認資料後參加；每位飼主最多選1隻。
+
+官方：
+寵物登記管理資訊網：https://www.pet.gov.tw/
+預申辦：https://www.pet.gov.tw/Web/O202.aspx
+登記站查詢：https://www.pet.gov.tw/Web/O301.aspx
+毛孩登入計畫：https://www.pet.gov.tw/Web2/ExclusiveEvents.html
+
+不要在公開回饋貼晶片號碼、姓名、身分證、住址、手機、Email或完整申辦畫面。`;
+ if(countCore&&window.PGLabImpact)PGLabImpact.core(r.r==='pre'?'preapply-incomplete':(r.r==='no'?'registration-needed':(r.c!=='yes'?'contact-update':'status-checked')));
+}
+function track(label){if(window.PGLabImpact)PGLabImpact.core(label)}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+['species','reg','contact','status','c1','c2','c3','c4'].forEach(id=>$(id).addEventListener('change',()=>buildCard(false)));
+buildCard(false);
+</script>
+<script src="../impact.js" data-project="petid930" data-action-text="我已完成犬貓登記／聯絡資料狀態前篩" data-real-text="我已真的完成寵物登記／補完預申辦／更新聯絡資料" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/139"></script>
+</body></html>
