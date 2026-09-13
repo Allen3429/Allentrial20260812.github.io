@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="waterready914">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="WaterReady 914：9/14 計畫性停水家庭準備卡。先查官方停水、估算每人每日3公升最低飲用水、分開非飲用水、處理抽水馬達與復水初期。">
+<title>WaterReady 914｜今晚先把停水準備做完</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#a32323;--info:#285c8d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1060px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}h1{font-size:clamp(38px,7vw,64px);line-height:1.03;margin:.15em 0 .25em}
+.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:980px}.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:12px 14px;border-radius:9px;line-height:1.72;margin:10px 0}.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}.info{border-left-color:var(--info)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}label{display:block;font-weight:800;margin:7px 0 6px}input,select,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}textarea{min-height:260px;resize:vertical}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}
+.big{font-size:clamp(24px,4vw,34px);font-weight:950}.water{font-size:clamp(38px,7vw,60px);font-weight:1000}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:9px}.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:22px;margin-top:4px}.small{font-size:13px;color:var(--muted);line-height:1.65}
+.check{display:flex;gap:8px;align-items:flex-start;margin:8px 0}.check input{width:auto;margin-top:4px}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · 計畫性停水家庭準備 · 2026/09/13</div>
+<h1>WaterReady 914<br>先查你家有沒有停，<br>再決定要裝多少水。</h1>
+<p class="lead">9/14 多縣市部分地區有計畫性停水；新聞依官方公告彙整包含臺北、新北、桃園、臺中、臺南、屏東、花蓮、澎湖等 8 縣市，最長約 10.5 小時。<strong>不是整個縣市都停水</strong>，先用官方系統查地址，再準備；不要因一則新聞就過量囤水。</p>
+
+<section class="card">
+<h2>1｜第一步不是裝水，是確認「我家到底有沒有停」</h2>
+<div class="grid">
+<div><label>你的供水區域</label>
+<select id="provider">
+<option value="tw">台灣自來水公司轄區</option>
+<option value="taipei">臺北自來水事業處轄區（臺北市與部分新北）</option>
+<option value="unknown">不確定</option>
+</select></div>
+<div><label>官方查詢結果</label>
+<select id="affected">
+<option value="unknown">還沒查</option>
+<option value="yes">確認受影響</option>
+<option value="no">確認不受影響</option>
+</select></div>
+</div>
+<div id="queryOut"></div>
+<div class="actions">
+<a class="btn" target="_blank" rel="noopener" href="https://web.water.gov.tw/wateroff/" onclick="track('tw-water-query')">台灣自來水官方停水查詢</a>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://webs.water.gov.taipei/wateroff/" onclick="track('taipei-water-query')">臺北自來水官方停水查詢</a>
+<a class="btn ghost" href="tel:1910" onclick="track('1910')">台水 1910</a>
+<a class="btn ghost" href="tel:0287335678" onclick="track('taipei-hotline')">北水 02-8733-5678</a>
+</div>
+<div class="small">不要在這個工具輸入完整地址或水號。官方查詢用完，回來只標「有／沒有受影響」即可。</div>
+</section>
+
+<section class="card">
+<h2>2｜最低飲用水怎麼抓？用臺灣官方的 3L／人／日當底線</h2>
+<div class="grid">
+<div><label>家中人數</label><input id="people" type="number" min="1" max="30" step="1" value="2"></div>
+<div><label>預估停水小時（不知道可填 10.5）</label><input id="hours" type="number" min="1" max="168" step="0.5" value="10.5"></div>
+<div><label>全家「每天」額外需求（L，可填0）</label><input id="extra" type="number" min="0" max="200" step="0.5" value="0"></div>
+<div><label>你打算用多大的容器？</label>
+<select id="container"><option value="2">2L瓶</option><option value="5">5L桶</option><option value="10">10L桶</option><option value="20">20L桶</option></select></div>
+</div>
+<div id="waterOut"></div>
+<div class="note info"><b>這只算「最低飲用水庫存」：</b>國防部《臺灣全民安全指引》建議居家儲備飲用水每人每日至少 3 公升。本工具至少抓 1 天；若停水跨日，再按天數增加。洗澡、沖廁、清潔用水不要混進這個 3L 基準，另用非飲用水容器準備。</div>
+<div class="note warn">嬰幼兒、疾病、寵物、炎熱環境或特殊飲食可能需要更多水；請把額外需求填在上面，不讓程式自行猜。</div>
+</section>
+
+<section class="card">
+<h2>3｜停水前 5 個防漏點</h2>
+<div class="check"><input id="official" type="checkbox"><span>我已用官方系統確認地址是否受影響，而不是只看縣市新聞。</span></div>
+<div class="check"><input id="clean" type="checkbox"><span>飲用水裝在乾淨、可加蓋的容器；飲用水和沖廁／清潔水分開。</span></div>
+<div class="check"><input id="cover" type="checkbox"><span>儲水容器有加蓋，不長時間敞開，避免二次污染與病媒蚊。</span></div>
+<div class="check"><input id="pump" type="checkbox"><span>若家中有「直接從自來水給水管抽水」的自用馬達，停水期間會關閉；若是社區大樓，已通知管委會／房東確認抽水設備，不自行亂關公共設備。</span></div>
+<div class="check"><input id="separate" type="checkbox"><span>已另外準備少量非飲用水供沖廁／清潔，不會拿飲用水大量沖馬桶。</span></div>
+<div id="beforeOut"></div>
+</section>
+
+<section class="card">
+<h2>4｜復水後別急著直接喝第一杯</h2>
+<div class="note warn"><b>管線末端、大樓、高地可能比公告時間晚恢復。</b>台水工程文件指出，復水時因管線排氣、水塔補水等，末端地區可能延後數小時。</div>
+<div class="note info"><b>如果復水初期看起來混濁：</b>先暫勿飲用，讓水流一段時間；地方政府過往停水指引曾建議初期約 1–2 分鐘先排放，這些水可回收沖廁。等水色／水質恢復正常，並遵守當次官方水質公告後再正常使用。</div>
+<div class="note info"><b>若官方另發布煮沸或水質警示：</b>以當次公告為準。不要用「看起來透明」取代官方水質訊息。</div>
+</section>
+
+<section class="card">
+<h2>5｜一鍵產生「我家今晚要做什麼」卡</h2>
+<textarea id="card"></textarea>
+<div class="actions"><button onclick="buildCard(true)">更新家庭準備卡</button><button class="ghost" onclick="copyText('card')">複製到家庭群組</button><button class="ghost" onclick="makeReminder()">加入9/14停水提醒</button></div>
+</section>
+
+<section class="card">
+<h2>6｜這個工具刻意不做</h2>
+<div class="note"><ul>
+<li>不收完整地址、水號、電話或住戶姓名。</li>
+<li>不自己猜停水範圍；實際地址一定回官方停水公告系統確認。</li>
+<li>不鼓勵過量囤水；最低飲用水用官方3L／人／日做底線，其他用途另備。</li>
+<li>不叫一般住戶亂關社區公共抽水設備；大樓交由管委會／機電人員確認。</li>
+<li>不保證公告的復水時間就是你家水龍頭立刻有水，末端與高地可能延後。</li>
+</ul></div>
+</section>
+
+<section class="card">
+<h2>7｜真實使用驗證</h2>
+<p>真正追的是：<strong>有沒有人先用官方地址查詢確認，再準備合理飲用水、分開沖廁水、處理抽水馬達／大樓設備，而不是新聞一看到就盲目囤水。</strong></p>
+<div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/123">WaterReady 914 回饋區 #123</a></div>
+</section>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+function queryState(){
+ const p=$('provider').value,a=$('affected').value;
+ let cls='warn',title='🟡 還沒完成地址查詢',msg='先開官方停水查詢，不要只看「你的縣市在名單內」。';
+ if(a==='yes'){cls='bad';title='🔴 已確認受影響：現在做儲水與設備準備';msg='用下面的最低飲用水基準，再另外備沖廁／清潔水。';}
+ if(a==='no'){cls='ok';title='🟢 官方地址查詢顯示不受這次停水影響';msg='不用因新聞過量儲水；仍可順手保留一日家庭飲用水作一般防災庫存。';}
+ if(p==='unknown')msg+=' 如果供水單位不確定，可先試兩個官方系統或打客服確認。';
+ $('queryOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;
+ return {p,a,title,msg};
+}
+function calc(){
+ const people=Math.max(1,Math.floor(Number($('people').value)||1));
+ const hours=Math.max(1,Number($('hours').value)||10.5);
+ const extra=Math.max(0,Number($('extra').value)||0);
+ const cap=Number($('container').value)||2;
+ const days=Math.max(1,Math.ceil(hours/24));
+ const liters=people*3*days+extra*days;
+ const count=Math.ceil(liters/cap);
+ $('waterOut').innerHTML=`<div class="note ok"><div class="water">${liters.toFixed(1)} L</div><b>最低飲用水庫存</b>（${people}人 × 3L × ${days}日${extra?` ＋ 額外 ${extra}L／日`:''}）<br>如果都用 ${cap}L 容器，至少約 <b>${count} 個</b>。這不含沖廁、洗澡與清潔用水。</div>`;
+ return {people,hours,extra,cap,days,liters,count};
+}
+function checklist(){
+ const ids=['official','clean','cover','pump','separate'];
+ const done=ids.filter(id=>$(id).checked).length;
+ $('beforeOut').innerHTML=`<div class="note ${done===5?'ok':'warn'}">${done===5?'✓ 停水前5項已確認。':`已完成 ${done}／5；還有 ${5-done} 項沒確認。`}</div>`;
+ return done;
+}
+function buildCard(countCore){
+ const q=queryState(),c=calc(),done=checklist();
+ $('card').value=`【WaterReady 914｜9/14家庭停水準備卡】
+先查官方，再儲水；不是整個縣市都停。
+
+官方查詢狀態：
+${q.title}
+${q.msg}
+
+最低飲用水：
+・家中 ${c.people} 人
+・預估停水 ${c.hours} 小時
+・以官方每人每日至少3L為底線
+・至少準備 ${c.liters.toFixed(1)} L 飲用水
+・若使用 ${c.cap}L 容器：約 ${c.count} 個
+・這不含沖廁／清潔水
+
+停水前：
+${$('official').checked?'✓':'□'} 已用官方地址查詢
+${$('clean').checked?'✓':'□'} 飲用水容器乾淨，與非飲用水分開
+${$('cover').checked?'✓':'□'} 儲水容器加蓋
+${$('pump').checked?'✓':'□'} 自用直接抽水馬達已規劃關閉／大樓已請管委會確認
+${$('separate').checked?'✓':'□'} 另備少量沖廁／清潔水
+
+復水後：
+・末端／高地／大樓可能比公告晚
+・若初期混濁，先暫勿飲用，排放一段時間；排掉的水可回收沖廁
+・若官方另有煮沸／水質警示，以當次公告為準
+
+官方：
+台灣自來水：https://web.water.gov.tw/wateroff/
+臺北自來水：https://webs.water.gov.taipei/wateroff/
+台水1910；北水02-8733-5678
+
+公開回饋不要貼完整地址、水號、電話或住戶姓名。`;
+ if(countCore&&window.PGLabImpact)PGLabImpact.core('household-card');
+}
+function makeReminder(){
+ const ics=`BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//WaterReady914//TW\r\nBEGIN:VEVENT\r\nDTSTART;VALUE=DATE:20260914\r\nDTEND;VALUE=DATE:20260915\r\nSUMMARY:確認今天是否停水＋關閉自用抽水馬達\r\nDESCRIPTION:先用官方停水查詢確認地址；飲用水每人至少3L／日作底線，非飲用水分開。若家中有直接由自來水給水管抽水的自用馬達，停水期間關閉。復水初期若混濁先暫勿飲用。\r\nEND:VEVENT\r\nEND:VCALENDAR`;
+ const b=new Blob([ics],{type:'text/calendar;charset=utf-8'}),a=document.createElement('a');
+ a.href=URL.createObjectURL(b);a.download='waterready-914.ics';a.click();URL.revokeObjectURL(a.href);
+ if(window.PGLabImpact)PGLabImpact.core('calendar-reminder');
+}
+function track(label){if(window.PGLabImpact)PGLabImpact.core(label)}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+['provider','affected','container'].forEach(id=>$(id).addEventListener('change',()=>buildCard(false)));
+['people','hours','extra'].forEach(id=>$(id).addEventListener('input',()=>buildCard(false)));
+['official','clean','cover','pump','separate'].forEach(id=>$(id).addEventListener('change',()=>buildCard(false)));
+buildCard(false);
+</script>
+<script src="../impact.js" data-project="waterready914" data-action-text="我已完成官方停水查詢＋家庭儲水準備卡" data-real-text="我已真的查地址並完成儲水／設備準備至少一項" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/123"></script>
+</body></html>
