@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="mouthloop930">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="MouthLoop 930：口腔癌免費篩檢資格前篩、9/30 Check & Win 行動提醒，以及篩檢異常後確診追蹤防漏。">
+<title>MouthLoop 930｜口篩不是做完就結束</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#a32323;--info:#285c8d}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1080px;margin:auto;padding:24px 14px 72px}
+.kicker{font-size:14px;font-weight:850;color:var(--muted)}
+h1{font-size:clamp(40px,7vw,68px);line-height:1.03;margin:.15em 0 .25em}
+h2{margin-bottom:.55em}
+.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:1000px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:12px 14px;border-radius:9px;line-height:1.72;margin:10px 0}
+.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}.info{border-left-color:var(--info)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:9px}
+.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:23px;margin-top:4px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
+label{display:block;font-weight:800;margin:8px 0 6px}
+select,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}
+textarea{min-height:250px;resize:vertical}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}
+button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}
+.ghost{background:#edf1f5;color:#17212b}
+.big{font-size:clamp(24px,4vw,34px);font-weight:950}
+.count{font-size:clamp(42px,8vw,68px);font-weight:1000}
+.small{font-size:13px;color:var(--muted);line-height:1.65}
+.check{display:flex;gap:8px;align-items:flex-start;margin:8px 0}.check input{width:auto;margin-top:4px}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · 口腔癌篩檢與異常追蹤防漏 · 2026/09/14</div>
+<h1>MouthLoop 930<br>口篩不是做完就結束。</h1>
+<p class="lead">衛福部口腔健康司 2026/9 更新資訊指出，口腔癌每年約 <strong>8,000 人</strong>發生、約 <strong>3,000 人</strong>死亡，而且是我國 30–64 歲男性最容易發生的癌症。符合資格者每 2 年可免費做 1 次口腔黏膜檢查；今年「Check & Win 篩就贏」活動到 <strong>9/30</strong>，還另外設計「完成回診追蹤」的追蹤獎。這頁只做兩件事：<strong>把該篩的人推到篩檢、把異常的人推到確診／追蹤</strong>。</p>
+
+<section class="card">
+<h2>1｜為什麼這輪不是再做一張衛教海報</h2>
+<div class="stats">
+<div class="stat">每年發生<b>約8,000人</b></div>
+<div class="stat">每年死亡<b>約3,000人</b></div>
+<div class="stat">定期篩檢可降低<b>26%死亡風險</b></div>
+<div class="stat">本期活動截止<b>9/30</b></div>
+</div>
+<div class="note info">2026年度 Check & Win 不只獎勵「有去篩檢」，還另設完成醫師建議回診追蹤的「追蹤獎」。這是一個很直接的需求訊號：真正的斷點不只在篩檢前，也在「篩到異常之後有沒有走完下一步」。</div>
+</section>
+
+<section class="card">
+<h2>2｜60秒：你現在應該走哪一條？</h2>
+<div class="grid">
+<div>
+<label>最接近你的「免費口篩資格」狀態</label>
+<select id="eligibility">
+<option value="adult-risk">30歲以上，現在或曾經吸菸／嚼檳榔</option>
+<option value="indigenous-betel">18–29歲，屬原住民且現在或曾嚼檳榔</option>
+<option value="other">其他／不確定</option>
+</select>
+</div>
+<div>
+<label>你現在卡在哪一步？</label>
+<select id="stage">
+<option value="not-screened">近2年還沒做口腔黏膜檢查／不確定</option>
+<option value="screened-normal">已做，醫師沒有叫我另外追蹤</option>
+<option value="followup">已做，醫師有說要追蹤／進一步確診</option>
+<option value="symptom">目前口腔有持續異常，但我不想在網頁描述細節</option>
+</select>
+</div>
+</div>
+<div id="routeOut"></div>
+<div class="note info"><b>隱私設計：</b>你的選項只用來在這個頁面當下分流；本工具不保存吸菸、檳榔、族群或篩檢結果。匿名採用量測只記「完成分流／點官方連結／確認採取行動」等通用事件。</div>
+</section>
+
+<section class="card">
+<h2>3｜如果你符合免費篩檢：今天直接把院所找出來</h2>
+<div class="note ok"><div class="big">官方資格</div>
+30歲以上曾吸菸或嚼檳榔者；以及18至未滿30歲、曾嚼檳榔的原住民，每2年1次免費口腔黏膜檢查。檢查以目視／觸診為主，不會疼痛，也沒有放射線。</div>
+<div class="actions">
+<a class="btn" target="_blank" rel="noopener" href="https://info.nhi.gov.tw/INAE1000/INAE1000S01" onclick="track('provider-query')">查健保特約口篩院所</a>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://dep.mohw.gov.tw/DOOH/fp-7148-80480-124.html" onclick="track('screen-info')">看衛福部最新資格說明</a>
+</div>
+<div class="note info">健保院所查詢進去後，可用「進階查詢 → 預防保健服務項目 → 口腔黏膜檢查」篩選。30歲以上符合資格者帶健保卡即可；18–29歲符合原住民資格者，官方頁面提醒另備戶口名簿。</div>
+</section>
+
+<section class="card">
+<h2>4｜已經篩到異常？這一步比抽獎重要</h2>
+<div class="note bad"><div class="big">不要把「疑似異常」當成癌症診斷，也不要把它擱著。</div>
+官方最新說明：若篩檢出疑似癌前病變或疑似口腔癌，應儘速到「口腔癌確認診斷及治療醫院」的口腔顎面外科或耳鼻喉頭頸外科確診，並依醫囑每3–6個月追蹤。</div>
+<div class="actions">
+<a class="btn" target="_blank" rel="noopener" href="https://dep.mohw.gov.tw/DOOH/cp-6543-87456-124.html" onclick="track('followup-hospital')">找官方確診／治療醫院</a>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://dep.mohw.gov.tw/DOOH/fp-6543-77978-124.html" onclick="track('followup-program')">看官方異常追蹤服務</a>
+</div>
+<div class="note warn">如果你目前自己發現口腔持續異常，也不要用這頁自我診斷。衛福部提醒所有檢查都不是100%準確，身體出現異狀仍應儘速就醫。</div>
+</section>
+
+<section class="card">
+<h2>5｜9/30 前的「順手誘因」：Check & Win</h2>
+<div class="note ok"><div class="count">9/30</div>
+2026年度活動到 9 月 30 日止。符合活動條件、完成衛福部預防保健口篩並填寫官方活動問卷者可參加抽獎；10月還有針對依醫師建議完成回診追蹤者的追蹤獎。</div>
+<div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://dep.mohw.gov.tw/DOOH/fp-6508-85985-124.html" onclick="track('campaign')">看官方 Check & Win 活動</a></div>
+<div class="note info">抽獎只是推你去完成健康行動的誘因，不是這個工具的終點。真正成功指標仍是「完成一次篩檢」或「收到追蹤建議後完成回診安排」。</div>
+</section>
+
+<section class="card">
+<h2>6｜把下一步鎖住：5項行動卡</h2>
+<div class="check"><input id="c1" type="checkbox"><span>我已確認自己是否符合每2年1次免費口腔黏膜檢查。</span></div>
+<div class="check"><input id="c2" type="checkbox"><span>若要篩檢，我已經打開官方院所查詢並找到至少1個可去的院所。</span></div>
+<div class="check"><input id="c3" type="checkbox"><span>若醫師建議追蹤／確診，我已打開官方確診治療醫院名單，而不是只把結果收起來。</span></div>
+<div class="check"><input id="c4" type="checkbox"><span>我知道「篩檢疑似異常」不等於確診；正式判斷交給口腔顎面外科／耳鼻喉頭頸外科。</span></div>
+<div class="check"><input id="c5" type="checkbox"><span>如果我要參加2026 Check & Win，我知道9/30是活動截止，不會把抽獎當成醫療追蹤的替代品。</span></div>
+<div id="checkOut"></div>
+</section>
+
+<section class="card">
+<h2>7｜一鍵產生「只記下一步、不記病史」的私人卡</h2>
+<textarea id="card"></textarea>
+<div class="actions"><button onclick="buildCard(true)">更新行動卡</button><button class="ghost" onclick="copyCard()">複製到私人備忘錄</button></div>
+<div class="note info">這張卡刻意不寫你的吸菸／檳榔細節、族群、口腔照片、診斷或院所病歷。公開 Issue 也只回報流程摩擦，例如「院所不好找」「不知道需不需要轉診」，不要貼健康細節。</div>
+</section>
+
+<section class="card">
+<h2>8｜這個工具刻意不做</h2>
+<div class="note"><ul>
+<li>不診斷口腔癌、不看口腔照片、不解讀病理報告。</li>
+<li>不把「篩檢異常」說成已確診癌症。</li>
+<li>不保存吸菸、檳榔、原住民身分或篩檢結果。</li>
+<li>不把抽獎活動當醫療建議；9/30只是一個近期行動誘因。</li>
+<li>不取代醫師追蹤；如果醫師已建議回診，以醫囑為優先。</li>
+</ul></div>
+</section>
+
+<section class="card">
+<h2>9｜真實使用驗證</h2>
+<p>真正追的是：<strong>有沒有符合資格的人因此完成一次口篩，以及篩檢疑似異常者有沒有真的完成回診／確診安排。</strong></p>
+<div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/157">MouthLoop 930 回饋區 #157</a></div>
+</section>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+
+function route(){
+ const e=$('eligibility').value,s=$('stage').value;
+ const eligible=(e==='adult-risk'||e==='indigenous-betel');
+ let cls='info',title='🔵 先確認資格，再決定下一步',msg='';
+ if(s==='followup'){
+   cls='bad';title='🔴 優先事項：把追蹤／確診接上';
+   msg='不要等9/30活動或下一次篩檢。直接使用官方「確認診斷及治療醫院名單」，依醫師建議安排回診／確診。';
+ } else if(s==='symptom'){
+   cls='warn';title='🟡 有持續異常：不要用網頁自我排除';
+   msg='即使不符合政府免費篩檢資格，身體出現異狀仍應就醫。這個工具不需要也不應收你的症狀細節。';
+ } else if(s==='not-screened'&&eligible){
+   cls='ok';title='🟢 符合免費口篩資格：今天先找到1家院所';
+   msg='政府補助每2年1次口腔黏膜檢查。先打開健保特約院所查詢；如果也要參加2026 Check & Win，活動到9/30。';
+ } else if(s==='not-screened'&&!eligible){
+   cls='info';title='🔵 目前不符合這個免費口篩前篩';
+   msg='不要把「不符合補助資格」理解成「口腔有異常也不用看」。若有症狀或疑慮，仍應就醫；本頁不做診斷。';
+ } else if(s==='screened-normal'){
+   cls='ok';title='🟢 已完成這一輪篩檢';
+   msg='如果醫師沒有另外交代，保留下一次定期篩檢觀念；若後續出現異狀，不要等滿2年才就醫。';
+ }
+ $('routeOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;
+ return {eligible,s,title,msg};
+}
+
+function checks(){
+ const ids=['c1','c2','c3','c4','c5'];
+ const n=ids.filter(id=>$(id).checked).length;
+ $('checkOut').innerHTML=`<div class="note ${n===5?'ok':'info'}">${n===5?'✓ 五項防漏都確認。':`目前完成 ${n}／5。只需要做和你目前階段有關的項目；核心是把「下一步」真的接上。`}</div>`;
+ return n;
+}
+
+function buildCard(countCore){
+ const r=route(),n=checks();
+ let next='先確認自己是否符合免費口腔黏膜檢查，並打開官方院所查詢。';
+ if(r.s==='followup') next='依原醫師建議，打開官方確診／治療醫院名單並安排回診／確診。';
+ if(r.s==='symptom') next='不要在網頁描述症狀；直接安排牙科、耳鼻喉或其他適當醫療評估。';
+ if(r.s==='screened-normal') next='記得定期篩檢；若後續出現異狀，不要等到下一個2年週期。';
+ if(r.s==='not-screened'&&r.eligible) next='今天找到至少1家提供口腔黏膜檢查的健保特約院所。';
+
+ $('card').value=`【MouthLoop 930｜我的下一步】
+日期：2026/09/14
+
+目前分流：
+${r.title}
+${r.msg}
+
+現在只做這件事：
+${next}
+
+行動防漏：${n}／5
+
+官方入口：
+口腔癌篩檢資格／說明：https://dep.mohw.gov.tw/DOOH/fp-7148-80480-124.html
+健保特約院所查詢：https://info.nhi.gov.tw/INAE1000/INAE1000S01
+確診／治療醫院名單：https://dep.mohw.gov.tw/DOOH/cp-6543-87456-124.html
+2026 Check & Win（9/30止）：https://dep.mohw.gov.tw/DOOH/fp-6508-85985-124.html
+
+提醒：
+・口腔黏膜篩檢「疑似異常」不等於癌症確診。
+・收到追蹤建議時，以原醫師／正式醫療團隊指示為優先。
+・本卡不要記姓名、健保卡號、病史、口腔照片或診斷結果。`;
+ if(countCore&&window.PGLabImpact) PGLabImpact.core(r.s==='followup'?'followup-card':'next-step-card');
+}
+
+function track(label){if(window.PGLabImpact)PGLabImpact.core(label)}
+async function copyCard(){
+ try{await navigator.clipboard.writeText($('card').value);alert('已複製')}
+ catch(e){$('card').select();document.execCommand('copy')}
+}
+
+['eligibility','stage','c1','c2','c3','c4','c5'].forEach(id=>$(id).addEventListener('change',()=>buildCard(false)));
+buildCard(false);
+</script>
+<script src="../impact.js" data-project="mouthloop930" data-action-text="我已完成口腔癌篩檢／異常追蹤下一步分流" data-real-text="我已真的完成口篩，或依醫師建議安排回診／確診" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/157"></script>
+</body></html>
