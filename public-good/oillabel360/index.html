@@ -1,0 +1,93 @@
+<!doctype html><html lang="zh-Hant" data-project="oillabel360"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="OilLabel 360：食用油瓶身品名／有效日期／批號查核與廚房盤點。未命中快照不等於安全，正式結論回到食藥署官方資料。">
+<title>OilLabel 360｜不要只看品牌，核對品名＋效期／批號</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#a32323;--info:#285c8d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1160px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}h1{font-size:clamp(40px,7vw,68px);line-height:1.02;margin:.15em 0 .25em}
+.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:1000px}.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:12px 14px;border-radius:9px;line-height:1.72;margin:10px 0}.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}.info{border-left-color:var(--info)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:9px}.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:23px;margin-top:4px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}label{display:block;font-weight:800;margin:8px 0 6px}input,select,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:11px;background:#fff}textarea{min-height:230px;resize:vertical}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}button,.btn{display:inline-block;border:0;border-radius:11px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}.danger{background:#8a2020}
+.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:14px}table{width:100%;border-collapse:collapse;min-width:1050px}th,td{padding:9px;border-bottom:1px solid var(--line);vertical-align:top}th{background:#f3f6f8;text-align:left}td input,td select{min-width:130px;padding:8px}
+.big{font-size:clamp(24px,4vw,34px);font-weight:950}.small{font-size:13px;color:var(--muted);line-height:1.65}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style></head><body><main class="wrap">
+<div class="kicker">Public Good Lab · 2026油品食安查核 · 2026/09/14</div>
+<h1>OilLabel 360<br>不要只看品牌。<br>核對「品名＋效期／批號」。</h1>
+<p class="lead">2026年的食用油事件已經不是一則新聞：食藥署中聯案曾公布 <strong>18項受影響產品、30個批號</strong>，流向資訊一度更新到 <strong>360家業者</strong>；8月底、9月初又陸續出現黑麻油、南瓜籽油、苦茶油抽驗異常。這頁不是替代食藥署，而是把家裡／小吃店的一瓶瓶油變成「已查、未查、要退」清單。</p>
+
+<section class="card"><h2>1｜先理解：同品牌 ≠ 全部有問題；沒命中快照 ≠ 一定安全</h2>
+<div class="stats"><div class="stat">中聯案<b>18項產品</b></div><div class="stat">中聯案<b>30個批號</b></div><div class="stat">流向曾更新<b>360家</b></div><div class="stat">官方另有<b>重新上架清單</b></div></div>
+<div class="note warn"><b>查食用油最少看三個欄位：</b>完整產品名稱、有效日期／批號、規格。只記得「泰山」「福壽」「福懋」這種品牌名不夠精準；官方也另外公布可重新上架產品，因此不能因品牌名直接把所有商品判成問題品。</div>
+<div class="actions"><a class="btn" target="_blank" rel="noopener" href="https://www.fda.gov.tw/TC/site13712.aspx">食藥署115年油脂案專區</a><a class="btn ghost" target="_blank" rel="noopener" href="https://www.fda.gov.tw/EdibleOilOperator/index.aspx">強制下架下游業者查詢</a><a class="btn ghost" target="_blank" rel="noopener" href="https://www.fda.gov.tw/TC/siteList.aspx?sid=13726">可重新上架清單</a></div></section>
+
+<section class="card"><h2>2｜先查手上的一瓶</h2>
+<div class="grid"><div><label>產品名稱（照瓶身抄）</label><input id="name" placeholder="例：麻油車冷壓黑麻油"></div><div><label>有效日期／批號</label><input id="date" placeholder="例：2028.04.06 或 20270420"></div><div><label>規格</label><input id="size" placeholder="例：255mL、600mL、18L"></div></div>
+<div id="matchOut"></div><div class="actions"><button onclick="runMatch(true)">比對近期快照</button><a class="btn ghost" target="_blank" rel="noopener" href="https://www.fda.gov.tw/EdibleOilOperator/index.aspx">再去官方查批號／有效日期</a></div>
+<div class="note info"><b>本頁的快照刻意很小，只收少數近期公開且可精準辨識的案例。</b>任何「未命中」都不能當成官方安全認證；最終仍要回食藥署專區／批次清單。</div></section>
+
+<section class="card"><h2>3｜近期可精準辨識的幾個快照</h2>
+<div class="note bad"><b>麻油車冷壓黑麻油｜255 mL｜有效日期 2028.04.06：</b>食藥署8/27公布檢出苯(a)駢芘超標，通路為聖德科斯，要求下架回收；若手上吻合，先停止使用並向原通路辦理退貨。</div>
+<div class="note bad"><b>惠家香南瓜籽油｜250 mL｜有效日期 2028.03.11：</b>9月初地方衛生抽驗公布苯(a)駢芘超標；台北市並要求該南瓜籽油不分批號預防性下架。精準吻合者先停止使用，其他批次請查最新地方／業者公告。</div>
+<div class="note bad"><b>德記榨油工廠「頂級小菓苦茶油」｜600 mL｜有效日期 2027.07.20：</b>9月初抽驗公布苯(a)駢芘超標，涉案批次已回收／封存。</div>
+<div class="note warn"><b>泰山／福壽／福懋等中聯案相關品牌：</b>品牌本身不是判定條件。請把瓶身「完整品名＋有效日期／批號」拿去食藥署官方清單核對。</div></section>
+
+<section class="card"><h2>4｜把整個廚房掃完：一瓶一列</h2>
+<div class="actions"><button onclick="addRow()">＋新增一瓶</button><button class="ghost" onclick="addExamples()">放入3個示範</button></div>
+<div class="tablewrap"><table><thead><tr><th>產品別名</th><th>有效日期／批號</th><th>規格</th><th>查核狀態</th><th>官方已查？</th><th>後續</th><th></th></tr></thead><tbody id="rows"></tbody></table></div>
+<div id="summaryOut"></div></section>
+
+<section class="card"><h2>5｜如果確認是問題批次</h2>
+<div class="note bad"><b>先停止使用。</b>不要因為只剩半瓶就繼續吃完。</div><div class="note info"><b>保留瓶身／包裝與購買資訊（如果手邊還有）。</b>先向原購買通路或產品責任業者詢問退換貨；食藥署中聯案也要求業者提供退換貨方式。</div><div class="note warn"><b>不要自行把大量食用油直接倒進水槽。</b>以退貨回收為優先；無法退回時，依所在地清潔／廢棄物規定處理。</div>
+<div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://cpc.ey.gov.tw/Page/73A817EB8E576330">退貨爭議：1950／消保會</a></div></section>
+
+<section class="card"><h2>6｜匯出自己的查核清單</h2><div class="actions"><button onclick="exportCSV()">匯出 CSV</button><button class="ghost" onclick="clearAll()">清除本機資料</button></div><textarea id="card"></textarea><div class="actions"><button onclick="buildCard(true)">更新摘要</button><button class="ghost" onclick="copyCard()">複製摘要</button></div></section>
+
+<section class="card"><h2>7｜這個工具刻意不做</h2><div class="note"><ul><li>不拍照、不OCR、不上傳瓶身或發票；全部資料只存此瀏覽器。</li><li>不把「品牌」直接判成召回；中聯案必須看具體產品與批號／有效日期。</li><li>不把「沒命中本頁快照」當成安全；官方清單持續更新。</li><li>不把「預防性下架」和「已檢驗不合格」混為同一結論。</li><li>不提供健康風險個人化診斷；若有食用後身體不適，請依症狀就醫／諮詢醫療專業。</li></ul></div></section>
+
+<section class="card"><h2>8｜真實使用驗證</h2><p>真正追的是：<strong>有沒有家庭／小吃店從「我好像看過這牌新聞」進一步完成瓶身批次查核，並真的退掉或確認一瓶油。</strong></p><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/146">OilLabel 360 回饋區 #146</a></div></section>
+</main>
+<script>
+const $=id=>document.getElementById(id); const KEY='oillabel360_v1'; let data=load();
+function norm(s){return String(s||'').toLowerCase().replace(/[\s.\-_/年月日]/g,'')}
+const alerts=[
+ {keys:['麻油車冷壓黑麻油'],date:'20280406',size:'255',title:'確認不合格：麻油車冷壓黑麻油 255mL／2028.04.06',msg:'食藥署8/27公布苯(a)駢芘超標。停止使用並向原通路退貨。'},
+ {keys:['惠家香','南瓜籽油'],date:'20280311',size:'250',title:'確認不合格：惠家香南瓜籽油 250mL／2028.03.11',msg:'9月初地方衛生抽驗公布苯(a)駢芘超標；精準吻合先停止使用並辦理退換。'},
+ {keys:['頂級小菓苦茶油'],date:'20270720',size:'600',title:'確認不合格：頂級小菓苦茶油 600mL／2027.07.20',msg:'9月初地方衛生抽驗公布苯(a)駢芘超標；涉案批次已回收／封存。'}
+];
+const incidentBrands=['泰山','福壽','福懋'];
+function classify(name,date,size){const n=norm(name),d=norm(date),z=norm(size);for(const a of alerts){if(a.keys.every(k=>n.includes(norm(k)))&&d.includes(a.date)&&( !a.size || z.includes(a.size)))return {level:'bad',title:a.title,msg:a.msg,status:'停止使用待退'}}if(incidentBrands.some(b=>n.includes(norm(b))))return {level:'warn',title:'需要官方批號／效期核對',msg:'這個品牌曾有產品出現在中聯油脂事件，但品牌名本身不能判定。請用完整品名＋有效日期／批號查食藥署官方清單。',status:'需官方確認'};return {level:'info',title:'本頁快照未精準命中',msg:'這不代表官方認定安全。請再到食藥署115年油脂案專區／下游業者查詢核對最新資料。',status:'未查'}}
+function runMatch(trackIt=false){const r=classify($('name').value,$('date').value,$('size').value);$('matchOut').innerHTML=`<div class="note ${r.level}"><div class="big">${r.title}</div>${r.msg}</div>`;if(trackIt&&window.PGLabImpact)PGLabImpact.core(r.level==='bad'?'exact-alert':'label-check');return r}
+function uid(){return Math.random().toString(36).slice(2)+Date.now().toString(36)}function load(){try{return JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){return []}}function save(){localStorage.setItem(KEY,JSON.stringify(data))}
+function addRow(seed={}){data.push({id:uid(),name:seed.name||'',date:seed.date||'',size:seed.size||'',status:seed.status||'未查',official:false,next:'未處理'});save();render()}
+function addExamples(){addRow({name:'食用油A',date:'',size:'1L'});addRow({name:'麻油車冷壓黑麻油',date:'2028.04.06',size:'255mL',status:'停止使用待退'});addRow({name:'泰山某油品',date:'',size:'',status:'需官方確認'})}
+function edit(id,k,v){const r=data.find(x=>x.id===id);if(!r)return;r[k]=v;if(['name','date','size'].includes(k))r.status=classify(r.name,r.date,r.size).status;save();render(false)}
+function delRow(id){data=data.filter(x=>x.id!==id);save();render()}
+function render(rebuild=true){const t=$('rows');t.innerHTML=data.length?data.map(r=>`<tr><td><input value="${r.name.replace(/"/g,'&quot;')}" oninput="edit('${r.id}','name',this.value)"></td><td><input value="${r.date.replace(/"/g,'&quot;')}" oninput="edit('${r.id}','date',this.value)"></td><td><input value="${r.size.replace(/"/g,'&quot;')}" oninput="edit('${r.id}','size',this.value)"></td><td><select onchange="edit('${r.id}','status',this.value)">${['未查','需官方確認','停止使用待退','已查無快照命中','已退換貨'].map(x=>`<option ${x===r.status?'selected':''}>${x}</option>`).join('')}</select></td><td><input type="checkbox" ${r.official?'checked':''} onchange="edit('${r.id}','official',this.checked)"></td><td><select onchange="edit('${r.id}','next',this.value)">${['未處理','已停用','已問通路','已退換貨','保留使用'].map(x=>`<option ${x===r.next?'selected':''}>${x}</option>`).join('')}</select></td><td><button class="danger" onclick="delRow('${r.id}')">刪</button></td></tr>`).join(''):'<tr><td colspan="7"><div class="note info">先新增一瓶。重點是把「每一瓶有沒有官方查過」變成看得到的清單。</div></td></tr>';summary();if(rebuild)buildCard(false)}
+function summary(){const total=data.length,official=data.filter(x=>x.official).length,need=data.filter(x=>['需官方確認','停止使用待退'].includes(x.status)&&x.next!=='已退換貨').length,done=data.filter(x=>x.next==='已退換貨'||(x.official&&x.status==='已查無快照命中')).length;$('summaryOut').innerHTML=`<div class="note ${need?'warn':'ok'}"><b>盤點 ${total} 瓶｜官方已查 ${official}｜仍需處理 ${need}｜完成 ${done}</b></div>`;return {total,official,need,done}}
+function buildCard(trackIt=false){const s=summary();const open=data.filter(x=>x.status==='停止使用待退'||x.status==='需官方確認').slice(0,10).map(x=>`□ ${x.name||'未命名'}｜${x.date||'無效期/批號'}｜${x.status}`).join('\n');$('card').value=`【OilLabel 360｜我的食用油查核摘要】
+盤點：${s.total}瓶
+官方已查：${s.official}瓶
+仍需處理：${s.need}瓶
+
+下一批：
+${open||'目前沒有標記為待查／待退的瓶子。'}
+
+原則：
+1. 不只看品牌，要看完整品名＋有效日期／批號。
+2. 本頁未命中不等於安全，最終回食藥署官方清單。
+3. 確認問題批次 → 停止使用 → 向原通路／業者退換。
+4. 退貨爭議 → 1950。
+
+官方油脂案專區：https://www.fda.gov.tw/TC/site13712.aspx
+強制下架下游業者查詢：https://www.fda.gov.tw/EdibleOilOperator/index.aspx
+
+公開回饋不要貼姓名、住址、會員帳號、發票條碼或付款資訊。`;if(trackIt&&window.PGLabImpact)PGLabImpact.core(s.total>=3?'kitchen-audit':'audit-summary')}
+function csvCell(v){return '"'+String(v??'').replace(/"/g,'""')+'"'}function exportCSV(){const rows=[['產品名稱','有效日期/批號','規格','查核狀態','官方已查','後續'],...data.map(r=>[r.name,r.date,r.size,r.status,r.official?'是':'否',r.next])];const blob=new Blob(['﻿'+rows.map(r=>r.map(csvCell).join(',')).join('\n')],{type:'text/csv;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='oillabel360-audit.csv';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500);if(window.PGLabImpact)PGLabImpact.core('csv-export')}
+function clearAll(){if(confirm('確定清除本機盤點？建議先匯出CSV。')){data=[];save();render()}}async function copyCard(){try{await navigator.clipboard.writeText($('card').value);alert('已複製')}catch(e){$('card').select();document.execCommand('copy')}}
+['name','date','size'].forEach(id=>$(id).addEventListener('input',()=>runMatch(false)));render();runMatch(false);
+</script><script src="../impact.js" data-project="oillabel360" data-action-text="我已完成至少一瓶食用油的瓶身／批次查核" data-real-text="我已真的完成官方查核／退換至少一瓶油" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/146"></script>
+</body></html>
