@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="phoneexit12">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="PhoneExit 12：舊手機個資清除與安全回收前篩。備份、SIM／microSD、帳號鎖、原廠重設與正式回收一次防漏。">
+<title>PhoneExit 12｜把舊手機安全送出抽屜</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#9f2424;--info:#285c8d}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1120px;margin:auto;padding:24px 14px 72px}
+.kicker{font-size:14px;font-weight:850;color:var(--muted)} h1{font-size:clamp(40px,7vw,68px);line-height:1.03;margin:.15em 0 .25em}
+.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:1000px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:12px 14px;border-radius:9px;line-height:1.72;margin:10px 0}
+.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}.info{border-left-color:var(--info)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:9px} .stat{border:1px solid var(--line);border-radius:14px;padding:12px} .stat b{display:block;font-size:23px;margin-top:4px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
+label{display:block;font-weight:800;margin:8px 0 6px} select,input,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}
+textarea{min-height:270px;resize:vertical}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px} button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer} .ghost{background:#edf1f5;color:#17212b}
+.big{font-size:clamp(24px,4vw,34px);font-weight:950} .small{font-size:13px;color:var(--muted);line-height:1.65}
+.check{display:flex;gap:8px;align-items:flex-start;margin:8px 0} .check input{width:auto;margin-top:4px}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · 舊手機個資清除＋安全回收 · 2026/09/14</div>
+<h1>PhoneExit 12<br>舊手機不是垃圾，<br>也不該因怕個資外洩一直躺抽屜。</h1>
+<p class="lead">環境部資料指出，臺灣每年約銷售 <strong>500萬支手機</strong>，廢手機回收率卻僅約 <strong>12%</strong>；超過一半民眾把舊機閒置在家，常見原因就包括<strong>擔心個資外洩</strong>。這頁把「備份 → 拿掉可移除媒體 → 正確清除 → 帳號鎖 → 正式回收／再利用」做成可執行流程。所有勾選狀態只在你的瀏覽器本機處理。</p>
+
+<section class="card">
+<h2>1｜先看問題量級</h2>
+<div class="stats">
+<div class="stat">每年手機銷售<b>約500萬支</b></div>
+<div class="stat">目前回收率<b>約12%</b></div>
+<div class="stat">舊機閒置<b>超過5成</b></div>
+<div class="stat">2026新制<b>循環率目標15%</b></div>
+</div>
+<div class="note info">2026年起，手機製造／輸入業者進入新的回收與循環服務規範；品牌與販售業者也被要求協助提供回收設施與個資防護／銷毀措施。對一般人來說，現在最值得解的不是「手機能不能回收」，而是「我敢不敢把這支有個資的手機交出去」。</div>
+<div class="actions">
+<a class="btn ghost" target="_blank" rel="noopener" href="https://recycle.moenv.gov.tw/News/NewInfo/2446">環境部：12%回收率與閒置原因</a>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://recycle.moenv.gov.tw/News/NewInfo/2559">環境部：2026手機循環新制</a>
+</div>
+</section>
+
+<section class="card">
+<h2>2｜先判斷這支手機能走哪條路</h2>
+<div class="grid">
+<div><label>裝置平台</label>
+<select id="platform">
+<option value="iphone">iPhone</option>
+<option value="samsung">Samsung Galaxy</option>
+<option value="android">其他 Android</option>
+<option value="other">功能型手機／其他</option>
+</select></div>
+<div><label>目前狀態</label>
+<select id="state">
+<option value="unlock">可開機，也可正常解鎖</option>
+<option value="screen">可開機，但螢幕／觸控壞到難操作</option>
+<option value="locked">可開機，但忘記密碼／無法解鎖</option>
+<option value="dead">完全無法開機</option>
+</select></div>
+<div><label>電池是否有鼓包、異常發熱、破損？</label>
+<select id="battery">
+<option value="no">沒有看到異常</option>
+<option value="yes">有／疑似有</option>
+<option value="unknown">不確定</option>
+</select></div>
+<div><label>你想把它送去哪？</label>
+<select id="dest">
+<option value="reuse">轉售／舊機買回／捐贈再利用</option>
+<option value="recycle">正式回收，不再使用</option>
+<option value="unknown">還沒決定</option>
+</select></div>
+</div>
+<div id="routeOut"></div>
+</section>
+
+<section class="card">
+<h2>3｜能正常操作的手機：先完成這 7 個防漏</h2>
+<div class="check"><input id="c1" type="checkbox"><span><b>重要資料已備份並抽查。</b>至少隨機打開幾張照片、聯絡人、文件，確認不是「以為有備份」。</span></div>
+<div class="check"><input id="c2" type="checkbox"><span><b>實體 SIM 已取出。</b>如果有 microSD／記憶卡，也已取出或另外安全清除。</span></div>
+<div class="check"><input id="c3" type="checkbox"><span><b>eSIM 已確認處理方式。</b>若要轉售／交給別人使用，不把自己的行動方案留在裝置上。</span></div>
+<div class="check"><input id="c4" type="checkbox"><span><b>已使用正確的「清除所有內容／原廠資料重設」。</b>不是只做「重設所有設定」。</span></div>
+<div class="check"><input id="c5" type="checkbox"><span><b>清除完成後出現初始設定畫面。</b>不再看到自己的桌面、照片、訊息或已登入App。</span></div>
+<div class="check"><input id="c6" type="checkbox"><span><b>帳號鎖已處理。</b>iPhone確認Find My／Activation Lock；Android避免因不當Recovery重設留下FRP，影響下一位使用者。</span></div>
+<div class="check"><input id="c7" type="checkbox"><span><b>沒有把充電中的異常鋰電池自行鑽孔、拆刺、敲破或丟一般垃圾。</b></span></div>
+<div id="checkOut"></div>
+</section>
+
+<section class="card">
+<h2>4｜依平台走官方清除路徑</h2>
+<div id="platformGuide"></div>
+<div class="actions">
+<a class="btn ghost" target="_blank" rel="noopener" href="https://support.apple.com/en-is/109511">Apple：出售／贈送前處理</a>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://www.samsung.com/tw/support/mobile-devices/perform-a-factory-reset-on-samsung-galaxy-device/">Samsung台灣：恢復原廠設定</a>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://support.google.com/android/answer/6088915?hl=zh-Hant">Android官方：恢復原廠設定</a>
+</div>
+</section>
+
+<section class="card">
+<h2>5｜不能正常操作／不能開機：不要因為怕資料外洩就永久囤著，也不要亂拆</h2>
+<div class="note warn"><b>螢幕壞、不能解鎖或完全不能開機時：</b>你可能無法完成一般的本機清除。這時不要把它當一般二手機直接交給陌生買家；優先找品牌、電信、正式回收／維修通路，主動詢問「無法開機／無法清除資料的手機，如何做資料防護或銷毀處理」。環境部2026新制本身就要求相關業者採取適當銷毀或防範措施，避免手機個資外洩。</div>
+<div class="note bad"><b>不要自行用鑽孔、敲碎、火燒等方式「物理清資料」。</b>手機內有鋰電池，暴力破壞可能造成起火、短路或受傷；尤其電池已鼓包／破損時，應先停止充電與使用，改詢問正式回收／維修單位如何安全交付。</div>
+<div class="actions">
+<a class="btn" target="_blank" rel="noopener" href="https://recycle.moenv.gov.tw/utmap/stations" onclick="track('recycle-map')">找正式回收／維修站點</a>
+<a class="btn ghost" href="tel:0800085717" onclick="track('recycle-hotline')">資源回收專線 0800-085-717</a>
+</div>
+</section>
+
+<section class="card"><h2>6｜你現在是否「可以交付」？</h2><div id="gateOut"></div></section>
+
+<section class="card">
+<h2>7｜一鍵產生自己的舊手機退役卡</h2>
+<textarea id="card"></textarea>
+<div class="actions"><button onclick="buildCard(true)">更新退役卡</button><button class="ghost" onclick="copyText('card')">複製到私人備忘錄</button></div>
+<div class="note info"><b>隱私：</b>不要把 IMEI、序號、手機號碼、Apple／Google／Samsung帳號、備份內容、照片或交易單據貼到公開回饋區。本工具也完全不需要這些資料。</div>
+</section>
+
+<section class="card">
+<h2>8｜這個工具刻意不做</h2>
+<div class="note"><ul>
+<li>不登入你的 Apple／Google／Samsung 帳號，也不讀手機、雲端或備份內容。</li>
+<li>不承諾「任何一種重設」都適合所有機型；平台細節以原廠最新說明為準。</li>
+<li>不把「Reset All Settings／重設所有設定」當成清除個資；Apple官方明確指出該動作不會刪照片、訊息、App與文件。</li>
+<li>不鼓勵無法開機的手機直接轉售給陌生人；若無法自行清除，優先走正式回收／維修通路並詢問資料防護方式。</li>
+<li>不因為手機壞掉就建議自行拆電池或破壞主機板。</li>
+</ul></div>
+</section>
+
+<section class="card"><h2>9｜真實使用驗證</h2><p>真正追的是：<strong>有沒有一支原本因為怕個資外洩而躺在抽屜的手機，最後完成備份／清除／帳號鎖處理，並真的進入舊機買回、再利用或正式回收。</strong></p><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/143">PhoneExit 12 回饋區 #143</a></div></section>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+function route(){const p=$('platform').value,s=$('state').value,b=$('battery').value,d=$('dest').value;let cls='ok',title='🟢 可走「備份 → 清除 → 驗證 → 交付」完整流程',msg='先做完下方7項，再決定轉售／回收。';if(b==='yes'){cls='bad';title='🔴 先處理電池安全，不要繼續充電／拆機';msg='疑似鼓包、異常發熱或破損時，先停止一般使用，詢問品牌／維修／正式回收單位安全交付方式。';}else if(s==='screen'||s==='locked'||s==='dead'){cls='warn';title='🟡 你可能無法完成一般本機清除';msg='先取出能安全取出的SIM／microSD；不要直接當一般二手機交陌生人。改找正式通路詢問資料防護／銷毀處理。';}if(d==='reuse'&&s!=='unlock')msg+=' 若目標是再利用，通常需要先解決資料清除與帳號鎖，否則不適合直接交付下一位使用者。';$('routeOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;return {p,s,b,d,title,msg,cls};}
+function guide(){const p=$('platform').value;let html='';if(p==='iphone'){html=`<div class="note info"><b>iPhone：</b>先確認備份，再從「設定 → 一般 → 移轉或重置 iPhone → 清除所有內容和設定」執行完整清除。Apple 說明：這會移除裝置內容，並在正確流程下關閉 Find My／Activation Lock；若是 eSIM 裝置、要出售或交給別人，清除時也要處理 eSIM。<br><b>注意：</b>「重設所有設定」不會刪除照片、訊息、App與文件，不能拿它當交付前資料清除。</div>`;}else if(p==='samsung'){html=`<div class="note info"><b>Samsung Galaxy：</b>官方目前路徑為「設定 → 一般管理 → 重設 → 重設為原廠設定 → 全部刪除」。Samsung 2026/9/3更新的說明指出，恢復原廠設定會刪除裝置上的個人資料；帳號保護／Google FRP也要留意，尤其不要在不了解後果時只從Recovery按鍵強制重設。</div>`;}else if(p==='android'){html=`<div class="note info"><b>其他 Android：</b>先做備份，再依原廠／Android設定中的「Erase all data（factory reset）／清除所有資料」流程處理。Google官方說明，恢復原廠設定會刪除手機資料；若用按鍵／Recovery或遠端方式重設，可能仍要求原本Google帳號驗證，所以準備轉售時要確認下一位使用者不會卡在裝置保護。</div>`;}else{html=`<div class="note info"><b>功能型手機／其他：</b>不同品牌差異大。先移除SIM與記憶卡，查原廠「清除使用者資料／恢復原廠」說明；若無法確認是否完整清除，優先正式回收而非轉售。</div>`;}$('platformGuide').innerHTML=html;}
+function checks(){const ids=['c1','c2','c3','c4','c5','c6','c7'];const n=ids.filter(id=>$(id).checked).length;$('checkOut').innerHTML=`<div class="note ${n===7?'ok':'info'}">${n===7?'✓ 7項都確認。接著看「可以交付？」總閘門。':`目前完成 ${n}／7。不要只因為按過「重設」就跳過SIM／記憶卡、初始畫面與帳號鎖確認。`}</div>`;return n;}
+function gate(){const r=route(),n=checks();let cls='warn',title='🟡 還不要交付',msg='先把能做的防漏完成。';if(r.b==='yes'){cls='bad';title='🔴 暫停一般交付';msg='先處理鼓包／破損電池的安全交付；不要繼續充電、拆刺或寄送未符合承運規範的受損鋰電池。';}else if(r.s!=='unlock'){cls='warn';title='🟡 改走「正式回收／資料防護」路徑';msg='裝置無法正常操作時，不要假裝已清乾淨。至少移除可安全取出的SIM／microSD，並向正式通路確認無法開機／無法解鎖設備的資料防護處理。';}else if(n===7){cls='ok';title='🟢 已達本工具的交付前防漏條件';msg='仍建議最後一次確認裝置停在初始設定畫面、沒有你的SIM／microSD，且若要再利用，下一位使用者不會被Activation Lock／FRP擋住。';}$('gateOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;return {cls,title,msg};}
+function buildCard(countCore){const r=route();guide();const n=checks();const g=gate();const platformText={iphone:'iPhone',samsung:'Samsung Galaxy',android:'其他 Android',other:'功能型手機／其他'}[r.p];const stateText={unlock:'可開機＋可解鎖',screen:'可開機但螢幕／觸控難操作',locked:'可開機但無法解鎖',dead:'無法開機'}[r.s];$('card').value=`【PhoneExit 12｜舊手機安全退役卡】\n日期：2026/09/14\n\n裝置：\n・平台：${platformText}\n・狀態：${stateText}\n・目標：${$('dest').options[$('dest').selectedIndex].text}\n\n目前總閘門：\n${g.title}\n${g.msg}\n\n交付前7項：\n${$('c1').checked?'✓':'□'} 已備份並抽查重要資料\n${$('c2').checked?'✓':'□'} SIM／microSD 已取出\n${$('c3').checked?'✓':'□'} eSIM 已確認處理\n${$('c4').checked?'✓':'□'} 已做「清除所有內容／原廠資料重設」\n${$('c5').checked?'✓':'□'} 清除後已看到初始設定畫面\n${$('c6').checked?'✓':'□'} Activation Lock／FRP／帳號鎖已處理\n${$('c7').checked?'✓':'□'} 沒有用鑽孔／敲碎等危險方式破壞鋰電池手機\n\n如果不能開機／不能解鎖：\n・不要直接當一般二手機交給陌生人。\n・不要自行鑽孔、敲碎、火燒。\n・優先找品牌／電信／正式回收或維修站，明確詢問「無法自行清資料時的個資防護／銷毀處理」。\n\n官方：\n環境部回收資料：https://recycle.moenv.gov.tw/News/NewInfo/2446\n全國維修／循環站點：https://recycle.moenv.gov.tw/utmap/stations\n資源回收專線：0800-085-717\n\n公開回饋不要貼IMEI、序號、電話、帳號、照片、備份內容或交易單據。`;if(countCore&&window.PGLabImpact)PGLabImpact.core(r.s==='unlock'&&n===7?'ready-to-handoff':r.s!=='unlock'?'privacy-route':'retirement-check');}
+function track(label){if(window.PGLabImpact)PGLabImpact.core(label)}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$('card').select();document.execCommand('copy')}}
+['platform','state','battery','dest','c1','c2','c3','c4','c5','c6','c7'].forEach(id=>$(id).addEventListener('change',()=>buildCard(false)));buildCard(false);
+</script>
+<script src="../impact.js" data-project="phoneexit12" data-action-text="我已完成一支舊手機的退役前篩／清除清單" data-real-text="我已真的把一支閒置手機完成安全回收／舊機買回／再利用交付" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/143"></script>
+</body></html>
