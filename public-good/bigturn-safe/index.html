@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="bigturn-safe">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="BigTurn Safe：大型車轉彎危險區60秒情境演練。把內輪差、視野死角從口號變成路口下一步。">
+<title>BigTurn Safe｜大型車轉彎危險區 60 秒演練</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#a32323;--info:#285c8d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1080px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}
+h1{font-size:clamp(40px,7vw,68px);line-height:1.02;margin:.15em 0 .25em}h2{margin-bottom:.5em}
+.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:980px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:12px 14px;border-radius:9px;line-height:1.72;margin:10px 0}
+.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}.info{border-left-color:var(--info)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:9px}.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:23px;margin-top:4px}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}
+button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}
+.ghost{background:#edf1f5;color:#17212b}
+.big{font-size:clamp(24px,4vw,34px);font-weight:950}.small{font-size:13px;color:var(--muted);line-height:1.65}
+.road{position:relative;height:330px;background:#5f6670;border-radius:18px;overflow:hidden;border:1px solid #4c535c;margin-top:12px}
+.road:before{content:"";position:absolute;left:0;right:0;top:195px;border-top:4px dashed rgba(255,255,255,.65)}
+.road:after{content:"";position:absolute;top:0;bottom:0;left:58%;border-left:4px dashed rgba(255,255,255,.65)}
+.truck{position:absolute;left:31%;top:108px;width:210px;height:82px;background:#f2f3f5;border-radius:13px 28px 10px 10px;border:3px solid #252a30;transform:rotate(0deg)}
+.truck:before,.truck:after{content:"";position:absolute;bottom:-9px;width:34px;height:17px;background:#17191c;border-radius:8px}
+.truck:before{left:22px}.truck:after{right:24px}
+.cab{position:absolute;right:0;top:0;width:62px;height:76px;border-left:3px solid #252a30;background:#d6dde4;border-radius:0 23px 8px 0}
+.danger{position:absolute;left:45%;top:174px;width:180px;height:120px;background:rgba(189,45,45,.28);border:3px dashed #ffb1b1;border-radius:10px 70px 70px 10px;transform:rotate(8deg)}
+.rider{position:absolute;width:26px;height:42px;border-radius:10px;background:#f4d35e;border:3px solid #292d33;box-shadow:0 0 0 4px rgba(255,255,255,.3)}
+.r1{left:49%;top:208px}.r2{left:25%;top:208px}
+.legend{position:absolute;left:12px;bottom:10px;background:rgba(255,255,255,.94);padding:8px 10px;border-radius:10px;font-size:12px;max-width:270px}
+.quiz{border:1px solid var(--line);border-radius:16px;padding:15px;margin:12px 0}.quiz h3{margin:.1em 0 .6em}
+.options{display:grid;gap:8px}.options button{text-align:left;background:#edf1f5;color:#17212b;border:1px solid #d4dde6;font-weight:750}
+.options button:hover{background:#e3e9ef}.answer{margin-top:10px}.score{font-size:clamp(30px,6vw,50px);font-weight:1000}
+.check{display:flex;gap:8px;align-items:flex-start;margin:8px 0}.check input{width:auto;margin-top:4px}
+textarea{width:100%;min-height:250px;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}
+@media(max-width:600px){.truck{left:21%;width:190px}.danger{left:37%;}.r1{left:48%}.r2{left:13%}}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · 115年交通安全月 · 2026/09/14</div>
+<h1>BigTurn Safe<br>大車旁那一格，<br>不是你要搶的空位。</h1>
+<p class="lead">今年 9 月交通安全月把「機車安全」列為主題，官方也在 9/2 新上架「轉彎請遠離大車危險區」。這個工具不考你名詞，而是讓你練 3 次：<strong>路口碰到可能轉彎的大型車，下一步到底要做什麼。</strong></p>
+
+<section class="card">
+<h2>1｜先看懂：大車「車頭過了」不代表後輪也會走同一條線</h2>
+<div class="stats">
+<div class="stat">大貨車典型內輪差<b>約3.5–4.5m</b></div>
+<div class="stat">聯結車典型內輪差<b>約6–7.5m</b></div>
+<div class="stat">官方核心動作<b>避免併行</b></div>
+<div class="stat">轉彎時<b>留在後方等它過</b></div>
+</div>
+<div class="road" aria-label="大型車轉彎內側危險區示意圖">
+  <div class="danger"></div>
+  <div class="truck"><div class="cab"></div></div>
+  <div class="rider r1" title="危險：大型車側邊／轉彎內側"></div>
+  <div class="rider r2" title="較安全：留在大型車後方"></div>
+  <div class="legend"><b>示意圖，不按比例：</b>紅色區只是提醒「轉彎內側會被後輪軌跡切入」，不是拿來算固定安全距離。</div>
+</div>
+<div class="note warn">上面的 3.5–4.5m／6–7.5m 是交通部168既有資料用來說明內輪差量級，<strong>不是「離幾公尺就一定安全」的公式</strong>。車型、軸距、轉彎角度、道路幾何都會改變風險。</div>
+</section>
+
+<section class="card">
+<h2>2｜60秒情境演練：只問「下一步」</h2>
+
+<div class="quiz" data-q="1">
+<h3>情境 1：紅燈時，你已停到大型車右側、接近車身後半部。</h3>
+<p>綠燈快亮了，你看得到前方還有一點縫。</p>
+<div class="options">
+<button onclick="answer(1,'a')">A. 綠燈就先催油門鑽過去，越快離開側邊越好</button>
+<button onclick="answer(1,'b')">B. 不再往側邊縫隙鑽；避免併行，讓大型車先完成動作</button>
+<button onclick="answer(1,'c')">C. 只要大型車現在沒打方向燈，就照原本位置一起起步</button>
+</div>
+<div id="a1" class="answer"></div>
+</div>
+
+<div class="quiz" data-q="2">
+<h3>情境 2：你在大型車後方，綠燈後它開始往右轉。</h3>
+<p>旁邊機車道看起來暫時空著。</p>
+<div class="options">
+<button onclick="answer(2,'a')">A. 從右側加速超過，因為車頭正在往左外擺</button>
+<button onclick="answer(2,'b')">B. 留在大型車後方，等它完整過彎，再確認安全後通過</button>
+<button onclick="answer(2,'c')">C. 貼著後輪旁邊走，這樣駕駛比較容易看到我</button>
+</div>
+<div id="a2" class="answer"></div>
+</div>
+
+<div class="quiz" data-q="3">
+<h3>情境 3：你跟大型車同方向行駛，接近路口。</h3>
+<p>你不確定它會不會轉彎。</p>
+<div class="options">
+<button onclick="answer(3,'a')">A. 先避免和它長時間並行，預留退讓空間</button>
+<button onclick="answer(3,'b')">B. 盡量待在車身側邊，這樣比較不會被後車追撞</button>
+<button onclick="answer(3,'c')">C. 只要我在自己的車道，就不用管大型車的視野死角</button>
+</div>
+<div id="a3" class="answer"></div>
+</div>
+
+<div id="scoreOut" class="note info"><span class="score">0 / 3</span><br>答過三題後會產生你的路口記憶卡。</div>
+<div class="actions"><button class="ghost" onclick="resetQuiz()">重新練一次</button><a class="btn ghost" target="_blank" rel="noopener" href="https://hpt.thb.gov.tw" onclick="track('hpt')">去官方機車危險感知平台繼續練</a></div>
+</section>
+
+<section class="card">
+<h2>3｜把它縮成 3 個自動反應</h2>
+<div class="check"><input id="c1" type="checkbox"><span><b>不併行：</b>大型車旁不是「多一格可以塞」；避免長時間待在車身側邊與視野死角。</span></div>
+<div class="check"><input id="c2" type="checkbox"><span><b>不鑽內側：</b>尤其接近路口、彎道時，不鑽大型車與路緣／轉彎內側的縫隙。</span></div>
+<div class="check"><input id="c3" type="checkbox"><span><b>大車轉彎，我留後方：</b>官方建議停在大型車後輪之後方，等它完全過彎、確認安全後再繼續。</span></div>
+<div id="habitOut"></div>
+</section>
+
+<section class="card">
+<h2>4｜一鍵產生「下次看到大車」記憶卡</h2>
+<textarea id="card"></textarea>
+<div class="actions"><button onclick="buildCard(true)">更新記憶卡</button><button class="ghost" onclick="copyCard()">複製給同學／家人</button></div>
+<div class="note info"><b>隱私：</b>不用上傳行車紀錄器，也不要在公開回饋貼車牌、GPS、精確路口、顧客地址、事故當事人或平台帳號。</div>
+</section>
+
+<section class="card">
+<h2>5｜這個工具刻意不做</h2>
+<div class="note">
+<ul>
+<li>不給「固定幾公尺一定安全」的保證；大型車幾何與道路情境會變。</li>
+<li>不教你如何從大型車側邊搶快超越。</li>
+<li>不把答對題目當成已經安全；真正驗證是下一次真實路口有沒有少一次併行／鑽側邊。</li>
+<li>不取代交通號誌、現場指揮、正式駕訓與交通法規。</li>
+</ul>
+</div>
+<div class="actions">
+<a class="btn ghost" target="_blank" rel="noopener" href="https://168.motc.gov.tw/theme/fullsized/publish" onclick="track('168-poster')">168：最新「轉彎請遠離大車危險區」</a>
+<a class="btn ghost" target="_blank" rel="noopener" href="https://www.swcoast-nsa.gov.tw/zh-tw/news/details/2588" onclick="track('safety-month')">115年交通安全月</a>
+</div>
+</section>
+
+<section class="card">
+<h2>6｜真實使用驗證</h2>
+<p>這輪真正追的不是分數，而是：<strong>你下次在真實路口遇到可能轉彎的大型車時，有沒有少一次併行／鑽側邊，改成留在後方等待。</strong></p>
+<div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/155">BigTurn Safe 回饋區 #155</a></div>
+</section>
+</main>
+
+<script>
+const answers={1:'b',2:'b',3:'a'};
+const explanations={
+  1:'正確方向：不要把大型車側邊的縫隙當成「快點鑽過去」的出口。大型車轉彎時有視野死角與內輪差；若已在側邊，重點是不再搶行、不再往轉彎內側鑽，讓大型車先完成動作。',
+  2:'正確。交通部168的建議是：大型車過彎時，停在大型車後輪之後方，等它完全過彎，再確認安全後繼續行駛。',
+  3:'正確。接近路口時先降低「我和大車並行」的時間，保留退讓空間；不要把自己的車道線當成大型車一定看得到你的保證。'
+};
+let state={1:null,2:null,3:null};
+
+function answer(q,v){
+  state[q]=v;
+  const good=v===answers[q];
+  document.getElementById('a'+q).innerHTML=`<div class="note ${good?'ok':'bad'}"><b>${good?'✓ 這個選擇較安全':'✗ 這個選擇把自己留在高風險位置'}</b><br>${explanations[q]}</div>`;
+  score();
+}
+function score(){
+  const done=Object.values(state).filter(Boolean).length;
+  const n=Object.entries(state).filter(([q,v])=>v===answers[q]).length;
+  const out=document.getElementById('scoreOut');
+  out.className='note '+(done===3&&n===3?'ok':'info');
+  out.innerHTML=`<span class="score">${n} / 3</span><br>${done<3?'還有 '+(3-done)+' 題未作答。':n===3?'三題全對。現在把三個行為勾起來，讓它變成路口自動反應。':'看完解析再重練一次；目標不是猜對，是把下一步練熟。'}`;
+  if(done===3 && window.PGLabImpact) PGLabImpact.core(n===3?'three-correct':'three-complete');
+  buildCard(false);
+}
+function habits(){
+  const n=['c1','c2','c3'].filter(id=>document.getElementById(id).checked).length;
+  document.getElementById('habitOut').innerHTML=`<div class="note ${n===3?'ok':'info'}">${n===3?'✓ 三個路口反應都確認。':'目前 '+n+'/3。少背口號，先把這三件事記住。'}</div>`;
+  return n;
+}
+function resetQuiz(){
+  state={1:null,2:null,3:null};
+  ['a1','a2','a3'].forEach(id=>document.getElementById(id).innerHTML='');
+  score();
+}
+function buildCard(countCore){
+  const n=Object.entries(state).filter(([q,v])=>v===answers[q]).length;
+  const h=habits();
+  document.getElementById('card').value=`【BigTurn Safe｜大型車轉彎危險區記憶卡】
+日期：2026/09/14
+
+我的3題情境結果：${n}/3
+三個自動反應：${h}/3
+
+下次看到大型車：
+1. 不併行：不要長時間待在大型車側邊／視野死角。
+2. 不鑽內側：接近路口時，不鑽大型車與路緣／轉彎內側縫隙。
+3. 大車轉彎，我留後方：等大型車完全過彎、確認安全後再走。
+
+理解用，不拿來算安全距離：
+・大貨車典型內輪差約3.5–4.5m
+・聯結車典型內輪差約6–7.5m
+車型與道路幾何不同，沒有「離幾公尺一定安全」保證。
+
+官方：
+168大型車安全：https://168.motc.gov.tw/theme/fullsized/publish
+機車危險感知教育平台：https://hpt.thb.gov.tw
+
+真正驗證：
+下次真實路口遇到可能轉彎的大型車，少一次併行／鑽側邊，改成留後方等待。
+
+公開回饋不要貼車牌、GPS、精確路口、顧客地址、事故當事人或平台帳號。`;
+  if(countCore&&window.PGLabImpact) PGLabImpact.core(n===3?'memory-card-complete':'memory-card');
+}
+function track(label){if(window.PGLabImpact)PGLabImpact.core(label)}
+async function copyCard(){
+  try{await navigator.clipboard.writeText(document.getElementById('card').value);alert('已複製')}
+  catch(e){document.getElementById('card').select();document.execCommand('copy')}
+}
+['c1','c2','c3'].forEach(id=>document.getElementById(id).addEventListener('change',()=>buildCard(false)));
+buildCard(false);
+</script>
+<script src="../impact.js" data-project="bigturn-safe" data-action-text="我已完成3個大型車轉彎情境演練" data-real-text="我已在真實路口主動避免與大型車併行／改留後方等待一次" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/155"></script>
+</body></html>
