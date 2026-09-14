@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="vaxpair101">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="VaxPair 101：115年度10/1公費流感＋新冠疫苗資格分流，避免把兩種公費資格誤認為完全相同。">
+<title>VaxPair 101｜10/1 流感＋新冠資格別搞混</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#66727f;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#a32323;--info:#285c8d}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1100px;margin:auto;padding:24px 14px 72px}
+.kicker{font-size:14px;font-weight:850;color:var(--muted)}
+h1{font-size:clamp(40px,7vw,68px);line-height:1.02;margin:.15em 0 .25em}
+h2{margin-bottom:.55em}
+.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:1000px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:12px 14px;border-radius:9px;line-height:1.72;margin:10px 0}
+.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}.info{border-left-color:var(--info)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:9px}
+.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:23px;margin-top:4px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
+label{display:block;font-weight:800;margin:8px 0 6px}
+select,input,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}
+textarea{min-height:260px;resize:vertical}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}
+button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}
+.ghost{background:#edf1f5;color:#17212b}
+.big{font-size:clamp(24px,4vw,34px);font-weight:950}
+.pair{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:10px}
+.result{border:1px solid var(--line);border-radius:16px;padding:15px}
+.result strong{font-size:24px;display:block;margin-bottom:5px}
+.check{display:flex;gap:8px;align-items:flex-start;margin:8px 0}.check input{width:auto;margin-top:4px}
+.small{font-size:13px;color:var(--muted);line-height:1.65}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · 115年度秋冬公費疫苗資格防漏 · 2026/09/15</div>
+<h1>VaxPair 101<br>10/1 可以打流感，<br>不代表一定也能公費打新冠。</h1>
+<p class="lead">115年度公費流感與新冠疫苗第一階段都在 <strong>2026/10/1</strong> 開打，但兩張資格表不是完全一樣；50–64歲無高風險慢性病成人則從 <strong>11/2</strong> 進入第二階段。最容易搞錯的是學生、禽畜／動物防疫人員，以及未滿6歲幼兒的新冠資格。</p>
+<section class="card"><h2>1｜先抓住四個最容易搞錯的地方</h2><div class="stats"><div class="stat">第一階段<b>10/1</b></div><div class="stat">第二階段<b>11/2</b></div><div class="stat">學生<b>流感✓ 新冠不一定</b></div><div class="stat">健康幼兒新冠<b>須從未接種</b></div></div><div class="note warn"><b>不要把「公費流感資格」整張複製成「公費新冠資格」。</b>例如國小到高中職／五專1–3年級學生，以及禽畜／動物防疫相關人員，是流感第一階段對象，但不是單憑這個身分就取得一般公費新冠資格。</div></section>
+<section class="card"><h2>2｜60秒雙資格分流</h2><div class="grid"><div><label>年齡／階段最接近</label><select id="age"><option value="infant">滿6個月至未滿6歲</option><option value="childschool">6歲以上、未滿19歲／學生年齡</option><option value="adult19_49">19–49歲</option><option value="adult50_54">50–54歲</option><option value="adult55_64">55–64歲</option><option value="adult65">65歲以上</option></select></div><div><label>若未滿6歲，過去是否曾接種過任何COVID-19疫苗？</label><select id="childCovidHistory"><option value="never">從未接種</option><option value="ever">曾接種過</option><option value="unknown">不確定</option><option value="na">不適用（不是未滿6歲）</option></select></div></div><div class="grid"><label class="check"><input id="indigenous" type="checkbox"><span>55歲以上原住民</span></label><label class="check"><input id="pregnant" type="checkbox"><span>孕婦</span></label><label class="check"><input id="medical" type="checkbox"><span>醫事或衛生防疫相關人員</span></label><label class="check"><input id="ltc" type="checkbox"><span>安養／長照機構住民或所屬工作人員</span></label><label class="check"><input id="childcare" type="checkbox"><span>幼兒園／托育機構工作人員或居家托育人員</span></label><label class="check"><input id="babyCaregiver" type="checkbox"><span>6個月內嬰兒之雙親或實際扶養者</span></label><label class="check"><input id="highRisk" type="checkbox"><span>符合官方高風險／潛在疾病對象</span></label><label class="check"><input id="student" type="checkbox"><span>國小、國中、高中職、五專1–3年級學生</span></label><label class="check"><input id="animal" type="checkbox"><span>禽畜相關或動物防疫相關人員</span></label></div><div id="pairOut"></div><div class="note info"><b>高風險疾病不是由這個網頁診斷。</b>流感與新冠的高風險定義也不是完全相同；例如新冠公費高風險對象另納入部分結核病、失能、精神疾病、失智症等對象。若是靠疾病資格申請，請直接看官方表或問接種院所。</div></section>
+<section class="card"><h2>3｜幼兒是今年最需要單獨看的族群</h2><div class="pair"><div class="result"><strong>流感</strong>滿6個月至國小入學前幼兒，屬第一階段公費對象。未滿9歲孩童的接種劑次還會依年齡與過去流感疫苗接種史而不同。</div><div class="result"><strong>新冠</strong>一般健康幼兒在115–116年度調整為「從未接種COVID-19疫苗之滿6個月至未滿6歲幼兒」才屬此幼兒公費條件；高風險幼兒另依高風險規則判斷。</div></div><div class="note warn">因此「以前打過新冠的健康幼兒，今年仍然和流感一樣自動符合公費」這個推論不對。接種史不確定時，不要用記憶猜，請讓醫療院所查接種紀錄。</div></section>
+<section class="card"><h2>4｜如果兩種都符合，可以同一天問院所</h2><div class="note ok">疾管署115年度秋冬政策延續「左流右新」共同接種策略。若個人同時符合兩種公費資格，可向院所確認是否同日接種；實際接種仍由醫師依當日健康狀況、接種史與禁忌症評估。</div><div class="actions"><a class="btn" target="_blank" rel="noopener" href="https://vaxmap.cdc.gov.tw/" onclick="track('vaxmap')">查流感／新冠／肺鏈疫苗地圖</a><a class="btn ghost" target="_blank" rel="noopener" href="https://www.cdc.gov.tw/Category/MPage/JNTC9qza3F_rgt9sRHqV2Q" onclick="track('flu-rule')">流感官方資格</a><a class="btn ghost" target="_blank" rel="noopener" href="https://www.gov.tw/News_Content_37_787217" onclick="track('pair-rule')">115年雙疫苗Q&A</a></div><div class="note info">去院所前先電話確認是否有該疫苗、當日是否提供接種及是否需預約，避免白跑。</div></section>
+<section class="card"><h2>5｜出門前5項防漏</h2><div class="check"><input id="c1" type="checkbox"><span>我已分別確認「流感」與「新冠」資格，不把兩者視為完全相同。</span></div><div class="check"><input id="c2" type="checkbox"><span>我已確認自己是10/1第一階段，還是11/2第二階段。</span></div><div class="check"><input id="c3" type="checkbox"><span>若是幼兒，我已確認過去COVID-19接種史，而不是只看年齡。</span></div><div class="check"><input id="c4" type="checkbox"><span>若靠原住民／職業／孕婦等資格，我已確認院所需要帶哪些證明。</span></div><div class="check"><input id="c5" type="checkbox"><span>我已先查院所並電話確認庫存、開診／接種時段與預約方式。</span></div><div id="checkOut"></div></section>
+<section class="card"><h2>6｜一鍵產生匿名接種行動卡</h2><textarea id="card" readonly></textarea><div class="actions"><button onclick="buildCard(true)">更新行動卡</button><button class="ghost" onclick="copyCard()">複製</button><button class="ghost" onclick="downloadReminder()">下載開打提醒 (.ics)</button></div><div class="note info"><b>隱私：</b>本頁不需要姓名、生日、健保卡號、疾病名稱、疫苗紀錄截圖、學校／公司或住址。公開回饋也只回報流程卡點與是否完成接種。</div></section>
+<section class="card"><h2>7｜這個工具刻意不做</h2><div class="note"><ul><li>不替醫師判斷接種禁忌症、過敏、急性疾病或孕期個別醫療風險。</li><li>不把「符合公費」等同「今天一定可以打」；院所仍可能有庫存、預約與當日評估限制。</li><li>不自己保存完整疫苗接種史；幼兒接種史不確定時回醫療系統確認。</li><li>不把學生身分自動視為公費新冠資格。</li><li>不把50–64歲無高風險慢性病成人錯排到10/1；這一組是11/2第二階段。</li></ul></div></section>
+<section class="card"><h2>8｜真實使用驗證</h2><p>這輪真正追的是：<strong>有沒有家庭先把兩張資格表分開看、查到合適院所，最後在正確階段完成接種。</strong></p><div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/168">VaxPair 101 驗證 #168</a></div></section>
+</main>
+<script>
+const $=id=>document.getElementById(id);function track(label){if(window.PGLabImpact)PGLabImpact.core(label)}
+function calc(){const age=$('age').value,hist=$('childCovidHistory').value;const flags={indigenous:$('indigenous').checked,pregnant:$('pregnant').checked,medical:$('medical').checked,ltc:$('ltc').checked,childcare:$('childcare').checked,babyCaregiver:$('babyCaregiver').checked,highRisk:$('highRisk').checked,student:$('student').checked,animal:$('animal').checked};let flu={ok:false,date:'',why:[]},cov={ok:false,date:'',why:[]};if(age==='adult65'){flu.ok=cov.ok=true;flu.date=cov.date='2026/10/01';flu.why.push('65歲以上');cov.why.push('65歲以上')}if(flags.indigenous){flu.ok=cov.ok=true;flu.date=cov.date='2026/10/01';flu.why.push('55歲以上原住民');cov.why.push('55歲以上原住民')}for(const [key,label] of [['pregnant','孕婦'],['medical','醫事／衛生防疫'],['ltc','長照機構對象'],['childcare','托育工作人員'],['babyCaregiver','6個月內嬰兒照顧者'],['highRisk','高風險／潛在疾病']]){if(flags[key]){flu.ok=cov.ok=true;flu.date=cov.date='2026/10/01';flu.why.push(label);cov.why.push(label)}}if(age==='infant'){flu.ok=true;flu.date='2026/10/01';flu.why.push('滿6個月至學齡前幼兒');if(hist==='never'){cov.ok=true;cov.date='2026/10/01';cov.why.push('未滿6歲且從未接種COVID-19疫苗')}else if(hist==='unknown'&&!flags.highRisk){cov.why.push('接種史不確定，需先查紀錄')}}if(flags.student){flu.ok=true;flu.date='2026/10/01';flu.why.push('學生族群')}if(flags.animal){flu.ok=true;flu.date='2026/10/01';flu.why.push('禽畜／動物防疫人員')}const ageSecond=['adult50_54','adult55_64'].includes(age);if(ageSecond&&!flu.ok){flu.ok=true;flu.date='2026/11/02';flu.why.push('50–64歲無其他第一階段資格')}if(ageSecond&&!cov.ok){cov.ok=true;cov.date='2026/11/02';cov.why.push('50–64歲無其他第一階段資格')}const fluText=flu.ok?`可公費前篩｜${flu.date==='2026/10/01'?'10/1 第一階段':'11/2 第二階段'}`:'目前未由已填條件判出公費資格';const covText=cov.ok?`可公費前篩｜${cov.date==='2026/10/01'?'10/1 第一階段':'11/2 第二階段'}`:'目前未由已填條件判出公費資格';$('pairOut').innerHTML=`<div class="pair"><div class="result"><strong>流感：${fluText}</strong><div>${flu.why.length?flu.why.join('、'):'請回官方資格表確認其他情況。'}</div></div><div class="result"><strong>新冠：${covText}</strong><div>${cov.why.length?cov.why.join('、'):'學生／動物防疫身分本身不等於新冠公費資格；請回官方表確認。'}</div></div></div>`;return {age,hist,flags,flu,cov,fluText,covText}}
+function checks(){const ids=['c1','c2','c3','c4','c5'],n=ids.filter(id=>$(id).checked).length;$('checkOut').innerHTML=`<div class="note ${n===5?'ok':'info'}">${n===5?'✓ 5項接種防漏都完成。':`目前 ${n}／5。最優先是分開確認兩種資格與實際接種日期。`}</div>`;return n}
+function buildCard(countCore){const r=calc(),c=checks();$('card').value=`【VaxPair 101｜115年度秋冬接種行動卡】\n日期：2026/09/15\n\n流感：\n・${r.fluText}\n・依據：${r.flu.why.length?r.flu.why.join('、'):'尚未由前篩判出'}\n\n新冠：\n・${r.covText}\n・依據：${r.cov.why.length?r.cov.why.join('、'):'尚未由前篩判出'}\n\n重要防漏：\n・學生與禽畜／動物防疫人員：單靠這個身分屬流感第一階段，不代表一般公費新冠。\n・一般健康未滿6歲幼兒：本季新冠公費幼兒條件包含「從未接種過COVID-19疫苗」。\n・50–64歲無高風險慢性病成人：第二階段 11/2。\n・若兩種都符合，可向院所詢問同日接種；正式仍由醫師評估。\n\n出門前完成：${c}／5\n□ 分開確認兩種資格\n□ 確認10/1或11/2\n□ 幼兒確認COVID-19接種史\n□ 準備身分／資格證明\n□ 先電話確認院所庫存與時段\n\n官方：\n疫苗地圖：https://vaxmap.cdc.gov.tw/\n流感資格：https://www.cdc.gov.tw/Category/MPage/JNTC9qza3F_rgt9sRHqV2Q\n雙疫苗Q&A：https://www.gov.tw/News_Content_37_787217\n\n不要在公開回饋貼姓名、生日、健保卡、病史、疫苗紀錄、學校／公司或住址。`;if(countCore&&window.PGLabImpact)PGLabImpact.core('eligibility-card');return r}
+function reminderDate(){const r=calc();const dates=[r.flu.ok?r.flu.date:null,r.cov.ok?r.cov.date:null].filter(Boolean).sort();return dates[0]||'2026/10/01'}
+function downloadReminder(){const d=reminderDate().replaceAll('/','').replaceAll('-','');const ics=`BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//VaxPair101//TW\r\nBEGIN:VEVENT\r\nDTSTART;TZID=Asia/Taipei:${d}T090000\r\nDTEND;TZID=Asia/Taipei:${d}T093000\r\nSUMMARY:確認115年度流感／新冠公費疫苗接種\r\nDESCRIPTION:先用疾管署疫苗地圖查院所並電話確認疫苗庫存、接種時段與預約方式。流感與新冠資格需分開確認。\r\nEND:VEVENT\r\nEND:VCALENDAR`;const b=new Blob([ics],{type:'text/calendar;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='VaxPair101_接種提醒.ics';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500);track('calendar-reminder')}
+async function copyCard(){try{await navigator.clipboard.writeText($('card').value);alert('已複製')}catch(e){$('card').select();document.execCommand('copy')}}
+['age','childCovidHistory','indigenous','pregnant','medical','ltc','childcare','babyCaregiver','highRisk','student','animal','c1','c2','c3','c4','c5'].forEach(id=>$(id).addEventListener('change',()=>buildCard(false)));buildCard(false);
+</script>
+<script src="../impact.js" data-project="vaxpair101" data-action-text="我已完成流感／新冠雙資格分流與接種防漏" data-real-text="我已真的查院所／預約，或在正確階段完成流感或新冠疫苗接種" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/168"></script>
+</body></html>
