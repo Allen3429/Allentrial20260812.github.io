@@ -1,0 +1,56 @@
+name: HELP5 public deployment proof
+on:
+  push:
+    paths:
+      - 'public-good/help5-20260914/index.html'
+      - '.github/workflows/help5-proof.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+  issues: write
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - name: Check the actual public page and read-only counters
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RUN_ID: ${{ github.run_id }}
+        run: |
+          python - <<'PY'
+          import urllib.request, urllib.error, json, time, os, datetime
+          base='https://allen3429.github.io/Allentrial20260812.github.io/public-good/help5-20260914/'
+          def get(url):
+              try:
+                  req=urllib.request.Request(url,headers={'User-Agent':'HELP5-deployment-verification/1.0'})
+                  with urllib.request.urlopen(req,timeout=12) as r:
+                      return {'http':r.status,'text':r.read(100000).decode('utf-8','replace')}
+              except urllib.error.HTTPError as e:
+                  return {'http':e.code,'text':str(e)}
+              except Exception as e:
+                  return {'http':None,'text':type(e).__name__+': '+str(e)}
+          site={}
+          for i in range(18):
+              r=get(base+'?test=1&proof='+os.environ['RUN_ID'])
+              ids=all(('id="'+s+'"') in r['text'] for s in ['food','scam','care','carer','language'])
+              site={'url':base,'http':r['http'],'five_cards_present':ids,'title_present':'今晚先幫上一件事｜HELP5' in r['text']}
+              if r['http']==200 and ids and site['title_present']: break
+              time.sleep(10)
+          counters={}
+          for k in ['visitors','completed','feedback','real']:
+              r=get('https://abacus.jasoncameron.dev/get/pglab-help5-20260914-v1/'+k)
+              value=None
+              try:
+                  v=json.loads(r['text']).get('value')
+                  if r['http']==200 and isinstance(v,(int,float)) and v>=0: value=v
+              except Exception: pass
+              counters[k]={'http':r['http'],'value':value,'state':'readable' if value is not None else 'unknown'}
+          proof={'checked_at_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'site':site,'counters':counters,'scope':'Public HTTP and static content verification only; not browser E2E. No /hit calls, no synthetic adoption. Null means unknown, not zero.','run':'https://github.com/'+os.environ['GH_REPO']+'/actions/runs/'+os.environ['RUN_ID']}
+          print(json.dumps(proof,ensure_ascii=False,indent=2))
+          body='## HELP5 自動部署查核（不是受益證據）\n\n```json\n'+json.dumps(proof,ensure_ascii=False,indent=2)+'\n```'
+          req=urllib.request.Request('https://api.github.com/repos/'+os.environ['GH_REPO']+'/issues/156/comments',data=json.dumps({'body':body}).encode(),headers={'Authorization':'Bearer '+os.environ['GH_TOKEN'],'Accept':'application/vnd.github+json','Content-Type':'application/json'},method='POST')
+          with urllib.request.urlopen(req,timeout=20) as r: print('Evidence comment HTTP',r.status)
+          if not(site.get('http')==200 and site.get('five_cards_present') and site.get('title_present')): raise SystemExit('Public deployment not verified')
+          PY
