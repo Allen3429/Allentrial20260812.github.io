@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="zh-Hant" data-project="soloretire6">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="SoloRetire 6：自營作業者勞退自提1%–6%現金流試算與2026年9月新上線的官方線上申辦流程。">
+<title>SoloRetire 6｜自營作業者也能線上做勞退自提</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#17212b;--muted:#65717e;--line:#dce4eb;--ok:#176b45;--warn:#946200;--bad:#9b2727;--info:#285c8d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
+.wrap{max-width:1080px;margin:auto;padding:24px 14px 72px}.kicker{font-size:14px;font-weight:850;color:var(--muted)}h1{font-size:clamp(40px,7vw,68px);line-height:1.02;margin:.15em 0 .25em}
+.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:980px}.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+.note{border-left:5px solid #aeb9c5;background:#fafbfd;padding:12px 14px;border-radius:9px;line-height:1.72;margin:10px 0}.ok{border-left-color:var(--ok)}.warn{border-left-color:var(--warn)}.bad{border-left-color:var(--bad)}.info{border-left-color:var(--info)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:9px}.stat{border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{display:block;font-size:22px;margin-top:4px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:10px}label{display:block;font-weight:800;margin:8px 0 6px}select,input,textarea{width:100%;font:inherit;padding:10px;border:1px solid #cbd5df;border-radius:12px;background:#fff}textarea{min-height:250px;resize:vertical}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}button,.btn{display:inline-block;border:0;border-radius:12px;padding:10px 13px;background:#17212b;color:#fff;text-decoration:none;font:inherit;font-weight:850;cursor:pointer}.ghost{background:#edf1f5;color:#17212b}
+.big{font-size:clamp(24px,4vw,34px);font-weight:950}.money{font-size:clamp(34px,7vw,56px);font-weight:1000}.small{font-size:13px;color:var(--muted);line-height:1.65}
+.check{display:flex;gap:8px;align-items:flex-start;margin:8px 0}.check input{width:auto;margin-top:4px}
+@media print{button,.actions,.pglab-impact{display:none!important}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="kicker">Public Good Lab · 自營作業者退休準備 · 2026/09/14</div>
+<h1>SoloRetire 6<br>沒有雇主，<br>也不代表不能有勞退自提。</h1>
+<p class="lead">2026年9月起，勞保局把「自營作業者自願提繳勞工退休金」搬到 e 化服務：自由工作者、獨立經營事業者、自營攤販等，不再一定要紙本郵寄或親自臨櫃。這頁先幫你把 <strong>1%–6% 每月現金流</strong>算清楚，再決定要不要進官方系統；不收姓名、身分證、銀行帳號、報稅資料或實際收入明細。</p>
+
+<section class="card">
+<h2>1｜先修正三個最容易誤會的地方</h2>
+<div class="stats">
+<div class="stat">自營作業者<b>可以自提</b></div>
+<div class="stat">可選比例<b>1%–6%</b></div>
+<div class="stat">雇主配對<b>沒有</b><span class="small">自營自提由自己負擔</span></div>
+<div class="stat">2026年9月起<b>可線上申辦</b></div>
+</div>
+<div class="note warn"><b>6% 是上限，不是強制建議。</b>自營收入波動時，先選自己現金流能長期承受的比例，比「硬上6%後中斷」更實際。</div>
+<div class="note info"><b>也不要把受僱勞工的制度套過來。</b>一般受僱勞工有雇主強制提繳；自營作業者沒有一個雇主再替你補6%，這筆自願提繳是你自己的退休儲蓄。</div>
+</section>
+
+<section class="card">
+<h2>2｜先確認你是不是這輪工具的對象</h2>
+<div class="grid">
+<div><label>你目前最接近哪種工作型態？</label>
+<select id="worktype">
+<option value="self">自營作業者／自由接案／獨立經營／自營攤販</option>
+<option value="employee">受僱勞工</option>
+<option value="boss">實際從事勞動的雇主</option>
+<option value="commission">受委任工作者／其他</option>
+</select></div>
+<div><label>你已經知道勞保局認定的「月提繳工資／月執行業務所得歸級金額」嗎？</label>
+<select id="knowbase"><option value="yes">知道</option><option value="no">不知道</option></select></div>
+</div>
+<div id="routeOut"></div>
+<div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://www.bli.gov.tw/0108097.html" onclick="track('grade-calc')">官方月提繳工資歸級試算</a><a class="btn ghost" target="_blank" rel="noopener" href="https://www.bli.gov.tw/0108501.htm" onclick="track('official-rules')">官方自願提繳說明</a></div>
+</section>
+
+<section class="card">
+<h2>3｜1%–6% 現金流試算</h2>
+<div class="grid">
+<div><label>官方歸級後的月提繳工資／月執行業務所得（元）</label>
+<input id="base" type="number" min="0" step="100" placeholder="例如官方範例歸級 45,800"></div>
+<div><label>想試算的自提比例</label>
+<select id="rate">
+<option value="1">1%</option><option value="2">2%</option><option value="3">3%</option>
+<option value="4">4%</option><option value="5">5%</option><option value="6" selected>6%</option>
+</select></div>
+</div>
+<div id="calcOut"></div>
+<div class="note info">這裡只算「你自己提進去的本金」。不假設未來投資報酬，也不把過去基金收益率拿來保證未來結果。官方表示自願提繳可參與收益分配，並享有稅賦優惠；實際報稅處理仍依你的所得性質與稅務申報為準。</div>
+</section>
+
+<section class="card">
+<h2>4｜新線上流程：真正少掉的是「紙本奔波」</h2>
+<div class="note ok"><b>① 登入勞保局 e 化服務</b> → 2026年9月起可線上提出自營作業者自願提繳。</div>
+<div class="note ok"><b>② 系統自動檢核</b> → 降低漏填後補件的摩擦。</div>
+<div class="note ok"><b>③ 等 Email 受理結果</b> → 勞保局公告會以電子郵件即時通知。</div>
+<div class="note ok"><b>④ 接續辦轉帳代繳</b> → 向金融機構辦理；官方也說明可透過網路銀行處理，讓流程做到零紙本。</div>
+<div class="actions"><a class="btn" target="_blank" rel="noopener" href="https://edesk.bli.gov.tw/me/#/na/login" onclick="track('eservice')">進勞保局 e 化服務</a><a class="btn ghost" target="_blank" rel="noopener" href="https://www.bli.gov.tw/0110193.html" onclick="track('news')">看9月新上線官方公告</a></div>
+</section>
+
+<section class="card">
+<h2>5｜申辦前的四個防漏</h2>
+<div class="check"><input id="c1" type="checkbox"><span>我用官方工具確認過月提繳工資／月執行業務所得歸級，不是直接拿「這個月實收多少」硬乘6%。</span></div>
+<div class="check"><input id="c2" type="checkbox"><span>我知道自營作業者沒有雇主再替我提6%，這筆自提完全是自己的現金流。</span></div>
+<div class="check"><input id="c3" type="checkbox"><span>我選的比例即使淡季收入下降，仍有機會持續負擔。</span></div>
+<div class="check"><input id="c4" type="checkbox"><span>我會從 <b>bli.gov.tw</b>／<b>edesk.bli.gov.tw</b> 官方入口申辦，不從陌生簡訊或社群連結輸入身分資料。</span></div>
+<div id="checkOut"></div>
+</section>
+
+<section class="card">
+<h2>6｜一鍵產生自己的自提決策卡</h2>
+<textarea id="card"></textarea>
+<div class="actions"><button onclick="buildCard(true)">更新決策卡</button><button class="ghost" onclick="copyText('card')">複製到私人備忘錄</button></div>
+<div class="note info"><b>隱私：</b>本工具只算你手動填的「官方歸級金額」與比例，不儲存姓名、身分證、銀行帳戶或報稅資料。若不想輸入真實數字，可以先用整數範例試算。</div>
+</section>
+
+<section class="card">
+<h2>7｜這個工具刻意不做</h2>
+<div class="note"><ul>
+<li>不把6%包裝成每個人都該選的「最佳投資」；自營作業者首先要顧現金流與緊急預備金。</li>
+<li>不預測未來勞退基金報酬，不用歷史收益率替你做保證。</li>
+<li>不替稅務機關算實際節稅額；只提醒官方所稱的稅賦優惠。</li>
+<li>不收精確月收入、報稅所得、商號、銀行、身分證或任何申辦畫面。</li>
+<li>如果你其實是受僱勞工／受委任工作者／實際從事勞動的雇主，制度也可能適用，但申辦路徑不一定和「自營作業者新線上功能」完全相同，應回官方確認。</li>
+</ul></div>
+</section>
+
+<section class="card">
+<h2>8｜真實使用驗證</h2>
+<p>真正追的是：<strong>有沒有自由工作者／攤商／獨立經營者原本以為「沒雇主就沒有勞退」，最後真的完成官方歸級試算、進 e 化服務，甚至開始自提。</strong></p>
+<div class="actions"><a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/Allen3429/Allentrial20260812.github.io/issues/141">SoloRetire 6 回饋區 #141</a></div>
+</section>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+function route(){
+ const w=$('worktype').value,k=$('knowbase').value;
+ let cls='ok',title='🟢 這正是9月新線上功能的主要對象',msg='自營作業者可在每月所得6%範圍內自願提繳，現在可走勞保局e化服務。';
+ if(w!=='self'){cls='warn';title='🟡 你可能也能自願提繳，但不要硬套「自營作業者」流程';msg='實際從事勞動的雇主、受委任工作者等也有自願提繳規定，但申報方式可能不同；請回官方個人自願提繳說明。';}
+ else if(k==='no'){cls='info';title='🔵 先做官方歸級，再算1%–6%';msg='提繳基礎不是單純把本月收入直接乘6%。先用官方月提繳工資／執行業務所得歸級資料確認。';}
+ $('routeOut').innerHTML=`<div class="note ${cls}"><div class="big">${title}</div>${msg}</div>`;
+ return {w,k,title,msg};
+}
+function calc(){
+ const b=Math.max(0,Number($('base').value)||0),r=Number($('rate').value)||0;
+ if(!b){$('calcOut').innerHTML='<div class="note info">先填「官方歸級金額」，不要直接填本月營收。你也可以先用官方公告範例 45,800 元測試。</div>';return {b,r,m:0,y:0,five:0,ten:0};}
+ const m=Math.round(b*r/100), y=m*12, five=y*5, ten=y*10;
+ $('calcOut').innerHTML=`<div class="note ok"><div class="money">每月約 NT$${m.toLocaleString()}</div>
+ 自提比例 ${r}%，一年本金約 <b>NT$${y.toLocaleString()}</b>；5年本金約 NT$${five.toLocaleString()}；10年本金約 NT$${ten.toLocaleString()}。<br>
+ <span class="small">以上完全不計投資收益，只讓你先看現金流承擔。</span></div>`;
+ return {b,r,m,y,five,ten};
+}
+function checks(){
+ const ids=['c1','c2','c3','c4'],n=ids.filter(id=>$(id).checked).length;
+ $('checkOut').innerHTML=`<div class="note ${n===4?'ok':'info'}">${n===4?'✓ 四個防漏都確認了，可以進官方流程。':`目前完成 ${n}／4。先補齊理解再送件，尤其是「歸級金額」和「沒有雇主配對」。`}</div>`;
+ return n;
+}
+function buildCard(countCore){
+ const rt=route(),c=calc(),ck=checks();
+ $('card').value=`【SoloRetire 6｜自營勞退自提決策卡】
+日期：2026/09/14
+
+我的工作型態：
+${rt.title}
+${rt.msg}
+
+試算：
+・官方歸級月提繳工資／月執行業務所得：${c.b?`NT$${c.b.toLocaleString()}`:'尚未填'}
+・自提比例：${c.r}%
+・每月自己負擔：約 NT$${c.m.toLocaleString()}
+・每年自提本金：約 NT$${c.y.toLocaleString()}
+・5年本金（不含收益）：約 NT$${c.five.toLocaleString()}
+・10年本金（不含收益）：約 NT$${c.ten.toLocaleString()}
+
+我知道：
+□ 自營作業者可以自願提繳勞退
+□ 1%–6%可依現金流選擇，6%不是強制
+□ 沒有雇主再配6%，自提由我自己負擔
+□ 正式金額要依勞保局月提繳工資／執行業務所得歸級
+□ 官方表示自提可享收益分配與稅賦優惠，但本卡不預測收益或實際節稅額
+
+2026年9月新流程：
+e化服務送件 → 系統檢核 → Email通知 → 金融機構／網銀辦轉帳代繳
+
+官方歸級試算：
+https://www.bli.gov.tw/0108097.html
+
+e化服務：
+https://edesk.bli.gov.tw/me/#/na/login
+
+公開回饋不要貼身分證、銀行、報稅資料、精確收入或申辦畫面。`;
+ if(countCore&&window.PGLabImpact)PGLabImpact.core(c.b?'cashflow-card':'flow-check');
+}
+function track(label){if(window.PGLabImpact)PGLabImpact.core(label)}
+async function copyText(id){try{await navigator.clipboard.writeText($(id).value);alert('已複製')}catch(e){$(id).select();document.execCommand('copy')}}
+['worktype','knowbase','rate','c1','c2','c3','c4'].forEach(id=>$(id).addEventListener('change',()=>buildCard(false)));
+$('base').addEventListener('input',()=>buildCard(false));
+buildCard(false);
+</script>
+<script src="../impact.js" data-project="soloretire6" data-action-text="我已完成自營勞退1%–6%現金流試算／決策卡" data-real-text="我已真的進勞保局e化服務／開始辦自營作業者勞退自提" data-issue="https://github.com/Allen3429/Allentrial20260812.github.io/issues/141"></script>
+</body></html>
